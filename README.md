@@ -3,21 +3,11 @@
 #### 介绍
 spring boot项目模板
 
-#### 软件架构
-软件架构说明
-
-
-#### 安装教程
-
-1. xxxx
-2. xxxx
-3. xxxx
-
-#### 使用说明
-
-1. xxxx
-2. xxxx
-3. xxxx
+#### 提交命令
+1. git status
+2. git add .
+3. git commit -m '注释内容'
+4. git push -u origin master
 
 #### 参与贡献
 

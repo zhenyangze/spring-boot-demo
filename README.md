@@ -13,6 +13,7 @@ spring boot项目模板
 * Web
 * Websocket
 * Rest Docs
+* FastJson
 3. Template Engines
 * Thymeleaf
 4. Security

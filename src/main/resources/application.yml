@@ -1,7 +1,10 @@
 server:
   port: 8080
-#  servlet:
-#    context-path: /demo
+  servlet:
+    context-path: /demo
+
+logging:
+  config: classpath:logback.xml
 
 spring:
   thymeleaf:
@@ -59,4 +62,4 @@ mybatis-plus:
       capital-mode: true # 是否开启大写命名，默认不开启
       logic-delete-value: 1 # 逻辑已删除值，逻辑删除下有效
       logic-not-delete-value: 0 # 逻辑未删除值，逻辑删除下有效
-      column-like: true # 是否开启LIKE查询，即根据entity自动生成的where条件中String类型字段是否使用LIKE，默认不开启
+      column-like: false # 是否开启LIKE查询，即根据entity自动生成的where条件中String类型字段是否使用LIKE，默认不开启

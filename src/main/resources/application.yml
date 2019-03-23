@@ -3,6 +3,7 @@ server:
   servlet:
     context-path: /demo
 
+# 日志
 logging:
   config: classpath:logback.xml
 
@@ -10,6 +11,7 @@ spring:
   thymeleaf:
     cache: false # 禁用thymeleaf缓存
 
+  # 数据源
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://localhost:3306/demo?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false
@@ -46,6 +48,22 @@ spring:
         login-username: admin
         login-password: 123
 
+  # redis sentinel
+  redis:
+    database: 5 # 采用哪个数据库
+    password: couga # 密码
+    timeout: 500 # 连接超时时间（毫秒）
+    sentinel:
+      master: cougamaster # master名称
+      nodes: ceshi:26379,ceshi:26380,ceshi:26381 # sentinel地址
+    jedis:
+      pool:
+        max-active: 8 # 连接池最大连接数,默认8个，（使用负值表示没有限制）
+        max-wait: -1 # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-idle: 8 # 连接池中的最大空闲连接
+        min-idle: 1 # 连接池中的最小空闲连接
+
+# mybatis plus
 mybatis-plus:
   mapper-locations: classpath:/mapper/*Mapper.xml # mapper文件路径
   type-aliases-package: com.example.model # 实体扫描，多个package用逗号或者分号分隔

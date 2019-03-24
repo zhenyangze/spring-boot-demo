@@ -11,6 +11,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import java.util.ArrayList;
 import java.util.List;
 
+// fastjson配置
 @Configuration
 public class FastJsonConfiguration {
 

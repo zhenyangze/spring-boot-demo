@@ -4,16 +4,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.util.StringUtils;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+// 日期转换配置
 @Configuration
-public class WebMvcConfiguration implements WebMvcConfigurer {
+public class Converterconfigration {
 
+    // 接收java.sql.Date类型参数
     @Bean
     public Converter<String, Date> dateConverter() {
         return new Converter<String, Date>() {
@@ -41,6 +42,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         };
     }
 
+    // 接收java.sql.Timestamp类型参数
     @Bean
     public Converter<String, Timestamp> timestampConverter() {
         return new Converter<String, Timestamp>() {

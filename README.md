@@ -18,6 +18,7 @@ spring boot项目模板
 * Thymeleaf
 4. Security
 * Security
+* security oauth2
 5. SQL
 * MySQL
 * Druid

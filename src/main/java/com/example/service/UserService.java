@@ -7,4 +7,6 @@ public interface UserService {
 
     User login(UserParams params);
 
+    User findById(Integer id);
+
 }

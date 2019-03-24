@@ -22,4 +22,10 @@ public class UserImpl implements UserService {
         User user = userDao.selectOne(wrapper);
         return user;
     }
+
+    @Override
+    public User findById(Integer id) {
+        User user = userDao.selectById(id);
+        return user;
+    }
 }

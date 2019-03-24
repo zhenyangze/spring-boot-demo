@@ -20,12 +20,13 @@ public class FastJsonConfiguration {
         FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
         // 配置信息
         FastJsonConfig config = new FastJsonConfig();
-        config.setSerializerFeatures(SerializerFeature.PrettyFormat);
-        config.setSerializerFeatures(SerializerFeature.WriteMapNullValue);
-        config.setSerializerFeatures(SerializerFeature.WriteNullListAsEmpty);
-        config.setSerializerFeatures(SerializerFeature.WriteNullStringAsEmpty);
-        config.setSerializerFeatures(SerializerFeature.WriteNullBooleanAsFalse);
-        config.setSerializerFeatures(SerializerFeature.WriteDateUseDateFormat);
+        config.setSerializerFeatures(
+                SerializerFeature.PrettyFormat,
+                SerializerFeature.WriteMapNullValue,
+                SerializerFeature.WriteNullListAsEmpty,
+                SerializerFeature.WriteNullStringAsEmpty,
+                SerializerFeature.WriteNullBooleanAsFalse,
+                SerializerFeature.WriteDateUseDateFormat);
         converter.setFastJsonConfig(config);
 
         // 处理中文乱码问题

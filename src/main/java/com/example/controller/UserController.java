@@ -1,7 +1,6 @@
 package com.example.controller;
 
 import com.example.model.User;
-import com.example.param.UserParams;
 import com.example.result.Result;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +21,10 @@ public class UserController {
     private HttpSession session;
 
     @GetMapping("/login")
-    public Result login(UserParams params) {
-        User user = userService.login(params);
-        session.setAttribute("user", user);
-        return Result.success(user);
+    public Result login(User user) {
+        User user1 = userService.login(user);
+        session.setAttribute("user", user1);
+        return Result.success(user1);
     }
 
     @GetMapping("/{id}")

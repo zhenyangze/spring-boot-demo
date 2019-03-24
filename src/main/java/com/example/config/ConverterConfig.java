@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 
 // 日期转换配置
 @Configuration
-public class Converterconfigration {
+public class ConverterConfig {
 
     // 接收java.sql.Date类型参数
     @Bean

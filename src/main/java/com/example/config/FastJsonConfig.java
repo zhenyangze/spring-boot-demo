@@ -1,7 +1,6 @@
 package com.example.config;
 
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,13 +12,13 @@ import java.util.List;
 
 // fastjson配置
 @Configuration
-public class FastJsonConfiguration {
+public class FastJsonConfig {
 
     @Bean
     public HttpMessageConverter fastJsonHttpMessageConverter() {
         FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
         // 配置信息
-        FastJsonConfig config = new FastJsonConfig();
+        com.alibaba.fastjson.support.config.FastJsonConfig config = new com.alibaba.fastjson.support.config.FastJsonConfig();
         config.setSerializerFeatures(
                 SerializerFeature.PrettyFormat,
                 SerializerFeature.WriteMapNullValue,

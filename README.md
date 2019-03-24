@@ -5,9 +5,7 @@ spring boot项目模板
 
 #### 技术应用
 1. Core
-* DevTools
 * Lombok
-* Configuration Processor
 * Cache
 2. Web
 * Web
@@ -16,14 +14,11 @@ spring boot项目模板
 * FastJson
 3. Template Engines
 * Thymeleaf
-4. Security
-* Security
-* security oauth2
-5. SQL
+4. SQL
 * MySQL
 * Druid
 * Mybatis Plus
-6. NoSQL
+5. NoSQL
 * Redis
 
 #### 提交命令

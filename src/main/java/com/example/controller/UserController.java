@@ -33,4 +33,10 @@ public class UserController {
         return Result.success(user);
     }
 
+    @GetMapping("/save")
+    public Result save(User user) {
+        userService.save(user);
+        return Result.success("保存成功！");
+    }
+
 }

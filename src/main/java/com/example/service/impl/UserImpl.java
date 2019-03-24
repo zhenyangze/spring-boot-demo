@@ -7,6 +7,7 @@ import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserImpl implements UserService {
@@ -28,7 +29,19 @@ public class UserImpl implements UserService {
     public User findById(Integer id) {
         System.out.println("查询id为"+id+"的用户");
         User user = userDao.selectById(id);
+        if (id==1) {
+            throw new RuntimeException("抛个异常！");
+        }
         return user;
     }
 
+    @Override
+    @Transactional
+    public void save(User user) {
+        int id = userDao.insert(user);
+        System.out.println(id);
+        if (user.getUsername().equals("abc")) {
+            throw new RuntimeException("异常回滚！");
+        }
+    }
 }

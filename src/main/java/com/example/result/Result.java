@@ -13,6 +13,11 @@ public class Result {
     private String  message;
     private Object  data;
 
+    public static Result success(String message) {
+        Result result = new Result(1, message, null);
+        return result;
+    }
+
     public static Result success(Object data) {
         Result result = new Result(1, "", data);
         return result;
@@ -25,6 +30,11 @@ public class Result {
 
     public static Result failure(String message) {
         Result result = new Result(0, message, null);
+        return result;
+    }
+
+    public static Result failure(Object data) {
+        Result result = new Result(0, "", data);
         return result;
     }
 

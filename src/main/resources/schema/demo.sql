@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-03-24 17:26:51
+Date: 2019-03-24 22:20:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -101,9 +101,13 @@ CREATE TABLE `t_user` (
   KEY `t_user_fk_role_id` (`role_id`),
   CONSTRAINT `t_user_fk_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `t_dept` (`id`),
   CONSTRAINT `t_user_fk_role_id` FOREIGN KEY (`role_id`) REFERENCES `t_role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
 INSERT INTO `t_user` VALUES ('1', 'xlk', '123', '薛凌康', '1990-10-14', '2019-03-24 11:25:54', null, null);
+INSERT INTO `t_user` VALUES ('2', 'xue', '123', '薛', '1990-10-14', '2019-03-24 11:25:54', null, null);
+INSERT INTO `t_user` VALUES ('3', 'bcd', '123', null, null, null, null, null);
+INSERT INTO `t_user` VALUES ('5', 'def', '123', null, null, null, null, null);
+INSERT INTO `t_user` VALUES ('6', 'ddd', '123', null, null, null, null, null);

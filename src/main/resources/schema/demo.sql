@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-03-23 23:44:39
+Date: 2019-03-24 17:26:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -90,6 +90,9 @@ CREATE TABLE `t_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) DEFAULT NULL COMMENT '用户名',
   `password` varchar(50) DEFAULT NULL COMMENT '密码',
+  `nickname` varchar(50) DEFAULT NULL COMMENT '昵称',
+  `birth` date DEFAULT NULL COMMENT '生日',
+  `logintime` timestamp NULL DEFAULT NULL COMMENT '登陆时间',
   `role_id` int(11) DEFAULT NULL COMMENT '角色id',
   `dept_id` int(11) DEFAULT NULL COMMENT '部门id',
   PRIMARY KEY (`id`),
@@ -103,4 +106,4 @@ CREATE TABLE `t_user` (
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('1', 'xlk', '123', null, null);
+INSERT INTO `t_user` VALUES ('1', 'xlk', '123', '薛凌康', '1990-10-14', '2019-03-24 11:25:54', null, null);

@@ -7,6 +7,7 @@ spring boot项目模板
 1. Core
 * Lombok
 * Cache
+* Aspect
 2. Web
 * Web
 * Websocket

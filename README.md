@@ -11,7 +11,7 @@ spring boot项目模板
 2. Web
 * Web
 * Websocket
-* Rest Docs
+* Swagger2
 * FastJson
 3. Template Engines
 * Thymeleaf

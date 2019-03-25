@@ -15,18 +15,18 @@ import javax.websocket.server.ServerEndpoint;
 @ServerEndpoint("/websocket/{webSocketId}/{userId}")
 @Component
 @Slf4j
-public class MyWebSocket {
+public class WebSocket {
 
     private static UserDao userDao;
     private static WebSocketService webSocketService;
 
     @Autowired
     public void setUserDao(UserDao userDao) {
-        MyWebSocket.userDao = userDao;
+        WebSocket.userDao = userDao;
     }
     @Autowired
     public void setWebSocketService(WebSocketService webSocketService) {
-        MyWebSocket.webSocketService = webSocketService;
+        WebSocket.webSocketService = webSocketService;
     }
 
     @OnOpen

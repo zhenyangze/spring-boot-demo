@@ -20,7 +20,7 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         TypeResolver resolver = new TypeResolver();
-        AlternateTypeRule timestampRule = new AlternateTypeRule(resolver.resolve(Timestamp.class), resolver.resolve(Object.class));
+        AlternateTypeRule timestampRule = new AlternateTypeRule(resolver.resolve(Timestamp.class), resolver.resolve(String.class));
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.withClassAnnotation(Api.class)) //只显示添加@Api注解的类

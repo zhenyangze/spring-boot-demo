@@ -9,7 +9,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-/** 异常处理切面 */
+// 异常处理切面
 @Component("exceptionAspect")
 @Aspect
 @Order(1)
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 public class ExceptionAspect {
 
     @Around("execution(* com..controller.*.*(..))")
-    public Object logic(ProceedingJoinPoint pjp) throws Throwable {
+    public Object exceptionHandle(ProceedingJoinPoint pjp) throws Throwable {
         try {
             return pjp.proceed();
         } catch (LogicException e) { // 业务逻辑异常，返回Result

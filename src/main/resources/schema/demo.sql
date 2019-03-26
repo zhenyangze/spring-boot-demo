@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-03-26 18:30:57
+Date: 2019-03-26 23:25:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -58,12 +58,13 @@ CREATE TABLE `t_dept` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `t_dept_idx_id` (`id`),
   KEY `t_dept_idx_p_id` (`p_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_dept
 -- ----------------------------
 INSERT INTO `t_dept` VALUES ('1', null, 'abc', '1');
+INSERT INTO `t_dept` VALUES ('2', null, '部门名称', null);
 
 -- ----------------------------
 -- Table structure for t_user
@@ -81,7 +82,7 @@ CREATE TABLE `t_user` (
   UNIQUE KEY `t_user_idx_id` (`id`),
   KEY `t_user_fk_dept_id` (`dept_id`),
   CONSTRAINT `t_user_fk_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `t_dept` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_user
@@ -90,3 +91,4 @@ INSERT INTO `t_user` VALUES ('1', 'xlk', '123', '薛凌康', '1990-10-14', '2019
 INSERT INTO `t_user` VALUES ('2', 'xue', '123', '薛', '1990-10-14', '2019-03-24 11:25:54', null);
 INSERT INTO `t_user` VALUES ('3', 'bcd', '123', null, null, null, null);
 INSERT INTO `t_user` VALUES ('5', 'def', '123', null, null, null, null);
+INSERT INTO `t_user` VALUES ('8', 'abc', '123', 'accd', '1990-10-14', null, null);

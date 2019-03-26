@@ -15,6 +15,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 
+import static com.example.result.Result.SUCCESS;
+
 @RestController
 @RequestMapping(value = "/file", produces = "application/json; charset=UTF-8")
 @Api(tags = "文件")
@@ -31,7 +33,7 @@ public class FileController {
 
     @PostMapping("/{type}/{rename}")
     @ApiOperation(value = "上传文件")
-    public Result upload(@RequestParam("file") @ApiParam(value = "文件", required = true) MultipartFile file,
+    public Result<Attachment> upload(@RequestParam("file") @ApiParam(value = "文件", required = true) MultipartFile file,
                          @PathVariable("type") @ApiParam(value = "文件类型", example = "demo", required = true) String type,
                          @PathVariable("rename") @ApiParam(value = "是否重命名", allowableValues = "1,0", defaultValue = "1", required = true) String rename) {
         String name = file.getOriginalFilename();
@@ -68,7 +70,7 @@ public class FileController {
         attachment.setAttachmentPath(localPath);
         attachment.setAttachmentAddress(address);
         attachmentService.save(attachment);
-        return Result.success(attachment);
+        return new Result<>(SUCCESS, "", attachment);
     }
 
 }

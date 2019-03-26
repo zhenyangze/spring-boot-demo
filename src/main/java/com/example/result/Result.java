@@ -10,37 +10,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @ApiModel("返回结果")
-public class Result {
+public class Result<T> {
 
+    /** 成功 */
+    public static final int SUCCESS = 1;
+    /** 失败 */
+    public static final int FAILURE = 0;
+    /** 禁止访问 */
+    public static final int FORBIDDEN = -1;
     @ApiModelProperty("状态码")
     private int code;
     @ApiModelProperty("消息")
     private String message;
     @ApiModelProperty("数据")
-    private Object data;
-
-    public static Result success(String message) {
-        return new Result(1, message, null);
-    }
-
-    public static Result success(Object data) {
-        return new Result(1, "", data);
-    }
-
-    public static Result success(String message, Object data) {
-        return new Result(1, message, data);
-    }
-
-    public static Result failure(String message) {
-        return new Result(0, message, null);
-    }
-
-    public static Result failure(Object data) {
-        return new Result(0, "", data);
-    }
-
-    public static Result failure(String message, Object data) {
-        return new Result(0, message, data);
-    }
+    private T data;
 
 }

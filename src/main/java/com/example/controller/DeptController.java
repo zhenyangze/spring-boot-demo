@@ -13,6 +13,8 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import static com.example.result.Result.SUCCESS;
+
 @RestController
 @RequestMapping(value = "/dept", produces = "application/json; charset=UTF-8")
 @Api(tags = "部门")
@@ -29,35 +31,35 @@ public class DeptController {
         Page<Dept> page = new Page<>(current, size);
         Wrapper<Dept> wrapper = new QueryWrapper<>(dept);
         IPage<Dept> iPage = deptService.page(page, wrapper);
-        return Result.success(iPage);
+        return new Result<>(SUCCESS, "", iPage);
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查询部门")
-    public Result findById(@PathVariable @ApiParam Integer id) {
+    public Result<Dept> findById(@PathVariable @ApiParam Integer id) {
         Dept dept = deptService.getById(id);
-        return Result.success(dept);
+        return new Result<>(SUCCESS, "", dept);
     }
 
     @PostMapping
     @ApiOperation(value = "保存部门")
     public Result save(Dept dept) {
         deptService.save(dept);
-        return Result.success("保存部门成功！");
+        return new Result<>(SUCCESS, "保存部门成功！", null);
     }
 
     @PutMapping
     @ApiOperation(value = "更新部门")
     public Result update(Dept dept) {
         deptService.updateById(dept);
-        return Result.success("更新部门成功！");
+        return new Result<>(SUCCESS, "更新部门成功！", null);
     }
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除部门")
     public Result delete(@PathVariable @ApiParam(value = "部门id", required = true) Integer id) {
         deptService.removeById(id);
-        return Result.success("删除部门成功！");
+        return new Result<>(SUCCESS, "删除部门成功！", null);
     }
 
 }

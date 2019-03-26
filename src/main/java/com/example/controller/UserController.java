@@ -13,6 +13,8 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import static com.example.result.Result.SUCCESS;
+
 @RestController
 @RequestMapping(value = "/user", produces="application/json; charset=UTF-8")
 @Api(tags="用户")
@@ -29,35 +31,35 @@ public class UserController {
         Page<User> page = new Page<>(current, size);
         Wrapper<User> wrapper = new QueryWrapper<>(user);
         IPage<User> iPage = userService.page(page, wrapper);
-        return Result.success(iPage);
+        return new Result<>(SUCCESS, "", iPage);
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查询用户")
-    public Result findById(@PathVariable("id") @ApiParam(value = "用户id", required = true) Integer id) {
+    public Result<User> findById(@PathVariable("id") @ApiParam(value = "用户id", required = true) Integer id) {
         User user = userService.getById(id);
-        return Result.success(user);
+        return new Result<>(SUCCESS, "", user);
     }
 
     @PostMapping
     @ApiOperation(value = "保存用户")
     public Result save(User user) {
         userService.save(user);
-        return Result.success("保存成功！");
+        return new Result<>(SUCCESS, "保存用户成功！", null);
     }
 
     @PutMapping
     @ApiOperation(value = "更新用户")
     public Result update(User user) {
         userService.updateById(user);
-        return Result.success("更新用户成功！");
+        return new Result<>(SUCCESS, "更新用户成功！", null);
     }
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除用户")
     public Result delete(@PathVariable @ApiParam(value = "用户id", required = true) Integer id) {
         userService.removeById(id);
-        return Result.success("删除用户成功！");
+        return new Result<>(SUCCESS, "删除用户成功！", null);
     }
 
 }

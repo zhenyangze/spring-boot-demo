@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 
+import static com.example.result.Result.SUCCESS;
+
 @RestController
 @RequestMapping(value = "/attachment", produces = "application/json; charset=UTF-8")
 @Api(tags = "附件")
@@ -31,14 +33,14 @@ public class AttachmentController {
         Page<Attachment> page = new Page<>(current, size);
         Wrapper<Attachment> wrapper = new QueryWrapper<>(attachment);
         IPage<Attachment> iPage = attachmentService.page(page, wrapper);
-        return Result.success(iPage);
+        return new Result<>(SUCCESS, "", iPage);
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查询附件")
-    public Result findById(@PathVariable @ApiParam(value = "附件id", required = true) Integer id) {
+    public Result<Attachment> findById(@PathVariable @ApiParam(value = "附件id", required = true) Integer id) {
         Attachment attachment = attachmentService.getById(id);
-        return Result.success(attachment);
+        return new Result<>(SUCCESS, "", attachment);
     }
 
     @DeleteMapping("/{id}")
@@ -47,7 +49,7 @@ public class AttachmentController {
         Attachment attachment = attachmentService.getById(id);
         new File(attachment.getAttachmentPath()).delete();
         attachmentService.removeById(id);
-        return Result.success("删除成功！");
+        return new Result<>(SUCCESS, "删除附件成功！", null);
     }
 
 }

@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import static com.example.result.Result.FORBIDDEN;
+
 // 登录验证切面
 @Component
 @Aspect
@@ -46,7 +48,7 @@ public class AccessAspect {
         }
         User user = (User) session.getAttribute("user");
         if (user==null) {
-            return new Result(-1, "请登录！", null);
+            return new Result<>(FORBIDDEN, "请登录！", null);
         }
         return pjp.proceed();
     }

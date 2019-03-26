@@ -1,5 +1,7 @@
 package com.example.result;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,40 +9,38 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@ApiModel("返回结果")
 public class Result {
 
-    private Integer status;
+    @ApiModelProperty("状态码")
+    private Integer code;
+    @ApiModelProperty("消息")
     private String  message;
+    @ApiModelProperty("数据")
     private Object  data;
 
     public static Result success(String message) {
-        Result result = new Result(1, message, null);
-        return result;
+        return new Result(1, message, null);
     }
 
     public static Result success(Object data) {
-        Result result = new Result(1, "", data);
-        return result;
+        return new Result(1, "", data);
     }
 
     public static Result success(String message, Object data) {
-        Result result = new Result(1, message, data);
-        return result;
+        return new Result(1, message, data);
     }
 
     public static Result failure(String message) {
-        Result result = new Result(0, message, null);
-        return result;
+        return new Result(0, message, null);
     }
 
     public static Result failure(Object data) {
-        Result result = new Result(0, "", data);
-        return result;
+        return new Result(0, "", data);
     }
 
     public static Result failure(String message, Object data) {
-        Result result = new Result(0, message, data);
-        return result;
+        return new Result(0, message, data);
     }
 
 }

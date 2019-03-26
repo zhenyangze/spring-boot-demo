@@ -3,10 +3,6 @@
 #### 介绍
 spring boot项目模板
 
-#### TODO
-* 上传文件
-* swagger文档
-
 #### 技术应用
 1. Core
 * Lombok

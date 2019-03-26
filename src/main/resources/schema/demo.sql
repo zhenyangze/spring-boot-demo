@@ -10,10 +10,41 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-03-24 22:20:07
+Date: 2019-03-26 18:30:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for t_attachment
+-- ----------------------------
+DROP TABLE IF EXISTS `t_attachment`;
+CREATE TABLE `t_attachment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `attachment_name` varchar(200) DEFAULT NULL COMMENT '附件名称',
+  `attachment_address` varchar(200) DEFAULT NULL COMMENT '访问地址',
+  `attachment_path` varchar(200) DEFAULT NULL COMMENT '本地路径',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `t_attachment_idx_id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_attachment
+-- ----------------------------
+INSERT INTO `t_attachment` VALUES ('9', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571592112.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571592112.rar');
+INSERT INTO `t_attachment` VALUES ('10', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571597869.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571597869.rar');
+INSERT INTO `t_attachment` VALUES ('11', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571598898.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571598898.rar');
+INSERT INTO `t_attachment` VALUES ('12', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571600367.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571600367.rar');
+INSERT INTO `t_attachment` VALUES ('13', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571630659.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571630659.rar');
+INSERT INTO `t_attachment` VALUES ('14', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571631448.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571631448.rar');
+INSERT INTO `t_attachment` VALUES ('15', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571632180.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571632180.rar');
+INSERT INTO `t_attachment` VALUES ('16', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571634337.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571634337.rar');
+INSERT INTO `t_attachment` VALUES ('17', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571635176.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571635176.rar');
+INSERT INTO `t_attachment` VALUES ('18', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571635889.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571635889.rar');
+INSERT INTO `t_attachment` VALUES ('19', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571636706.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571636706.rar');
+INSERT INTO `t_attachment` VALUES ('20', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571637506.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571637506.rar');
+INSERT INTO `t_attachment` VALUES ('21', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571638284.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571638284.rar');
+INSERT INTO `t_attachment` VALUES ('23', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571663964.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571663964.rar');
 
 -- ----------------------------
 -- Table structure for t_dept
@@ -27,60 +58,12 @@ CREATE TABLE `t_dept` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `t_dept_idx_id` (`id`),
   KEY `t_dept_idx_p_id` (`p_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_dept
 -- ----------------------------
-
--- ----------------------------
--- Table structure for t_pri
--- ----------------------------
-DROP TABLE IF EXISTS `t_pri`;
-CREATE TABLE `t_pri` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `p_id` int(11) DEFAULT NULL COMMENT '父权限id',
-  `pri_name` varchar(50) DEFAULT NULL COMMENT '权限名称',
-  `pri_alias` varchar(50) DEFAULT NULL COMMENT '权限别名',
-  `pri_level` int(1) DEFAULT NULL COMMENT '权限级别',
-  UNIQUE KEY `t_pri_idx_id` (`id`),
-  KEY `t_pri_idx_p_id` (`p_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- ----------------------------
--- Records of t_pri
--- ----------------------------
-
--- ----------------------------
--- Table structure for t_role
--- ----------------------------
-DROP TABLE IF EXISTS `t_role`;
-CREATE TABLE `t_role` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `role_name` varchar(50) DEFAULT NULL COMMENT '权限名称',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `t_role_idx_id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- ----------------------------
--- Records of t_role
--- ----------------------------
-
--- ----------------------------
--- Table structure for t_role_pri_link
--- ----------------------------
-DROP TABLE IF EXISTS `t_role_pri_link`;
-CREATE TABLE `t_role_pri_link` (
-  `role_id` int(11) NOT NULL COMMENT '角色id',
-  `pri_id` int(11) NOT NULL COMMENT '权限id',
-  `pri_scope` varchar(50) DEFAULT NULL COMMENT '权限作用范围',
-  PRIMARY KEY (`role_id`,`pri_id`),
-  UNIQUE KEY `t_role_pri_link_idx_pk` (`role_id`,`pri_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- ----------------------------
--- Records of t_role_pri_link
--- ----------------------------
+INSERT INTO `t_dept` VALUES ('1', null, 'abc', '1');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -93,21 +76,17 @@ CREATE TABLE `t_user` (
   `nickname` varchar(50) DEFAULT NULL COMMENT '昵称',
   `birth` date DEFAULT NULL COMMENT '生日',
   `logintime` timestamp NULL DEFAULT NULL COMMENT '登陆时间',
-  `role_id` int(11) DEFAULT NULL COMMENT '角色id',
   `dept_id` int(11) DEFAULT NULL COMMENT '部门id',
   PRIMARY KEY (`id`),
   UNIQUE KEY `t_user_idx_id` (`id`),
   KEY `t_user_fk_dept_id` (`dept_id`),
-  KEY `t_user_fk_role_id` (`role_id`),
-  CONSTRAINT `t_user_fk_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `t_dept` (`id`),
-  CONSTRAINT `t_user_fk_role_id` FOREIGN KEY (`role_id`) REFERENCES `t_role` (`id`)
+  CONSTRAINT `t_user_fk_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `t_dept` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('1', 'xlk', '123', '薛凌康', '1990-10-14', '2019-03-24 11:25:54', null, null);
-INSERT INTO `t_user` VALUES ('2', 'xue', '123', '薛', '1990-10-14', '2019-03-24 11:25:54', null, null);
-INSERT INTO `t_user` VALUES ('3', 'bcd', '123', null, null, null, null, null);
-INSERT INTO `t_user` VALUES ('5', 'def', '123', null, null, null, null, null);
-INSERT INTO `t_user` VALUES ('6', 'ddd', '123', null, null, null, null, null);
+INSERT INTO `t_user` VALUES ('1', 'xlk', '123', '薛凌康', '1990-10-14', '2019-03-24 11:25:54', null);
+INSERT INTO `t_user` VALUES ('2', 'xue', '123', '薛', '1990-10-14', '2019-03-24 11:25:54', null);
+INSERT INTO `t_user` VALUES ('3', 'bcd', '123', null, null, null, null);
+INSERT INTO `t_user` VALUES ('5', 'def', '123', null, null, null, null);

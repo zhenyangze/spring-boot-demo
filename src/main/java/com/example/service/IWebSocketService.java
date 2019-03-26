@@ -7,7 +7,7 @@ import javax.websocket.Session;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public interface WebSocketService {
+public interface IWebSocketService {
 
     Map<String, User> USER_MAP = new ConcurrentHashMap<>();
 

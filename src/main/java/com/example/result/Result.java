@@ -13,11 +13,11 @@ import lombok.NoArgsConstructor;
 public class Result {
 
     @ApiModelProperty("状态码")
-    private Integer code;
+    private int code;
     @ApiModelProperty("消息")
-    private String  message;
+    private String message;
     @ApiModelProperty("数据")
-    private Object  data;
+    private Object data;
 
     public static Result success(String message) {
         return new Result(1, message, null);

@@ -2,7 +2,7 @@ package com.example.controller;
 
 import com.example.model.Attachment;
 import com.example.result.Result;
-import com.example.service.AttachmentService;
+import com.example.service.IAttachmentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -21,7 +21,7 @@ import java.util.Calendar;
 public class FileController {
 
     @Autowired
-    private AttachmentService attachmentService;
+    private IAttachmentService attachmentService;
     @Value("${attachment.save-dir}")
     private String fileDir;
     @Value("${attachment.address-prefix}")
@@ -31,8 +31,8 @@ public class FileController {
 
     @PostMapping("/{type}/{rename}")
     @ApiOperation(value = "上传文件")
-    public Result upload(@RequestParam("file") @ApiParam("文件") MultipartFile file,
-                         @PathVariable("type") @ApiParam("文件类型") String type,
+    public Result upload(@RequestParam("file") @ApiParam(value = "文件", required = true) MultipartFile file,
+                         @PathVariable("type") @ApiParam(value = "文件类型", example = "demo", required = true) String type,
                          @PathVariable("rename") @ApiParam(value = "是否重命名", allowableValues = "1,0", defaultValue = "1", required = true) String rename) {
         String name = file.getOriginalFilename();
         if (rename.equals("1")) { // 重命名
@@ -67,7 +67,7 @@ public class FileController {
         attachment.setAttachmentName(file.getOriginalFilename());
         attachment.setAttachmentPath(localPath);
         attachment.setAttachmentAddress(address);
-        attachment = attachmentService.save(attachment);
+        attachmentService.save(attachment);
         return Result.success(attachment);
     }
 

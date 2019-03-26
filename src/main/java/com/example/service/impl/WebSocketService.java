@@ -1,9 +1,9 @@
 package com.example.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.dao.UserDao;
+import com.example.mapper.UserMapper;
 import com.example.model.User;
-import com.example.service.WebSocketService;
+import com.example.service.IWebSocketService;
 import com.example.websocket.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,17 +15,17 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class WebSocketImpl implements WebSocketService {
+public class WebSocketService implements IWebSocketService {
 
     @Autowired
-    private UserDao userDao;
+    private UserMapper userMapper;
 
     @Override
     public void send(Message message) {
         Integer fromUserId = message.getFromUserId();
         User from = null;
         if (fromUserId!=null) {
-            from = userDao.selectById(fromUserId);
+            from = userMapper.selectById(fromUserId);
         }
         Integer toUserId = message.getToUserId();
         List<Session> toSessions = new ArrayList<>();

@@ -41,3 +41,6 @@ spring boot项目模板
 >git checkout remote branch
 4. 更新
 >git pull
+
+#### 运行命令
+>java -Dfile.encoding=utf-8 -jar spring-boot-demo.jar

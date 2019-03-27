@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-03-26 23:25:01
+Date: 2019-03-27 18:43:36
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -52,19 +52,19 @@ INSERT INTO `t_attachment` VALUES ('23', 'apache-tomcat-8.5.4-windows-x64.rar', 
 DROP TABLE IF EXISTS `t_dept`;
 CREATE TABLE `t_dept` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `p_id` int(11) DEFAULT NULL COMMENT '父部门id',
   `dept_name` varchar(50) DEFAULT NULL COMMENT '部门名称',
-  `dept_level` int(1) DEFAULT NULL COMMENT '部门级别',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `t_dept_idx_id` (`id`),
-  KEY `t_dept_idx_p_id` (`p_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+  UNIQUE KEY `t_dept_idx_id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_dept
 -- ----------------------------
-INSERT INTO `t_dept` VALUES ('1', null, 'abc', '1');
-INSERT INTO `t_dept` VALUES ('2', null, '部门名称', null);
+INSERT INTO `t_dept` VALUES ('1', '改下名');
+INSERT INTO `t_dept` VALUES ('2', '测试部门');
+INSERT INTO `t_dept` VALUES ('3', '改下名啊');
+INSERT INTO `t_dept` VALUES ('4', '测试部门3');
+INSERT INTO `t_dept` VALUES ('5', '5555');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -82,13 +82,12 @@ CREATE TABLE `t_user` (
   UNIQUE KEY `t_user_idx_id` (`id`),
   KEY `t_user_fk_dept_id` (`dept_id`),
   CONSTRAINT `t_user_fk_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `t_dept` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('1', 'xlk', '123', '薛凌康', '1990-10-14', '2019-03-24 11:25:54', null);
-INSERT INTO `t_user` VALUES ('2', 'xue', '123', '薛', '1990-10-14', '2019-03-24 11:25:54', null);
-INSERT INTO `t_user` VALUES ('3', 'bcd', '123', null, null, null, null);
-INSERT INTO `t_user` VALUES ('5', 'def', '123', null, null, null, null);
-INSERT INTO `t_user` VALUES ('8', 'abc', '123', 'accd', '1990-10-14', null, null);
+INSERT INTO `t_user` VALUES ('1', 'xlk', '123', '薛凌康', '1990-10-14', '2019-03-24 11:25:54', '1');
+INSERT INTO `t_user` VALUES ('2', 'xue', '123', '薛', '1990-10-14', '2019-03-24 11:25:54', '1');
+INSERT INTO `t_user` VALUES ('3', 'bcd', '123', null, null, null, '1');
+INSERT INTO `t_user` VALUES ('5', 'def', '123', null, null, null, '1');

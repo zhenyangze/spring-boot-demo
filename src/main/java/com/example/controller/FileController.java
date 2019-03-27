@@ -6,6 +6,7 @@ import com.example.service.IAttachmentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -58,8 +59,11 @@ public class FileController {
             saveDir.mkdirs();
         }
         try {
+            System.out.println("-------------------getCanonicalFile: "+saveFile.getCanonicalFile());
+            System.out.println("-------------------getAbsoluteFile: "+saveFile.getAbsoluteFile());
             // 保存文件
-            file.transferTo(saveFile);
+            FileUtils.copyInputStreamToFile(file.getInputStream(), saveFile);
+            // file.transferTo(saveFile); // 这个方法不稳定
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

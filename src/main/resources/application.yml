@@ -72,8 +72,10 @@ spring:
 
   # redis sentinel
   redis:
-    database: 5 # 采用哪个数据库
+    host: localhost # 默认localhost
+    port: 6379 # 默认6379
 #    password: couga # 密码
+    database: 5 # 采用哪个数据库，默认0
     timeout: 500 # 连接超时时间（毫秒）
     # 使用sentinel集群时将以下三行注释打开
 #    sentinel:

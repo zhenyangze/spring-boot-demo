@@ -1,7 +1,8 @@
 # spring-boot-demo
 
 #### 介绍
-spring boot项目模板
+spring boot项目模板<br>
+文档地址：http://localhost:8080/demo/swagger-ui.html
 
 #### TODO
 * thymeleaf

@@ -3,6 +3,9 @@
 #### 介绍
 spring boot项目模板
 
+#### TODO
+* thymeleaf
+
 #### 技术应用
 1. Core
 * Lombok

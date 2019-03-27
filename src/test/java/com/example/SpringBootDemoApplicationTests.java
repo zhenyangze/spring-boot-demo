@@ -1,5 +1,7 @@
 package com.example;
 
+import com.example.mapper.UserMapper;
+import com.example.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,13 +11,14 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @Slf4j
 public class SpringBootDemoApplicationTests {
 
-
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
+    @Autowired
+    private UserMapper userMapper;
 
     @Test
     public void contextLoads() {
@@ -28,7 +31,11 @@ public class SpringBootDemoApplicationTests {
 
     @Test
     public void testRedis() {
-        redisTemplate.getConnectionFactory().getConnection().set("abc".getBytes(), "123".getBytes());
+        User user = userMapper.selectById(1);
+        redisTemplate.opsForValue().set("user", user);
+        Object obj = redisTemplate.opsForValue().get("user");
+        System.out.println(obj);
+        System.out.println(obj.getClass());
     }
 
 }

@@ -11,8 +11,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
@@ -29,7 +27,6 @@ public class AttachmentController {
 
     @GetMapping("/{current}/{size}")
     @ApiOperation(value = "查询附件列表")
-    @Cacheable(cacheNames = "attachment", keyGenerator = "defaultKeyGenerator")
     public Result list(@PathVariable @ApiParam(value = "当前页", defaultValue = "1", required = true) long current,
                        @PathVariable @ApiParam(value = "当前页", defaultValue = "10", required = true) long size,
                        Attachment attachment) {
@@ -41,7 +38,6 @@ public class AttachmentController {
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查询附件")
-    @Cacheable(cacheNames = "attachment", keyGenerator = "defaultKeyGenerator")
     public Result<Attachment> findById(@PathVariable @ApiParam(value = "附件id", required = true) Integer id) {
         Attachment attachment = attachmentService.getById(id);
         return new Result<>(SUCCESS, "", attachment);
@@ -49,7 +45,6 @@ public class AttachmentController {
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除附件")
-    @CacheEvict(cacheNames = "attachment", allEntries = true)
     public Result removeById(@PathVariable @ApiParam(value = "附件id", required = true) Integer id) {
         Attachment attachment = attachmentService.getById(id);
         new File(attachment.getAttachmentPath()).delete();

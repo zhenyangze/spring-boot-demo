@@ -11,8 +11,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import static com.example.result.Result.SUCCESS;
@@ -27,7 +25,6 @@ public class DeptController {
 
     @GetMapping("/{current}/{size}")
     @ApiOperation(value = "查询部门列表")
-    @Cacheable(cacheNames = "dept", keyGenerator = "defaultKeyGenerator")
     public Result list(@PathVariable @ApiParam(value = "当前页", defaultValue = "1", required = true) long current,
                        @PathVariable @ApiParam(value = "当前页", defaultValue = "10", required = true) long size,
                        Dept dept) {
@@ -39,7 +36,6 @@ public class DeptController {
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查询部门")
-    @Cacheable(cacheNames = "dept", keyGenerator = "defaultKeyGenerator")
     public Result<Dept> findById(@PathVariable @ApiParam Integer id) {
         Dept dept = deptService.getById(id);
         return new Result<>(SUCCESS, "", dept);
@@ -47,7 +43,6 @@ public class DeptController {
 
     @PostMapping
     @ApiOperation(value = "保存部门")
-    @CacheEvict(cacheNames = "dept", allEntries = true)
     public Result save(Dept dept) {
         deptService.save(dept);
         return new Result<>(SUCCESS, "保存部门成功！", null);
@@ -55,7 +50,6 @@ public class DeptController {
 
     @PutMapping
     @ApiOperation(value = "更新部门")
-    @CacheEvict(cacheNames = "dept", allEntries = true)
     public Result update(Dept dept) {
         deptService.updateById(dept);
         return new Result<>(SUCCESS, "更新部门成功！", null);
@@ -63,7 +57,6 @@ public class DeptController {
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除部门")
-    @CacheEvict(cacheNames = "dept", allEntries = true)
     public Result delete(@PathVariable @ApiParam(value = "部门id", required = true) Integer id) {
         deptService.removeById(id);
         return new Result<>(SUCCESS, "删除部门成功！", null);

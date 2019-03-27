@@ -39,6 +39,7 @@ public class LoginController {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq(true,"username", username);
         wrapper.eq(true,"password", password);
+        System.out.println(wrapper.getCustomSqlSegment());
         User user = userService.getOne(wrapper);
         if (user!=null) {
             session.setAttribute("user", user);

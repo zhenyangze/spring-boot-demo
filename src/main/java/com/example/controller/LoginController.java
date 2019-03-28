@@ -10,12 +10,14 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.NotBlank;
 
 import static com.example.result.Result.SUCCESS;
 
@@ -32,10 +34,12 @@ public class LoginController {
     @PostMapping
     @ApiOperation(value = "登录")
     @ApiImplicitParams({
-            @ApiImplicitParam(name="username", value="用户名", paramType="query", dataType="string", required = true),
-            @ApiImplicitParam(name="password", value="密码", paramType="query", dataType="string", required = true)
+            @ApiImplicitParam(name="username", value="用户名", paramType="query", dataType="string"),
+            @ApiImplicitParam(name="password", value="密码", paramType="query", dataType="string")
     })
-    public Result<User> login(String username, String password) {
+    @Validated
+    public Result<User> login(@NotBlank(message = "用户名不能为空") String username,
+                              @NotBlank(message = "密码不能为空") String password) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq(true,"username", username);
         wrapper.eq(true,"password", password);

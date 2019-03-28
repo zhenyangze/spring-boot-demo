@@ -12,7 +12,7 @@ import com.example.service.IUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,12 +20,12 @@ import javax.validation.constraints.NotNull;
 
 import static com.example.result.Result.SUCCESS;
 
-@AllArgsConstructor
 @RestController
 @RequestMapping(value = "/user", produces="application/json; charset=UTF-8")
 @Api(tags="用户")
 public class UserController {
 
+    @Autowired
     private IUserService userService;
 
     @GetMapping("/{current}/{size}")

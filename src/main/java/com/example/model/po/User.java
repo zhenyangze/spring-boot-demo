@@ -1,24 +1,29 @@
-package com.example.model;
+package com.example.model.po;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.example.group.Insert;
 import com.example.group.Update;
+import com.example.model.BaseModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @ApiModel("用户")
-public class User {
+public class User extends BaseModel {
 
     @ApiModelProperty("用户id")
     @NotNull(groups = {Update.class}, message = "用户id不能为空")
+    @Null(groups = {Insert.class}, message = "用户id必须为空")
     private Integer id;
     @ApiModelProperty("用户名")
     @NotNull(groups = {Insert.class}, message = "用户名不能为空")
@@ -42,7 +47,13 @@ public class User {
     private Integer deptId;
 
     @TableField(exist = false)
-    @ApiModelProperty(hidden = true)
+    @ApiModelProperty("部门信息")
+    @Null(groups = {Insert.class, Update.class}, message = "部门信息必须为空")
     private Dept dept;
+    @TableField(exist = false)
+    @ApiModelProperty("书籍信息")
+    @NotEmpty(groups = {Insert.class, Update.class}, message = "书籍信息不能为空")
+    @Valid
+    private List<Book> books;
 
 }

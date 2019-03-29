@@ -6,18 +6,21 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.validation.Validation;
 import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 
 // 参数校验
 @Configuration
 public class ValidatorConfig {
 
+    // hibernate validator
     @Bean
     public Validator validator() {
-        ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class)
+        return Validation
+                .byProvider(HibernateValidator.class)
                 .configure()
-                .buildValidatorFactory();
-        return validatorFactory.getValidator();
+                // 快速返回模式，有一个验证失败立即返回错误信息
+//                .failFast(true)
+                .buildValidatorFactory()
+                .getValidator();
     }
 
 }

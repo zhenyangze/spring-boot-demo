@@ -1,8 +1,10 @@
 package com.example.controller;
 
-import com.example.model.Attachment;
+import com.example.model.po.Attachment;
+import com.example.model.vo.AttachmentVO;
 import com.example.result.Result;
 import com.example.service.IAttachmentService;
+import com.example.util.CustomizedBeanUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -34,9 +36,9 @@ public class FileController {
 
     @PostMapping("/{type}/{rename}")
     @ApiOperation(value = "上传文件")
-    public Result<Attachment> upload(@RequestParam("file") @ApiParam(value = "文件", required = true) MultipartFile file,
-                         @PathVariable("type") @ApiParam(value = "文件类型", example = "demo", required = true) String type,
-                         @PathVariable("rename") @ApiParam(value = "是否重命名", allowableValues = "1,0", defaultValue = "1", required = true) String rename) {
+    public Result<AttachmentVO> upload(@RequestParam("file") @ApiParam(value = "文件", required = true) MultipartFile file,
+                                       @PathVariable("type") @ApiParam(value = "文件类型", example = "demo", required = true) String type,
+                                       @PathVariable("rename") @ApiParam(value = "是否重命名", allowableValues = "1,0", defaultValue = "1", required = true) String rename) {
         String name = file.getOriginalFilename();
         if (rename.equals("1")) { // 重命名
             String[] arr = name.split("\\.");
@@ -74,7 +76,8 @@ public class FileController {
         attachment.setAttachmentPath(localPath);
         attachment.setAttachmentAddress(address);
         attachmentService.save(attachment);
-        return new Result<>(SUCCESS, "", attachment);
+        AttachmentVO attachmentVO = CustomizedBeanUtils.copyObject(attachment, AttachmentVO.class);
+        return new Result<>(SUCCESS, "", attachmentVO);
     }
 
 }

@@ -41,7 +41,7 @@ public class ControllerExceptionHandler {
         return new Result<>(FAILURE, errorMsg.toString(), null);
     }
 
-    // 实体类参数校验异常，MethodArgumentNotValidException为表单参数校验异常，BindException为@RequestBody参数校验异常
+    // 实体类参数校验异常，MethodArgumentNotValidException为@RequestBody参数校验异常，BindException为普通实体类参数校验异常
     @ExceptionHandler({MethodArgumentNotValidException.class, BindException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result handleValidException(Exception e) {

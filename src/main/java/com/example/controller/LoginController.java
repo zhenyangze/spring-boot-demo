@@ -2,9 +2,11 @@ package com.example.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.exception.LogicException;
-import com.example.model.User;
+import com.example.model.po.User;
+import com.example.model.vo.UserVO;
 import com.example.result.Result;
 import com.example.service.IUserService;
+import com.example.util.CustomizedBeanUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -24,6 +26,7 @@ import static com.example.result.Result.SUCCESS;
 @RestController
 @RequestMapping(value = "/login", produces="application/json; charset=UTF-8")
 @Api(tags = "登录")
+@Validated
 public class LoginController {
 
     @Autowired
@@ -34,20 +37,19 @@ public class LoginController {
     @PostMapping
     @ApiOperation(value = "登录")
     @ApiImplicitParams({
-            @ApiImplicitParam(name="username", value="用户名", paramType="query", dataType="string"),
-            @ApiImplicitParam(name="password", value="密码", paramType="query", dataType="string")
+            @ApiImplicitParam(name="username", value="用户名", paramType="query", dataType="string", required = true),
+            @ApiImplicitParam(name="password", value="密码", paramType="query", dataType="string", required = true)
     })
-    @Validated
     public Result<User> login(@NotBlank(message = "用户名不能为空") String username,
                               @NotBlank(message = "密码不能为空") String password) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq(true,"username", username);
         wrapper.eq(true,"password", password);
-        System.out.println(wrapper.getCustomSqlSegment());
         User user = userService.getOne(wrapper);
+        UserVO userVO = CustomizedBeanUtils.copyObject(user, UserVO.class, "password");
         if (user!=null) {
-            session.setAttribute("user", user);
-            return new Result<>(SUCCESS, "", user);
+            session.setAttribute("user", userVO);
+            return new Result<>(SUCCESS, "", userVO);
         }
         throw new LogicException("用户名或密码错误！");
     }

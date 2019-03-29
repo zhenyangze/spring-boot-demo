@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.mapper.UserMapper">
 
-    <resultMap id="resultMap" type="com.example.model.User">
+    <resultMap id="resultMap" type="com.example.model.po.User">
         <id column="t_user_id" property="id" />
         <result column="t_user_username" property="username" />
         <result column="t_user_password" property="password" />
@@ -10,7 +10,7 @@
         <result column="t_user_birth" property="birth" />
         <result column="t_user_logintime" property="logintime" />
         <result column="t_user_dept_id" property="deptId" />
-        <association column="t_user_dept_id" property="dept" javaType="com.example.model.Dept">
+        <association column="t_user_dept_id" property="dept" javaType="com.example.model.po.Dept">
             <id column="t_dept_id" property="id" />
             <result column="t_dept_dept_name" property="deptName" />
         </association>

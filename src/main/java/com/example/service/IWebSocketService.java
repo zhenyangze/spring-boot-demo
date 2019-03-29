@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.model.User;
+import com.example.model.po.User;
 import com.example.websocket.Message;
 
 import javax.websocket.Session;

@@ -2,7 +2,7 @@ package com.example.websocket;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.mapper.UserMapper;
-import com.example.model.User;
+import com.example.model.po.User;
 import com.example.service.IWebSocketService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

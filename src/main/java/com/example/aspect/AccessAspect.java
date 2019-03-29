@@ -1,6 +1,6 @@
 package com.example.aspect;
 
-import com.example.model.User;
+import com.example.model.po.User;
 import com.example.result.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;

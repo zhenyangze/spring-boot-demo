@@ -2,9 +2,13 @@ package com.example.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.exception.LogicException;
+import com.example.model.po.Book;
+import com.example.model.po.Dept;
 import com.example.model.po.User;
-import com.example.model.vo.UserVO;
+import com.example.model.vo.BookVO;
+import com.example.model.vo.DeptVO;
 import com.example.model.vo.ResultVO;
+import com.example.model.vo.UserVO;
 import com.example.service.IUserService;
 import com.example.util.ModelUtil;
 import io.swagger.annotations.Api;
@@ -46,7 +50,10 @@ public class LoginController {
         wrapper.eq(true,"username", username);
         wrapper.eq(true,"password", password);
         User user = userService.getOne(wrapper);
-        UserVO userVO = (UserVO) ModelUtil.copy(user, new ModelUtil.Mapping(User.class, UserVO.class, "password"));
+        UserVO userVO = (UserVO) ModelUtil.copy(user,
+                new ModelUtil.Mapping(User.class, UserVO.class, "password"),
+                new ModelUtil.Mapping(Dept.class, DeptVO.class, "id"),
+                new ModelUtil.Mapping(Book.class, BookVO.class, "userId"));
         if (user!=null) {
             session.setAttribute("user", userVO);
             return new ResultVO<>(SUCCESS, "", userVO);

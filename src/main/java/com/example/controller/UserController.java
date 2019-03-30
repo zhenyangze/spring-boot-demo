@@ -7,9 +7,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.group.Insert;
 import com.example.group.Update;
 import com.example.model.po.Book;
+import com.example.model.po.Dept;
 import com.example.model.po.User;
-import com.example.model.vo.UserVO;
+import com.example.model.vo.BookVO;
+import com.example.model.vo.DeptVO;
 import com.example.model.vo.ResultVO;
+import com.example.model.vo.UserVO;
 import com.example.service.IBookService;
 import com.example.service.IUserService;
 import com.example.util.ModelUtil;
@@ -45,7 +48,8 @@ public class UserController {
         Wrapper<User> wrapper = new QueryWrapper<>(userVO);
         IPage<User> iPage = userService.page(pageParams, wrapper);
         long start = System.currentTimeMillis();
-        IPage page = (IPage) ModelUtil.copy(iPage, new ModelUtil.Mapping(User.class, UserVO.class, "password"));
+        IPage page = (IPage) ModelUtil.copy(iPage,
+                new ModelUtil.Mapping(User.class, UserVO.class, "password"));
         long end = System.currentTimeMillis();
         System.out.println(end-start);
         return new ResultVO<>(SUCCESS, "", page);
@@ -56,7 +60,10 @@ public class UserController {
     @Validated
     public ResultVO<UserVO> findById(@PathVariable @NotNull(message = "用户id不能为空") @ApiParam(value = "用户id", required = true) Integer id) {
         User user = userService.getById(id);
-        UserVO userVO = (UserVO) ModelUtil.copy(user, new ModelUtil.Mapping(User.class, UserVO.class, "password"));
+        UserVO userVO = (UserVO) ModelUtil.copy(user,
+                new ModelUtil.Mapping(User.class, UserVO.class, "password"),
+                new ModelUtil.Mapping(Dept.class, DeptVO.class, "id"),
+                new ModelUtil.Mapping(Book.class, BookVO.class, "userId"));
         return new ResultVO<>(SUCCESS, "", userVO);
     }
 

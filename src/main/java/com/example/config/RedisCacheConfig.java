@@ -2,6 +2,7 @@ package com.example.config;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.example.util.TypeUtil;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,14 +18,12 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.*;
-import org.springframework.util.ClassUtils;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.lang.reflect.Method;
-import java.net.URI;
-import java.net.URL;
-import java.util.Date;
-import java.util.Locale;
 
 @EnableCaching
 @Configuration
@@ -86,12 +85,6 @@ public class RedisCacheConfig {
             private static final String SEPARATOR = ":";
             private static final String NO_PARAM_KEY = "noparam";
 
-            private boolean isSimpleValueType(Class<?> clazz) {
-                return (ClassUtils.isPrimitiveOrWrapper(clazz) || clazz.isEnum() || CharSequence.class.isAssignableFrom(clazz)
-                        || Number.class.isAssignableFrom(clazz) || Date.class.isAssignableFrom(clazz) || URI.class==clazz
-                        || URL.class==clazz || Locale.class==clazz || Class.class==clazz);
-            }
-
             private String toJson(Object obj) {
                 return JSON.toJSONString(obj, SerializerFeature.WriteMapNullValue);
             }
@@ -106,7 +99,7 @@ public class RedisCacheConfig {
                 if (params.length>0) {
                     // 参数值
                     for (Object object : params) {
-                        if (isSimpleValueType(object.getClass())) {
+                        if (TypeUtil.isSimpleValueType(object.getClass())) {
                             builder.append(object);
                         } else {
                             builder.append(toJson(object).hashCode());

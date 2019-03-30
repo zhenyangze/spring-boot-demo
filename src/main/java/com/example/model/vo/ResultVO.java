@@ -1,4 +1,4 @@
-package com.example.result;
+package com.example.model.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @ApiModel("返回结果")
-public class Result<T> {
+public class ResultVO<T> {
 
     /** 成功 */
     public static final int SUCCESS = 1;

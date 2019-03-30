@@ -2,9 +2,9 @@ package com.example.controller;
 
 import com.example.model.po.Attachment;
 import com.example.model.vo.AttachmentVO;
-import com.example.result.Result;
+import com.example.model.vo.ResultVO;
 import com.example.service.IAttachmentService;
-import com.example.util.CustomizedBeanUtils;
+import com.example.util.ModelUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -18,7 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 
-import static com.example.result.Result.SUCCESS;
+import static com.example.model.vo.ResultVO.SUCCESS;
 
 @RestController
 @RequestMapping(value = "/file", produces = "application/json; charset=UTF-8")
@@ -36,9 +36,9 @@ public class FileController {
 
     @PostMapping("/{type}/{rename}")
     @ApiOperation(value = "上传文件")
-    public Result<AttachmentVO> upload(@RequestParam("file") @ApiParam(value = "文件", required = true) MultipartFile file,
-                                       @PathVariable("type") @ApiParam(value = "文件类型", example = "demo", required = true) String type,
-                                       @PathVariable("rename") @ApiParam(value = "是否重命名", allowableValues = "1,0", defaultValue = "1", required = true) String rename) {
+    public ResultVO<AttachmentVO> upload(@RequestParam("file") @ApiParam(value = "文件", required = true) MultipartFile file,
+                                         @PathVariable("type") @ApiParam(value = "文件类型", example = "demo", required = true) String type,
+                                         @PathVariable("rename") @ApiParam(value = "是否重命名", allowableValues = "1,0", defaultValue = "1", required = true) String rename) {
         String name = file.getOriginalFilename();
         if (rename.equals("1")) { // 重命名
             String[] arr = name.split("\\.");
@@ -76,8 +76,8 @@ public class FileController {
         attachment.setAttachmentPath(localPath);
         attachment.setAttachmentAddress(address);
         attachmentService.save(attachment);
-        AttachmentVO attachmentVO = CustomizedBeanUtils.copyObject(attachment, AttachmentVO.class);
-        return new Result<>(SUCCESS, "", attachmentVO);
+        AttachmentVO attachmentVO = (AttachmentVO) ModelUtil.copy(attachment, new ModelUtil.Mapping(Attachment.class, AttachmentVO.class, "attachmentPath"));
+        return new ResultVO<>(SUCCESS, "", attachmentVO);
     }
 
 }

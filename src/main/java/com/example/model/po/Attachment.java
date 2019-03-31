@@ -4,7 +4,6 @@ import com.example.model.BaseModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-// 附件
 @Data
 public class Attachment extends BaseModel {
 

@@ -1,7 +1,10 @@
 package com.example;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.mapper.UserMapper;
+import com.example.mapper.UserRoleLinkMapper;
 import com.example.model.po.User;
+import com.example.model.po.UserRoleLink;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +25,8 @@ public class SpringBootDemoApplicationTests {
     private RedisTemplate<String, Object> redisTemplate;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private UserRoleLinkMapper userRoleLinkMapper;
 
     @Test
     public void contextLoads() {
@@ -54,6 +59,24 @@ public class SpringBootDemoApplicationTests {
         Object[] objects = (Object[]) users;
         System.out.println(objects.length);
         System.out.println(objects.getClass());
+    }
+
+    @Test
+    public void testUserRoleLinkMapper() {
+        UserRoleLink link = new UserRoleLink(1, 1);
+        userRoleLinkMapper.insert(link);
+    }
+
+    @Test
+    public void testQueryWrapper() {
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("user_id", 1);
+        wrapper.eq("role_id", 1);
+        wrapper.or();
+        wrapper.eq("user_id", 2);
+        wrapper.eq("role_id", 3);
+        wrapper.or();
+        System.out.println(wrapper.getCustomSqlSegment());
     }
 
 }

@@ -35,11 +35,11 @@ public class AttachmentController {
     public ResultVO list(@PathVariable @NotNull(message = "当前页不能为空") @ApiParam(value = "当前页", defaultValue = "1", required = true) long current,
                          @PathVariable @NotNull(message = "每页显示条数不能为空") @ApiParam(value = "当前页", defaultValue = "10", required = true) long size,
                          AttachmentVO attachmentVO) {
-        Page<Attachment> pageParams = new Page<>(current, size);
+        Page<Attachment> page = new Page<>(current, size);
         Wrapper<Attachment> wrapper = new QueryWrapper<>(attachmentVO);
-        IPage<Attachment> iPage = attachmentService.page(pageParams, wrapper);
-        IPage page = (IPage) ModelUtil.copy(iPage, new ModelUtil.Mapping(Attachment.class, AttachmentVO.class));
-        return new ResultVO<>(SUCCESS, "", page);
+        IPage<Attachment> iPage = attachmentService.page(page, wrapper);
+        IPage attachments = (IPage) ModelUtil.copy(iPage, new ModelUtil.Mapping(Attachment.class, AttachmentVO.class));
+        return new ResultVO<>(SUCCESS, "", attachments);
     }
 
     @GetMapping("/{id}")

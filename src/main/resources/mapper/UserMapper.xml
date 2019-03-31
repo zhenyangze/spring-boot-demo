@@ -19,16 +19,23 @@
             <result column="t_book_book_name" property="bookName" />
             <result column="t_book_user_id" property="userId" />
         </collection>
+        <collection column="t_user_id" property="roles" javaType="java.util.List" ofType="com.example.model.po.Role">
+            <id column="t_role_id" property="id" />
+            <result column="t_role_role_name" property="roleName" />
+        </collection>
     </resultMap>
 
     <select id="selectById" parameterType="java.io.Serializable" resultMap="resultMap">
         select t_user.id t_user_id, t_user.username t_user_username, t_user.password t_user_password, t_user.nickname t_user_nickname,
                t_user.birth t_user_birth, t_user.logintime t_user_logintime, t_user.dept_id t_user_dept_id,
                t_dept.id t_dept_id, t_dept.dept_name t_dept_dept_name,
-               t_book.id t_book_id, t_book.book_name t_book_book_name, t_book.user_id t_book_user_id
+               t_book.id t_book_id, t_book.book_name t_book_book_name, t_book.user_id t_book_user_id,
+               t_role.id t_role_id, t_role.role_name t_role_role_name
         from t_user t_user
         left join t_dept t_dept on t_dept.id = t_user.dept_id
         left join t_book t_book on t_book.user_id = t_user.id
+        left join t_user_role_link t_user_role_link on t_user_role_link.user_id = t_user.id
+        left join t_role t_role on t_role.id = t_user_role_link.role_id
         where t_user.id = #{id}
     </select>
 
@@ -36,10 +43,13 @@
         select t_user.id t_user_id, t_user.username t_user_username, t_user.password t_user_password, t_user.nickname t_user_nickname,
                t_user.birth t_user_birth, t_user.logintime t_user_logintime, t_user.dept_id t_user_dept_id,
                t_dept.id t_dept_id, t_dept.dept_name t_dept_dept_name,
-               t_book.id t_book_id, t_book.book_name t_book_book_name, t_book.user_id t_book_user_id
+               t_book.id t_book_id, t_book.book_name t_book_book_name, t_book.user_id t_book_user_id,
+               t_role.id t_role_id, t_role.role_name t_role_role_name
         from t_user t_user
         left join t_dept t_dept on t_dept.id = t_user.dept_id
         left join t_book t_book on t_book.user_id = t_user.id
+        left join t_user_role_link t_user_role_link on t_user_role_link.user_id = t_user.id
+        left join t_role t_role on t_role.id = t_user_role_link.role_id
         ${ew.customSqlSegment}
     </select>
 

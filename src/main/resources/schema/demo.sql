@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-03-30 21:21:45
+Date: 2019-03-31 22:40:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,8 +24,7 @@ CREATE TABLE `t_attachment` (
   `attachment_name` varchar(200) DEFAULT NULL COMMENT '附件名称',
   `attachment_address` varchar(200) DEFAULT NULL COMMENT '访问地址',
   `attachment_path` varchar(200) DEFAULT NULL COMMENT '本地路径',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `t_attachment_idx_id` (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
@@ -61,17 +60,16 @@ CREATE TABLE `t_book` (
   `book_name` varchar(50) DEFAULT NULL COMMENT '书籍名称',
   `user_id` int(11) DEFAULT NULL COMMENT '用户id',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `t_book_idx_id` (`id`),
   KEY `t_book_fk_user_id` (`user_id`),
   CONSTRAINT `t_book_fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_book
 -- ----------------------------
-INSERT INTO `t_book` VALUES ('1', '啊啊啊', '1');
-INSERT INTO `t_book` VALUES ('2', 'aaa', '1');
-INSERT INTO `t_book` VALUES ('3', 'hhh', '1');
+INSERT INTO `t_book` VALUES ('7', '啊啊啊', '1');
+INSERT INTO `t_book` VALUES ('19', '哈哈哈', '1');
+INSERT INTO `t_book` VALUES ('20', '呵呵呵', '1');
 
 -- ----------------------------
 -- Table structure for t_dept
@@ -80,8 +78,7 @@ DROP TABLE IF EXISTS `t_dept`;
 CREATE TABLE `t_dept` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `dept_name` varchar(50) DEFAULT NULL COMMENT '部门名称',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `t_dept_idx_id` (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
@@ -92,6 +89,26 @@ INSERT INTO `t_dept` VALUES ('2', '测试部门');
 INSERT INTO `t_dept` VALUES ('3', '改下名啊');
 INSERT INTO `t_dept` VALUES ('4', '测试部门3');
 INSERT INTO `t_dept` VALUES ('5', '5555');
+
+-- ----------------------------
+-- Table structure for t_role
+-- ----------------------------
+DROP TABLE IF EXISTS `t_role`;
+CREATE TABLE `t_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(50) DEFAULT NULL COMMENT '角色名称',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_role
+-- ----------------------------
+INSERT INTO `t_role` VALUES ('1', '管理员');
+INSERT INTO `t_role` VALUES ('2', '游客');
+INSERT INTO `t_role` VALUES ('3', '超级管理员');
+INSERT INTO `t_role` VALUES ('4', '特级管理员');
+INSERT INTO `t_role` VALUES ('5', '职员');
+INSERT INTO `t_role` VALUES ('6', '总监');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -106,7 +123,6 @@ CREATE TABLE `t_user` (
   `logintime` timestamp NULL DEFAULT NULL COMMENT '登陆时间',
   `dept_id` int(11) DEFAULT NULL COMMENT '部门id',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `t_user_idx_id` (`id`),
   KEY `t_user_fk_dept_id` (`dept_id`),
   CONSTRAINT `t_user_fk_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `t_dept` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
@@ -118,3 +134,22 @@ INSERT INTO `t_user` VALUES ('1', 'xlk', '123', '薛凌康', '1990-10-14', '2019
 INSERT INTO `t_user` VALUES ('2', 'xue', '123', '薛', '1990-10-14', '2019-03-24 11:25:54', '1');
 INSERT INTO `t_user` VALUES ('3', 'bcd', '123', null, null, null, '1');
 INSERT INTO `t_user` VALUES ('5', 'def', '123', null, null, null, '1');
+
+-- ----------------------------
+-- Table structure for t_user_role_link
+-- ----------------------------
+DROP TABLE IF EXISTS `t_user_role_link`;
+CREATE TABLE `t_user_role_link` (
+  `user_id` int(11) NOT NULL COMMENT '用户id',
+  `role_id` int(11) NOT NULL COMMENT '角色id',
+  PRIMARY KEY (`user_id`,`role_id`),
+  KEY `t_user_role_link_fk_role_id` (`role_id`),
+  CONSTRAINT `t_user_role_link_fk_role_id` FOREIGN KEY (`role_id`) REFERENCES `t_role` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `t_user_role_link_fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_user_role_link
+-- ----------------------------
+INSERT INTO `t_user_role_link` VALUES ('1', '2');
+INSERT INTO `t_user_role_link` VALUES ('1', '4');

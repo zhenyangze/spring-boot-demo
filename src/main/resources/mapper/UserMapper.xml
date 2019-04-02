@@ -19,7 +19,6 @@
 
     <resultMap id="resultMap" type="com.example.model.po.User" extends="baseResultMap">
         <association column="t_user_dept_id" property="dept" resultMap="com.example.mapper.DeptMapper.baseResultMap" />
-        <collection column="t_user_id" property="books" resultMap="com.example.mapper.BookMapper.baseResultMap" />
         <collection column="t_user_id" property="roles" resultMap="com.example.mapper.RoleMapper.resultMap" />
     </resultMap>
 

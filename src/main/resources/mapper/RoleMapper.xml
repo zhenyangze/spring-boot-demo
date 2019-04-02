@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.mapper.RoleMapper">
+
+    <sql id="baseCol">
+        t_role.id t_role_id, t_role.role_name t_role_role_name, t_role.role_desc t_role_role_desc
+    </sql>
+
+    <resultMap id="baseResultMap" type="com.example.model.po.Role">
+        <id column="t_role_id" property="id" />
+        <result column="t_role_role_name" property="roleName" />
+        <result column="t_role_role_desc" property="roleDesc" />
+    </resultMap>
+
+    <resultMap id="resultMap" type="com.example.model.po.Role" extends="baseResultMap">
+        <collection column="t_role_id" property="resources" resultMap="com.example.mapper.ResourceMapper.resultMap" />
+    </resultMap>
+
+    <select id="selectById" parameterType="java.io.Serializable" resultMap="resultMap">
+        select <include refid="baseCol" />,
+               <include refid="com.example.mapper.ResourceMapper.baseCol" />
+        from t_role t_role
+        left join t_role_resource_link t_role_resource_link on t_role.id = t_role_resource_link.role_id
+        left join t_resource t_resource on t_role_resource_link.resource_id = t_resource.id
+    </select>
+
+</mapper>

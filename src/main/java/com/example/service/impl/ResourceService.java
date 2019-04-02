@@ -30,7 +30,7 @@ public class ResourceService extends BaseService<ResourceMapper, Resource> imple
 
     @Override
     @Transactional
-    @CacheEvict(cacheNames = {"resource.multiple"}, allEntries = true)
+    @CacheEvict(cacheNames = {"resource:multiple"}, allEntries = true)
     public boolean save(Resource resource) {
         return super.save(resource);
     }

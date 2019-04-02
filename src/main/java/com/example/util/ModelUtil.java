@@ -1,5 +1,6 @@
 package com.example.util;
 
+import com.example.exception.ProjectException;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -39,7 +40,7 @@ public class ModelUtil {
                 return collection;
             } catch (InstantiationException|IllegalAccessException e) {
                 log.error(e.getMessage(), e);
-                throw new RuntimeException(e);
+                throw new ProjectException(e);
             }
         }
         // 数组
@@ -67,7 +68,7 @@ public class ModelUtil {
             target = targetClass.newInstance();
         } catch (InstantiationException|IllegalAccessException e) {
             log.error(e.getMessage(), e);
-            throw new RuntimeException(e);
+            throw new ProjectException(e);
         }
         for (PropertyDescriptor targetPd : targetPds) {
             Method writeMethod = targetPd.getWriteMethod();

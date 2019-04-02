@@ -1,5 +1,7 @@
 package com.example.util;
 
+import com.example.exception.ProjectException;
+
 import java.io.*;
 
 public class SerializeUtil {
@@ -18,13 +20,13 @@ public class SerializeUtil {
             oos.writeObject(obj);
             return baos.toByteArray();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new ProjectException(e);
         } finally {
             if (oos!=null) {
                 try {
                     oos.close();
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    throw new ProjectException(e);
                 }
             }
         }
@@ -54,13 +56,13 @@ public class SerializeUtil {
             ois = new ObjectInputStream(bais);
             return ois.readObject();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new ProjectException(e);
         } finally {
             if (ois!=null) {
                 try {
                     ois.close();
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    throw new ProjectException(e);
                 }
             }
         }

@@ -13,7 +13,7 @@
     </resultMap>
 
     <resultMap id="resultMap" type="com.example.model.po.Role" extends="baseResultMap">
-        <collection column="t_role_id" property="resources" resultMap="com.example.mapper.ResourceMapper.resultMap" />
+        <collection column="t_role_id" property="resources" resultMap="com.example.mapper.ResourceMapper.baseResultMap" />
     </resultMap>
 
     <select id="selectById" parameterType="java.io.Serializable" resultMap="resultMap">

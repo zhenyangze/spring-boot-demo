@@ -27,6 +27,7 @@ import static com.example.model.vo.ResultVO.SUCCESS;
 @RestController
 @RequestMapping(value = "/role", produces = "application/json; charset=UTF-8")
 @Api(tags = "角色")
+@Validated
 public class RoleController {
 
     @Autowired

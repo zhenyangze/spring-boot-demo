@@ -12,9 +12,11 @@ import io.swagger.annotations.ApiParam;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
@@ -24,6 +26,7 @@ import static com.example.model.vo.ResultVO.SUCCESS;
 @RestController
 @RequestMapping(value = "/file", produces = "application/json; charset=UTF-8")
 @Api(tags = "文件")
+@Validated
 public class FileController {
 
     @Autowired
@@ -38,8 +41,8 @@ public class FileController {
     @PostMapping("/{type}/{rename}")
     @ApiOperation(value = "上传文件")
     public ResultVO<AttachmentVO> upload(@RequestParam("file") @ApiParam(value = "文件", required = true) MultipartFile file,
-                                         @PathVariable("type") @ApiParam(value = "文件类型", example = "demo", required = true) String type,
-                                         @PathVariable("rename") @ApiParam(value = "是否重命名", allowableValues = "1,0", defaultValue = "1", required = true) String rename) {
+                                         @PathVariable("type") @NotNull(message = "文件类型不能为空") @ApiParam(value = "文件类型", example = "demo", required = true) String type,
+                                         @PathVariable("rename") @NotNull(message = "是否重命名不能为空") @ApiParam(value = "是否重命名", allowableValues = "1,0", defaultValue = "1", required = true) String rename) {
         String name = file.getOriginalFilename();
         if (rename.equals("1")) { // 重命名
             String[] arr = name.split("\\.");

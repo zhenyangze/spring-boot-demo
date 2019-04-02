@@ -11,6 +11,7 @@ import com.example.model.vo.ResourceVO;
 import com.example.model.vo.ResultVO;
 import com.example.service.IResourceService;
 import com.example.util.ModelUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,8 @@ import javax.validation.constraints.NotNull;
 import static com.example.model.vo.ResultVO.SUCCESS;
 
 @RestController
-@RequestMapping(value = "", produces = "application/json; charset=UTF-8")
+@RequestMapping(value = "/resource", produces = "application/json; charset=UTF-8")
+@Api(tags = "资源")
 @Validated
 public class ResourceController {
 

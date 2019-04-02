@@ -1,0 +1,75 @@
+package com.example.controller;
+
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.group.Insert;
+import com.example.group.Update;
+import com.example.model.po.Resource;
+import com.example.model.vo.ResourceVO;
+import com.example.model.vo.ResultVO;
+import com.example.service.IResourceService;
+import com.example.util.ModelUtil;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.NotNull;
+
+import static com.example.model.vo.ResultVO.SUCCESS;
+
+@RestController
+@RequestMapping(value = "", produces = "application/json; charset=UTF-8")
+@Validated
+public class ResourceController {
+
+    @Autowired
+    private IResourceService resourceService;
+
+    @GetMapping("/{current}/{size}")
+    @ApiOperation(value = "查询资源列表")
+    public ResultVO list(@PathVariable @NotNull(message = "当前页不能为空") @ApiParam(value = "当前页", defaultValue = "1", required = true) long current,
+                         @PathVariable @NotNull(message = "每页显示条数不能为空") @ApiParam(value = "当前页", defaultValue = "10", required = true) long size,
+                         ResourceVO resourceVO) {
+        Page<Resource> page = new Page<>(current, size);
+        Wrapper<Resource> wrapper = new QueryWrapper<>(resourceVO);
+        IPage<Resource> iPage = resourceService.page(page, wrapper);
+        IPage resources = (IPage) ModelUtil.copy(iPage, new ModelUtil.Mapping(Resource.class, ResourceVO.class));
+        return new ResultVO<>(SUCCESS, "", resources);
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id查询资源")
+    public ResultVO<ResourceVO> findById(@PathVariable @NotNull(message = "资源id不能为空") @ApiParam Integer id) {
+        Resource resource = resourceService.getById(id);
+        ResourceVO resourceVO = (ResourceVO) ModelUtil.copy(resource, new ModelUtil.Mapping(Resource.class, ResourceVO.class));
+        return new ResultVO<>(SUCCESS, "", resourceVO);
+    }
+
+    @PostMapping
+    @ApiOperation(value = "保存资源")
+    public ResultVO save(@Validated({Insert.class}) ResourceVO resourceVO) {
+        Resource resource = (Resource) ModelUtil.copy(resourceVO, new ModelUtil.Mapping(ResourceVO.class, Resource.class));
+        resourceService.save(resource);
+        return new ResultVO<>(SUCCESS, "保存资源成功！", null);
+    }
+
+    @PutMapping
+    @ApiOperation(value = "更新资源")
+    public ResultVO update(@Validated({Update.class}) ResourceVO resourceVO) {
+        Resource resource = (Resource) ModelUtil.copy(resourceVO, new ModelUtil.Mapping(ResourceVO.class, Resource.class));
+        resourceService.updateById(resource);
+        return new ResultVO<>(SUCCESS, "更新资源成功！", null);
+    }
+
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除资源")
+    public ResultVO delete(@PathVariable @NotNull(message = "资源id不能为空") @ApiParam(value = "资源id", required = true) Integer id) {
+        resourceService.removeById(id);
+        return new ResultVO<>(SUCCESS, "删除资源成功！", null);
+    }
+
+}

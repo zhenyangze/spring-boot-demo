@@ -1,7 +1,10 @@
 package com.example.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.model.po.Role;
 
-public interface IRoleService extends IService<Role> {
+public interface IRoleService extends IBaseService<Role> {
+
+    void customSave(Role role);
+
+    void customUpdate(Role role);
 }

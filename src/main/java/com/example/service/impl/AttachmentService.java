@@ -2,7 +2,6 @@ package com.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.mapper.AttachmentMapper;
 import com.example.model.po.Attachment;
 import com.example.service.IAttachmentService;
@@ -15,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.Serializable;
 
 @Service
-public class AttachmentService extends ServiceImpl<AttachmentMapper, Attachment> implements IAttachmentService {
+public class AttachmentService extends BaseService<AttachmentMapper, Attachment> implements IAttachmentService {
 
     @Override
     @Cacheable(cacheNames = "attachment:multiple", keyGenerator = "defaultPageKeyGenerator")

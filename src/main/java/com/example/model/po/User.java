@@ -49,11 +49,6 @@ public class User extends BaseModel {
     @Null(groups = {UserInsert.class, UserUpdate.class}, message = "部门信息必须为空")
     private Dept dept;
     @TableField(exist = false)
-    @ApiModelProperty("书籍信息")
-    @NotEmpty(groups = {UserInsert.class, UserUpdate.class}, message = "书籍信息不能为空")
-    @Valid
-    private List<Book> books;
-    @TableField(exist = false)
     @ApiModelProperty("角色信息")
     @NotEmpty(groups = {UserInsert.class, UserUpdate.class}, message = "角色信息不能为空")
     @Valid

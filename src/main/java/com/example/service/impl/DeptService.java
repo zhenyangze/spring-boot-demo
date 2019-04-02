@@ -2,7 +2,6 @@ package com.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.mapper.DeptMapper;
 import com.example.model.po.Dept;
 import com.example.service.IDeptService;
@@ -15,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.Serializable;
 
 @Service
-public class DeptService extends ServiceImpl<DeptMapper, Dept> implements IDeptService {
+public class DeptService extends BaseService<DeptMapper, Dept> implements IDeptService {
 
     @Override
     @Cacheable(cacheNames = {"dept:multiple"}, keyGenerator = "defaultPageKeyGenerator")
@@ -40,7 +39,7 @@ public class DeptService extends ServiceImpl<DeptMapper, Dept> implements IDeptS
     @Transactional
     @Caching(
             evict = {
-                    @CacheEvict(cacheNames = {"dept:multiple", "user:single"}, allEntries = true),
+                    @CacheEvict(cacheNames = {"dept:multiple"}, allEntries = true),
                     @CacheEvict(cacheNames = {"dept:single"}, key = "'dept:'+#dept.id")
             }
     )
@@ -52,7 +51,7 @@ public class DeptService extends ServiceImpl<DeptMapper, Dept> implements IDeptS
     @Transactional
     @Caching(
             evict = {
-                    @CacheEvict(cacheNames = {"dept:multiple", "user:single"}, allEntries = true),
+                    @CacheEvict(cacheNames = {"dept:multiple"}, allEntries = true),
                     @CacheEvict(cacheNames = {"dept:single"}, key = "'dept:'+#id")
             }
     )

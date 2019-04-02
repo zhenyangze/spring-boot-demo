@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.group.Insert;
-import com.example.group.Update;
+import com.example.group.RoleInsert;
+import com.example.group.RoleUpdate;
+import com.example.model.po.Resource;
 import com.example.model.po.Role;
+import com.example.model.vo.ResourceVO;
 import com.example.model.vo.ResultVO;
 import com.example.model.vo.RoleVO;
 import com.example.service.IRoleService;
@@ -46,23 +48,25 @@ public class RoleController {
     @ApiOperation(value = "根据id查询角色")
     public ResultVO<RoleVO> findById(@PathVariable @NotNull(message = "角色id不能为空") @ApiParam Integer id) {
         Role role = roleService.getById(id);
-        RoleVO roleVO = (RoleVO) ModelUtil.copy(role, new ModelUtil.Mapping(Role.class, RoleVO.class));
+        RoleVO roleVO = (RoleVO) ModelUtil.copy(role,
+                new ModelUtil.Mapping(Role.class, RoleVO.class),
+                new ModelUtil.Mapping(Resource.class, ResourceVO.class));
         return new ResultVO<>(SUCCESS, "", roleVO);
     }
 
     @PostMapping
     @ApiOperation(value = "保存角色")
-    public ResultVO save(@Validated({Insert.class}) RoleVO roleVO) {
+    public ResultVO save(@Validated({RoleInsert.class}) @RequestBody RoleVO roleVO) {
         Role role = (Role) ModelUtil.copy(roleVO, new ModelUtil.Mapping(RoleVO.class, Role.class));
-        roleService.save(role);
+        roleService.customSave(role);
         return new ResultVO<>(SUCCESS, "保存角色成功！", null);
     }
 
     @PutMapping
     @ApiOperation(value = "更新角色")
-    public ResultVO update(@Validated({Update.class}) RoleVO roleVO) {
+    public ResultVO update(@Validated({RoleUpdate.class}) @RequestBody RoleVO roleVO) {
         Role role = (Role) ModelUtil.copy(roleVO, new ModelUtil.Mapping(RoleVO.class, Role.class));
-        roleService.updateById(role);
+        roleService.customUpdate(role);
         return new ResultVO<>(SUCCESS, "更新角色成功！", null);
     }
 

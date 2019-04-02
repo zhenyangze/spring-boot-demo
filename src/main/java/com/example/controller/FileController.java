@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.exception.ProjectException;
 import com.example.model.po.Attachment;
 import com.example.model.vo.AttachmentVO;
 import com.example.model.vo.ResultVO;
@@ -61,13 +62,11 @@ public class FileController {
             saveDir.mkdirs();
         }
         try {
-            System.out.println("-------------------getCanonicalFile: "+saveFile.getCanonicalFile());
-            System.out.println("-------------------getAbsoluteFile: "+saveFile.getAbsoluteFile());
             // 保存文件
             FileUtils.copyInputStreamToFile(file.getInputStream(), saveFile);
             // file.transferTo(saveFile); // 这个方法不稳定
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new ProjectException(e);
         }
         // 访问路径
         String address = addressPrefix+(addressPrefix.endsWith(fileSeparator)? "": fileSeparator)+relativePath;

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-03-31 22:40:02
+Date: 2019-04-02 18:28:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -62,7 +62,7 @@ CREATE TABLE `t_book` (
   PRIMARY KEY (`id`),
   KEY `t_book_fk_user_id` (`user_id`),
   CONSTRAINT `t_book_fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_book
@@ -91,24 +91,59 @@ INSERT INTO `t_dept` VALUES ('4', '测试部门3');
 INSERT INTO `t_dept` VALUES ('5', '5555');
 
 -- ----------------------------
+-- Table structure for t_resource
+-- ----------------------------
+DROP TABLE IF EXISTS `t_resource`;
+CREATE TABLE `t_resource` (
+  `id` int(11) NOT NULL,
+  `resource_url` varchar(50) DEFAULT NULL COMMENT '资源url',
+  `resource_desc` varchar(50) DEFAULT NULL COMMENT '资源描述',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `t_resource_idx_resource_url` (`resource_url`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_resource
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for t_role
 -- ----------------------------
 DROP TABLE IF EXISTS `t_role`;
 CREATE TABLE `t_role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `role_name` varchar(50) DEFAULT NULL COMMENT '角色名称',
-  PRIMARY KEY (`id`)
+  `role_desc` varchar(200) DEFAULT NULL COMMENT '角色描述',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `t_role_idx_role_name` (`role_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_role
 -- ----------------------------
-INSERT INTO `t_role` VALUES ('1', '管理员');
-INSERT INTO `t_role` VALUES ('2', '游客');
-INSERT INTO `t_role` VALUES ('3', '超级管理员');
-INSERT INTO `t_role` VALUES ('4', '特级管理员');
-INSERT INTO `t_role` VALUES ('5', '职员');
-INSERT INTO `t_role` VALUES ('6', '总监');
+INSERT INTO `t_role` VALUES ('1', '管理员', null);
+INSERT INTO `t_role` VALUES ('2', '游客', null);
+INSERT INTO `t_role` VALUES ('3', '超级管理员', null);
+INSERT INTO `t_role` VALUES ('4', '特级管理员', null);
+INSERT INTO `t_role` VALUES ('5', '职员', null);
+INSERT INTO `t_role` VALUES ('6', '总监', null);
+
+-- ----------------------------
+-- Table structure for t_role_resource_link
+-- ----------------------------
+DROP TABLE IF EXISTS `t_role_resource_link`;
+CREATE TABLE `t_role_resource_link` (
+  `role_id` int(11) NOT NULL,
+  `resource_id` int(11) NOT NULL,
+  PRIMARY KEY (`role_id`,`resource_id`),
+  KEY `t_role_resource_link_fk_resource_id` (`resource_id`),
+  CONSTRAINT `t_role_resource_link_fk_resource_id` FOREIGN KEY (`resource_id`) REFERENCES `t_resource` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `t_role_resource_link_fk_role_id` FOREIGN KEY (`role_id`) REFERENCES `t_role` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_role_resource_link
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for t_user
@@ -116,13 +151,14 @@ INSERT INTO `t_role` VALUES ('6', '总监');
 DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) DEFAULT NULL COMMENT '用户名',
-  `password` varchar(50) DEFAULT NULL COMMENT '密码',
+  `username` varchar(50) NOT NULL COMMENT '用户名',
+  `password` varchar(50) NOT NULL COMMENT '密码',
   `nickname` varchar(50) DEFAULT NULL COMMENT '昵称',
   `birth` date DEFAULT NULL COMMENT '生日',
   `logintime` timestamp NULL DEFAULT NULL COMMENT '登陆时间',
   `dept_id` int(11) DEFAULT NULL COMMENT '部门id',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `t_user_idx_username` (`username`),
   KEY `t_user_fk_dept_id` (`dept_id`),
   CONSTRAINT `t_user_fk_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `t_dept` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;

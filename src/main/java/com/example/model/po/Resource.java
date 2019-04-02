@@ -5,6 +5,7 @@ import com.example.group.RoleInsert;
 import com.example.group.RoleUpdate;
 import com.example.group.Update;
 import com.example.model.BaseModel;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
 @Data
+@ApiModel("资源")
 public class Resource extends BaseModel {
 
     @ApiModelProperty("资源id")

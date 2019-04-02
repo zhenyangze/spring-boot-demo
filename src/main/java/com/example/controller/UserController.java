@@ -7,10 +7,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.group.UserInsert;
 import com.example.group.UserUpdate;
 import com.example.model.po.Dept;
+import com.example.model.po.Resource;
+import com.example.model.po.Role;
 import com.example.model.po.User;
-import com.example.model.vo.DeptVO;
-import com.example.model.vo.ResultVO;
-import com.example.model.vo.UserVO;
+import com.example.model.vo.*;
 import com.example.service.IUserService;
 import com.example.util.ModelUtil;
 import io.swagger.annotations.Api;
@@ -52,7 +52,9 @@ public class UserController {
         User user = userService.getById(id);
         UserVO userVO = (UserVO) ModelUtil.copy(user,
                 new ModelUtil.Mapping(User.class, UserVO.class, "password"),
-                new ModelUtil.Mapping(Dept.class, DeptVO.class, "id"));
+                new ModelUtil.Mapping(Dept.class, DeptVO.class),
+                new ModelUtil.Mapping(Role.class, RoleVO.class),
+                new ModelUtil.Mapping(Resource.class, ResourceVO.class));
         return new ResultVO<>(SUCCESS, "", userVO);
     }
 

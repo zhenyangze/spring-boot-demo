@@ -1,10 +1,12 @@
 package com.example.model.po;
 
 import com.example.model.BaseModel;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
+@ApiModel("附件")
 public class Attachment extends BaseModel {
 
     @ApiModelProperty("附件id")

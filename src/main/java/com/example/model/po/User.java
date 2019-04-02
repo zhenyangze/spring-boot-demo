@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.example.group.UserInsert;
 import com.example.group.UserUpdate;
 import com.example.model.BaseModel;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -17,6 +18,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Data
+@ApiModel("用户")
 public class User extends BaseModel {
 
     @ApiModelProperty("用户id")

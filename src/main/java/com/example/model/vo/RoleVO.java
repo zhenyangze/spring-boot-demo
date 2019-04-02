@@ -5,6 +5,5 @@ import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 @Data
-@ApiModel("角色")
 public class RoleVO extends Role {
 }

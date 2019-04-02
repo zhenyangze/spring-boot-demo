@@ -6,6 +6,7 @@ import com.example.group.RoleUpdate;
 import com.example.group.UserInsert;
 import com.example.group.UserUpdate;
 import com.example.model.BaseModel;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -16,6 +17,7 @@ import javax.validation.constraints.Null;
 import java.util.List;
 
 @Data
+@ApiModel("角色")
 public class Role extends BaseModel {
 
     @ApiModelProperty("角色id")

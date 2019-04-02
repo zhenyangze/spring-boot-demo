@@ -3,6 +3,7 @@ package com.example.model.po;
 import com.example.group.Insert;
 import com.example.group.Update;
 import com.example.model.BaseModel;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
 @Data
+@ApiModel("部门")
 public class Dept extends BaseModel {
 
     @ApiModelProperty("部门id")

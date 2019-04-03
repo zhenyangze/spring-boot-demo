@@ -5,7 +5,10 @@ spring boot项目模板<br>
 文档地址：http://localhost:8080/demo/swagger-ui.html
 
 #### TODO
-* thymeleaf
+* git clone git@gitee.com:zhang.w/boot-security.git
+* 定时任务
+* 线程池
+* 工作流
 
 #### 技术应用
 1. Core

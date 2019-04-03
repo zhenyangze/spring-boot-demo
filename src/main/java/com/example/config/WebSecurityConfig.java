@@ -73,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
     }
 
-    //在这里配置哪些页面不需要认证
+    // 在这里配置哪些页面不需要认证
     @Override
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers("/login");

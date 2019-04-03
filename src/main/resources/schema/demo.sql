@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-04-03 18:34:38
+Date: 2019-04-03 23:10:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -50,6 +50,26 @@ INSERT INTO `t_attachment` VALUES ('26', 'exe4j_64b_jb51.rar', '/demofile/abc/20
 INSERT INTO `t_attachment` VALUES ('27', '桌面.rar', '/demofile/abc/2019/3/1553701128644.rar', 'E:/IdeaProjects/file/abc/2019/3/1553701128644.rar');
 INSERT INTO `t_attachment` VALUES ('28', '1553701128644.rar', '/demofile/bcd/2019/3/1553701660654.rar', 'E:/IdeaProjects/file/bcd/2019/3/1553701660654.rar');
 INSERT INTO `t_attachment` VALUES ('29', '1553701128644.rar', '/demofile/eee/2019/3/1553940007584.rar', 'E:/IdeaProjects/file/eee/2019/3/1553940007584.rar');
+
+-- ----------------------------
+-- Table structure for t_book
+-- ----------------------------
+DROP TABLE IF EXISTS `t_book`;
+CREATE TABLE `t_book` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `book_name` varchar(50) DEFAULT NULL COMMENT '书籍名称',
+  `user_id` int(11) DEFAULT NULL COMMENT '用户id',
+  PRIMARY KEY (`id`),
+  KEY `t_book_fk_user_id` (`user_id`),
+  CONSTRAINT `t_book_fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_book
+-- ----------------------------
+INSERT INTO `t_book` VALUES ('7', '啊啊啊', '1');
+INSERT INTO `t_book` VALUES ('19', '哈哈哈', '1');
+INSERT INTO `t_book` VALUES ('20', '呵呵呵', '1');
 
 -- ----------------------------
 -- Table structure for t_dept

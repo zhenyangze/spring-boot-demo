@@ -23,6 +23,11 @@ public class RoleService extends BaseService<RoleMapper, Role> implements IRoleS
     private IRoleResourceLinkService roleResourceLinkService;
 
     @Override
+    public List<Role> getByResourceId(Integer resourceId) {
+        return baseMapper.selectByResourceId(resourceId);
+    }
+
+    @Override
     @Transactional
     public void customSave(Role role) {
         baseMapper.insert(role);

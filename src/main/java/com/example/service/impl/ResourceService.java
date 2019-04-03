@@ -12,9 +12,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Service
 public class ResourceService extends BaseService<ResourceMapper, Resource> implements IResourceService {
+
+    @Override
+    @Cacheable(cacheNames = {"resource:multiple"}, keyGenerator = "defaultPageKeyGenerator")
+    public List<Resource> getAll() {
+        return baseMapper.selectList(null);
+    }
 
     @Override
     @Cacheable(cacheNames = {"resource:multiple"}, keyGenerator = "defaultPageKeyGenerator")

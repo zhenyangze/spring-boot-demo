@@ -25,4 +25,11 @@
         where t_role.id = #{id}
     </select>
 
+    <select id="selectByResourceId" parameterType="int" resultMap="resultMap">
+        select <include refid="baseCol" />
+        from t_role t_role
+        left join t_role_resource_link t_role_resource_link on t_role_resource_link.role_id = t_role.id
+        where t_role_resource_link.resource_id = #{resourceId}
+    </select>
+
 </mapper>

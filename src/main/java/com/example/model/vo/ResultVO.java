@@ -13,11 +13,13 @@ import lombok.NoArgsConstructor;
 public class ResultVO<T> {
 
     /** 成功 */
-    public static final int SUCCESS = 1;
+    public static final int SUCCESS = 200;
     /** 失败 */
-    public static final int FAILURE = 0;
-    /** 禁止访问 */
-    public static final int FORBIDDEN = -1;
+    public static final int FAILURE = 500;
+    /** 未认证 */
+    public static final int UNAUTHORIZED = 401;
+    /** 未授权 */
+    public static final int FORBIDDEN = 403;
     @ApiModelProperty("状态码")
     private int code;
     @ApiModelProperty("消息")

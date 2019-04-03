@@ -1,75 +1,82 @@
 package com.example.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.example.config.security.*;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    @Qualifier("userDetailsServiceImpl")
-    private UserDetailsService userDetailsService;
+    // 加载用户信息
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return new UserDetailsServiceImpl();
+    }
 
-    //根据一个url请求，获得访问它所需要的roles权限
-//    @Autowired
-//    private FilterInvocationSecurityMetadataSource filterInvocationSecurityMetadataSource;
+    // 密码加密方式
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-    //接收一个用户的信息和访问一个url所需要的权限，判断该用户是否可以访问
-    @Autowired
-    private AccessDecisionManager accessDecisionManager;
+    // 根据访问url获取所需角色
+    @Bean
+    public FilterInvocationSecurityMetadataSource filterInvocationSecurityMetadataSource() {
+        return new FilterInvocationSecurityMetadataSourceImpl();
+    }
 
-    //403页面
-    @Autowired
-    private AccessDeniedHandler accessDeniedHandler;
+    // 自定义授权决策
+    @Bean
+    public AccessDecisionManager accessDecisionManager() {
+        return new AccessDecisionManagerImpl();
+    }
+
+    // 认证成功
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler() {
+        return new AuthenticationSuccessHandlerImpl();
+    }
+
+    // 认证失败
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler() {
+        return new AuthenticationFailureHandlerImpl();
+    }
+
+    // 权限不足
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new AccessDeniedHandlerImpl();
+    }
 
     /**
      * 定义认证用户信息获取来源，密码校验规则等
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        /**有以下几种形式，使用第3种*/
-        //inMemoryAuthentication 从内存中获取
-        //auth.inMemoryAuthentication().passwordEncoder(new BCryptPasswordEncoder()).withUser("user1").password(new BCryptPasswordEncoder().encode("123123")).roles("USER");
-
-        //jdbcAuthentication从数据库中获取，但是默认是以security提供的表结构
-        //usersByUsernameQuery 指定查询用户SQL
-        //authoritiesByUsernameQuery 指定查询权限SQL
-        //auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery(query).authoritiesByUsernameQuery(query);
-
-        //注入userDetailsService，需要实现userDetailsService接口
-        auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+        auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
     }
 
     //在这里配置哪些页面不需要认证
     @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(/*"/", */"/noAuthenticate");
+    public void configure(WebSecurity web) {
+        web.ignoring().antMatchers("/login");
     }
 
     /**
@@ -77,62 +84,34 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()       //配置安全策略
+        http.authorizeRequests()
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override
                     public <O extends FilterSecurityInterceptor> O postProcess(O o) {
-//                        o.setSecurityMetadataSource(filterInvocationSecurityMetadataSource);
-                        o.setAccessDecisionManager(accessDecisionManager);
+                        o.setSecurityMetadataSource(filterInvocationSecurityMetadataSource());
+                        o.setAccessDecisionManager(accessDecisionManager());
                         return o;
                     }
                 })
-//                .antMatchers("/hello").hasAuthority("ADMIN")
-                .and()
+            .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginProcessingUrl("/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .permitAll()
-                .failureHandler(new AuthenticationFailureHandler() {
-                    @Override
-                    public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-                        httpServletResponse.setContentType("application/json;charset=utf-8");
-                        PrintWriter out = httpServletResponse.getWriter();
-                        StringBuffer sb = new StringBuffer();
-                        sb.append("{\"status\":\"error\",\"msg\":\"");
-                        if (e instanceof UsernameNotFoundException || e instanceof BadCredentialsException) {
-                            sb.append("用户名或密码输入错误，登录失败!");
-                        } else if (e instanceof DisabledException) {
-                            sb.append("账户被禁用，登录失败，请联系管理员!");
-                        } else {
-                            sb.append("登录失败!");
-                        }
-                        sb.append("\"}");
-                        out.write(sb.toString());
-                        out.flush();
-                        out.close();
-                    }
-                })
-                .successHandler(new AuthenticationSuccessHandler() {
-                    @Override
-                    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-                        httpServletResponse.setContentType("application/json;charset=utf-8");
-                        PrintWriter out = httpServletResponse.getWriter();
-//                        ObjectMapper objectMapper = new ObjectMapper();
-                        String s = "{\"status\":\"success\",\"msg\":"+"}";
-                        out.write(s);
-                        out.flush();
-                        out.close();
-                    }
-                })
-                .and()
+                .successHandler(authenticationSuccessHandler())
+                .failureHandler(authenticationFailureHandler())
+            .and()
                 .logout()
                 .permitAll()
-                .and()
+            .and()
+                .logout()
+                .permitAll()
+            .and()
                 .csrf()
                 .disable()
                 .exceptionHandling()
-                .accessDeniedHandler(accessDeniedHandler);
+                .accessDeniedHandler(accessDeniedHandler());
     }
 
 }

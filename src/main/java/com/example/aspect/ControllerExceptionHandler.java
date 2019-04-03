@@ -1,6 +1,7 @@
 package com.example.aspect;
 
 import com.example.exception.LogicException;
+import com.example.exception.ProjectException;
 import com.example.model.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -74,12 +75,20 @@ public class ControllerExceptionHandler {
         return new ResultVO<>(FAILURE, e.getMessage(), null);
     }
 
+    // 项目异常
+    @ExceptionHandler({ProjectException.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResultVO handleProjectException(ProjectException e) {
+        log.error(e.getMessage(), e);
+        return new ResultVO<>(FAILURE, "服务器异常！", null);
+    }
+
     // 其他异常
     @ExceptionHandler({Throwable.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResultVO handleThrowable(Throwable e) {
         log.error(e.getMessage(), e);
-        return new ResultVO<>(FAILURE, e.getMessage(), null);
+        return new ResultVO<>(FAILURE, "服务器异常！", null);
     }
 
 }

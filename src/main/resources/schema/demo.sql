@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-04-02 18:28:55
+Date: 2019-04-03 18:34:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -52,26 +52,6 @@ INSERT INTO `t_attachment` VALUES ('28', '1553701128644.rar', '/demofile/bcd/201
 INSERT INTO `t_attachment` VALUES ('29', '1553701128644.rar', '/demofile/eee/2019/3/1553940007584.rar', 'E:/IdeaProjects/file/eee/2019/3/1553940007584.rar');
 
 -- ----------------------------
--- Table structure for t_book
--- ----------------------------
-DROP TABLE IF EXISTS `t_book`;
-CREATE TABLE `t_book` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `book_name` varchar(50) DEFAULT NULL COMMENT '书籍名称',
-  `user_id` int(11) DEFAULT NULL COMMENT '用户id',
-  PRIMARY KEY (`id`),
-  KEY `t_book_fk_user_id` (`user_id`),
-  CONSTRAINT `t_book_fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
-
--- ----------------------------
--- Records of t_book
--- ----------------------------
-INSERT INTO `t_book` VALUES ('7', '啊啊啊', '1');
-INSERT INTO `t_book` VALUES ('19', '哈哈哈', '1');
-INSERT INTO `t_book` VALUES ('20', '呵呵呵', '1');
-
--- ----------------------------
 -- Table structure for t_dept
 -- ----------------------------
 DROP TABLE IF EXISTS `t_dept`;
@@ -95,16 +75,40 @@ INSERT INTO `t_dept` VALUES ('5', '5555');
 -- ----------------------------
 DROP TABLE IF EXISTS `t_resource`;
 CREATE TABLE `t_resource` (
-  `id` int(11) NOT NULL,
-  `resource_url` varchar(50) DEFAULT NULL COMMENT '资源url',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `resource_pattern` varchar(50) DEFAULT NULL COMMENT '资源pattern',
+  `resource_method` varchar(20) DEFAULT NULL COMMENT '请求方法',
   `resource_desc` varchar(50) DEFAULT NULL COMMENT '资源描述',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `t_resource_idx_resource_url` (`resource_url`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_resource
 -- ----------------------------
+INSERT INTO `t_resource` VALUES ('1', '/attachment/*/*', 'GET', '附件列表');
+INSERT INTO `t_resource` VALUES ('2', '/attachment/*', 'GET', '附件详情');
+INSERT INTO `t_resource` VALUES ('3', '/attachment/*', 'DELETE', '删除附件');
+INSERT INTO `t_resource` VALUES ('4', '/dept/*/*', 'GET', '部门列表');
+INSERT INTO `t_resource` VALUES ('5', '/dept/*', 'GET', '部门详情');
+INSERT INTO `t_resource` VALUES ('6', '/dept', 'POST', '保存部门');
+INSERT INTO `t_resource` VALUES ('7', '/dept', 'PUT', '更新部门');
+INSERT INTO `t_resource` VALUES ('8', '/dept/*', 'DELETE', '删除部门');
+INSERT INTO `t_resource` VALUES ('9', '/file/*/*', 'POST', '上传文件');
+INSERT INTO `t_resource` VALUES ('10', '/resource/*/*', 'GET', '资源列表');
+INSERT INTO `t_resource` VALUES ('11', '/resource/*', 'GET', '资源详情');
+INSERT INTO `t_resource` VALUES ('12', '/resource', 'POST', '保存资源');
+INSERT INTO `t_resource` VALUES ('13', '/resource', 'PUT', '更新资源');
+INSERT INTO `t_resource` VALUES ('14', '/resource/*', 'DELETE', '删除资源');
+INSERT INTO `t_resource` VALUES ('15', '/role/*/*', 'GET', '角色列表');
+INSERT INTO `t_resource` VALUES ('16', '/role/*', 'GET', '角色详情');
+INSERT INTO `t_resource` VALUES ('17', '/role', 'POST', '保存角色');
+INSERT INTO `t_resource` VALUES ('18', '/role', 'PUT', '更新角色');
+INSERT INTO `t_resource` VALUES ('19', '/role/*', 'DELETE', '删除角色');
+INSERT INTO `t_resource` VALUES ('20', '/user/*/*', 'GET', '用户列表');
+INSERT INTO `t_resource` VALUES ('21', '/user/*', 'GET', '用户详情');
+INSERT INTO `t_resource` VALUES ('22', '/user', 'POST', '保存用户');
+INSERT INTO `t_resource` VALUES ('23', '/user', 'PUT', '更新用户');
+INSERT INTO `t_resource` VALUES ('24', '/user/*', 'DELETE', '删除用户');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -121,12 +125,12 @@ CREATE TABLE `t_role` (
 -- ----------------------------
 -- Records of t_role
 -- ----------------------------
-INSERT INTO `t_role` VALUES ('1', '管理员', null);
-INSERT INTO `t_role` VALUES ('2', '游客', null);
-INSERT INTO `t_role` VALUES ('3', '超级管理员', null);
-INSERT INTO `t_role` VALUES ('4', '特级管理员', null);
-INSERT INTO `t_role` VALUES ('5', '职员', null);
-INSERT INTO `t_role` VALUES ('6', '总监', null);
+INSERT INTO `t_role` VALUES ('1', 'ROLE_ADMIN', '管理员');
+INSERT INTO `t_role` VALUES ('2', 'ROLE_MANAGER', '总经理');
+INSERT INTO `t_role` VALUES ('3', 'ROLE_FINANCE', '财务');
+INSERT INTO `t_role` VALUES ('4', 'ROLE_HR', '人资');
+INSERT INTO `t_role` VALUES ('5', 'ROLE_STAFF', '员工');
+INSERT INTO `t_role` VALUES ('6', 'ROLE_LOGIN', '登录用户');
 
 -- ----------------------------
 -- Table structure for t_role_resource_link
@@ -144,6 +148,84 @@ CREATE TABLE `t_role_resource_link` (
 -- ----------------------------
 -- Records of t_role_resource_link
 -- ----------------------------
+INSERT INTO `t_role_resource_link` VALUES ('1', '1');
+INSERT INTO `t_role_resource_link` VALUES ('5', '1');
+INSERT INTO `t_role_resource_link` VALUES ('1', '2');
+INSERT INTO `t_role_resource_link` VALUES ('5', '2');
+INSERT INTO `t_role_resource_link` VALUES ('1', '3');
+INSERT INTO `t_role_resource_link` VALUES ('1', '4');
+INSERT INTO `t_role_resource_link` VALUES ('2', '4');
+INSERT INTO `t_role_resource_link` VALUES ('4', '4');
+INSERT INTO `t_role_resource_link` VALUES ('5', '4');
+INSERT INTO `t_role_resource_link` VALUES ('1', '5');
+INSERT INTO `t_role_resource_link` VALUES ('2', '5');
+INSERT INTO `t_role_resource_link` VALUES ('4', '5');
+INSERT INTO `t_role_resource_link` VALUES ('5', '5');
+INSERT INTO `t_role_resource_link` VALUES ('1', '6');
+INSERT INTO `t_role_resource_link` VALUES ('2', '6');
+INSERT INTO `t_role_resource_link` VALUES ('4', '6');
+INSERT INTO `t_role_resource_link` VALUES ('1', '7');
+INSERT INTO `t_role_resource_link` VALUES ('2', '7');
+INSERT INTO `t_role_resource_link` VALUES ('4', '7');
+INSERT INTO `t_role_resource_link` VALUES ('1', '8');
+INSERT INTO `t_role_resource_link` VALUES ('2', '8');
+INSERT INTO `t_role_resource_link` VALUES ('4', '8');
+INSERT INTO `t_role_resource_link` VALUES ('1', '9');
+INSERT INTO `t_role_resource_link` VALUES ('3', '9');
+INSERT INTO `t_role_resource_link` VALUES ('5', '9');
+INSERT INTO `t_role_resource_link` VALUES ('1', '10');
+INSERT INTO `t_role_resource_link` VALUES ('2', '10');
+INSERT INTO `t_role_resource_link` VALUES ('4', '10');
+INSERT INTO `t_role_resource_link` VALUES ('5', '10');
+INSERT INTO `t_role_resource_link` VALUES ('1', '11');
+INSERT INTO `t_role_resource_link` VALUES ('2', '11');
+INSERT INTO `t_role_resource_link` VALUES ('4', '11');
+INSERT INTO `t_role_resource_link` VALUES ('5', '11');
+INSERT INTO `t_role_resource_link` VALUES ('1', '12');
+INSERT INTO `t_role_resource_link` VALUES ('2', '12');
+INSERT INTO `t_role_resource_link` VALUES ('4', '12');
+INSERT INTO `t_role_resource_link` VALUES ('1', '13');
+INSERT INTO `t_role_resource_link` VALUES ('2', '13');
+INSERT INTO `t_role_resource_link` VALUES ('4', '13');
+INSERT INTO `t_role_resource_link` VALUES ('1', '14');
+INSERT INTO `t_role_resource_link` VALUES ('2', '14');
+INSERT INTO `t_role_resource_link` VALUES ('4', '14');
+INSERT INTO `t_role_resource_link` VALUES ('1', '15');
+INSERT INTO `t_role_resource_link` VALUES ('2', '15');
+INSERT INTO `t_role_resource_link` VALUES ('4', '15');
+INSERT INTO `t_role_resource_link` VALUES ('5', '15');
+INSERT INTO `t_role_resource_link` VALUES ('1', '16');
+INSERT INTO `t_role_resource_link` VALUES ('2', '16');
+INSERT INTO `t_role_resource_link` VALUES ('4', '16');
+INSERT INTO `t_role_resource_link` VALUES ('5', '16');
+INSERT INTO `t_role_resource_link` VALUES ('1', '17');
+INSERT INTO `t_role_resource_link` VALUES ('2', '17');
+INSERT INTO `t_role_resource_link` VALUES ('4', '17');
+INSERT INTO `t_role_resource_link` VALUES ('1', '18');
+INSERT INTO `t_role_resource_link` VALUES ('2', '18');
+INSERT INTO `t_role_resource_link` VALUES ('4', '18');
+INSERT INTO `t_role_resource_link` VALUES ('1', '19');
+INSERT INTO `t_role_resource_link` VALUES ('2', '19');
+INSERT INTO `t_role_resource_link` VALUES ('4', '19');
+INSERT INTO `t_role_resource_link` VALUES ('1', '20');
+INSERT INTO `t_role_resource_link` VALUES ('2', '20');
+INSERT INTO `t_role_resource_link` VALUES ('3', '20');
+INSERT INTO `t_role_resource_link` VALUES ('4', '20');
+INSERT INTO `t_role_resource_link` VALUES ('5', '20');
+INSERT INTO `t_role_resource_link` VALUES ('1', '21');
+INSERT INTO `t_role_resource_link` VALUES ('2', '21');
+INSERT INTO `t_role_resource_link` VALUES ('3', '21');
+INSERT INTO `t_role_resource_link` VALUES ('4', '21');
+INSERT INTO `t_role_resource_link` VALUES ('5', '21');
+INSERT INTO `t_role_resource_link` VALUES ('1', '22');
+INSERT INTO `t_role_resource_link` VALUES ('2', '22');
+INSERT INTO `t_role_resource_link` VALUES ('4', '22');
+INSERT INTO `t_role_resource_link` VALUES ('1', '23');
+INSERT INTO `t_role_resource_link` VALUES ('2', '23');
+INSERT INTO `t_role_resource_link` VALUES ('4', '23');
+INSERT INTO `t_role_resource_link` VALUES ('1', '24');
+INSERT INTO `t_role_resource_link` VALUES ('2', '24');
+INSERT INTO `t_role_resource_link` VALUES ('4', '24');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -187,5 +269,4 @@ CREATE TABLE `t_user_role_link` (
 -- ----------------------------
 -- Records of t_user_role_link
 -- ----------------------------
-INSERT INTO `t_user_role_link` VALUES ('1', '2');
-INSERT INTO `t_user_role_link` VALUES ('1', '4');
+INSERT INTO `t_user_role_link` VALUES ('1', '1');

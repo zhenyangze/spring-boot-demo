@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-04-03 23:10:52
+Date: 2019-04-04 18:50:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -254,7 +254,7 @@ DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL COMMENT '用户名',
-  `password` varchar(50) NOT NULL COMMENT '密码',
+  `password` varchar(200) NOT NULL COMMENT '密码',
   `nickname` varchar(50) DEFAULT NULL COMMENT '昵称',
   `birth` date DEFAULT NULL COMMENT '生日',
   `logintime` timestamp NULL DEFAULT NULL COMMENT '登陆时间',
@@ -268,10 +268,10 @@ CREATE TABLE `t_user` (
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('1', 'xlk', '123', '薛凌康', '1990-10-14', '2019-03-24 11:25:54', '1');
-INSERT INTO `t_user` VALUES ('2', 'xue', '123', '薛', '1990-10-14', '2019-03-24 11:25:54', '1');
-INSERT INTO `t_user` VALUES ('3', 'bcd', '123', null, null, null, '1');
-INSERT INTO `t_user` VALUES ('5', 'def', '123', null, null, null, '1');
+INSERT INTO `t_user` VALUES ('1', 'xlk', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', '薛凌康', '1990-10-14', '2019-03-24 11:25:54', '1');
+INSERT INTO `t_user` VALUES ('2', 'xue', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', '薛', '1990-10-14', '2019-03-24 11:25:54', '1');
+INSERT INTO `t_user` VALUES ('3', 'bcd', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', null, null, null, '1');
+INSERT INTO `t_user` VALUES ('5', 'def', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', null, null, null, '1');
 
 -- ----------------------------
 -- Table structure for t_user_role_link

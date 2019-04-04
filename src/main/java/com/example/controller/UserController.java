@@ -17,6 +17,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +33,8 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/{current}/{size}")
     @ApiOperation(value = "查询用户列表")
@@ -62,6 +65,7 @@ public class UserController {
     @ApiOperation(value = "保存用户")
     public ResultVO save(@Validated({UserInsert.class}) @RequestBody UserVO userVO) {
         User user = (User) ModelUtil.copy(userVO, new ModelUtil.Mapping(UserVO.class, User.class));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.customSave(user);
         return new ResultVO<>(SUCCESS, "保存用户成功！", null);
     }
@@ -70,6 +74,7 @@ public class UserController {
     @ApiOperation(value = "更新用户")
     public ResultVO update(@Validated({UserUpdate.class}) @RequestBody UserVO userVO) {
         User user = (User) ModelUtil.copy(userVO, new ModelUtil.Mapping(UserVO.class, User.class));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.customUpdate(user);
         return new ResultVO<>(SUCCESS, "更新用户成功！", null);
     }

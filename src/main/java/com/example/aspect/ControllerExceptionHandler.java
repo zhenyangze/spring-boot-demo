@@ -5,7 +5,6 @@ import com.example.exception.ProjectException;
 import com.example.model.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -21,7 +20,6 @@ import java.util.List;
 import java.util.Set;
 
 import static com.example.model.vo.ResultVO.FAILURE;
-import static com.example.model.vo.ResultVO.FORBIDDEN;
 
 @RestControllerAdvice
 @Slf4j
@@ -83,13 +81,6 @@ public class ControllerExceptionHandler {
     public ResultVO handleProjectException(ProjectException e) {
         log.error(e.getMessage(), e);
         return new ResultVO<>(FAILURE, "服务器异常！", null);
-    }
-
-    // 权限异常
-    @ExceptionHandler({AccessDeniedException.class})
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ResultVO handleAccessDeniedException(AccessDeniedException e) {
-        return new ResultVO<>(FORBIDDEN, e.getMessage(), null);
     }
 
     // 其他异常

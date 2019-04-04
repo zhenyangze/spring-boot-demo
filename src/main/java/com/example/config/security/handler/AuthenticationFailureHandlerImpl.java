@@ -1,4 +1,4 @@
-package com.example.config.security;
+package com.example.config.security.handler;
 
 import com.example.model.vo.ResultVO;
 import com.example.util.ResponseUtil;
@@ -7,6 +7,7 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,8 @@ import java.io.IOException;
 
 import static com.example.model.vo.ResultVO.UNAUTHORIZED;
 
+// 认证失败
+@Component
 public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHandler {
 
     @Override

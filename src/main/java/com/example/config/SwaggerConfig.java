@@ -1,6 +1,8 @@
 package com.example.config;
 
+import com.example.config.security.filter.TokenFilter;
 import com.fasterxml.classmate.TypeResolver;
+import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -9,8 +11,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.plugin.core.PluginRegistry;
 import org.springframework.plugin.core.PluginRegistrySupport;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.schema.AlternateTypeRule;
+import springfox.documentation.schema.ModelRef;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.OperationBuilderPlugin;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -33,10 +37,16 @@ public class SwaggerConfig {
     public Docket api() {
         TypeResolver resolver = new TypeResolver();
         AlternateTypeRule timestampRule = new AlternateTypeRule(resolver.resolve(Timestamp.class), resolver.resolve(String.class));
+        ParameterBuilder builder = new ParameterBuilder();
+        builder.parameterType("header").name(TokenFilter.TOKEN_KEY)
+                .description("认证参数")
+                .required(false)
+                .modelRef(new ModelRef("string")); // 在swagger里显示header
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.withClassAnnotation(Api.class)) //只显示添加@Api注解的类
+                .apis(RequestHandlerSelectors.withClassAnnotation(Api.class)) // 只显示添加@Api注解的类
                 .build()
+                .globalOperationParameters(Lists.newArrayList(builder.build()))
                 .alternateTypeRules(timestampRule)
                 .apiInfo(new ApiInfoBuilder()
                         .title("spring boot项目模板api")

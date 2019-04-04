@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.beans.IntrospectionException;
@@ -27,6 +28,8 @@ public class SpringBootDemoApplicationTests {
     private UserMapper userMapper;
     @Autowired
     private UserRoleLinkMapper userRoleLinkMapper;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Test
     public void contextLoads() {
@@ -77,6 +80,11 @@ public class SpringBootDemoApplicationTests {
         wrapper.eq("role_id", 3);
         wrapper.or();
         System.out.println(wrapper.getCustomSqlSegment());
+    }
+
+    @Test
+    public void testPassword() {
+        System.out.println(passwordEncoder.encode("123"));
     }
 
 }

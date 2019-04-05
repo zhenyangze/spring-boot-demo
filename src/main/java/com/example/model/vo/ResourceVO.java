@@ -5,4 +5,7 @@ import lombok.Data;
 
 @Data
 public class ResourceVO extends Resource {
+
+    private static final long serialVersionUID = 1L;
+
 }

@@ -6,11 +6,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @ApiModel("返回结果")
-public class ResultVO<T> {
+public class ResultVO<T> implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /** 成功 */
     public static final int SUCCESS = 200;

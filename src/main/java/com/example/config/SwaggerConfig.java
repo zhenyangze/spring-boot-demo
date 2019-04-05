@@ -15,6 +15,7 @@ import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.schema.AlternateTypeRule;
 import springfox.documentation.schema.ModelRef;
+import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.OperationBuilderPlugin;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -37,16 +38,19 @@ public class SwaggerConfig {
     public Docket api() {
         TypeResolver resolver = new TypeResolver();
         AlternateTypeRule timestampRule = new AlternateTypeRule(resolver.resolve(Timestamp.class), resolver.resolve(String.class));
-        ParameterBuilder builder = new ParameterBuilder();
-        builder.parameterType("header").name(TokenFilter.TOKEN_KEY)
+        Parameter token = new ParameterBuilder()
+                .parameterType("header")
+                .parameterAccess("access")
+                .name(TokenFilter.TOKEN_KEY)
                 .description("认证参数")
                 .required(false)
-                .modelRef(new ModelRef("string")); // 在swagger里显示header
+                .modelRef(new ModelRef("string"))
+                .build();
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.withClassAnnotation(Api.class)) // 只显示添加@Api注解的类
                 .build()
-                .globalOperationParameters(Lists.newArrayList(builder.build()))
+                .globalOperationParameters(Lists.newArrayList(token))
                 .alternateTypeRules(timestampRule)
                 .apiInfo(new ApiInfoBuilder()
                         .title("spring boot项目模板api")
@@ -68,7 +72,7 @@ public class SwaggerConfig {
         OperationParameterReader operationParameterReader = context.getBean(OperationParameterReader.class);
         // 原plugins集合不能修改，创建新集合，通过反射替换
         if (pluginRegistry.contains(operationParameterReader)) {
-            List<OperationBuilderPlugin> plugins_new = new ArrayList<OperationBuilderPlugin>(plugins);
+            List<OperationBuilderPlugin> plugins_new = new ArrayList<>(plugins);
             plugins_new.remove(operationParameterReader);
             try {
                 Field field = PluginRegistrySupport.class.getDeclaredField("plugins");

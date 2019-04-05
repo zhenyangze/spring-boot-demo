@@ -16,6 +16,7 @@ import javax.validation.constraints.Null;
 @ApiModel("资源")
 public class Resource extends BaseModel {
 
+    private static final long serialVersionUID = 1L;
     @ApiModelProperty("资源id")
     @Null(groups = {Insert.class}, message = "资源id必须为空")
     @NotNull(groups = {Update.class, RoleInsert.class, RoleUpdate.class}, message = "资源id不能为空")

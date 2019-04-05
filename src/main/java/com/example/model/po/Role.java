@@ -20,6 +20,7 @@ import java.util.List;
 @ApiModel("角色")
 public class Role extends BaseModel {
 
+    private static final long serialVersionUID = 1L;
     @ApiModelProperty("角色id")
     @NotNull(groups = {RoleUpdate.class, UserInsert.class, UserUpdate.class}, message = "角色id不能为空")
     @Null(groups = {RoleInsert.class}, message = "角色id必须为空")

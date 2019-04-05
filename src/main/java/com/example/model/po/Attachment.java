@@ -9,6 +9,7 @@ import lombok.Data;
 @ApiModel("附件")
 public class Attachment extends BaseModel {
 
+    private static final long serialVersionUID = 1L;
     @ApiModelProperty("附件id")
     private Integer id;
     @ApiModelProperty("名称")

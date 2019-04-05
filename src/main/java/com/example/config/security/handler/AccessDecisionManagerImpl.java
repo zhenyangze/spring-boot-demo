@@ -22,10 +22,10 @@ public class AccessDecisionManagerImpl implements AccessDecisionManager {
         if (authentication instanceof AnonymousAuthenticationToken) {
             throw new BadCredentialsException("未登录！");
         }
-        // 遍历目标url的权限列表
+        // 遍历所需角色
         for (ConfigAttribute configAttribute : configAttributes) {
             String roleName = configAttribute.getAttribute();
-            // 遍历当前用户所具有的权限
+            // 遍历当前用户所具有的角色
             Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
             for (GrantedAuthority authority : authorities) {
                 if (authority.getAuthority().equals(roleName)) {

@@ -21,6 +21,7 @@ import java.util.List;
 @ApiModel("用户")
 public class User extends BaseModel {
 
+    private static final long serialVersionUID = 1L;
     @ApiModelProperty("用户id")
     @NotNull(groups = {UserUpdate.class}, message = "用户id不能为空")
     @Null(groups = {UserInsert.class}, message = "用户id必须为空")

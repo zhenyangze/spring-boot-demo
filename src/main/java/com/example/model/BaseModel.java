@@ -12,6 +12,7 @@ import java.util.Map;
 @Slf4j
 public class BaseModel implements Cloneable, Serializable {
 
+    private static final long serialVersionUID = 1L;
     /**
      * @return 实体类主键与数据库主键对应关系，key实体类主键，value数据库主键
      */

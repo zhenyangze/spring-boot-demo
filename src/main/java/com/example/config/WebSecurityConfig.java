@@ -68,9 +68,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 基于token，所以不需要session
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()
-                // 以下路径不要求认证
+                // 放开所有路径
                 .antMatchers("/**").permitAll()
-                // 授权决策
+                // 真正的授权决策
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override
                     public <O extends FilterSecurityInterceptor> O postProcess(O o) {

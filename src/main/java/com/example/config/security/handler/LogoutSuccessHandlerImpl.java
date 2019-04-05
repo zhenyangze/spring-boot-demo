@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.example.model.vo.ResultVO.SUCCESS;
+
 // 退出登录成功
 @Component
 public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
@@ -25,7 +27,7 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         String token = TokenFilter.getToken(request);
         tokenService.deleteToken(token);
-        ResultVO resultVO = new ResultVO<>(ResultVO.SUCCESS, "退出成功！", null);
+        ResultVO resultVO = new ResultVO<>(SUCCESS, "退出成功！", null);
         ResponseUtil.println(response, resultVO);
     }
 

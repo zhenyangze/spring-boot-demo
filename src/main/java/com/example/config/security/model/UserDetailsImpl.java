@@ -19,6 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class UserDetailsImpl implements UserDetails, Serializable {
 
+    private static final long serialVersionUID = 1L;
     private User user;
     private String token;
     /** 登陆时间戳 */

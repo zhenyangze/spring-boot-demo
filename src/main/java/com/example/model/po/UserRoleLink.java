@@ -13,6 +13,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class UserRoleLink extends BaseModel {
 
+    private static final long serialVersionUID = 1L;
     private Integer userId;
     private Integer roleId;
 

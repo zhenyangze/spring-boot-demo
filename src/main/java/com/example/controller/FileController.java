@@ -32,7 +32,7 @@ public class FileController {
     @Autowired
     private IAttachmentService attachmentService;
     @Value("${attachment.save-dir}")
-    private String fileDir;
+    private String saveDir;
     @Value("${attachment.address-prefix}")
     private String addressPrefix;
     @Value("${attachment.file-separator}")
@@ -57,7 +57,7 @@ public class FileController {
         // 相对路径
         String relativePath = type+fileSeparator+year+fileSeparator+month+fileSeparator+name;
         // 本地文件路径
-        String localPath = fileDir+(fileDir.endsWith(fileSeparator)? "": fileSeparator)+relativePath;
+        String localPath = saveDir+(saveDir.endsWith(fileSeparator)? "": fileSeparator)+relativePath;
         // 创建文件夹
         File saveFile = new File(localPath);
         File saveDir = new File(saveFile.getParent());

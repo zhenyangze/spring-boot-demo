@@ -1,11 +1,12 @@
-package com.example.swagger;
+package com.example.config;
 
+import com.example.filter.SwaggerFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class SwaggerFilterConfig {
+public class FilterConfig {
 
     @Bean
     public SwaggerFilter swaggerFilter() {

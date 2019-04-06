@@ -11,6 +11,12 @@ import java.nio.charset.StandardCharsets;
 
 public class SwaggerFilter implements Filter {
 
+    private static JSONObject tokenDefinition;
+    private static JSONObject resultTokenDefinition;
+    private static JSONObject tokenTag;
+    private static JSONObject loginPath;
+    private static JSONObject logoutPath;
+
     // 拦截api信息，动态添加认证接口
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -23,13 +29,13 @@ public class SwaggerFilter implements Filter {
             String str = new String(content, StandardCharsets.UTF_8);
             JSONObject swagger = JSONObject.fromObject(str);
             JSONObject definitions = swagger.getJSONObject("definitions");
-            definitions.put("令牌", tokenDefinition());
-            definitions.put("返回结果«令牌»", resultTokenDefinition());
+            definitions.put("令牌", tokenDefinition);
+            definitions.put("返回结果«令牌»", resultTokenDefinition);
             JSONArray tags = swagger.getJSONArray("tags");
-            tags.add(tokenTag());
+            tags.add(tokenTag);
             JSONObject paths = swagger.getJSONObject("paths");
-            paths.put("/login", loginPath());
-            paths.put("/logout", logoutPath());
+            paths.put("/login", loginPath);
+            paths.put("/logout", logoutPath);
             // 把返回值输出到客户端
             ServletOutputStream out = response.getOutputStream();
             response.setContentLength(-1);
@@ -38,138 +44,126 @@ public class SwaggerFilter implements Filter {
         }
     }
 
-    private static JSONObject tokenDefinition() {
-        return JSONObject.fromObject(
-                "{"+
-                "    \"type\": \"object\","+
-                "    \"title\": \"令牌\","+
-                "    \"properties\": {"+
-                "        \"token\": {"+
-                "            \"allowEmptyValue\": false,"+
-                "            \"description\": \"令牌\","+
-                "            \"type\": \"string\""+
-                "        },\n"+
-                "        \"loginTime\": {"+
-                "            \"allowEmptyValue\": false,"+
-                "            \"description\": \"登录时间戳\","+
-                "            \"format\": \"int64\","+
-                "            \"type\": \"integer\""+
-                "        }"+
-                "    }"+
-                "}");
-    }
-
-    private static JSONObject resultTokenDefinition() {
-        return JSONObject.fromObject(
-                "{"+
-                "    \"title\": \"返回结果«令牌»\","+
-                "    \"type\": \"object\","+
-                "    \"properties\": {"+
-                "        \"code\": {"+
-                "            \"type\": \"integer\","+
-                "            \"format\": \"int32\","+
-                "            \"description\": \"状态码\","+
-                "            \"allowEmptyValue\": false"+
-                "        },"+
-                "        \"data\": {"+
-                "            \"description\": \"数据\","+
-                "            \"allowEmptyValue\": false,"+
-                "            \"$ref\": \"#/definitions/令牌\""+
-                "        },"+
-                "        \"message\": {"+
-                "            \"type\": \"string\","+
-                "            \"description\": \"消息\","+
-                "            \"allowEmptyValue\": false"+
-                "        }"+
-                "    }"+
-                "}");
-    }
-
-    private static JSONObject tokenTag() {
-        return JSONObject.fromObject(
-                "{"+
-                "    \"description\": \"Token\","+
-                "    \"name\": \"令牌\""+
-                "}");
-    }
-
-    private static JSONObject loginPath() {
-        return JSONObject.fromObject(
-                "{"+
-                "    \"post\": {"+
-                "        \"tags\": [\"令牌\"],"+
-                "        \"summary\": \"登录\","+
-                "        \"operationId\": \"loginUsingPOST\","+
-                "        \"produces\": [\"application/json;charset=UTF-8\"],"+
-                "        \"responses\": {"+
-                "            \"200\": {"+
-                "                \"description\": \"OK\","+
-                "                \"schema\": {"+
-                "                    \"$ref\": \"#/definitions/返回结果«令牌»\""+
-                "                }"+
-                "            },"+
-                "            \"401\": {"+
-                "                \"description\": \"Unauthorized\""+
-                "            },"+
-                "            \"403\": {"+
-                "                \"description\": \"Forbidden\""+
-                "            },"+
-                "            \"404\": {"+
-                "                \"description\": \"Not Found\""+
-                "            }"+
-                "        },"+
-                "        \"parameters\": [{"+
-                "            \"name\": \"username\","+
-                "            \"in\": \"query\","+
-                "            \"description\": \"用户名\","+
-                "            \"required\": true,"+
-                "            \"type\": \"string\""+
-                "        },"+
-                "        {"+
-                "            \"name\": \"password\","+
-                "            \"in\": \"query\","+
-                "            \"description\": \"密码\","+
-                "            \"required\": true,"+
-                "            \"type\": \"string\""+
-                "        }]"+
-                "    }"+
-                "}");
-    }
-
-    private static JSONObject logoutPath() {
-        return JSONObject.fromObject(
-                "{"+
-                "    \"get\": {"+
-                "        \"tags\": [\"令牌\"],"+
-                "        \"summary\": \"登出\","+
-                "        \"operationId\": \"logoutUsingGET\","+
-                "        \"produces\": [\"application/json;charset=UTF-8\"],"+
-                "        \"parameters\": [{"+
-                "            \"name\": \"token\","+
-                "            \"in\": \"header\","+
-                "            \"description\": \"认证参数\","+
-                "            \"required\": true,"+
-                "            \"type\": \"string\""+
-                "        }],"+
-                "        \"responses\": {"+
-                "            \"200\": {"+
-                "                \"description\": \"OK\","+
-                "                \"schema\": {"+
-                "                    \"$ref\": \"#/definitions/返回结果\""+
-                "                }"+
-                "            },"+
-                "            \"401\": {"+
-                "                \"description\": \"Unauthorized\""+
-                "            },"+
-                "            \"403\": {"+
-                "                \"description\": \"Forbidden\""+
-                "            },"+
-                "            \"404\": {"+
-                "                \"description\": \"Not Found\""+
-                "            }"+
-                "        }"+
-                "    }"+
-                "}");
+    static {
+        tokenDefinition = JSONObject.fromObject(
+                        "{"+
+                        "    \"type\": \"object\","+
+                        "    \"title\": \"令牌\","+
+                        "    \"properties\": {"+
+                        "        \"token\": {"+
+                        "            \"allowEmptyValue\": false,"+
+                        "            \"description\": \"令牌\","+
+                        "            \"type\": \"string\""+
+                        "        },\n"+
+                        "        \"loginTime\": {"+
+                        "            \"allowEmptyValue\": false,"+
+                        "            \"description\": \"登录时间戳\","+
+                        "            \"format\": \"int64\","+
+                        "            \"type\": \"integer\""+
+                        "        }"+
+                        "    }"+
+                        "}");
+        resultTokenDefinition = JSONObject.fromObject(
+                        "{"+
+                        "    \"title\": \"返回结果«令牌»\","+
+                        "    \"type\": \"object\","+
+                        "    \"properties\": {"+
+                        "        \"code\": {"+
+                        "            \"type\": \"integer\","+
+                        "            \"format\": \"int32\","+
+                        "            \"description\": \"状态码\","+
+                        "            \"allowEmptyValue\": false"+
+                        "        },"+
+                        "        \"data\": {"+
+                        "            \"description\": \"数据\","+
+                        "            \"allowEmptyValue\": false,"+
+                        "            \"$ref\": \"#/definitions/令牌\""+
+                        "        },"+
+                        "        \"message\": {"+
+                        "            \"type\": \"string\","+
+                        "            \"description\": \"消息\","+
+                        "            \"allowEmptyValue\": false"+
+                        "        }"+
+                        "    }"+
+                        "}");
+        tokenTag = JSONObject.fromObject(
+                        "{"+
+                        "    \"description\": \"Token\","+
+                        "    \"name\": \"令牌\""+
+                        "}");
+        loginPath = JSONObject.fromObject(
+                        "{"+
+                        "    \"post\": {"+
+                        "        \"tags\": [\"令牌\"],"+
+                        "        \"summary\": \"登录\","+
+                        "        \"operationId\": \"loginUsingPOST\","+
+                        "        \"produces\": [\"application/json;charset=UTF-8\"],"+
+                        "        \"responses\": {"+
+                        "            \"200\": {"+
+                        "                \"description\": \"OK\","+
+                        "                \"schema\": {"+
+                        "                    \"$ref\": \"#/definitions/返回结果«令牌»\""+
+                        "                }"+
+                        "            },"+
+                        "            \"401\": {"+
+                        "                \"description\": \"Unauthorized\""+
+                        "            },"+
+                        "            \"403\": {"+
+                        "                \"description\": \"Forbidden\""+
+                        "            },"+
+                        "            \"404\": {"+
+                        "                \"description\": \"Not Found\""+
+                        "            }"+
+                        "        },"+
+                        "        \"parameters\": [{"+
+                        "            \"name\": \"username\","+
+                        "            \"in\": \"query\","+
+                        "            \"description\": \"用户名\","+
+                        "            \"required\": true,"+
+                        "            \"type\": \"string\""+
+                        "        },"+
+                        "        {"+
+                        "            \"name\": \"password\","+
+                        "            \"in\": \"query\","+
+                        "            \"description\": \"密码\","+
+                        "            \"required\": true,"+
+                        "            \"type\": \"string\""+
+                        "        }]"+
+                        "    }"+
+                        "}");
+        logoutPath = JSONObject.fromObject(
+                        "{"+
+                        "    \"get\": {"+
+                        "        \"tags\": [\"令牌\"],"+
+                        "        \"summary\": \"登出\","+
+                        "        \"operationId\": \"logoutUsingGET\","+
+                        "        \"produces\": [\"application/json;charset=UTF-8\"],"+
+                        "        \"parameters\": [{"+
+                        "            \"name\": \"token\","+
+                        "            \"in\": \"header\","+
+                        "            \"description\": \"认证参数\","+
+                        "            \"required\": true,"+
+                        "            \"type\": \"string\""+
+                        "        }],"+
+                        "        \"responses\": {"+
+                        "            \"200\": {"+
+                        "                \"description\": \"OK\","+
+                        "                \"schema\": {"+
+                        "                    \"$ref\": \"#/definitions/返回结果\""+
+                        "                }"+
+                        "            },"+
+                        "            \"401\": {"+
+                        "                \"description\": \"Unauthorized\""+
+                        "            },"+
+                        "            \"403\": {"+
+                        "                \"description\": \"Forbidden\""+
+                        "            },"+
+                        "            \"404\": {"+
+                        "                \"description\": \"Not Found\""+
+                        "            }"+
+                        "        }"+
+                        "    }"+
+                        "}");
     }
 
     @Override

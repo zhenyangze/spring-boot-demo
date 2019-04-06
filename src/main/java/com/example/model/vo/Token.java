@@ -1,4 +1,4 @@
-package com.example.config.security.model;
+package com.example.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

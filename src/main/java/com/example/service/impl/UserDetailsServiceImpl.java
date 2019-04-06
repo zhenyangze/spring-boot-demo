@@ -1,7 +1,7 @@
-package com.example.config.security.service.impl;
+package com.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.config.security.model.UserDetailsImpl;
+import com.example.model.vo.UserDetailsImpl;
 import com.example.mapper.UserMapper;
 import com.example.model.po.User;
 import org.springframework.beans.factory.annotation.Autowired;

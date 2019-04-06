@@ -1,4 +1,4 @@
-package com.example.config.security.handler;
+package com.example.security;
 
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;

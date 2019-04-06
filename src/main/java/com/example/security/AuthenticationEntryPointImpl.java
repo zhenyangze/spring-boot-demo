@@ -1,4 +1,4 @@
-package com.example.config.security.handler;
+package com.example.security;
 
 import com.example.model.vo.ResultVO;
 import com.example.util.ResponseUtil;

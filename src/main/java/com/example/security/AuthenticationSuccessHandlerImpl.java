@@ -1,8 +1,8 @@
-package com.example.config.security.handler;
+package com.example.security;
 
-import com.example.config.security.model.Token;
-import com.example.config.security.model.UserDetailsImpl;
-import com.example.config.security.service.ITokenService;
+import com.example.model.vo.Token;
+import com.example.model.vo.UserDetailsImpl;
+import com.example.service.ITokenService;
 import com.example.model.vo.ResultVO;
 import com.example.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;

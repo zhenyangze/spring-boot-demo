@@ -1,6 +1,6 @@
 package com.example.config;
 
-import com.example.config.security.filter.TokenFilter;
+import com.example.filter.TokenFilter;
 import com.fasterxml.classmate.TypeResolver;
 import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;

@@ -1,4 +1,4 @@
-package com.example.config.swagger.extension;
+package com.example.swagger;
 
 import com.fasterxml.classmate.ResolvedType;
 import com.google.common.base.Predicate;

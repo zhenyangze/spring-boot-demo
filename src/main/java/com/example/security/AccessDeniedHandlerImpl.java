@@ -1,4 +1,4 @@
-package com.example.config.security.handler;
+package com.example.security;
 
 import com.example.model.vo.ResultVO;
 import com.example.util.ResponseUtil;
@@ -18,7 +18,7 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException exception) throws IOException {
-        ResultVO resultVO = new ResultVO<>(FORBIDDEN, "权限不足！", null);
+        ResultVO resultVO = new ResultVO<>(FORBIDDEN, exception.getMessage(), null);
         ResponseUtil.println(response, resultVO);
     }
 

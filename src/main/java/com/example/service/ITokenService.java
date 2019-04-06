@@ -1,7 +1,7 @@
-package com.example.config.security.service;
+package com.example.service;
 
-import com.example.config.security.model.Token;
-import com.example.config.security.model.UserDetailsImpl;
+import com.example.model.vo.Token;
+import com.example.model.vo.UserDetailsImpl;
 
 public interface ITokenService {
 

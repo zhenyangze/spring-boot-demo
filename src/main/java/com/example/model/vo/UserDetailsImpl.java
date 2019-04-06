@@ -1,4 +1,4 @@
-package com.example.config.security.model;
+package com.example.model.vo;
 
 import com.example.model.po.Role;
 import com.example.model.po.User;

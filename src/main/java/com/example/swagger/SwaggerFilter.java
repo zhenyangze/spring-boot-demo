@@ -1,4 +1,4 @@
-package com.example.config.swagger.extension;
+package com.example.swagger;
 
 import com.example.filter.util.ResponseWrapper;
 import net.sf.json.JSONArray;

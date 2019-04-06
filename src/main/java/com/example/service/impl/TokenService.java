@@ -1,8 +1,8 @@
-package com.example.config.security.service.impl;
+package com.example.service.impl;
 
-import com.example.config.security.model.Token;
-import com.example.config.security.model.UserDetailsImpl;
-import com.example.config.security.service.ITokenService;
+import com.example.model.vo.Token;
+import com.example.model.vo.UserDetailsImpl;
+import com.example.service.ITokenService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;

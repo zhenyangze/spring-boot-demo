@@ -1,7 +1,7 @@
-package com.example.config.security.filter;
+package com.example.filter;
 
-import com.example.config.security.model.UserDetailsImpl;
-import com.example.config.security.service.ITokenService;
+import com.example.model.vo.UserDetailsImpl;
+import com.example.service.ITokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

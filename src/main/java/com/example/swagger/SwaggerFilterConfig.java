@@ -1,4 +1,4 @@
-package com.example.config.swagger.extension;
+package com.example.swagger;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;

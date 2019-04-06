@@ -5,6 +5,7 @@ import com.fasterxml.classmate.TypeResolver;
 import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +32,8 @@ import java.util.List;
 @EnableSwagger2
 public class SwaggerConfig {
 
+    @Value("${swagger2.enable}")
+    private boolean enable;
     @Autowired
     private ApplicationContext context;
 
@@ -47,6 +50,7 @@ public class SwaggerConfig {
                 .modelRef(new ModelRef("string"))
                 .build();
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .enable(enable)
                 .select()
                 .apis(RequestHandlerSelectors.withClassAnnotation(Api.class)) // 只显示添加@Api注解的类
                 .build()

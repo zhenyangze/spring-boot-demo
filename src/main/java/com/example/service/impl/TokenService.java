@@ -24,12 +24,12 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class TokenService implements ITokenService {
 
-    @Value("${token.expire.seconds}")
+    @Value("${token.expire-seconds}")
     private Integer expireSeconds;
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
     // 私钥
-    @Value("${token.jwtSecret}")
+    @Value("${token.jwt-secret}")
     private String jwtSecret;
 
     private static Key KEY = null;

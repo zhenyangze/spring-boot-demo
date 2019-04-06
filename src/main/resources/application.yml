@@ -123,10 +123,8 @@ attachment:
   address-prefix: /demofile # 文件访问前缀
   file-separator: / # 文件路径分隔符
 
-# token过期时间（秒）
 token:
   expire-seconds: 7200 # token过期时间（秒）
-  # jwt密钥
   jwt-secret: SPRING-BOOT-DEMO # jwt密钥
 
 swagger2:

@@ -30,8 +30,8 @@ public class FilterInvocationSecurityMetadataSourceImpl implements FilterInvocat
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
         HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();
 
-        // 查询所有资源
-        List<Resource> resources = resourceService.getAll();
+        // 查询所有http类型的资源
+        List<Resource> resources = resourceService.getByType("http");
 
         Resource resource = null;
         // 按照url匹配

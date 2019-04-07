@@ -26,7 +26,7 @@ public class TokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = getToken(request);
-        if (!StringUtils.isEmpty(token)) {
+        if (!StringUtils.isEmpty(token) && !"null".equals(token)) {
             UserDetailsImpl userDetails = tokenService.getUserDetalis(token);
             if (userDetails != null) {
                 checkExpireTime(userDetails);

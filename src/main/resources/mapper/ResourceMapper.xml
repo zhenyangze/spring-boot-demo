@@ -3,12 +3,14 @@
 <mapper namespace="com.example.mapper.ResourceMapper">
 
     <sql id="baseCol">
-        t_resource.id t_resource_id, t_resource.resource_pattern t_resource_resource_pattern, t_resource.resource_method t_resource_resource_method,
+        t_resource.id t_resource_id, t_resource.resource_type t_resource_resource_type,
+        t_resource.resource_pattern t_resource_resource_pattern, t_resource.resource_method t_resource_resource_method,
         t_resource.resource_desc t_resource_resource_desc
     </sql>
 
     <resultMap id="baseResultMap" type="com.example.model.po.Resource">
         <id column="t_resource_id" property="id" />
+        <result column="t_resource_resource_type" property="resourceType" />
         <result column="t_resource_resource_pattern" property="resourcePattern" />
         <result column="t_resource_resource_method" property="resourceMethod" />
         <result column="t_resource_resource_desc" property="resourceDesc" />

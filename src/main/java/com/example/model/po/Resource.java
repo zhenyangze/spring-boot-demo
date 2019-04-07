@@ -21,6 +21,10 @@ public class Resource extends BaseModel {
     @Null(groups = {Insert.class}, message = "资源id必须为空")
     @NotNull(groups = {Update.class, RoleInsert.class, RoleUpdate.class}, message = "资源id不能为空")
     private Integer id;
+    @ApiModelProperty("资源类型")
+    @NotNull(groups = {Insert.class, Update.class}, message = "资源类型不能为空")
+    @Null(groups = {RoleInsert.class, RoleUpdate.class}, message = "资源类型必须为空")
+    private String resourceType;
     @ApiModelProperty("资源pattern")
     @NotNull(groups = {Insert.class, Update.class}, message = "资源pattern不能为空")
     @Null(groups = {RoleInsert.class, RoleUpdate.class}, message = "资源pattern必须为空")

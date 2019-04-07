@@ -25,6 +25,10 @@ logging:
   config: classpath:logback.xml
 
 spring:
+  devtools:
+    restart:
+      enabled: true # 热部署
+      additional-paths: src/main/java # 设置重启的目录
   thymeleaf:
     cache: false # 禁用thymeleaf缓存
 

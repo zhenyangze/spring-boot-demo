@@ -1,6 +1,7 @@
 package com.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.mapper.ResourceMapper;
 import com.example.model.po.Resource;
@@ -19,8 +20,10 @@ public class ResourceService extends BaseService<ResourceMapper, Resource> imple
 
     @Override
     @Cacheable(cacheNames = {"resource:multiple"}, keyGenerator = "defaultPageKeyGenerator")
-    public List<Resource> getAll() {
-        return baseMapper.selectList(null);
+    public List<Resource> getByType(String type) {
+        QueryWrapper<Resource> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("resource_type", type);
+        return baseMapper.selectList(queryWrapper);
     }
 
     @Override

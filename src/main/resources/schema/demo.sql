@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-04-04 18:50:21
+Date: 2019-04-07 21:38:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,7 +25,7 @@ CREATE TABLE `t_attachment` (
   `attachment_address` varchar(200) DEFAULT NULL COMMENT '访问地址',
   `attachment_path` varchar(200) DEFAULT NULL COMMENT '本地路径',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_attachment
@@ -50,6 +50,9 @@ INSERT INTO `t_attachment` VALUES ('26', 'exe4j_64b_jb51.rar', '/demofile/abc/20
 INSERT INTO `t_attachment` VALUES ('27', '桌面.rar', '/demofile/abc/2019/3/1553701128644.rar', 'E:/IdeaProjects/file/abc/2019/3/1553701128644.rar');
 INSERT INTO `t_attachment` VALUES ('28', '1553701128644.rar', '/demofile/bcd/2019/3/1553701660654.rar', 'E:/IdeaProjects/file/bcd/2019/3/1553701660654.rar');
 INSERT INTO `t_attachment` VALUES ('29', '1553701128644.rar', '/demofile/eee/2019/3/1553940007584.rar', 'E:/IdeaProjects/file/eee/2019/3/1553940007584.rar');
+INSERT INTO `t_attachment` VALUES ('30', '1553701128644.rar', '/demofile/ceshi/2019/4/1554529074722.rar', 'E:/IdeaProjects/file/ceshi/2019/4/1554529074722.rar');
+INSERT INTO `t_attachment` VALUES ('31', '1553700913857.rar', '/demofile/ceshi/2019/4/1554529266591.rar', 'E:/IdeaProjects/file/ceshi/2019/4/1554529266591.rar');
+INSERT INTO `t_attachment` VALUES ('32', '1553700913857.rar', '/demofile/ceshi/2019/4/1554529387508.rar', 'E:/IdeaProjects/file/ceshi/2019/4/1554529387508.rar');
 
 -- ----------------------------
 -- Table structure for t_book
@@ -96,39 +99,40 @@ INSERT INTO `t_dept` VALUES ('5', '5555');
 DROP TABLE IF EXISTS `t_resource`;
 CREATE TABLE `t_resource` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `resource_type` varchar(50) DEFAULT NULL COMMENT '资源类型',
   `resource_pattern` varchar(50) DEFAULT NULL COMMENT '资源pattern',
   `resource_method` varchar(20) DEFAULT NULL COMMENT '请求方法',
   `resource_desc` varchar(50) DEFAULT NULL COMMENT '资源描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_resource
 -- ----------------------------
-INSERT INTO `t_resource` VALUES ('1', '/attachment/*/*', 'GET', '附件列表');
-INSERT INTO `t_resource` VALUES ('2', '/attachment/*', 'GET', '附件详情');
-INSERT INTO `t_resource` VALUES ('3', '/attachment/*', 'DELETE', '删除附件');
-INSERT INTO `t_resource` VALUES ('4', '/dept/*/*', 'GET', '部门列表');
-INSERT INTO `t_resource` VALUES ('5', '/dept/*', 'GET', '部门详情');
-INSERT INTO `t_resource` VALUES ('6', '/dept', 'POST', '保存部门');
-INSERT INTO `t_resource` VALUES ('7', '/dept', 'PUT', '更新部门');
-INSERT INTO `t_resource` VALUES ('8', '/dept/*', 'DELETE', '删除部门');
-INSERT INTO `t_resource` VALUES ('9', '/file/*/*', 'POST', '上传文件');
-INSERT INTO `t_resource` VALUES ('10', '/resource/*/*', 'GET', '资源列表');
-INSERT INTO `t_resource` VALUES ('11', '/resource/*', 'GET', '资源详情');
-INSERT INTO `t_resource` VALUES ('12', '/resource', 'POST', '保存资源');
-INSERT INTO `t_resource` VALUES ('13', '/resource', 'PUT', '更新资源');
-INSERT INTO `t_resource` VALUES ('14', '/resource/*', 'DELETE', '删除资源');
-INSERT INTO `t_resource` VALUES ('15', '/role/*/*', 'GET', '角色列表');
-INSERT INTO `t_resource` VALUES ('16', '/role/*', 'GET', '角色详情');
-INSERT INTO `t_resource` VALUES ('17', '/role', 'POST', '保存角色');
-INSERT INTO `t_resource` VALUES ('18', '/role', 'PUT', '更新角色');
-INSERT INTO `t_resource` VALUES ('19', '/role/*', 'DELETE', '删除角色');
-INSERT INTO `t_resource` VALUES ('20', '/user/*/*', 'GET', '用户列表');
-INSERT INTO `t_resource` VALUES ('21', '/user/*', 'GET', '用户详情');
-INSERT INTO `t_resource` VALUES ('22', '/user', 'POST', '保存用户');
-INSERT INTO `t_resource` VALUES ('23', '/user', 'PUT', '更新用户');
-INSERT INTO `t_resource` VALUES ('24', '/user/*', 'DELETE', '删除用户');
+INSERT INTO `t_resource` VALUES ('1', 'http', '/attachment/*/*', 'GET', '附件列表');
+INSERT INTO `t_resource` VALUES ('2', 'http', '/attachment/*', 'GET', '附件详情');
+INSERT INTO `t_resource` VALUES ('3', 'http', '/attachment/*', 'DELETE', '删除附件');
+INSERT INTO `t_resource` VALUES ('4', 'http', '/dept/*/*', 'GET', '部门列表');
+INSERT INTO `t_resource` VALUES ('5', 'http', '/dept/*', 'GET', '部门详情');
+INSERT INTO `t_resource` VALUES ('6', 'http', '/dept', 'POST', '保存部门');
+INSERT INTO `t_resource` VALUES ('7', 'http', '/dept', 'PUT', '更新部门');
+INSERT INTO `t_resource` VALUES ('8', 'http', '/dept/*', 'DELETE', '删除部门');
+INSERT INTO `t_resource` VALUES ('9', 'http', '/file/*/*', 'POST', '上传文件');
+INSERT INTO `t_resource` VALUES ('10', 'http', '/resource/*/*', 'GET', '资源列表');
+INSERT INTO `t_resource` VALUES ('11', 'http', '/resource/*', 'GET', '资源详情');
+INSERT INTO `t_resource` VALUES ('12', 'http', '/resource', 'POST', '保存资源');
+INSERT INTO `t_resource` VALUES ('13', 'http', '/resource', 'PUT', '更新资源');
+INSERT INTO `t_resource` VALUES ('14', 'http', '/resource/*', 'DELETE', '删除资源');
+INSERT INTO `t_resource` VALUES ('15', 'http', '/role/*/*', 'GET', '角色列表');
+INSERT INTO `t_resource` VALUES ('16', 'http', '/role/*', 'GET', '角色详情');
+INSERT INTO `t_resource` VALUES ('17', 'http', '/role', 'POST', '保存角色');
+INSERT INTO `t_resource` VALUES ('18', 'http', '/role', 'PUT', '更新角色');
+INSERT INTO `t_resource` VALUES ('19', 'http', '/role/*', 'DELETE', '删除角色');
+INSERT INTO `t_resource` VALUES ('20', 'http', '/user/*/*', 'GET', '用户列表');
+INSERT INTO `t_resource` VALUES ('21', 'http', '/user/*', 'GET', '用户详情');
+INSERT INTO `t_resource` VALUES ('22', 'http', '/user', 'POST', '保存用户');
+INSERT INTO `t_resource` VALUES ('23', 'http', '/user', 'PUT', '更新用户');
+INSERT INTO `t_resource` VALUES ('24', 'http', '/user/*', 'DELETE', '删除用户');
 
 -- ----------------------------
 -- Table structure for t_role

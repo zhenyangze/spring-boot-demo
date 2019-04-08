@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -30,6 +31,8 @@ public class SpringBootDemoApplicationTests {
     private UserRoleLinkMapper userRoleLinkMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private ApplicationContext context;
 
     @Test
     public void contextLoads() {
@@ -85,6 +88,14 @@ public class SpringBootDemoApplicationTests {
     @Test
     public void testPassword() {
         System.out.println(passwordEncoder.encode("123"));
+    }
+
+    @Test
+    public void testContext() {
+        String[] names = context.getBeanDefinitionNames();
+        for (String name : names) {
+            System.out.println(name);
+        }
     }
 
 }

@@ -19,8 +19,8 @@ public class StompSubProtocolErrorHandlerImpl extends StompSubProtocolErrorHandl
             LinkedList message = (LinkedList) nativeHeaders.get("message");
             if (message!=null) {
                 message.clear();
-//                message.add("不允许访问！");
-                message.add(cause.getCause().getMessage());
+//                message.add(cause.getCause().getMessage());
+                message.add("请求出错！");
             }
         }
         return genericMessage;

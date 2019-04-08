@@ -2,7 +2,6 @@ package com.example.config;
 
 import com.example.websocket.AccessDecisionFromClientInterceptor;
 import com.example.websocket.CustomizeWebMvcStompEndpointRegistry;
-import com.example.websocket.CustomizeWebSocketMessageBrokerConfiguration;
 import com.example.websocket.StompSubProtocolErrorHandlerImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +30,7 @@ import org.springframework.web.socket.messaging.StompSubProtocolErrorHandler;
  * @see org.springframework.web.socket.messaging.StompSubProtocolHandler#handleMessageToClient(WebSocketSession, Message)
  * 未对自定义拦截做支持，
  * 所以取消{@link org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker}，
- * 使用自定义配置{@link CustomizeWebSocketMessageBrokerConfiguration}
+ * 使用自定义配置{@link com.example.websocket.CustomizeWebSocketMessageBrokerConfiguration}
  * 后续将这部分配置单独做一个项目
  */
 @Configuration

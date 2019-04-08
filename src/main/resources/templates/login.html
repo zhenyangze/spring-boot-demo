@@ -5,6 +5,7 @@
 <head>
     <title>登陆页面</title>
     <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/basevalue.js}"></script>
 </head>
 <body>
 <div><label> 账号: <input type="text" id="username"/> </label></div>
@@ -25,7 +26,7 @@
             success: function(data) {
                 var token = data.data.token;
                 console.log("token: "+token);
-                localStorage.setItem("token", token);
+                localStorage.setItem(storage_token_key, token);
                 location.href = "/demo/ws";
             },
             error: function(xhr, msg, e) {

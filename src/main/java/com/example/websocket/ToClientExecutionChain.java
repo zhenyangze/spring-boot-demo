@@ -4,6 +4,7 @@ import org.springframework.messaging.Message;
 import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.messaging.StompSubProtocolHandler;
 
 import java.util.List;
 
@@ -18,12 +19,12 @@ public class ToClientExecutionChain {
         this.interceptors = interceptors;
     }
 
-    public boolean applyPreHandle(WebSocketSession session, Message<?> message) {
+    public boolean applyPreHandle(WebSocketSession session, Message<?> message, StompSubProtocolHandler handler) {
         if (!ObjectUtils.isEmpty(interceptors)) {
             for (int i=0; i<interceptors.size(); i++) {
                 ToClientInterceptor interceptor = interceptors.get(i);
-                if (!interceptor.preHandle(session, message)) {
-                    applyPostHandle(session, message);
+                if (!interceptor.preHandle(session, message, handler)) {
+                    applyPostHandle(session, message, handler);
                     return false;
                 }
                 this.interceptorIndex = i;
@@ -32,11 +33,11 @@ public class ToClientExecutionChain {
         return true;
     }
 
-    public void applyPostHandle(WebSocketSession session, Message<?> message) {
+    public void applyPostHandle(WebSocketSession session, Message<?> message, StompSubProtocolHandler handler) {
         if (!ObjectUtils.isEmpty(interceptors)) {
             for (int i = this.interceptorIndex; i >= 0; i--) {
                 ToClientInterceptor interceptor = interceptors.get(i);
-                interceptor.postHandle(session, message);
+                interceptor.postHandle(session, message, handler);
             }
         }
     }

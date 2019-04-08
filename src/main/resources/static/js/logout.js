@@ -1,5 +1,5 @@
 function logout() {
-    var token = localStorage.getItem("token");
+    var token = localStorage.getItem(storage_token_key);
     $.ajax({
         url: "/demo/logout",
         type: "get",

@@ -26,6 +26,7 @@
 <script type="text/javascript" th:src="@{/js/stomp.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/logout.js}"></script>
+<script type="text/javascript" th:src="@{/js/basevalue.js}"></script>
 <script type="text/javascript">
     var stompClient = null;
 
@@ -37,8 +38,8 @@
     }
 
     function connect() {
-        var token = localStorage.getItem("token");
-        var socket = new SockJS('http://localhost:8080/demo/endpoint?token='+token); //链接SockJS 的endpoint 名称为"/endpoint"
+        var token = localStorage.getItem(storage_token_key);
+        var socket = new SockJS('/demo/endpoint?token='+token); //链接SockJS 的endpoint 名称为"/endpoint"
         stompClient = Stomp.over(socket);//使用stomp子协议的WebSocket 客户端
         stompClient.connect({}, function(frame) {//链接Web Socket的服务端。
             setConnected(true);

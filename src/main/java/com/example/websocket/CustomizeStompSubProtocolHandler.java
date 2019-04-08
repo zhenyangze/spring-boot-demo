@@ -23,18 +23,18 @@ public class CustomizeStompSubProtocolHandler extends StompSubProtocolHandler {
     @Override
     public void handleMessageFromClient(WebSocketSession session, WebSocketMessage<?> webSocketMessage, MessageChannel outputChannel) {
         FromClientExecutionChain chain = new FromClientExecutionChain(fromClientInterceptors);
-        if (chain.applyPreHandle(session, webSocketMessage, outputChannel)) {
+        if (chain.applyPreHandle(session, webSocketMessage, outputChannel, this)) {
             super.handleMessageFromClient(session, webSocketMessage, outputChannel);
-            chain.applyPostHandle(session, webSocketMessage, outputChannel);
+            chain.applyPostHandle(session, webSocketMessage, outputChannel, this);
         }
     }
 
     @Override
     public void handleMessageToClient(WebSocketSession session, Message<?> message) {
         ToClientExecutionChain chain = new ToClientExecutionChain(toClientInterceptors);
-        if (chain.applyPreHandle(session, message)) {
+        if (chain.applyPreHandle(session, message, this)) {
             super.handleMessageToClient(session, message);
-            chain.applyPostHandle(session, message);
+            chain.applyPostHandle(session, message, this);
         }
     }
 

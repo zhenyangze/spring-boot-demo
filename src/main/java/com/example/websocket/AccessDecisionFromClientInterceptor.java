@@ -47,17 +47,18 @@ public class AccessDecisionFromClientInterceptor implements FromClientIntercepto
         // TODO 拆分成两个方法
         /*
          * TODO
-         *  一、
          *  遍历资源，根据message的类型和destination匹配资源，
          *  获取到当前资源resource，
-         *  如果resource==null，直接放行
+         *  如果resource==null，禁止访问（安全）
+         *  注：这里和http请求授权策略不一样，http请求如果访问controller中没有定义的url会返回404，
+         *  所以在http请求授权策略中当resource==null时默认为不需要权限
+         *  而websocket如果不做限制可以发送任意主题的消息，所以为了安全，禁止用户发送资源定义以外的主题
          *  如果resource不为null，按照资源（resource）id获取需要角色，
          *  List<Role> roles = roleService.getByResourceId(resource.getId());
          */
 
         /*
          * TODO
-         *  二、
          *  如果roles（需要角色）和authorities（当前用户角色）都不为空
          *  (!Collections.isEmpty(roles) && !Collections.isEmpty(authorities))
          *  roles和authorities进行匹配，

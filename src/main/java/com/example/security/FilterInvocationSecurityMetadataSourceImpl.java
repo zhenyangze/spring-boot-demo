@@ -4,7 +4,9 @@ import com.example.model.po.Resource;
 import com.example.model.po.Role;
 import com.example.service.IResourceService;
 import com.example.service.IRoleService;
+import io.jsonwebtoken.lang.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
@@ -21,6 +23,8 @@ import java.util.List;
 @Component
 public class FilterInvocationSecurityMetadataSourceImpl implements FilterInvocationSecurityMetadataSource {
 
+    @Value("${resource.type.http}")
+    private String http;
     @Autowired
     private IResourceService resourceService;
     @Autowired
@@ -31,14 +35,16 @@ public class FilterInvocationSecurityMetadataSourceImpl implements FilterInvocat
         HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();
 
         // 查询所有http类型的资源
-        List<Resource> resources = resourceService.getByType("http");
+        List<Resource> resources = resourceService.getByType(http);
 
         Resource resource = null;
         // 按照url匹配
-        for (Resource r: resources) {
-            RequestMatcher requestMatcher = new AntPathRequestMatcher(r.getResourcePattern(), r.getResourceMethod());
-            if (requestMatcher.matches(request)) {
-                resource = r;
+        if (!Collections.isEmpty(resources)) {
+            for (Resource r: resources) {
+                RequestMatcher requestMatcher = new AntPathRequestMatcher(r.getResourcePattern(), r.getResourceMethod());
+                if (requestMatcher.matches(request)) {
+                    resource = r;
+                }
             }
         }
 
@@ -49,12 +55,15 @@ public class FilterInvocationSecurityMetadataSourceImpl implements FilterInvocat
 
         // 按照资源id获取角色
         List<Role> roles = roleService.getByResourceId(resource.getId());
-        int size = roles.size();
-        String[] values = new String[size];
-        for (int i = 0; i < size; i++) {
-            values[i] = roles.get(i).getRoleName();
+        if (!Collections.isEmpty(roles)) {
+            int size = roles.size();
+            String[] values = new String[size];
+            for (int i = 0; i < size; i++) {
+                values[i] = roles.get(i).getRoleName();
+            }
+            return SecurityConfig.createList(values);
         }
-        return SecurityConfig.createList(values);
+        return null;
     }
 
     @Override

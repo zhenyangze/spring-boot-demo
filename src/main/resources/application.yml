@@ -133,3 +133,8 @@ token:
 
 swagger2:
   enable: true # 启用swagger2
+
+resource:
+  type:
+    http: http # 资源类型：http
+    websocket: websocket # 资源类型：websocket

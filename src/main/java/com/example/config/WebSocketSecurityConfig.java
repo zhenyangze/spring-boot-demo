@@ -6,9 +6,13 @@ import com.example.websocket.CustomizeWebSocketMessageBrokerConfiguration;
 import com.example.websocket.StompSubProtocolErrorHandlerImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.security.config.annotation.web.messaging.MessageSecurityMetadataSourceRegistry;
 import org.springframework.security.config.annotation.web.socket.AbstractSecurityWebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.WebSocketMessage;
+import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.messaging.StompSubProtocolErrorHandler;
 
@@ -21,7 +25,11 @@ import org.springframework.web.socket.messaging.StompSubProtocolErrorHandler;
  * 会引入{@link org.springframework.web.socket.config.annotation.DelegatingWebSocketMessageBrokerConfiguration}配置类，
  * 该配置类默认使用{@link org.springframework.web.socket.config.annotation.WebMvcStompEndpointRegistry}，
  * {@link org.springframework.web.socket.config.annotation.WebMvcStompEndpointRegistry}的stomp协议处理器为
- * {@link org.springframework.web.socket.messaging.StompSubProtocolHandler}，处理消息的方法未对自定义拦截做支持，
+ * {@link org.springframework.web.socket.messaging.StompSubProtocolHandler}，
+ * 处理消息的方法：
+ * @see org.springframework.web.socket.messaging.StompSubProtocolHandler#handleMessageFromClient(WebSocketSession, WebSocketMessage, MessageChannel)
+ * @see org.springframework.web.socket.messaging.StompSubProtocolHandler#handleMessageToClient(WebSocketSession, Message)
+ * 未对自定义拦截做支持，
  * 所以取消{@link org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker}，
  * 使用自定义配置{@link CustomizeWebSocketMessageBrokerConfiguration}
  * 后续将这部分配置单独做一个项目

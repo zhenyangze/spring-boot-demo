@@ -1,5 +1,6 @@
 package com.example.security;
 
+import io.jsonwebtoken.lang.Collections;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
@@ -22,14 +23,17 @@ public class AccessDecisionManagerImpl implements AccessDecisionManager {
         if (authentication instanceof AnonymousAuthenticationToken) {
             throw new BadCredentialsException("未登录！");
         }
-        // 遍历所需角色
-        for (ConfigAttribute configAttribute : configAttributes) {
-            String roleName = configAttribute.getAttribute();
-            // 遍历当前用户所具有的角色
-            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-            for (GrantedAuthority authority : authorities) {
-                if (authority.getAuthority().equals(roleName)) {
-                    return;
+        // 当前用户角色
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        if (!Collections.isEmpty(configAttributes) && !Collections.isEmpty(authorities)) {
+            // 遍历所需角色
+            for (ConfigAttribute configAttribute : configAttributes) {
+                String roleName = configAttribute.getAttribute();
+                // 遍历当前用户角色
+                for (GrantedAuthority authority : authorities) {
+                    if (authority.getAuthority().equals(roleName)) {
+                        return;
+                    }
                 }
             }
         }

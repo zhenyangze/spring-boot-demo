@@ -3,7 +3,6 @@ package com.example.websocket;
 import com.example.model.po.Resource;
 import com.example.model.vo.UserDetailsImpl;
 import com.example.service.IResourceService;
-import com.example.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.MessageChannel;
@@ -23,8 +22,6 @@ public class AccessDecisionFromClientInterceptor implements FromClientIntercepto
     private String websocket;
     @Autowired
     private IResourceService resourceService;
-    @Autowired
-    private IRoleService roleService;
 
     @Override
     public boolean preHandle(WebSocketSession session, WebSocketMessage<?> webSocketMessage, MessageChannel outputChannel, StompSubProtocolHandler handler) {

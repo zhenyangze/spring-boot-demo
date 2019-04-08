@@ -2,7 +2,6 @@ package com.example.security;
 
 import com.example.model.po.Resource;
 import com.example.service.IResourceService;
-import com.example.service.IRoleService;
 import io.jsonwebtoken.lang.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,8 +25,6 @@ public class FilterInvocationSecurityMetadataSourceImpl implements FilterInvocat
     private String http;
     @Autowired
     private IResourceService resourceService;
-    @Autowired
-    private IRoleService roleService;
 
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {

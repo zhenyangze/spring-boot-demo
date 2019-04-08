@@ -38,12 +38,12 @@ public class CustomizeStompSubProtocolHandler extends StompSubProtocolHandler {
         }
     }
 
-    public void addFromClientInterceptors(FromClientInterceptor interceptor) {
+    public void addFromClientInterceptor(FromClientInterceptor interceptor) {
         Assert.notNull(interceptor, "interceptor不能为null");
         this.fromClientInterceptors.add(interceptor);
     }
 
-    public void addToClientInterceptors(ToClientInterceptor interceptor) {
+    public void addToClientInterceptor(ToClientInterceptor interceptor) {
         Assert.notNull(interceptor, "interceptor不能为null");
         this.toClientInterceptors.add(interceptor);
     }

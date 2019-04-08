@@ -1,8 +1,6 @@
 package com.example.config;
 
-import com.example.websocket.AccessDecisionFromClientInterceptor;
-import com.example.websocket.CustomizeWebMvcStompEndpointRegistry;
-import com.example.websocket.StompSubProtocolErrorHandlerImpl;
+import com.example.websocket.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
@@ -49,12 +47,26 @@ public class WebSocketSecurityConfig extends AbstractSecurityWebSocketMessageBro
         return new AccessDecisionFromClientInterceptor();
     }
 
+    // sessionId登记
+    @Bean
+    public SessionIdRegistry sessionIdRegistry() {
+        return new SessionIdRegistry();
+    }
+
+    // sessionId登记拦截器
+    @Bean
+    public SessionIdRegistryInterceptor sessionIdRegistryInterceptor() {
+        return new SessionIdRegistryInterceptor();
+    }
+
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/endpoint").withSockJS();
         registry.setErrorHandler(stompSubProtocolErrorHandler());
         // 配置授权决策拦截器
-        ((CustomizeWebMvcStompEndpointRegistry) registry).addFromClientInterceptors(accessDecisionFromClientInterceptor());
+        ((CustomizeWebMvcStompEndpointRegistry) registry)
+                .addFromClientInterceptor(accessDecisionFromClientInterceptor())
+                .addFromClientInterceptor(sessionIdRegistryInterceptor());
     }
 
     // 这里取消所有检查，统一在授权决策拦截器中处理

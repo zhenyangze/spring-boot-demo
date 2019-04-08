@@ -141,13 +141,15 @@ public class CustomizeWebMvcStompEndpointRegistry extends WebMvcStompEndpointReg
     }
 
     // 增加消息拦截器
-    public void addFromClientInterceptors(FromClientInterceptor interceptor) {
-        this.stompHandler.addFromClientInterceptors(interceptor);
+    public CustomizeWebMvcStompEndpointRegistry addFromClientInterceptor(FromClientInterceptor interceptor) {
+        this.stompHandler.addFromClientInterceptor(interceptor);
+        return this;
     }
 
     // 增加消息拦截器
-    public void addToClientInterceptors(ToClientInterceptor interceptor) {
-        this.stompHandler.addToClientInterceptors(interceptor);
+    public CustomizeWebMvcStompEndpointRegistry addToClientInterceptor(ToClientInterceptor interceptor) {
+        this.stompHandler.addToClientInterceptor(interceptor);
+        return this;
     }
 
     // 使用反射获取WebSocketTransportRegistration实例的属性

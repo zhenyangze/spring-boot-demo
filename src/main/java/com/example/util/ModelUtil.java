@@ -21,8 +21,8 @@ public class ModelUtil {
 
     /**
      * 复制对象
-     * @see BeanUtils#copyProperties
-     * @see BeanUtils#getPropertyDescriptors
+     * @see BeanUtils#copyProperties(Object, Object, String...)
+     * @see BeanUtils#getPropertyDescriptors(Class)
      * @see PropertyDescriptor
      * @param source 源对象
      * @param mappings 对应关系

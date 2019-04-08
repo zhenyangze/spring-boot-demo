@@ -12,6 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.List;
 
 // 自定义授权决策
 @Component
@@ -23,20 +24,20 @@ public class AccessDecisionManagerImpl implements AccessDecisionManager {
         if (authentication instanceof AnonymousAuthenticationToken) {
             throw new BadCredentialsException("未登录！");
         }
-        // 当前用户角色
+        // 当前用户资源
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         if (!Collections.isEmpty(configAttributes) && !Collections.isEmpty(authorities)) {
-            // 遍历所需角色
-            for (ConfigAttribute configAttribute : configAttributes) {
-                String roleName = configAttribute.getAttribute();
-                // 遍历当前用户角色
-                for (GrantedAuthority authority : authorities) {
-                    if (authority.getAuthority().equals(roleName)) {
-                        return;
-                    }
+            // 需求资源id
+            String resourceId = ((List<ConfigAttribute>) configAttributes).get(0).getAttribute();
+            // 遍历当前角色资源
+            for (GrantedAuthority authority: authorities) {
+                if (authority.getAuthority().equals(resourceId)) {
+                    // 如果匹配到表示用户有权限
+                    return;
                 }
             }
         }
+        // 没有匹配到表示权限不足
         throw new AccessDeniedException("权限不足！");
     }
 

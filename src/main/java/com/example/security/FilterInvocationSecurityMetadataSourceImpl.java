@@ -1,7 +1,6 @@
 package com.example.security;
 
 import com.example.model.po.Resource;
-import com.example.model.po.Role;
 import com.example.service.IResourceService;
 import com.example.service.IRoleService;
 import io.jsonwebtoken.lang.Collections;
@@ -48,22 +47,11 @@ public class FilterInvocationSecurityMetadataSourceImpl implements FilterInvocat
             }
         }
 
-        // 如果没有匹配的资源则说明大家都可以访问
-        if (resource == null) {
+        if (resource==null) {
             return null;
         }
 
-        // 按照资源id获取角色
-        List<Role> roles = roleService.getByResourceId(resource.getId());
-        if (!Collections.isEmpty(roles)) {
-            int size = roles.size();
-            String[] values = new String[size];
-            for (int i = 0; i < size; i++) {
-                values[i] = roles.get(i).getRoleName();
-            }
-            return SecurityConfig.createList(values);
-        }
-        return null;
+        return SecurityConfig.createList(String.valueOf(resource.getId()));
     }
 
     @Override

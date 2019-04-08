@@ -1,8 +1,10 @@
 package com.example.model.vo;
 
+import com.example.model.po.Resource;
 import com.example.model.po.Role;
 import com.example.model.po.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.jsonwebtoken.lang.Collections;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,13 +32,21 @@ public class UserDetailsImpl implements UserDetails, Serializable {
     public UserDetailsImpl(User user) {
         this.user = user;
     }
+
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
         List<Role> roles = user.getRoles();
-        for (Role role: roles) {
-            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+        if (!Collections.isEmpty(roles)) {
+            for (Role role: roles) {
+                List<Resource> resources = role.getResources();
+                if (!Collections.isEmpty(resources)) {
+                    for (Resource resource: resources) {
+                        authorities.add(new SimpleGrantedAuthority(String.valueOf(resource.getId())));
+                    }
+                }
+            }
         }
         return authorities;
     }

@@ -15,12 +15,12 @@ public interface FromClientInterceptor {
      * 前置处理
      * @see CustomizeStompSubProtocolHandler#handleMessageFromClient(WebSocketSession, WebSocketMessage, MessageChannel)
      * @param session websocket session
-     * @param webSocketMessage websocket消息
+     * @param message websocket消息
      * @param outputChannel websocket消息通道
      * @param handler stomp协议控制器
      * @return true 执行后续操作，false 取消后续操作
      */
-    default boolean preHandle(WebSocketSession session, WebSocketMessage<?> webSocketMessage, MessageChannel outputChannel, StompSubProtocolHandler handler) {
+    default boolean preHandle(WebSocketSession session, MessageFromClient message, MessageChannel outputChannel, StompSubProtocolHandler handler) {
         return true;
     }
 
@@ -28,11 +28,11 @@ public interface FromClientInterceptor {
      * 后置处理
      * @see CustomizeStompSubProtocolHandler#handleMessageFromClient(WebSocketSession, WebSocketMessage, MessageChannel)
      * @param session websocket session
-     * @param webSocketMessage websocket消息
+     * @param message websocket消息
      * @param outputChannel websocket消息通道
      * @param handler stomp协议控制器
      */
-    default void postHandle(WebSocketSession session, WebSocketMessage<?> webSocketMessage, MessageChannel outputChannel, StompSubProtocolHandler handler) {
+    default void postHandle(WebSocketSession session, MessageFromClient message, MessageChannel outputChannel, StompSubProtocolHandler handler) {
 
     }
 

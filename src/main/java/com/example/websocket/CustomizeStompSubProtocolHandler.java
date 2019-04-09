@@ -1,13 +1,17 @@
 package com.example.websocket;
 
+import com.example.model.vo.UserDetailsImpl;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.util.Assert;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.messaging.StompSubProtocolHandler;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -31,6 +35,17 @@ public class CustomizeStompSubProtocolHandler extends StompSubProtocolHandler {
 
     @Override
     public void handleMessageToClient(WebSocketSession session, Message<?> message) {
+        Authentication authentication = (Authentication) session.getPrincipal();
+        if (authentication!=null) {
+            // 用户信息
+            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            System.out.println("userDetails: "+userDetails);
+            // 资源信息
+            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+            System.out.println("authorities: "+authorities);
+        } else {
+            System.out.println("authentication is null");
+        }
         ToClientExecutionChain chain = new ToClientExecutionChain(toClientInterceptors);
         if (chain.applyPreHandle(session, message, this)) {
             super.handleMessageToClient(session, message);

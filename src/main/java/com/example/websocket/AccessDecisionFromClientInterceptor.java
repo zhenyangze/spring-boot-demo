@@ -1,19 +1,11 @@
 package com.example.websocket;
 
-import com.example.model.po.Resource;
-import com.example.model.vo.UserDetailsImpl;
 import com.example.service.IResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.messaging.StompSubProtocolHandler;
-
-import java.util.Collection;
-import java.util.List;
 
 // websocket消息授权决策
 public class AccessDecisionFromClientInterceptor implements FromClientInterceptor {
@@ -24,23 +16,22 @@ public class AccessDecisionFromClientInterceptor implements FromClientIntercepto
     private IResourceService resourceService;
 
     @Override
-    public boolean preHandle(WebSocketSession session, WebSocketMessage<?> webSocketMessage, MessageChannel outputChannel, StompSubProtocolHandler handler) {
-        System.out.println("-----------------websocket消息授权决策-----------------");
-        System.out.println("session_id: "+session.getId());
-        Authentication authentication = (Authentication) session.getPrincipal();
-        if (authentication!=null) {
-            // 用户信息
-            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-            System.out.println("userDetails: "+userDetails);
-            // 资源信息
-            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-            System.out.println("authorities: "+authorities);
-        } else {
-            System.out.println("authentication is null");
-        }
-        System.out.println("message:\n"+webSocketMessage.getPayload());
-        // 查询所有websocket类型的资源
-        List<Resource> resources = resourceService.getByType(websocket);
+    public boolean preHandle(WebSocketSession session, MessageFromClient message, MessageChannel outputChannel, StompSubProtocolHandler handler) {
+//        System.out.println("-----------------websocket消息授权决策-----------------");
+//        System.out.println("session_id: "+session.getId());
+//        Authentication authentication = (Authentication) session.getPrincipal();
+//        if (authentication!=null) {
+//            // 用户信息
+//            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+//            System.out.println("userDetails: "+userDetails);
+//            // 资源信息
+//            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+//            System.out.println("authorities: "+authorities);
+//        } else {
+//            System.out.println("authentication is null");
+//        }
+//        // 查询所有websocket类型的资源
+//        List<Resource> resources = resourceService.getByType(websocket);
         // TODO 拆分成两个方法
         /*
          * TODO

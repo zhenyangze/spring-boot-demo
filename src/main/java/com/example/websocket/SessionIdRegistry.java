@@ -18,6 +18,10 @@ public class SessionIdRegistry {
         return sessionIds!=null? sessionIds: Collections.emptySet();
     }
 
+    public Map<Integer, Set<String>> getAllSessionIds() {
+        return this.userSessionIds;
+    }
+
     // 登记sessionId
     public void registerSessionId(Integer userId, String sessionId) {
         Assert.notNull(userId, "userId不能为null");

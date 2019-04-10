@@ -1,6 +1,7 @@
 package com.example.websocket;
 
-import org.springframework.messaging.Message;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
+import org.springframework.security.core.Authentication;
 import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.socket.WebSocketSession;
@@ -19,12 +20,12 @@ public class ToClientExecutionChain {
         this.interceptors = interceptors;
     }
 
-    public boolean applyPreHandle(WebSocketSession session, Message<?> message, StompSubProtocolHandler handler) {
+    public boolean applyPreHandle(WebSocketSession session, Authentication authentication, StompHeaderAccessor accessor, Object payload, StompSubProtocolHandler handler) {
         if (!ObjectUtils.isEmpty(interceptors)) {
             for (int i=0; i<interceptors.size(); i++) {
                 ToClientInterceptor interceptor = interceptors.get(i);
-                if (!interceptor.preHandle(session, message, handler)) {
-                    applyPostHandle(session, message, handler);
+                if (!interceptor.preHandle(session, authentication, accessor, payload, handler)) {
+                    applyPostHandle(session, authentication, accessor, payload, handler);
                     return false;
                 }
                 this.interceptorIndex = i;
@@ -33,11 +34,11 @@ public class ToClientExecutionChain {
         return true;
     }
 
-    public void applyPostHandle(WebSocketSession session, Message<?> message, StompSubProtocolHandler handler) {
+    public void applyPostHandle(WebSocketSession session, Authentication authentication, StompHeaderAccessor accessor, Object payload, StompSubProtocolHandler handler) {
         if (!ObjectUtils.isEmpty(interceptors)) {
             for (int i = this.interceptorIndex; i >= 0; i--) {
                 ToClientInterceptor interceptor = interceptors.get(i);
-                interceptor.postHandle(session, message, handler);
+                interceptor.postHandle(session, authentication, accessor, payload, handler);
             }
         }
     }

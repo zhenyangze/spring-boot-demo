@@ -1,6 +1,7 @@
 package com.example.websocket;
 
 import com.example.exception.ProjectException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.lang.Nullable;
 import org.springframework.scheduling.TaskScheduler;
@@ -27,6 +28,7 @@ import java.util.Map;
 /**
  * 代替{@link org.springframework.web.socket.config.annotation.WebMvcStompEndpointRegistry}
  */
+@Slf4j
 public class CustomizeWebMvcStompEndpointRegistry extends WebMvcStompEndpointRegistry {
 
     // 代替父类中的属性
@@ -163,6 +165,7 @@ public class CustomizeWebMvcStompEndpointRegistry extends WebMvcStompEndpointReg
                 ret = (Integer) value;
             }
         } catch (NoSuchFieldException|IllegalAccessException e) {
+            log.error(e.getMessage(), e);
             throw new ProjectException(e);
         }
         return ret;

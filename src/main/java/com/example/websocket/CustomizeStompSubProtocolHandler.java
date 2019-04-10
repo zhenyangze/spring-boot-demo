@@ -1,18 +1,20 @@
 package com.example.websocket;
 
-import com.example.model.vo.UserDetailsImpl;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
+import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.messaging.StompSubProtocolHandler;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.LinkedTransferQueue;
 
 /**
  * 代替{@link org.springframework.web.socket.messaging.StompSubProtocolHandler}
@@ -27,29 +29,23 @@ public class CustomizeStompSubProtocolHandler extends StompSubProtocolHandler {
     @Override
     public void handleMessageFromClient(WebSocketSession session, WebSocketMessage<?> webSocketMessage, MessageChannel outputChannel) {
         FromClientExecutionChain chain = new FromClientExecutionChain(fromClientInterceptors);
-        if (chain.applyPreHandle(session, webSocketMessage, outputChannel, this)) {
+        Authentication authentication = (Authentication) session.getPrincipal();
+        MessageFromClient message = getMessageFromClient(webSocketMessage);
+        if (chain.applyPreHandle(session, authentication, message, outputChannel, this)) {
             super.handleMessageFromClient(session, webSocketMessage, outputChannel);
-            chain.applyPostHandle(session, webSocketMessage, outputChannel, this);
+            chain.applyPostHandle(session, authentication, message, outputChannel, this);
         }
     }
 
     @Override
     public void handleMessageToClient(WebSocketSession session, Message<?> message) {
-        Authentication authentication = (Authentication) session.getPrincipal();
-        if (authentication!=null) {
-            // 用户信息
-            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-            System.out.println("userDetails: "+userDetails);
-            // 资源信息
-            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-            System.out.println("authorities: "+authorities);
-        } else {
-            System.out.println("authentication is null");
-        }
         ToClientExecutionChain chain = new ToClientExecutionChain(toClientInterceptors);
-        if (chain.applyPreHandle(session, message, this)) {
+        Authentication authentication = (Authentication) session.getPrincipal();
+        StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
+        Object payload = message.getPayload();
+        if (chain.applyPreHandle(session, authentication, accessor, payload, this)) {
             super.handleMessageToClient(session, message);
-            chain.applyPostHandle(session, message, this);
+            chain.applyPostHandle(session, authentication, accessor, payload, this);
         }
     }
 
@@ -61,6 +57,44 @@ public class CustomizeStompSubProtocolHandler extends StompSubProtocolHandler {
     public void addToClientInterceptor(ToClientInterceptor interceptor) {
         Assert.notNull(interceptor, "interceptor不能为null");
         this.toClientInterceptors.add(interceptor);
+    }
+
+    private MessageFromClient getMessageFromClient(WebSocketMessage<?> webSocketMessage) {
+        if (webSocketMessage instanceof TextMessage) {
+            MessageFromClient message = new MessageFromClient();
+            String payload = ((TextMessage) webSocketMessage).getPayload();
+            String[] arr = payload.split("\n");
+            Queue<String> queue = new LinkedTransferQueue<>();
+            for (String str: arr) {
+                String strTrim = str.trim();
+                if (StringUtils.isEmpty(strTrim)) {
+                    continue;
+                }
+                queue.offer(strTrim);
+            }
+            String type = queue.poll();
+            message.setType(type);
+            int last = 0;
+            if ("SEND".equals(type)) {
+                last = 1;
+            }
+            while (queue.size()>last) {
+                String param = queue.poll();
+                if (param.startsWith("id:")) {
+                    message.setSubId(param.split(":")[1].trim());
+                } else if (param.startsWith("destination:")) {
+                    message.setDestination(param.split(":")[1].trim());
+                } else if (param.startsWith("content-length:")) {
+                    message.setContentLength(Integer.valueOf(param.split(":")[1].trim()));
+                }
+            }
+            String content = queue.poll();
+            if (!StringUtils.isEmpty(content)) {
+                message.setContent(content.trim());
+            }
+            return message;
+        }
+        return null;
     }
 
 }

@@ -1,7 +1,10 @@
 package com.example;
 
 import org.junit.Test;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.util.PathMatcher;
 
+import java.util.Objects;
 import java.util.Queue;
 import java.util.concurrent.LinkedTransferQueue;
 
@@ -20,6 +23,17 @@ public class SpringBootDemoTests {
         }
         System.out.println(queue);
         System.out.println(queue.poll());
+    }
+
+    @Test
+    public void testPathMatcher() {
+        PathMatcher matcher = new AntPathMatcher();
+        System.out.println(matcher.match("/**", ""));
+    }
+
+    @Test
+    public void testEquals() {
+        System.out.println(Objects.equals(null, null));
     }
 
 }

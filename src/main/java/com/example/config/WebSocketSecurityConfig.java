@@ -41,13 +41,19 @@ public class WebSocketSecurityConfig extends AbstractSecurityWebSocketMessageBro
         return new StompSubProtocolErrorHandlerImpl();
     }
 
+    // 匹配消息资源
+    @Bean
+    public MessageResourceMatcher messageResourceMatcher() {
+        return new MessageResourceMatcher();
+    }
+
     // 授权决策拦截器
     @Bean
     public AccessDecisionFromClientInterceptor accessDecisionFromClientInterceptor() {
         return new AccessDecisionFromClientInterceptor();
     }
 
-    // sessionId登记
+    // sessionId记录
     @Bean
     public SessionIdRegistry sessionIdRegistry() {
         return new SessionIdRegistry();
@@ -59,20 +65,28 @@ public class WebSocketSecurityConfig extends AbstractSecurityWebSocketMessageBro
         return new SessionIdRegistryInterceptor();
     }
 
+    // sessionId移除拦截器
+    @Bean
+    public SessionIdUnRegistryInterceptor sessionIdUnRegistryInterceptor() {
+        return new SessionIdUnRegistryInterceptor();
+    }
+
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/endpoint").withSockJS();
         registry.setErrorHandler(stompSubProtocolErrorHandler());
-        // 配置授权决策拦截器
+        // 配置拦截器
         ((CustomizeWebMvcStompEndpointRegistry) registry)
                 .addFromClientInterceptor(accessDecisionFromClientInterceptor())
-                .addFromClientInterceptor(sessionIdRegistryInterceptor());
+                .addFromClientInterceptor(sessionIdUnRegistryInterceptor())
+                .addToClientInterceptor(sessionIdRegistryInterceptor());
     }
 
     // 这里取消所有检查，统一在授权决策拦截器中处理
     @Override
     protected void configureInbound(MessageSecurityMetadataSourceRegistry messages) {
-        messages.anyMessage().permitAll();
+        messages.nullDestMatcher().authenticated()
+                .anyMessage().permitAll();
     }
 
     // 关闭同源策略

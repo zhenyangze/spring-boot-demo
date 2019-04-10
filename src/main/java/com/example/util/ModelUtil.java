@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.FatalBeanException;
-import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
 import java.beans.PropertyDescriptor;
@@ -30,7 +29,9 @@ public class ModelUtil {
      */
     @SuppressWarnings("unchecked")
     public static Object copy(Object source, Mapping... mappings) {
-        Assert.notNull(source, "source不能为空");
+        if (source==null) {
+            return null;
+        }
         Class clazz = source.getClass();
         // 集合
         if (Collection.class.isAssignableFrom(clazz)) {

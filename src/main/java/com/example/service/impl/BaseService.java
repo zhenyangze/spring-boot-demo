@@ -5,17 +5,35 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.exception.LogicException;
+import com.example.filter.TokenFilter;
 import com.example.model.BaseModel;
+import com.example.model.po.User;
+import com.example.model.vo.UserDetailsImpl;
 import com.example.service.IBaseService;
+import com.example.service.ITokenService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 public class BaseService<M extends BaseMapper<T>, T extends BaseModel> extends ServiceImpl<M, T> implements IBaseService<T> {
+
+    @Autowired
+    private HttpServletRequest request;
+    @Autowired
+    private ITokenService tokenService;
+
+    @Override
+    public User currentUser() {
+        String token = TokenFilter.getToken(request);
+        UserDetailsImpl userDetails = tokenService.getUserDetalis(token);
+        return userDetails==null? null: userDetails.getUser();
+    }
 
     @Override
     @Transactional

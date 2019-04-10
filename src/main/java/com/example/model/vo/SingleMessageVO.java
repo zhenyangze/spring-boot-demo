@@ -1,13 +1,11 @@
 package com.example.model.vo;
 
+import com.example.model.po.SingleMessage;
 import lombok.Data;
 
-import java.io.Serializable;
-
 @Data
-public class MessageVO implements Serializable {
+public class SingleMessageVO extends SingleMessage {
 
     private static final long serialVersionUID = 1L;
-    private String name;
 
 }

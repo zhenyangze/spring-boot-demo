@@ -6,12 +6,16 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+// 令牌
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResponseVO implements Serializable {
+public class TokenVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private String responseMessage;
+    // 令牌
+    private String token;
+    // 登录时间戳
+    private Long loginTime;
 
 }

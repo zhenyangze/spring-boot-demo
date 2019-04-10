@@ -1,12 +1,12 @@
 package com.example.service;
 
-import com.example.model.vo.Token;
+import com.example.model.vo.TokenVO;
 import com.example.model.vo.UserDetailsImpl;
 
 public interface ITokenService {
 
     // 获取token并缓存userDetails
-    Token saveToken(UserDetailsImpl userDetails);
+    TokenVO saveToken(UserDetailsImpl userDetails);
 
     // 刷新缓存中的userDetails
     void refresh(UserDetailsImpl userDetails);

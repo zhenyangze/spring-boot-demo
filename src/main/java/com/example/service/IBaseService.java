@@ -3,10 +3,13 @@ package com.example.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.model.BaseModel;
+import com.example.model.po.User;
 
 import java.util.Collection;
 
 public interface IBaseService<T extends BaseModel> extends IService<T> {
+
+    User currentUser();
 
     /**
      * 类似oracle的merge语法

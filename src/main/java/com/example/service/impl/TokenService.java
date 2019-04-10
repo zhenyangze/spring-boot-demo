@@ -1,6 +1,6 @@
 package com.example.service.impl;
 
-import com.example.model.vo.Token;
+import com.example.model.vo.TokenVO;
 import com.example.model.vo.UserDetailsImpl;
 import com.example.service.ITokenService;
 import io.jsonwebtoken.Jwts;
@@ -36,11 +36,11 @@ public class TokenService implements ITokenService {
     private static final String LOGIN_USER_KEY = "LOGIN_USER_KEY";
 
     @Override
-    public Token saveToken(UserDetailsImpl userDetails) {
+    public TokenVO saveToken(UserDetailsImpl userDetails) {
         userDetails.setToken(UUID.randomUUID().toString());
         cacheUserDetails(userDetails);
         String token = createToken(userDetails);
-        return new Token(token, userDetails.getLoginTime());
+        return new TokenVO(token, userDetails.getLoginTime());
     }
 
     @Override

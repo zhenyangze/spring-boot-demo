@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-04-07 21:39:54
+Date: 2019-04-10 20:49:24
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -84,7 +84,7 @@ CREATE TABLE `t_resource` (
   `resource_method` varchar(20) DEFAULT NULL COMMENT '请求方法',
   `resource_desc` varchar(50) DEFAULT NULL COMMENT '资源描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_resource
@@ -113,6 +113,9 @@ INSERT INTO `t_resource` VALUES ('21', 'http', '/user/*', 'GET', '用户详情')
 INSERT INTO `t_resource` VALUES ('22', 'http', '/user', 'POST', '保存用户');
 INSERT INTO `t_resource` VALUES ('23', 'http', '/user', 'PUT', '更新用户');
 INSERT INTO `t_resource` VALUES ('24', 'http', '/user/*', 'DELETE', '删除用户');
+INSERT INTO `t_resource` VALUES ('25', 'http', '/endpoint/**', null, '获取websocket信息及握手');
+INSERT INTO `t_resource` VALUES ('26', 'websocket', '/topic/getResponse', 'SUBSCRIBE', '订阅/topic/getResponse主题');
+INSERT INTO `t_resource` VALUES ('27', 'websocket', '/welcome', 'SEND', '向/welcome主题发送消息');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -230,6 +233,9 @@ INSERT INTO `t_role_resource_link` VALUES ('4', '23');
 INSERT INTO `t_role_resource_link` VALUES ('1', '24');
 INSERT INTO `t_role_resource_link` VALUES ('2', '24');
 INSERT INTO `t_role_resource_link` VALUES ('4', '24');
+INSERT INTO `t_role_resource_link` VALUES ('1', '25');
+INSERT INTO `t_role_resource_link` VALUES ('1', '26');
+INSERT INTO `t_role_resource_link` VALUES ('1', '27');
 
 -- ----------------------------
 -- Table structure for t_user

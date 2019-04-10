@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-04-10 20:49:24
+Date: 2019-04-11 00:12:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -55,6 +55,31 @@ INSERT INTO `t_attachment` VALUES ('31', '1553700913857.rar', '/demofile/ceshi/2
 INSERT INTO `t_attachment` VALUES ('32', '1553700913857.rar', '/demofile/ceshi/2019/4/1554529387508.rar', 'E:/IdeaProjects/file/ceshi/2019/4/1554529387508.rar');
 
 -- ----------------------------
+-- Table structure for t_broadcast_message
+-- ----------------------------
+DROP TABLE IF EXISTS `t_broadcast_message`;
+CREATE TABLE `t_broadcast_message` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `send_time` timestamp NULL DEFAULT NULL COMMENT '发送时间',
+  `content` varchar(2000) DEFAULT NULL COMMENT '消息内容',
+  `send_user_id` int(11) DEFAULT NULL COMMENT '发送用户id',
+  PRIMARY KEY (`id`),
+  KEY `t_broadcast_message_fk_send_user_id` (`send_user_id`),
+  CONSTRAINT `t_broadcast_message_fk_send_user_id` FOREIGN KEY (`send_user_id`) REFERENCES `t_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_broadcast_message
+-- ----------------------------
+INSERT INTO `t_broadcast_message` VALUES ('1', '2019-04-11 00:00:14', '下面广播通知：斯凯孚红烧', '1');
+INSERT INTO `t_broadcast_message` VALUES ('2', '2019-04-11 00:02:03', '下面广播通知：斯凯孚红烧', '1');
+INSERT INTO `t_broadcast_message` VALUES ('3', '2019-04-11 00:03:27', '下面广播通知：斯凯孚红烧', '1');
+INSERT INTO `t_broadcast_message` VALUES ('4', '2019-04-11 00:04:20', '下面广播通知：斯凯孚红烧', '1');
+INSERT INTO `t_broadcast_message` VALUES ('5', '2019-04-11 00:04:28', '下面广播通知：斯凯孚红烧ffgf', '1');
+INSERT INTO `t_broadcast_message` VALUES ('6', '2019-04-11 00:08:29', '下面广播通知：红烧肉', '1');
+INSERT INTO `t_broadcast_message` VALUES ('7', '2019-04-11 00:09:37', '下面广播通知：红烧肉', '1');
+
+-- ----------------------------
 -- Table structure for t_dept
 -- ----------------------------
 DROP TABLE IF EXISTS `t_dept`;
@@ -84,7 +109,7 @@ CREATE TABLE `t_resource` (
   `resource_method` varchar(20) DEFAULT NULL COMMENT '请求方法',
   `resource_desc` varchar(50) DEFAULT NULL COMMENT '资源描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_resource
@@ -114,8 +139,9 @@ INSERT INTO `t_resource` VALUES ('22', 'http', '/user', 'POST', '保存用户');
 INSERT INTO `t_resource` VALUES ('23', 'http', '/user', 'PUT', '更新用户');
 INSERT INTO `t_resource` VALUES ('24', 'http', '/user/*', 'DELETE', '删除用户');
 INSERT INTO `t_resource` VALUES ('25', 'http', '/endpoint/**', null, '获取websocket信息及握手');
-INSERT INTO `t_resource` VALUES ('26', 'websocket', '/topic/getResponse', 'SUBSCRIBE', '订阅/topic/getResponse主题');
+INSERT INTO `t_resource` VALUES ('26', 'websocket', '/user/topic/broadcast', 'SUBSCRIBE', '订阅/topic/broadcast主题');
 INSERT INTO `t_resource` VALUES ('27', 'websocket', '/welcome', 'SEND', '向/welcome主题发送消息');
+INSERT INTO `t_resource` VALUES ('28', 'http', '/broadcast', 'POST', '发送广播消息');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -236,6 +262,28 @@ INSERT INTO `t_role_resource_link` VALUES ('4', '24');
 INSERT INTO `t_role_resource_link` VALUES ('1', '25');
 INSERT INTO `t_role_resource_link` VALUES ('1', '26');
 INSERT INTO `t_role_resource_link` VALUES ('1', '27');
+INSERT INTO `t_role_resource_link` VALUES ('1', '28');
+
+-- ----------------------------
+-- Table structure for t_single_message
+-- ----------------------------
+DROP TABLE IF EXISTS `t_single_message`;
+CREATE TABLE `t_single_message` (
+  `id` int(11) NOT NULL,
+  `send_time` timestamp NULL DEFAULT NULL COMMENT '发送时间',
+  `content` varchar(2000) DEFAULT NULL COMMENT '消息内容',
+  `send_user_id` int(11) DEFAULT NULL COMMENT '发送用户id',
+  `to_user_id` int(11) DEFAULT NULL COMMENT '接收用户id',
+  PRIMARY KEY (`id`),
+  KEY `t_single_message_fk_send_user_id` (`send_user_id`),
+  KEY `t_single_message_fk_to_user_id` (`to_user_id`),
+  CONSTRAINT `t_single_message_fk_send_user_id` FOREIGN KEY (`send_user_id`) REFERENCES `t_user` (`id`),
+  CONSTRAINT `t_single_message_fk_to_user_id` FOREIGN KEY (`to_user_id`) REFERENCES `t_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_single_message
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for t_user

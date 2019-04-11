@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-04-11 00:12:22
+Date: 2019-04-11 19:12:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -55,6 +55,26 @@ INSERT INTO `t_attachment` VALUES ('31', '1553700913857.rar', '/demofile/ceshi/2
 INSERT INTO `t_attachment` VALUES ('32', '1553700913857.rar', '/demofile/ceshi/2019/4/1554529387508.rar', 'E:/IdeaProjects/file/ceshi/2019/4/1554529387508.rar');
 
 -- ----------------------------
+-- Table structure for t_book
+-- ----------------------------
+DROP TABLE IF EXISTS `t_book`;
+CREATE TABLE `t_book` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `book_name` varchar(50) DEFAULT NULL COMMENT '书籍名称',
+  `user_id` int(11) DEFAULT NULL COMMENT '用户id',
+  PRIMARY KEY (`id`),
+  KEY `t_book_fk_user_id` (`user_id`),
+  CONSTRAINT `t_book_fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_book
+-- ----------------------------
+INSERT INTO `t_book` VALUES ('7', '啊啊啊', '1');
+INSERT INTO `t_book` VALUES ('19', '哈哈哈', '1');
+INSERT INTO `t_book` VALUES ('20', '呵呵呵', '1');
+
+-- ----------------------------
 -- Table structure for t_broadcast_message
 -- ----------------------------
 DROP TABLE IF EXISTS `t_broadcast_message`;
@@ -66,7 +86,7 @@ CREATE TABLE `t_broadcast_message` (
   PRIMARY KEY (`id`),
   KEY `t_broadcast_message_fk_send_user_id` (`send_user_id`),
   CONSTRAINT `t_broadcast_message_fk_send_user_id` FOREIGN KEY (`send_user_id`) REFERENCES `t_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_broadcast_message
@@ -78,6 +98,42 @@ INSERT INTO `t_broadcast_message` VALUES ('4', '2019-04-11 00:04:20', '下面广
 INSERT INTO `t_broadcast_message` VALUES ('5', '2019-04-11 00:04:28', '下面广播通知：斯凯孚红烧ffgf', '1');
 INSERT INTO `t_broadcast_message` VALUES ('6', '2019-04-11 00:08:29', '下面广播通知：红烧肉', '1');
 INSERT INTO `t_broadcast_message` VALUES ('7', '2019-04-11 00:09:37', '下面广播通知：红烧肉', '1');
+INSERT INTO `t_broadcast_message` VALUES ('8', '2019-04-11 10:54:25', '群发消息', '1');
+INSERT INTO `t_broadcast_message` VALUES ('9', '2019-04-11 10:54:37', '群发消息', '1');
+INSERT INTO `t_broadcast_message` VALUES ('10', '2019-04-11 10:55:26', '群发消息', '1');
+INSERT INTO `t_broadcast_message` VALUES ('11', '2019-04-11 11:04:43', '群发消息', '1');
+INSERT INTO `t_broadcast_message` VALUES ('12', '2019-04-11 11:06:36', '群发消息', '1');
+INSERT INTO `t_broadcast_message` VALUES ('13', '2019-04-11 11:08:23', '群发消息', '1');
+INSERT INTO `t_broadcast_message` VALUES ('14', '2019-04-11 11:48:52', '群发消息', '1');
+INSERT INTO `t_broadcast_message` VALUES ('15', '2019-04-11 11:55:04', '群发消息', '1');
+INSERT INTO `t_broadcast_message` VALUES ('16', '2019-04-11 11:55:15', '群发消息', '1');
+INSERT INTO `t_broadcast_message` VALUES ('17', '2019-04-11 16:06:35', '我是一条广播', '1');
+INSERT INTO `t_broadcast_message` VALUES ('18', '2019-04-11 16:11:07', '我是一条广播', '1');
+
+-- ----------------------------
+-- Table structure for t_chat_message
+-- ----------------------------
+DROP TABLE IF EXISTS `t_chat_message`;
+CREATE TABLE `t_chat_message` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `send_time` timestamp NULL DEFAULT NULL COMMENT '发送时间',
+  `content` varchar(2000) DEFAULT NULL COMMENT '消息内容',
+  `send_user_id` int(11) DEFAULT NULL COMMENT '发送用户id',
+  `to_user_id` int(11) DEFAULT NULL COMMENT '接收用户id',
+  `read_status` tinyint(1) DEFAULT NULL COMMENT '阅读状态，1已读，0未读',
+  PRIMARY KEY (`id`),
+  KEY `t_single_message_fk_send_user_id` (`send_user_id`),
+  KEY `t_single_message_fk_to_user_id` (`to_user_id`),
+  CONSTRAINT `t_single_message_fk_send_user_id` FOREIGN KEY (`send_user_id`) REFERENCES `t_user` (`id`),
+  CONSTRAINT `t_single_message_fk_to_user_id` FOREIGN KEY (`to_user_id`) REFERENCES `t_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_chat_message
+-- ----------------------------
+INSERT INTO `t_chat_message` VALUES ('1', '2019-04-11 17:30:33', '我是一条点对点消息', '1', '1', '1');
+INSERT INTO `t_chat_message` VALUES ('2', '2019-04-11 17:31:44', '我是一条点对点消息', '1', '1', '1');
+INSERT INTO `t_chat_message` VALUES ('3', '2019-04-11 17:33:12', '我是一条点对点消息', '1', '1', '0');
 
 -- ----------------------------
 -- Table structure for t_dept
@@ -109,7 +165,7 @@ CREATE TABLE `t_resource` (
   `resource_method` varchar(20) DEFAULT NULL COMMENT '请求方法',
   `resource_desc` varchar(50) DEFAULT NULL COMMENT '资源描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_resource
@@ -139,9 +195,16 @@ INSERT INTO `t_resource` VALUES ('22', 'http', '/user', 'POST', '保存用户');
 INSERT INTO `t_resource` VALUES ('23', 'http', '/user', 'PUT', '更新用户');
 INSERT INTO `t_resource` VALUES ('24', 'http', '/user/*', 'DELETE', '删除用户');
 INSERT INTO `t_resource` VALUES ('25', 'http', '/endpoint/**', null, '获取websocket信息及握手');
-INSERT INTO `t_resource` VALUES ('26', 'websocket', '/user/topic/broadcast', 'SUBSCRIBE', '订阅/topic/broadcast主题');
-INSERT INTO `t_resource` VALUES ('27', 'websocket', '/welcome', 'SEND', '向/welcome主题发送消息');
+INSERT INTO `t_resource` VALUES ('26', 'websocket', '/topic/broadcast', 'SUBSCRIBE', '订阅广播消息');
 INSERT INTO `t_resource` VALUES ('28', 'http', '/broadcast', 'POST', '发送广播消息');
+INSERT INTO `t_resource` VALUES ('29', 'http', '/broadcast/*/*', 'GET', '广播列表');
+INSERT INTO `t_resource` VALUES ('30', 'http', '/broadcast/*', 'GET', '广播详情');
+INSERT INTO `t_resource` VALUES ('31', 'http', '/chat/*/*', 'GET', '消息列表');
+INSERT INTO `t_resource` VALUES ('32', 'http', '/chat/*', 'GET', '消息详情');
+INSERT INTO `t_resource` VALUES ('33', 'http', '/chat/*/*/*/*', 'GET', '往来消息');
+INSERT INTO `t_resource` VALUES ('34', 'http', '/chat', 'PUT', '更新消息');
+INSERT INTO `t_resource` VALUES ('35', 'http', '/chat', 'POST', '发送点对点消息');
+INSERT INTO `t_resource` VALUES ('36', 'websocket', '/user/topic/chat', 'SUBSCRIBE', '订阅点对点消息');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -261,29 +324,14 @@ INSERT INTO `t_role_resource_link` VALUES ('2', '24');
 INSERT INTO `t_role_resource_link` VALUES ('4', '24');
 INSERT INTO `t_role_resource_link` VALUES ('1', '25');
 INSERT INTO `t_role_resource_link` VALUES ('1', '26');
-INSERT INTO `t_role_resource_link` VALUES ('1', '27');
 INSERT INTO `t_role_resource_link` VALUES ('1', '28');
-
--- ----------------------------
--- Table structure for t_single_message
--- ----------------------------
-DROP TABLE IF EXISTS `t_single_message`;
-CREATE TABLE `t_single_message` (
-  `id` int(11) NOT NULL,
-  `send_time` timestamp NULL DEFAULT NULL COMMENT '发送时间',
-  `content` varchar(2000) DEFAULT NULL COMMENT '消息内容',
-  `send_user_id` int(11) DEFAULT NULL COMMENT '发送用户id',
-  `to_user_id` int(11) DEFAULT NULL COMMENT '接收用户id',
-  PRIMARY KEY (`id`),
-  KEY `t_single_message_fk_send_user_id` (`send_user_id`),
-  KEY `t_single_message_fk_to_user_id` (`to_user_id`),
-  CONSTRAINT `t_single_message_fk_send_user_id` FOREIGN KEY (`send_user_id`) REFERENCES `t_user` (`id`),
-  CONSTRAINT `t_single_message_fk_to_user_id` FOREIGN KEY (`to_user_id`) REFERENCES `t_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- ----------------------------
--- Records of t_single_message
--- ----------------------------
+INSERT INTO `t_role_resource_link` VALUES ('1', '29');
+INSERT INTO `t_role_resource_link` VALUES ('1', '31');
+INSERT INTO `t_role_resource_link` VALUES ('1', '32');
+INSERT INTO `t_role_resource_link` VALUES ('1', '33');
+INSERT INTO `t_role_resource_link` VALUES ('1', '34');
+INSERT INTO `t_role_resource_link` VALUES ('1', '35');
+INSERT INTO `t_role_resource_link` VALUES ('1', '36');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -328,3 +376,4 @@ CREATE TABLE `t_user_role_link` (
 -- Records of t_user_role_link
 -- ----------------------------
 INSERT INTO `t_user_role_link` VALUES ('1', '1');
+INSERT INTO `t_user_role_link` VALUES ('2', '1');

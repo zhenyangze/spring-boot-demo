@@ -45,7 +45,7 @@ public class DeptController {
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查询部门")
-    public ResultVO<DeptVO> findById(@PathVariable @NotNull(message = "部门id不能为空") @ApiParam Integer id) {
+    public ResultVO<DeptVO> findById(@PathVariable @NotNull(message = "部门id不能为空") @ApiParam(value = "部门id", required = true) Integer id) {
         Dept dept = deptService.getById(id);
         DeptVO deptVO = (DeptVO) ModelUtil.copy(dept, new ModelUtil.Mapping(Dept.class, DeptVO.class));
         return new ResultVO<>(SUCCESS, "", deptVO);

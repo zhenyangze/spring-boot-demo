@@ -47,7 +47,7 @@ public class RoleController {
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查询角色")
-    public ResultVO<RoleVO> findById(@PathVariable @NotNull(message = "角色id不能为空") @ApiParam Integer id) {
+    public ResultVO<RoleVO> findById(@PathVariable @NotNull(message = "角色id不能为空") @ApiParam(value = "角色id", required = true) Integer id) {
         Role role = roleService.getById(id);
         RoleVO roleVO = (RoleVO) ModelUtil.copy(role,
                 new ModelUtil.Mapping(Role.class, RoleVO.class),

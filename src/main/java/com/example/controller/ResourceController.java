@@ -45,7 +45,7 @@ public class ResourceController {
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查询资源")
-    public ResultVO<ResourceVO> findById(@PathVariable @NotNull(message = "资源id不能为空") @ApiParam Integer id) {
+    public ResultVO<ResourceVO> findById(@PathVariable @NotNull(message = "资源id不能为空") @ApiParam(value = "资源id", required = true) Integer id) {
         Resource resource = resourceService.getById(id);
         ResourceVO resourceVO = (ResourceVO) ModelUtil.copy(resource, new ModelUtil.Mapping(Resource.class, ResourceVO.class));
         return new ResultVO<>(SUCCESS, "", resourceVO);

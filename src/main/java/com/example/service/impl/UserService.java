@@ -21,6 +21,11 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
     private IUserRoleLinkService userRoleLinkService;
 
     @Override
+    public User customGetById(Integer id) {
+        return baseMapper.customSelectById(id);
+    }
+
+    @Override
     @Transactional
     public void customSave(User user) {
         baseMapper.insert(user);

@@ -1,9 +1,9 @@
 package com.example.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.model.vo.UserDetailsImpl;
 import com.example.mapper.UserMapper;
+import com.example.mapper.params.Params;
 import com.example.model.po.User;
+import com.example.model.vo.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,9 +18,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq(true,"username", username);
-        User user = userMapper.selectOne(wrapper);
+        Params<User> params = new Params<>(new User().setUsername(username));
+        User user = userMapper.customSelectOne(params);
         if (user==null) {
             throw new UsernameNotFoundException("用户名："+ username + "不存在！");
         }

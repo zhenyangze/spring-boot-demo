@@ -22,7 +22,7 @@
         <collection column="t_user_id" property="roles" resultMap="com.example.mapper.RoleMapper.resultMap" />
     </resultMap>
 
-    <select id="selectById" parameterType="java.io.Serializable" resultMap="resultMap">
+    <select id="customSelectById" parameterType="int" resultMap="resultMap">
         select <include refid="baseCol" />,
                <include refid="com.example.mapper.DeptMapper.baseCol" />,
                <include refid="com.example.mapper.RoleMapper.baseCol" />,
@@ -36,18 +36,22 @@
         where t_user.id = #{id}
     </select>
 
-    <select id="selectOne" parameterType="com.baomidou.mybatisplus.core.conditions.Wrapper" resultMap="resultMap">
+    <select id="customSelectOne" parameterType="com.example.mapper.params.Params" resultMap="resultMap">
         select <include refid="baseCol" />,
-        <include refid="com.example.mapper.DeptMapper.baseCol" />,
-        <include refid="com.example.mapper.RoleMapper.baseCol" />,
-        <include refid="com.example.mapper.ResourceMapper.baseCol" />
+               <include refid="com.example.mapper.DeptMapper.baseCol" />,
+               <include refid="com.example.mapper.RoleMapper.baseCol" />,
+               <include refid="com.example.mapper.ResourceMapper.baseCol" />
         from t_user t_user
         left join t_dept t_dept on t_dept.id = t_user.dept_id
         left join t_user_role_link t_user_role_link on t_user_role_link.user_id = t_user.id
         left join t_role t_role on t_role.id = t_user_role_link.role_id
         left join t_role_resource_link t_role_resource_link on t_role.id = t_role_resource_link.role_id
         left join t_resource t_resource on t_role_resource_link.resource_id = t_resource.id
-        ${ew.customSqlSegment}
+        <where>
+            <if test=" params.entity.username != null and params.entity.username != ''.toString() ">
+                and t_user.username = #{params.entity.username}
+            </if>
+        </where>
     </select>
 
 </mapper>

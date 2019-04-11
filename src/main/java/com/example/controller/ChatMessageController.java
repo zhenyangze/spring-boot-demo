@@ -1,11 +1,10 @@
 package com.example.controller;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.group.Insert;
 import com.example.group.Update;
+import com.example.mapper.params.Params;
 import com.example.model.po.ChatMessage;
 import com.example.model.po.User;
 import com.example.model.vo.ChatMessageVO;
@@ -51,8 +50,8 @@ public class ChatMessageController {
                          @PathVariable @NotNull(message = "每页显示条数不能为空") @ApiParam(value = "每页显示条数", defaultValue = "10", required = true) long size,
                          ChatMessageVO chatMessageVO) {
         Page<ChatMessage> page = new Page<>(current, size);
-        Wrapper<ChatMessage> wrapper = new QueryWrapper<>(chatMessageVO);
-        IPage<ChatMessage> iPage = chatMessageService.page(page, wrapper);
+        Params<ChatMessage> params = new Params<>(chatMessageVO);
+        IPage<ChatMessage> iPage = chatMessageService.customPage(page, params);
         IPage messages = (IPage) ModelUtil.copy(iPage,
                 new ModelUtil.Mapping(ChatMessage.class, ChatMessageVO.class),
                 new ModelUtil.Mapping(User.class, UserVO.class, "password"));
@@ -67,16 +66,10 @@ public class ChatMessageController {
                              @PathVariable @NotNull(message = "每页显示条数不能为空") @ApiParam(value = "每页显示条数", defaultValue = "10", required = true) long size,
                              ChatMessageVO chatMessageVO) {
         Page<ChatMessage> page = new Page<>(current, size);
-        QueryWrapper<ChatMessage> wrapper = new QueryWrapper<>(chatMessageVO);
-        wrapper.and(queryWrapper -> {
-            queryWrapper.eq("t_chat_message.send_user_id", userId);
-            queryWrapper.eq("t_chat_message.to_user_id", anotherUserId);
-            queryWrapper.or();
-            queryWrapper.eq("t_chat_message.send_user_id", anotherUserId);
-            queryWrapper.eq("t_chat_message.to_user_id", userId);
-            return queryWrapper;
-        });
-        IPage<ChatMessage> iPage = chatMessageService.page(page, wrapper);
+        Params<ChatMessage> params = new Params<>(chatMessageVO);
+        params.put("userId", userId);
+        params.put("anotherUserId", anotherUserId);
+        IPage<ChatMessage> iPage = chatMessageService.customPage(page, params);
         IPage messages = (IPage) ModelUtil.copy(iPage,
                 new ModelUtil.Mapping(ChatMessage.class, ChatMessageVO.class),
                 new ModelUtil.Mapping(User.class, UserVO.class, "password"));
@@ -86,7 +79,7 @@ public class ChatMessageController {
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查询消息")
     public ResultVO<ChatMessageVO> findById(@PathVariable @NotNull(message = "消息id不能为空") @ApiParam(value = "消息id", required = true) Integer id) {
-        ChatMessage chatMessage = chatMessageService.getById(id);
+        ChatMessage chatMessage = chatMessageService.customGetById(id);
         ChatMessageVO chatMessageVO = (ChatMessageVO) ModelUtil.copy(chatMessage,
                 new ModelUtil.Mapping(ChatMessage.class, ChatMessageVO.class),
                 new ModelUtil.Mapping(User.class, UserVO.class, "password"));

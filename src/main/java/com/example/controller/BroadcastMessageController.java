@@ -1,10 +1,9 @@
 package com.example.controller;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.group.Insert;
+import com.example.mapper.params.Params;
 import com.example.model.po.BroadcastMessage;
 import com.example.model.po.User;
 import com.example.model.vo.BroadcastMessageVO;
@@ -47,8 +46,8 @@ public class BroadcastMessageController {
                          @PathVariable @NotNull(message = "每页显示条数不能为空") @ApiParam(value = "每页显示条数", defaultValue = "10", required = true) long size,
                          BroadcastMessageVO broadcastMessageVO) {
         Page<BroadcastMessage> page = new Page<>(current, size);
-        Wrapper<BroadcastMessage> wrapper = new QueryWrapper<>(broadcastMessageVO);
-        IPage<BroadcastMessage> iPage = broadcastMessageService.page(page, wrapper);
+        Params<BroadcastMessage> params = new Params<>(broadcastMessageVO);
+        IPage<BroadcastMessage> iPage = broadcastMessageService.customPage(page, params);
         IPage messages = (IPage) ModelUtil.copy(iPage,
                 new ModelUtil.Mapping(BroadcastMessage.class, BroadcastMessageVO.class),
                 new ModelUtil.Mapping(User.class, UserVO.class, "password"));
@@ -58,7 +57,7 @@ public class BroadcastMessageController {
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查询广播")
     public ResultVO<BroadcastMessageVO> findById(@PathVariable @NotNull(message = "广播id不能为空") @ApiParam(value = "广播id", required = true) Integer id) {
-        BroadcastMessage broadcastMessage = broadcastMessageService.getById(id);
+        BroadcastMessage broadcastMessage = broadcastMessageService.customGetById(id);
         BroadcastMessageVO broadcastMessageVO = (BroadcastMessageVO) ModelUtil.copy(broadcastMessage,
                 new ModelUtil.Mapping(BroadcastMessage.class, BroadcastMessageVO.class),
                 new ModelUtil.Mapping(User.class, UserVO.class, "password"));

@@ -8,7 +8,7 @@
         t_chat_message.to_user_id t_chat_message_to_user_id, t_chat_message.read_status t_chat_message_read_status
     </sql>
 
-    <resultMap id="baseResultMap" type="com.example.model.po.BroadcastMessage">
+    <resultMap id="baseResultMap" type="com.example.model.po.ChatMessage">
         <id column="t_chat_message_id" property="id" />
         <result column="t_chat_message_send_time" property="sendTime" />
         <result column="t_chat_message_content" property="content" />
@@ -47,12 +47,12 @@
         <result column="to_user_dept_id" property="deptId" />
     </resultMap>
 
-    <resultMap id="resultMap" type="com.example.model.po.BroadcastMessage" extends="baseResultMap">
+    <resultMap id="resultMap" type="com.example.model.po.ChatMessage" extends="baseResultMap">
         <association column="t_chat_message_send_user_id" property="sendUser" resultMap="sendUserResultMap" />
         <association column="t_chat_message_to_user_id" property="toUser" resultMap="toUserResultMap" />
     </resultMap>
 
-    <select id="selectPage" resultMap="resultMap">
+    <select id="customSelectPage" resultMap="resultMap">
         select <include refid="baseCol" />,
                <include refid="sendUserCol" />,
                <include refid="toUserCol" />
@@ -60,15 +60,34 @@
         left join t_user send_user on send_user.id = t_chat_message.send_user_id
         left join t_user to_user on to_user.id = t_chat_message.to_user_id
         <where>
-            <if test=" ew.entity.content != null and ew.entity.content != ''.toString() ">
-                and instr(t_chat_message.content, #{ew.entity.content}) > 0
+            <if test=" params.entity.content != null and params.entity.content != ''.toString() ">
+                and instr(t_chat_message.content, #{params.entity.content}) > 0
             </if>
-            ${ew.customSqlSegment}
+            <if test=" params.map.userId != null and params.map.anotherUserId != null ">
+                and (
+                    t_chat_message.send_user_id = #{params.map.userId}
+                    and
+                    t_chat_message.to_user_id = #{params.map.anotherUserId}
+                    or
+                    t_chat_message.send_user_id = #{params.map.anotherUserId}
+                    and
+                    t_chat_message.to_user_id = #{params.map.userId}
+                )
+            </if>
+            <if test=" params.entity.sendUserId != null">
+                and t_chat_message.send_user_id = #{params.entity.sendUserId}
+            </if>
+            <if test=" params.entity.toUserId != null ">
+                and t_chat_message.to_user_id = #{params.entity.toUserId}
+            </if>
+            <if test=" params.entity.readStatus != null ">
+                and t_chat_message.read_status = #{params.entity.readStatus}
+            </if>
         </where>
         order by t_chat_message.send_time desc
     </select>
 
-    <select id="selectById" parameterType="java.io.Serializable" resultMap="resultMap">
+    <select id="customSelectById" parameterType="int" resultMap="resultMap">
         select <include refid="baseCol" />,
                <include refid="sendUserCol" />,
                <include refid="toUserCol" />

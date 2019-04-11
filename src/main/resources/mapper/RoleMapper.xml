@@ -16,20 +16,13 @@
         <collection column="t_role_id" property="resources" resultMap="com.example.mapper.ResourceMapper.baseResultMap" />
     </resultMap>
 
-    <select id="selectById" parameterType="java.io.Serializable" resultMap="resultMap">
+    <select id="customSelectById" parameterType="int" resultMap="resultMap">
         select <include refid="baseCol" />,
                <include refid="com.example.mapper.ResourceMapper.baseCol" />
         from t_role t_role
         left join t_role_resource_link t_role_resource_link on t_role.id = t_role_resource_link.role_id
         left join t_resource t_resource on t_role_resource_link.resource_id = t_resource.id
         where t_role.id = #{id}
-    </select>
-
-    <select id="selectByResourceId" parameterType="int" resultMap="resultMap">
-        select <include refid="baseCol" />
-        from t_role t_role
-        left join t_role_resource_link t_role_resource_link on t_role_resource_link.role_id = t_role.id
-        where t_role_resource_link.resource_id = #{resourceId}
     </select>
 
 </mapper>

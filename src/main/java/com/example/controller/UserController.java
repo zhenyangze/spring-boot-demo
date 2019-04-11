@@ -53,7 +53,7 @@ public class UserController {
     @ApiOperation(value = "根据id查询用户")
     @Validated
     public ResultVO<UserVO> findById(@PathVariable @NotNull(message = "用户id不能为空") @ApiParam(value = "用户id", required = true) Integer id) {
-        User user = userService.getById(id);
+        User user = userService.customGetById(id);
         UserVO userVO = (UserVO) ModelUtil.copy(user,
                 new ModelUtil.Mapping(User.class, UserVO.class, "password"),
                 new ModelUtil.Mapping(Dept.class, DeptVO.class),

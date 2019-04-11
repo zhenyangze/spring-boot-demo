@@ -18,8 +18,8 @@ public class ResultVO<T> implements Serializable {
 
     /** 成功 */
     public static final int SUCCESS = 200;
-    /** 失败 */
-    public static final int FAILURE = 500;
+    /** 服务器异常 */
+    public static final int INTERNAL_SERVER_ERROR = 500;
     /** 参数错误 */
     public static final int BAD_REQUEST = 400;
     /** 未认证 */

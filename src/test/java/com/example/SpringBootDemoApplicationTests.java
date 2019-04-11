@@ -68,12 +68,6 @@ public class SpringBootDemoApplicationTests {
     }
 
     @Test
-    public void testUserRoleLinkMapper() {
-        UserRoleLink link = new UserRoleLink(1, 1);
-        userRoleLinkMapper.insert(link);
-    }
-
-    @Test
     public void testQueryWrapper() {
         QueryWrapper wrapper = new QueryWrapper();
         wrapper.eq("user_id", 1);

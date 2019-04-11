@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Data
-@ApiModel("websocket广播消息")
+@ApiModel("广播消息")
 public class BroadcastMessage extends BaseModel {
 
     private static final long serialVersionUID = 1;

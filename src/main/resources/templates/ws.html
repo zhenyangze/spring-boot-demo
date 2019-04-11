@@ -44,7 +44,7 @@
         stompClient.connect({}, function(frame) {//链接Web Socket的服务端。
             setConnected(true);
             console.log('Connected: ' + frame);
-            stompClient.subscribe('/user/topic/broadcast', function(respnose){ //订阅/topic/getResponse 目标发送的消息。这个是在控制器的@SendTo中定义的。
+            stompClient.subscribe('/topic/broadcast', function(respnose){ //订阅/topic/getResponse 目标发送的消息。这个是在控制器的@SendTo中定义的。
                 showResponse(JSON.parse(respnose.body).content);
             });
         });

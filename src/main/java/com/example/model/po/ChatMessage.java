@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 
 @Data
 @ApiModel("websocket点对点消息")
-public class SingleMessage extends BaseModel {
+public class ChatMessage extends BaseModel {
 
     private static final long serialVersionUID = 1;
     @ApiModelProperty("消息id")

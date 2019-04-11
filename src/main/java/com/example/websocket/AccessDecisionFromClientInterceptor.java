@@ -1,7 +1,9 @@
 package com.example.websocket;
 
+import com.alibaba.fastjson.JSON;
 import com.example.exception.ProjectException;
 import com.example.model.po.Resource;
+import com.example.model.vo.ChatMessageVO;
 import com.example.service.IResourceService;
 import io.jsonwebtoken.lang.Collections;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +18,7 @@ import org.springframework.web.socket.handler.ConcurrentWebSocketSessionDecorato
 import org.springframework.web.socket.messaging.StompSubProtocolHandler;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 
@@ -101,12 +104,12 @@ public class AccessDecisionFromClientInterceptor implements FromClientIntercepto
 
     // 通知用户
     private void notifyUser(WebSocketSession session, String message) {
-        if (!message.startsWith(" ")) {
-            message = " "+message;
-        }
+        ChatMessageVO singleMessage = new ChatMessageVO();
+        singleMessage.setSendTime(new Timestamp(System.currentTimeMillis()));
+        singleMessage.setContent(message);
         ConcurrentWebSocketSessionDecorator decorator = new ConcurrentWebSocketSessionDecorator(session, -1, -1);
         try {
-            decorator.sendMessage(new TextMessage(message));
+            decorator.sendMessage(new TextMessage(" "+JSON.toJSONString(singleMessage)));
         } catch (IOException e) {
             log.error(e.getMessage(), e);
             throw new ProjectException(e);

@@ -1,13 +1,13 @@
 package com.example.controller;
 
-import com.example.service.ISingleMessageService;
+import com.example.service.IChatMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class SingleMessageController {
+public class ChatMessageController {
 
     @Autowired
-    private ISingleMessageService singleMessageService;
+    private IChatMessageService chatMessageService;
 
 }

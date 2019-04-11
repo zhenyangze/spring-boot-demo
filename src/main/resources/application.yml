@@ -138,3 +138,8 @@ resource:
   type:
     http: http # 资源类型：http
     websocket: websocket # 资源类型：websocket
+
+websocket:
+  destination:
+    broadcast: /topic/broadcast
+    chat: /topic/chat

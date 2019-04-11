@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.mapper.BroadcastMessageMapper">
+
+    <sql id="baseCol">
+        t_broadcast_message.id t_broadcast_message_id, t_broadcast_message.send_time t_broadcast_message_send_time,
+        t_broadcast_message.content t_broadcast_message_content, t_broadcast_message.send_user_id t_broadcast_message_send_user_id
+    </sql>
+
+    <resultMap id="baseResultMap" type="com.example.model.po.BroadcastMessage">
+        <id column="t_broadcast_message_id" property="id" />
+        <result column="t_broadcast_message_send_time" property="sendTime" />
+        <result column="t_broadcast_message_content" property="content" />
+        <result column="t_broadcast_message_send_user_id" property="sendUserId" />
+    </resultMap>
+
+    <sql id="sendUserCol">
+        send_user.id send_user_id, send_user.username send_user_username, send_user.password send_user_password, send_user.nickname send_user_nickname,
+        send_user.birth send_user_birth, send_user.logintime send_user_logintime, send_user.dept_id send_user_dept_id
+    </sql>
+
+    <resultMap id="sendUserResultMap" type="com.example.model.po.User">
+        <id column="send_user_id" property="id" />
+        <result column="send_user_username" property="username" />
+        <result column="send_user_password" property="password" />
+        <result column="send_user_nickname" property="nickname" />
+        <result column="send_user_birth" property="birth" />
+        <result column="send_user_logintime" property="logintime" />
+        <result column="send_user_dept_id" property="deptId" />
+    </resultMap>
+
+    <resultMap id="resultMap" type="com.example.model.po.BroadcastMessage" extends="baseResultMap">
+        <association column="t_broadcast_message_send_user_id" property="sendUser" resultMap="sendUserResultMap" />
+    </resultMap>
+
+    <select id="selectPage" resultMap="resultMap">
+        select <include refid="baseCol" />,
+               <include refid="sendUserCol" />
+        from t_broadcast_message t_broadcast_message
+        left join t_user send_user on send_user.id = t_broadcast_message.send_user_id
+        <where>
+            <if test=" ew.entity.content != null and ew.entity.content != ''.toString() ">
+                and instr(t_broadcast_message.content, #{ew.entity.content}) > 0
+            </if>
+        </where>
+    </select>
+
+    <select id="selectById" parameterType="java.io.Serializable" resultMap="resultMap">
+        select <include refid="baseCol" />,
+               <include refid="sendUserCol" />
+        from t_broadcast_message t_broadcast_message
+        left join t_user send_user on send_user.id = t_broadcast_message.send_user_id
+        where t_broadcast_message.id = #{id}
+    </select>
+
+</mapper>

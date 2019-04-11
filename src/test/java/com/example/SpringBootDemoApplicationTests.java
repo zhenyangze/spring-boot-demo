@@ -53,13 +53,6 @@ public class SpringBootDemoApplicationTests {
     }
 
     @Test
-    public void testPropertyDescriptor() throws IntrospectionException {
-        PropertyDescriptor propertyDescriptor = new PropertyDescriptor("books", User.class);
-        System.out.println(propertyDescriptor);
-        System.out.println(propertyDescriptor.getPropertyType());
-    }
-
-    @Test
     public void testArray() throws IllegalAccessException, InstantiationException {
         User[] users = new User[7];
         Object[] objects = (Object[]) users;

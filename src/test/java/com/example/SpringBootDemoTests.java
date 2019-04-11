@@ -1,5 +1,6 @@
 package com.example;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.junit.Test;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
@@ -34,6 +35,18 @@ public class SpringBootDemoTests {
     @Test
     public void testEquals() {
         System.out.println(Objects.equals(null, null));
+    }
+
+    @Test
+    public void testQueryWrapper() {
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("user_id", 1);
+        wrapper.eq("role_id", 1);
+        wrapper.or();
+        wrapper.eq("user_id", 2);
+        wrapper.eq("role_id", 3);
+        wrapper.or();
+        System.out.println(wrapper.getCustomSqlSegment());
     }
 
 }

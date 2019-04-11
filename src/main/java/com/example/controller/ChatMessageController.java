@@ -4,26 +4,30 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.group.Insert;
+import com.example.group.Update;
 import com.example.model.po.ChatMessage;
 import com.example.model.po.User;
 import com.example.model.vo.ChatMessageVO;
 import com.example.model.vo.ResultVO;
 import com.example.model.vo.UserVO;
 import com.example.service.IChatMessageService;
+import com.example.util.MessageHeadersBuilder;
 import com.example.util.ModelUtil;
+import com.example.websocket.SessionIdRegistry;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
+import java.util.Set;
 
 import static com.example.model.vo.ResultVO.SUCCESS;
 
@@ -35,6 +39,8 @@ public class ChatMessageController {
 
     @Value("${websocket.destination.chat}")
     private String chat;
+    @Autowired
+    private SessionIdRegistry sessionIdRegistry;
     @Autowired
     private IChatMessageService chatMessageService;
     @Autowired
@@ -62,7 +68,12 @@ public class ChatMessageController {
                              @PathVariable @NotNull(message = "每页显示条数不能为空") @ApiParam(value = "每页显示条数", defaultValue = "10", required = true) long size,
                              ChatMessageVO chatMessageVO) {
         Page<ChatMessage> page = new Page<>(current, size);
-        Wrapper<ChatMessage> wrapper = new QueryWrapper<>(chatMessageVO);
+        QueryWrapper<ChatMessage> wrapper = new QueryWrapper<>(chatMessageVO);
+        wrapper.eq("t_chat_message.send_user_id", userId);
+        wrapper.eq("t_chat_message.to_user_id", anotherUserId);
+        wrapper.or();
+        wrapper.eq("t_chat_message.send_user_id", anotherUserId);
+        wrapper.eq("t_chat_message.to_user_id", userId);
         IPage<ChatMessage> iPage = chatMessageService.page(page, wrapper);
         IPage messages = (IPage) ModelUtil.copy(iPage,
                 new ModelUtil.Mapping(ChatMessage.class, ChatMessageVO.class),
@@ -78,6 +89,38 @@ public class ChatMessageController {
                 new ModelUtil.Mapping(ChatMessage.class, ChatMessageVO.class),
                 new ModelUtil.Mapping(User.class, UserVO.class, "password"));
         return new ResultVO<>(SUCCESS, "", chatMessageVO);
+    }
+
+    @PutMapping
+    @ApiOperation(value = "更新消息")
+    public ResultVO update(@Validated({Update.class}) ChatMessageVO chatMessageVO) {
+        ChatMessage chatMessage = (ChatMessage) ModelUtil.copy(chatMessageVO, new ModelUtil.Mapping(ChatMessageVO.class, ChatMessage.class));
+        chatMessageService.updateById(chatMessage);
+        return new ResultVO<>(SUCCESS, "更新消息成功！", null);
+    }
+
+    @MessageMapping("/chat")
+    public void chat(@Validated({Insert.class}) ChatMessageVO chatMessageVO) {
+        ChatMessage chatMessage = (ChatMessage) ModelUtil.copy(chatMessageVO, new ModelUtil.Mapping(ChatMessageVO.class, ChatMessage.class));
+        Timestamp now = new Timestamp(System.currentTimeMillis());
+        chatMessage.setSendTime(now);
+        User currentUser = chatMessageService.currentUser();
+        chatMessage.setSendUser(currentUser);
+        chatMessage.setSendUserId(currentUser.getId());
+        chatMessage.setReadStatus(0);
+        chatMessageService.save(chatMessage);
+
+        Set<String> sessionIds = sessionIdRegistry.getSessionIds(chatMessage.getToUserId());
+        sessionIds.forEach(sessionId -> template.convertAndSendToUser(
+                sessionId,
+                chat,
+                ModelUtil.copy(chatMessage,
+                        new ModelUtil.Mapping(ChatMessage.class, ChatMessageVO.class),
+                        new ModelUtil.Mapping(User.class, UserVO.class, "password")),
+                new MessageHeadersBuilder()
+                        .sessionId(sessionId)
+                        .leaveMutable(true)
+                        .build()));
     }
 
 }

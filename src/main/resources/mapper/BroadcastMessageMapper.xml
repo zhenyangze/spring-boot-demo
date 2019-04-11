@@ -42,6 +42,7 @@
             <if test=" ew.entity.content != null and ew.entity.content != ''.toString() ">
                 and instr(t_broadcast_message.content, #{ew.entity.content}) > 0
             </if>
+            ${ew.customSqlSegment}
         </where>
     </select>
 

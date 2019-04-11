@@ -90,7 +90,11 @@ public class CustomizeStompSubProtocolHandler extends StompSubProtocolHandler {
             }
             String content = queue.poll();
             if (!StringUtils.isEmpty(content)) {
-                message.setContent(content.trim());
+                if (content.startsWith("destination:") && StringUtils.isEmpty(message.getDestination())) {
+                    message.setDestination(content.split(":")[1].trim());
+                } else {
+                    message.setContent(content.trim());
+                }
             }
             return message;
         }

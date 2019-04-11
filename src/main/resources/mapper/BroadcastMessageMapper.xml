@@ -44,6 +44,7 @@
             </if>
             ${ew.customSqlSegment}
         </where>
+        order by t_broadcast_message.send_time desc
     </select>
 
     <select id="selectById" parameterType="java.io.Serializable" resultMap="resultMap">

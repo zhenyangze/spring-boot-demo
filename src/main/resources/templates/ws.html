@@ -17,9 +17,6 @@
         <button id="disconnect" disabled="disabled" onclick="disconnect();">断开连接</button>
     </div>
     <div id="conversationDiv">
-        <div><label>输入接收用户id</label><input type="text" id="toUserId" /></div>
-        <div><label>输入消息内容</label><input type="text" id="content" /></div>
-        <div><button id="send" onclick="send();">发送</button></div>
         <div><label>广播消息：</label><span id="broadcast"></span></div>
         <div><label>聊天消息：</label><span id="chat"></span></div>
     </div>
@@ -64,13 +61,6 @@
         console.log("Disconnected");
     }
 
-    function send() {
-        var toUserId = $('#toUserId').val();
-        var content = $('#content').val();
-        //通过stompClient.send 向/welcome 目标 发送消息,这个是在控制器的@messageMapping 中定义的。
-        stompClient.send("/chat", {}, JSON.stringify({ 'content': content, 'toUserId': toUserId }));
-    }
-
     function showBroadcast(response) {
         var broadcast = $("#broadcast");
         broadcast.html(response.content);
@@ -78,7 +68,8 @@
 
     function showChat(response) {
         var chat = $("#chat");
-        chat.html(response.content);
+        chat.html(response.sendTime+": "+response.sendUser.nickname+": "+response.content);
+        // TODO 设置为已读
     }
 </script>
 </body>

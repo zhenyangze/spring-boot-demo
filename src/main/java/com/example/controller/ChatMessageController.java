@@ -20,7 +20,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -69,11 +68,14 @@ public class ChatMessageController {
                              ChatMessageVO chatMessageVO) {
         Page<ChatMessage> page = new Page<>(current, size);
         QueryWrapper<ChatMessage> wrapper = new QueryWrapper<>(chatMessageVO);
-        wrapper.eq("t_chat_message.send_user_id", userId);
-        wrapper.eq("t_chat_message.to_user_id", anotherUserId);
-        wrapper.or();
-        wrapper.eq("t_chat_message.send_user_id", anotherUserId);
-        wrapper.eq("t_chat_message.to_user_id", userId);
+        wrapper.and(queryWrapper -> {
+            queryWrapper.eq("t_chat_message.send_user_id", userId);
+            queryWrapper.eq("t_chat_message.to_user_id", anotherUserId);
+            queryWrapper.or();
+            queryWrapper.eq("t_chat_message.send_user_id", anotherUserId);
+            queryWrapper.eq("t_chat_message.to_user_id", userId);
+            return queryWrapper;
+        });
         IPage<ChatMessage> iPage = chatMessageService.page(page, wrapper);
         IPage messages = (IPage) ModelUtil.copy(iPage,
                 new ModelUtil.Mapping(ChatMessage.class, ChatMessageVO.class),
@@ -91,16 +93,9 @@ public class ChatMessageController {
         return new ResultVO<>(SUCCESS, "", chatMessageVO);
     }
 
-    @PutMapping
-    @ApiOperation(value = "更新消息")
-    public ResultVO update(@Validated({Update.class}) ChatMessageVO chatMessageVO) {
-        ChatMessage chatMessage = (ChatMessage) ModelUtil.copy(chatMessageVO, new ModelUtil.Mapping(ChatMessageVO.class, ChatMessage.class));
-        chatMessageService.updateById(chatMessage);
-        return new ResultVO<>(SUCCESS, "更新消息成功！", null);
-    }
-
-    @MessageMapping("/chat")
-    public void chat(@Validated({Insert.class}) ChatMessageVO chatMessageVO) {
+    @PostMapping
+    @ApiOperation(value = "发送消息")
+    public ResultVO chat(@Validated({Insert.class}) ChatMessageVO chatMessageVO) {
         ChatMessage chatMessage = (ChatMessage) ModelUtil.copy(chatMessageVO, new ModelUtil.Mapping(ChatMessageVO.class, ChatMessage.class));
         Timestamp now = new Timestamp(System.currentTimeMillis());
         chatMessage.setSendTime(now);
@@ -116,11 +111,20 @@ public class ChatMessageController {
                 chat,
                 ModelUtil.copy(chatMessage,
                         new ModelUtil.Mapping(ChatMessage.class, ChatMessageVO.class),
-                        new ModelUtil.Mapping(User.class, UserVO.class, "password")),
+                        new ModelUtil.Mapping(User.class, UserVO.class, "password", "roles")),
                 new MessageHeadersBuilder()
                         .sessionId(sessionId)
                         .leaveMutable(true)
                         .build()));
+        return new ResultVO<>(SUCCESS, "发送消息成功！", null);
+    }
+
+    @PutMapping
+    @ApiOperation(value = "更新消息")
+    public ResultVO update(@Validated({Update.class}) ChatMessageVO chatMessageVO) {
+        ChatMessage chatMessage = (ChatMessage) ModelUtil.copy(chatMessageVO, new ModelUtil.Mapping(ChatMessageVO.class, ChatMessage.class));
+        chatMessageService.updateById(chatMessage);
+        return new ResultVO<>(SUCCESS, "更新消息成功！", null);
     }
 
 }

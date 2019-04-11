@@ -25,13 +25,15 @@ public class ChatMessage extends BaseModel {
     @Null(groups = {Insert.class, Update.class}, message = "发送时间必须为空")
     private Timestamp sendTime;
     @ApiModelProperty("消息内容")
-    @NotNull(groups = {Insert.class, Update.class}, message = "消息内容不能为空")
+    @NotNull(groups = {Insert.class}, message = "消息内容不能为空")
+    @Null(groups = {Update.class}, message = "消息内容必须为空")
     private String content;
     @ApiModelProperty("发送用户id")
     @Null(groups = {Insert.class, Update.class}, message = "发送用户id必须为空")
     private Integer sendUserId;
     @ApiModelProperty("接收用户id")
-    @NotNull(groups = {Insert.class, Update.class}, message = "接收用户id不能为空")
+    @NotNull(groups = {Insert.class}, message = "接收用户id不能为空")
+    @Null(groups = {Update.class}, message = "接收用户id必须为空")
     private Integer toUserId;
     @ApiModelProperty("阅读状态")
     @Null(groups = {Insert.class}, message = "阅读状态必须为空")

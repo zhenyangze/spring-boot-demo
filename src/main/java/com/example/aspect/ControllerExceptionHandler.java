@@ -19,6 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import static com.example.model.vo.ResultVO.BAD_REQUEST;
 import static com.example.model.vo.ResultVO.FAILURE;
 
 @RestControllerAdvice
@@ -39,7 +40,7 @@ public class ControllerExceptionHandler {
                 errorMsg.append(",");
             }
         }
-        return new ResultVO<>(FAILURE, errorMsg.toString(), null);
+        return new ResultVO<>(BAD_REQUEST, errorMsg.toString(), null);
     }
 
     // 实体类参数校验异常，MethodArgumentNotValidException为@RequestBody参数校验异常，BindException为普通实体类参数校验异常
@@ -65,14 +66,14 @@ public class ControllerExceptionHandler {
                 }
             }
         }
-        return new ResultVO<>(FAILURE, errorMsg.toString(), null);
+        return new ResultVO<>(BAD_REQUEST, errorMsg.toString(), null);
     }
 
     // 业务逻辑异常
     @ExceptionHandler({LogicException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResultVO handleLogicException(LogicException e) {
-        return new ResultVO<>(FAILURE, e.getMessage(), null);
+        return new ResultVO<>(BAD_REQUEST, e.getMessage(), null);
     }
 
     // 项目异常

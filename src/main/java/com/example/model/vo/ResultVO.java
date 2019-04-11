@@ -20,6 +20,8 @@ public class ResultVO<T> implements Serializable {
     public static final int SUCCESS = 200;
     /** 失败 */
     public static final int FAILURE = 500;
+    /** 参数错误 */
+    public static final int BAD_REQUEST = 400;
     /** 未认证 */
     public static final int UNAUTHORIZED = 401;
     /** 未授权 */

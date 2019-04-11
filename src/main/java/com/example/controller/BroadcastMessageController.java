@@ -57,13 +57,21 @@ public class BroadcastMessageController {
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查询广播")
-    public ResultVO<BroadcastMessageVO> findById(@PathVariable @NotNull(message = "广播id不能为空") @ApiParam Integer id) {
+    public ResultVO<BroadcastMessageVO> findById(@PathVariable @NotNull(message = "广播id不能为空") @ApiParam(value = "广播id", required = true) Integer id) {
         BroadcastMessage broadcastMessage = broadcastMessageService.getById(id);
         BroadcastMessageVO broadcastMessageVO = (BroadcastMessageVO) ModelUtil.copy(broadcastMessage,
                 new ModelUtil.Mapping(BroadcastMessage.class, BroadcastMessageVO.class),
                 new ModelUtil.Mapping(User.class, UserVO.class, "password"));
         return new ResultVO<>(SUCCESS, "", broadcastMessageVO);
     }
+
+    @DeleteMapping
+    @ApiOperation(value = "删除广播")
+    public ResultVO delete(@PathVariable @NotNull(message = "广播id不能为空") @ApiParam(value = "广播id", required = true) Integer id) {
+        broadcastMessageService.removeById(id);
+        return new ResultVO<>(SUCCESS, "删除广播成功！", null);
+    }
+
 
     @PostMapping
     @ApiOperation(value = "发送广播")

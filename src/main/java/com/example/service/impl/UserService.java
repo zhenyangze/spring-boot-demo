@@ -43,7 +43,7 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
         for (Role role: roles) {
             links.add(new UserRoleLink(userId, role.getId()));
         }
-        userRoleLinkService.merge(links, new QueryWrapper<>(new UserRoleLink().setUserId(userId)));
+        userRoleLinkService.merge(links, new QueryWrapper<UserRoleLink>().eq("user_id", userId));
     }
 
 }

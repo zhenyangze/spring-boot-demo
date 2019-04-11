@@ -48,7 +48,7 @@ public class RoleService extends BaseService<RoleMapper, Role> implements IRoleS
         for (Resource resource: resources) {
             links.add(new RoleResourceLink(roleId, resource.getId()));
         }
-        roleResourceLinkService.merge(links, new QueryWrapper<>(new RoleResourceLink().setRoleId(roleId)));
+        roleResourceLinkService.merge(links, new QueryWrapper<RoleResourceLink>().eq("role_id", roleId));
     }
 
 }

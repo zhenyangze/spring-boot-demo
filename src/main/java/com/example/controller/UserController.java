@@ -18,6 +18,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,7 +66,10 @@ public class UserController {
     @ApiOperation(value = "保存用户")
     public ResultVO save(@Validated({UserInsert.class}) @RequestBody UserVO userVO) {
         User user = (User) ModelUtil.copy(userVO, new ModelUtil.Mapping(UserVO.class, User.class));
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        String password = user.getPassword();
+        if (!StringUtils.isEmpty(password)) {
+            user.setPassword(passwordEncoder.encode(password));
+        }
         userService.customSave(user);
         return new ResultVO<>(SUCCESS, "保存用户成功！", null);
     }
@@ -74,7 +78,10 @@ public class UserController {
     @ApiOperation(value = "更新用户")
     public ResultVO update(@Validated({UserUpdate.class}) @RequestBody UserVO userVO) {
         User user = (User) ModelUtil.copy(userVO, new ModelUtil.Mapping(UserVO.class, User.class));
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        String password = user.getPassword();
+        if (!StringUtils.isEmpty(password)) {
+            user.setPassword(passwordEncoder.encode(password));
+        }
         userService.customUpdate(user);
         return new ResultVO<>(SUCCESS, "更新用户成功！", null);
     }

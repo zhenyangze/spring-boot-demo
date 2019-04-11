@@ -8,7 +8,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 /**
  * {@link EnableAsync}开启异步支持，
- * 使用注解{@link org.springframework.scheduling.annotation.Async}生命异步任务，
+ * 使用注解{@link org.springframework.scheduling.annotation.Async}声明异步任务，
  * 异步任务由配置中的线程池调度
  */
 @EnableAsync(proxyTargetClass = true)

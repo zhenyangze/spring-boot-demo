@@ -40,7 +40,7 @@ spring:
         min-idle: 1 # 连接池中的最小空闲连接
 
 log:
-  home: E:/IdeaProjects/logs/dev
+  home: E:/IdeaProjects/logs/dev # 日志目录
 
 server:
   port: 8080
@@ -50,8 +50,6 @@ server:
 
 attachment:
   save-dir: E:/IdeaProjects/file # 文件保存路径
-  address-prefix: /demofile # 文件访问前缀
-  file-separator: / # 文件路径分隔符
 
 swagger2:
   enable: true # 启用swagger2

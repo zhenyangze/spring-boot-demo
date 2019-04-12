@@ -16,7 +16,7 @@ public class Attachment extends BaseModel {
     private String attachmentName;
     @ApiModelProperty("访问地址")
     private String attachmentAddress;
-    @ApiModelProperty(value = "本地路径", hidden = true)
+    @ApiModelProperty("本地路径")
     private String attachmentPath;
 
 }

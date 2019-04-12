@@ -2,9 +2,7 @@ package com.example;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.mapper.UserMapper;
-import com.example.mapper.UserRoleLinkMapper;
 import com.example.model.po.User;
-import com.example.model.po.UserRoleLink;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,9 +13,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.beans.IntrospectionException;
-import java.beans.PropertyDescriptor;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @Slf4j
@@ -27,8 +22,6 @@ public class SpringBootDemoApplicationTests {
     private RedisTemplate<String, Object> redisTemplate;
     @Autowired
     private UserMapper userMapper;
-    @Autowired
-    private UserRoleLinkMapper userRoleLinkMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -81,7 +74,8 @@ public class SpringBootDemoApplicationTests {
     public void testContext() {
         String[] names = context.getBeanDefinitionNames();
         for (String name : names) {
-            System.out.println(name);
+            Object bean = context.getBean(name);
+            System.out.println(bean==null? null: bean.getClass());
         }
     }
 

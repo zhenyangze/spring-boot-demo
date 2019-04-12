@@ -1,6 +1,7 @@
 package com.example.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.example.annotation.IgnoreSwaggerParameter;
 import com.example.group.RoleInsert;
 import com.example.group.RoleUpdate;
 import com.example.group.UserInsert;
@@ -35,7 +36,8 @@ public class Role extends BaseModel {
     private String roleDesc;
 
     @TableField(exist = false)
-    @ApiModelProperty(value = "资源信息", hidden = true)
+    @ApiModelProperty("资源信息")
+    @IgnoreSwaggerParameter
     @NotEmpty(groups = {RoleInsert.class, RoleInsert.class}, message = "资源信息不能为空")
     @Valid
     private List<Resource> resources;

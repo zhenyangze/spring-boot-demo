@@ -1,6 +1,7 @@
 package com.example.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.example.annotation.IgnoreSwaggerParameter;
 import com.example.group.Insert;
 import com.example.model.BaseModel;
 import io.swagger.annotations.ApiModel;
@@ -30,7 +31,8 @@ public class BroadcastMessage extends BaseModel {
     private Integer sendUserId;
 
     @TableField(exist = false)
-    @ApiModelProperty(value = "发送用户", hidden = true)
+    @ApiModelProperty("发送用户")
+    @IgnoreSwaggerParameter
     @Null(groups = {Insert.class}, message = "发送用户必须为空")
     private User sendUser;
 

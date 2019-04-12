@@ -2,6 +2,7 @@ package com.example.model.po;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.example.annotation.IgnoreSwaggerParameter;
 import com.example.group.UserInsert;
 import com.example.group.UserUpdate;
 import com.example.model.BaseModel;
@@ -48,11 +49,13 @@ public class User extends BaseModel {
     private Integer deptId;
 
     @TableField(exist = false)
-    @ApiModelProperty(value = "部门信息", hidden = true)
+    @ApiModelProperty("部门信息")
+    @IgnoreSwaggerParameter
     @Null(groups = {UserInsert.class, UserUpdate.class}, message = "部门信息必须为空")
     private Dept dept;
     @TableField(exist = false)
-    @ApiModelProperty(value = "角色信息", hidden = true)
+    @ApiModelProperty("角色信息")
+    @IgnoreSwaggerParameter
     @NotEmpty(groups = {UserInsert.class, UserUpdate.class}, message = "角色信息不能为空")
     @Valid
     private List<Role> roles;

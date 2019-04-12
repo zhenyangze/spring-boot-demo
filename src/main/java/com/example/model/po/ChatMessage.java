@@ -1,6 +1,7 @@
 package com.example.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.example.annotation.IgnoreSwaggerParameter;
 import com.example.group.Insert;
 import com.example.group.Update;
 import com.example.model.BaseModel;
@@ -40,11 +41,13 @@ public class ChatMessage extends BaseModel {
     private Integer readStatus;
 
     @TableField(exist = false)
-    @ApiModelProperty(value = "发送用户", hidden = true)
+    @ApiModelProperty("发送用户")
+    @IgnoreSwaggerParameter
     @Null(groups = {Insert.class, Update.class}, message = "发送用户必须为空")
     private User sendUser;
     @TableField(exist = false)
-    @ApiModelProperty(value = "接收用户", hidden = true)
+    @ApiModelProperty("接收用户")
+    @IgnoreSwaggerParameter
     @Null(groups = {Insert.class, Update.class}, message = "接收用户必须为空")
     private User toUser;
 

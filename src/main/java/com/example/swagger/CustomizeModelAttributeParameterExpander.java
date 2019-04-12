@@ -1,5 +1,7 @@
 package com.example.swagger;
 
+import com.example.annotation.IgnoreSwaggerParameter;
+import com.example.util.FieldUtil;
 import com.fasterxml.classmate.ResolvedType;
 import com.fasterxml.classmate.members.ResolvedField;
 import com.google.common.annotations.VisibleForTesting;
@@ -7,10 +9,10 @@ import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
-import io.swagger.annotations.ApiModelProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ClassUtils;
 import springfox.documentation.builders.ParameterBuilder;
@@ -22,9 +24,9 @@ import springfox.documentation.spi.schema.AlternateTypeProvider;
 import springfox.documentation.spi.schema.EnumTypeDeterminer;
 import springfox.documentation.spi.service.contexts.DocumentationContext;
 import springfox.documentation.spi.service.contexts.ParameterExpansionContext;
-import springfox.documentation.spring.web.plugins.DocumentationPluginsManager;
 import springfox.documentation.spring.web.readers.parameter.ExpansionContext;
 import springfox.documentation.spring.web.readers.parameter.ModelAttributeField;
+import springfox.documentation.spring.web.readers.parameter.ModelAttributeParameterExpander;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -45,38 +47,28 @@ import static springfox.documentation.schema.Collections.collectionElementType;
 import static springfox.documentation.schema.Collections.isContainerType;
 import static springfox.documentation.schema.Types.typeNameFor;
 
+/**
+ * 覆盖{@link ModelAttributeParameterExpander}
+ * @see CustomizeModelAttributeParameterExpander#getBeanPropertyNames(Class)
+ * @see ModelAttributeParameterExpander#getBeanPropertyNames(Class)
+ * @see IgnoreSwaggerParameter
+ */
 @Component
-public class ModelAttributeParameterExpander2 {
-    private static final Logger LOG = LoggerFactory.getLogger(springfox.documentation.spring.web.readers.parameter.ModelAttributeParameterExpander.class);
+@Primary
+public class CustomizeModelAttributeParameterExpander extends ModelAttributeParameterExpander {
+
+    private static final Logger LOG = LoggerFactory.getLogger(CustomizeModelAttributeParameterExpander.class);
     private final FieldProvider fieldProvider;
     private final EnumTypeDeterminer enumTypeDeterminer;
 
     @Autowired
-    protected DocumentationPluginsManager pluginsManager;
-
-    @Autowired
-    public ModelAttributeParameterExpander2(
-            FieldProvider fields,
-            EnumTypeDeterminer enumTypeDeterminer) {
-
+    public CustomizeModelAttributeParameterExpander(FieldProvider fields, EnumTypeDeterminer enumTypeDeterminer) {
+        super(fields, enumTypeDeterminer);
         this.fieldProvider = fields;
         this.enumTypeDeterminer = enumTypeDeterminer;
     }
 
-    // 增加了一个方法，判断字段是否有ApiModelProperty注解，且hidden属性为true
-    private Predicate<ModelAttributeField> hidden() {
-        return new Predicate<ModelAttributeField>() {
-            @Override
-            public boolean apply(ModelAttributeField input) {
-                ResolvedField resolvedField = input.getField();
-                Field field = resolvedField.getRawMember();
-                field.setAccessible(true);
-                ApiModelProperty apiModelProperty = field.getDeclaredAnnotation(ApiModelProperty.class);
-                return apiModelProperty!=null && apiModelProperty.hidden();
-            }
-        };
-    }
-
+    @Override
     public List<Parameter> expand(ExpansionContext context) {
 
         List<Parameter> parameters = newArrayList();
@@ -91,8 +83,7 @@ public class ModelAttributeParameterExpander2 {
 
         FluentIterable<ModelAttributeField> expendables = modelAttributes
                 .filter(not(simpleType()))
-                .filter(not(recursiveType(context)))
-                .filter(not(hidden())); // 只展开非hidden的字段
+                .filter(not(recursiveType(context)));
         for (ModelAttributeField each : expendables) {
             LOG.debug("Attempting to expand expandable field: {}", each.getField());
             parameters.addAll(
@@ -271,6 +262,17 @@ public class ModelAttributeParameterExpander2 {
             PropertyDescriptor[] propDescriptors = getBeanInfo(clazz).getPropertyDescriptors();
 
             for (PropertyDescriptor propDescriptor : propDescriptors) {
+
+                // 增加逻辑，忽略@IgnoreSwaggerParameter注解的字段
+                Field field = FieldUtil.getDeclaredField(clazz, propDescriptor.getName());
+                if (field!=null) {
+                    field.setAccessible(true);
+                    IgnoreSwaggerParameter ignoreSwaggerParameter = field.getDeclaredAnnotation(IgnoreSwaggerParameter.class);
+                    if (ignoreSwaggerParameter != null) {
+                        continue;
+                    }
+                }
+                // 增加结束
 
                 if (propDescriptor.getReadMethod() != null) {
                     beanProps.add(propDescriptor.getName());

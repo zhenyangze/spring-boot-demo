@@ -32,12 +32,14 @@ spring:
         max-idle: 8 # 连接池中的最大空闲连接
         min-idle: 1 # 连接池中的最小空闲连接
 
+log:
+  home: E:/IdeaProjects/logs/prod
+
 server:
   port: 80
   jetty:
     accesslog:
       enabled: true # 开启访问日志，默认false
-      filename: E:/IdeaProjects/logs/prod/jetty_access_yyyy_mm_dd.log # 日志文件名，yyyy_MM_dd是日期格式占位符，最终会被file-date-format配置的格式代替
 
 attachment:
   save-dir: E:/IdeaProjects/file # 文件保存路径

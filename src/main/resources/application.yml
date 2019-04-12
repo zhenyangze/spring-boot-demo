@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: prod
 
   servlet:
     multipart:
@@ -53,6 +53,7 @@ server:
     selectors: -1 # 选择器线程数，默认-1，根据运行环境派生
     max-http-post-size: 1048576 # post请求最大字节数，单位byte
     accesslog:
+      filename: ${log.home}/jetty_access_yyyy_mm_dd.log # 日志文件名，yyyy_MM_dd是日期格式占位符，最终会被file-date-format配置的格式代替
       file-date-format: yyyy_MM_dd # 日志文件日期格式
       retention-period: 31 # 日志保留天数，默认31
       append: true # 追加日志，默认false，重启后旧日志另存，重新创建新日志
@@ -66,7 +67,12 @@ server:
 
 # 运行日志
 logging:
-  config: classpath:logback.xml
+  config: classpath:logback-spring.xml
+log:
+  root-level: INFO
+  max-size: 30MB
+  max-history: 30
+  charset: UTF-8
 
 # mybatis plus
 mybatis-plus:
@@ -75,7 +81,6 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true # 驼峰命名
     cache-enabled: false # 是否开启缓存
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 打印sql日志
   global-config:
     db-config:
       db-type: mysql # 数据库类型
@@ -101,3 +106,7 @@ websocket:
   destination:
     broadcast: /topic/broadcast
     chat: /topic/chat
+
+attachment:
+  address-prefix: /demofile # 文件访问前缀
+  file-separator: / # 文件路径分隔符

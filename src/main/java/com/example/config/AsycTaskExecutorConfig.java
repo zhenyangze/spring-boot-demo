@@ -19,8 +19,20 @@ public class AsycTaskExecutorConfig {
     @Bean
     public TaskExecutor taskExecutor() {
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
-        taskExecutor.setCorePoolSize(50);
-        taskExecutor.setMaxPoolSize(100);
+        // 核心线程数量，默认1
+        taskExecutor.setCorePoolSize(8);
+        // 最大线程数量，默认int最大值
+        taskExecutor.setMaxPoolSize(16);
+        // 任务队列容量，达到最大时线程池会扩容，默认int最大值
+        taskExecutor.setQueueCapacity(100);
+        // 线程超时时间，默认60
+        taskExecutor.setKeepAliveSeconds(60);
+        // 允许核心线程超时，默认false
+        taskExecutor.setAllowCoreThreadTimeOut(true);
+        // 线程名称前缀
+        taskExecutor.setThreadNamePrefix("task-");
+        // 线程优先级
+        taskExecutor.setThreadPriority(5);
         return taskExecutor;
     }
 

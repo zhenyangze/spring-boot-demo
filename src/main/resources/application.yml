@@ -41,6 +41,37 @@ spring:
       cache-null-values: false # 缓存为null的value，默认true
       time-to-live: 30m # 缓存有效时间
 
+  # 定时任务
+  quartz:
+    auto-startup: true # 自动启动，默认true
+    startup-delay: 0s # 延迟启动，默认0s
+    job-store-type: jdbc # 任务保存方式，默认memory（内存）
+    wait-for-jobs-to-complete-on-shutdown: true # 关闭时等待任务执行完毕，默认false
+    overwrite-existing-jobs: false # 覆盖已有job，默认false
+    jdbc:
+      initialize-schema: never # 初始化数据库，默认embedded
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceId: AUTO # ID设置为自动获取，每一个必须不同，所有调度器实例中是唯一的
+            instanceName: clusteredScheduler # 任务调度器名称
+            makeSchedulerThreadDaemon: true # 指定调度程序的主线程是否应该是守护线程
+          jobStore:
+            # 使用spring管理的数据源代替quartz管理的数据源，当设置了SchedulerFactoryBean的datasource属性时默认生效
+            class: org.springframework.scheduling.quartz.LocalDataSourceJobStore
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate # 数据库方言
+            tablePrefix: QRTZ_ # quartz表名前缀，默认QRTZ_
+            isClustered: true # 加入集群
+            clusterCheckinInterval: 10000 # 集群检查间隔（毫秒）
+            useProperties: false # 是否处理properties文件，默认false
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool # 线程池
+            makeThreadsDaemons: true # 生成线程守护进程
+            threadCount: 10 # 线程数量
+            threadPriority: 5 # 线程优先级
+            threadsInheritContextClassLoaderOfInitializingThread: true # 线程继承初始化线程的上下文类加载程序，默认false
+
 server:
   port: 8080
   servlet:

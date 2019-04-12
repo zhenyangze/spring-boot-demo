@@ -32,14 +32,14 @@ spring:
         max-idle: 8 # 连接池中的最大空闲连接
         min-idle: 1 # 连接池中的最小空闲连接
 
-log:
-  home: E:/IdeaProjects/logs/prod # 日志目录
-
 server:
   port: 80
   jetty:
     accesslog:
       enabled: true # 开启访问日志，默认false
+
+log:
+  home: E:/IdeaProjects/logs/prod # 日志目录
 
 attachment:
   save-dir: E:/IdeaProjects/file # 文件保存路径

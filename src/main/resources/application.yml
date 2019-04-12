@@ -65,15 +65,6 @@ server:
       log-server: true # 记录主机名，默认false
       log-latency: true # 记录请求处理时间，默认false
 
-# 运行日志
-logging:
-  config: classpath:logback-spring.xml
-log:
-  root-level: INFO
-  max-size: 30MB
-  max-history: 30
-  charset: UTF-8
-
 # mybatis plus
 mybatis-plus:
   mapper-locations: classpath:/mapper/*Mapper.xml # mapper文件路径
@@ -92,6 +83,16 @@ mybatis-plus:
       logic-delete-value: 1 # 逻辑已删除值，逻辑删除下有效
       logic-not-delete-value: 0 # 逻辑未删除值，逻辑删除下有效
       column-like: false # 是否开启LIKE查询，即根据entity自动生成的where条件中String类型字段是否使用LIKE，默认不开启
+
+# 日志
+logging:
+  config: classpath:logback-spring.xml
+
+log:
+  root-level: INFO # 日志级别
+  max-size: 30MB # 日志最大大小
+  max-history: 30 # 日志保留天数
+  charset: UTF-8 # 日志编码
 
 token:
   expire-seconds: 7200 # token过期时间（秒）

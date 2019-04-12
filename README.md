@@ -5,10 +5,8 @@ spring boot项目模板<br>
 文档地址：http://localhost:8080/demo/swagger-ui.html
 
 #### TODO
-* 日志分包
->常规输出，sql日志，错误日志
-* 邮件
 * 定时任务
+* 邮件
 * 工作流
 
 #### 技术应用

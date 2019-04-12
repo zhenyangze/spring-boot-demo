@@ -4,9 +4,7 @@ import com.example.filter.TokenFilter;
 import com.fasterxml.classmate.TypeResolver;
 import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -27,8 +25,6 @@ public class SwaggerConfig {
 
     @Value("${swagger2.enable}")
     private boolean enable;
-    @Autowired
-    private ApplicationContext context;
 
     @Bean
     public Docket api() {

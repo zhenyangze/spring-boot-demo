@@ -54,4 +54,4 @@ spring boot项目模板<br>
 >git fetch --all && git reset --hard origin/master && git pull
 
 #### 运行命令
->java -Dfile.encoding=utf-8 -jar spring-boot-demo.jar
+>java -Dfile.encoding=utf-8 -Dspring.profiles.active=dev -jar spring-boot-demo.jar

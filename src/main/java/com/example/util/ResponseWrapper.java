@@ -1,4 +1,4 @@
-package com.example.filter.util;
+package com.example.util;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.WriteListener;

@@ -36,7 +36,7 @@
         where t_user.id = #{id}
     </select>
 
-    <select id="customSelectOne" parameterType="com.example.mapper.params.Params" resultMap="resultMap">
+    <select id="customSelectOne" parameterType="com.example.params.Params" resultMap="resultMap">
         select <include refid="baseCol" />,
                <include refid="com.example.mapper.DeptMapper.baseCol" />,
                <include refid="com.example.mapper.RoleMapper.baseCol" />,

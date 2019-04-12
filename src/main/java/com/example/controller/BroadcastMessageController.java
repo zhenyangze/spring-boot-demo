@@ -3,7 +3,7 @@ package com.example.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.group.Insert;
-import com.example.mapper.params.Params;
+import com.example.params.Params;
 import com.example.model.po.BroadcastMessage;
 import com.example.model.po.User;
 import com.example.model.vo.BroadcastMessageVO;

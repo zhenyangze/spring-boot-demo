@@ -1,4 +1,4 @@
-package com.example.mapper.params;
+package com.example.params;
 
 import com.example.model.BaseModel;
 import lombok.Data;

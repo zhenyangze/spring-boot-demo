@@ -3,7 +3,7 @@ package com.example.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mapper.ChatMessageMapper;
-import com.example.mapper.params.Params;
+import com.example.params.Params;
 import com.example.model.po.ChatMessage;
 import com.example.service.IChatMessageService;
 import org.springframework.stereotype.Service;

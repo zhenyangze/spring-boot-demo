@@ -1,7 +1,7 @@
 package com.example.service.impl;
 
 import com.example.mapper.UserMapper;
-import com.example.mapper.params.Params;
+import com.example.params.Params;
 import com.example.model.po.User;
 import com.example.model.vo.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;

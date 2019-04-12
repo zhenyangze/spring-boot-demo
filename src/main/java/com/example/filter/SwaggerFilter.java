@@ -1,6 +1,6 @@
 package com.example.filter;
 
-import com.example.filter.util.ResponseWrapper;
+import com.example.util.ResponseWrapper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 

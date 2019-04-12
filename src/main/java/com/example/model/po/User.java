@@ -48,11 +48,11 @@ public class User extends BaseModel {
     private Integer deptId;
 
     @TableField(exist = false)
-    @ApiModelProperty("部门信息")
+    @ApiModelProperty(value = "部门信息", hidden = true)
     @Null(groups = {UserInsert.class, UserUpdate.class}, message = "部门信息必须为空")
     private Dept dept;
     @TableField(exist = false)
-    @ApiModelProperty("角色信息")
+    @ApiModelProperty(value = "角色信息", hidden = true)
     @NotEmpty(groups = {UserInsert.class, UserUpdate.class}, message = "角色信息不能为空")
     @Valid
     private List<Role> roles;

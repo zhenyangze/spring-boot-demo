@@ -35,7 +35,7 @@ public class Role extends BaseModel {
     private String roleDesc;
 
     @TableField(exist = false)
-    @ApiModelProperty("资源信息")
+    @ApiModelProperty(value = "资源信息", hidden = true)
     @NotEmpty(groups = {RoleInsert.class, RoleInsert.class}, message = "资源信息不能为空")
     @Valid
     private List<Resource> resources;

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.mapper.JobTemplateMapper">
+
+    <sql id="baseCol">
+        t_job_template.id t_job_template_id, t_job_template.job_name t_job_template_job_name,
+        t_job_template.job_class_name t_job_template_job_class_name, t_job_template.job_desc t_job_template_job_desc
+    </sql>
+
+    <resultMap id="baseResultMap" type="com.example.model.po.JobTemplate">
+        <id column="t_job_template_id" property="id" />
+        <result column="t_job_template_job_name" property="jobName" />
+        <result column="job_class_name" property="jobClassName" />
+        <result column="t_job_template_job_desc" property="jobDesc" />
+    </resultMap>
+
+    <resultMap id="resultMap" type="com.example.model.po.JobTemplate" extends="baseResultMap">
+        <collection column="t_job_template_id" property="parameters" resultMap="com.example.mapper.JobTemplateParameterMapper.baseResultMap" />
+    </resultMap>
+
+    <select id="customSelectById" parameterType="int" resultMap="resultMap">
+        select <include refid="baseCol" />,
+               <include refid="com.example.mapper.JobTemplateParameterMapper.baseCol" />
+        from t_job_template t_job_template
+        left join t_job_template_parameter t_job_template_parameter on t_job_template_parameter.job_template_id = t_job_template.id
+        where t_job_template.id = #{id}
+    </select>
+
+</mapper>

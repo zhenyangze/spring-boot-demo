@@ -11,23 +11,23 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
 @Data
-@ApiModel("任务模板参数")
+@ApiModel(value = "任务模板参数")
 public class JobTemplateParameter extends BaseModel {
 
     private static final long serialVersionUID = 1L;
-    @ApiModelProperty("参数id")
+    @ApiModelProperty(value = "参数id")
     @Null(groups = {JobTemplateInsert.class}, message = "参数id必须为空")
     private Integer id;
-    @ApiModelProperty("参数名称")
+    @ApiModelProperty(value = "参数名称")
     @NotNull(groups = {JobTemplateInsert.class, JobTemplateUpdate.class}, message = "参数名称不能为空")
     private String parameterName;
-    @ApiModelProperty("参数类型")
+    @ApiModelProperty(value = "参数类型")
     @NotNull(groups = {JobTemplateInsert.class, JobTemplateUpdate.class}, message = "参数类型不能为空")
     private String parameterType;
-    @ApiModelProperty("参数描述")
+    @ApiModelProperty(value = "参数描述")
     @NotNull(groups = {JobTemplateInsert.class, JobTemplateUpdate.class}, message = "参数描述不能为空")
     private String parameterDesc;
-    @ApiModelProperty("任务模板id")
+    @ApiModelProperty(value = "任务模板id")
     @Null(groups = {JobTemplateInsert.class, JobTemplateUpdate.class}, message = "任务模板id必须为空")
     private Integer jobTemplateId;
 

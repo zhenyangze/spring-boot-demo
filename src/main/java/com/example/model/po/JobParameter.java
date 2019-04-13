@@ -6,17 +6,17 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-@ApiModel("定时任务参数")
+@ApiModel(value = "定时任务参数")
 public class JobParameter extends BaseModel {
 
     private static final long serialVersionUID = 1L;
-    @ApiModelProperty("参数id")
+    @ApiModelProperty(value = "参数id")
     private Integer id;
-    @ApiModelProperty("参数名称")
+    @ApiModelProperty(value = "参数名称")
     private String parameterName;
-    @ApiModelProperty("参数值")
+    @ApiModelProperty(value = "参数值")
     private String parameterValue;
-    @ApiModelProperty("定时任务id")
+    @ApiModelProperty(value = "定时任务id")
     private Integer jobId;
 
 }

@@ -32,7 +32,7 @@ public class JobTemplateController {
     private IJobTemplateService jobTemplateService;
 
     @GetMapping("/{current}/{size}")
-    @ApiOperation("查询任务模板列表")
+    @ApiOperation(value = "查询任务模板列表")
     public ResultVO list(@PathVariable @NotNull(message = "当前页不能为空") @ApiParam(value = "当前页", defaultValue = "1", required = true) long current,
                          @PathVariable @NotNull(message = "每页显示条数不能为空") @ApiParam(value = "每页显示条数", defaultValue = "10", required = true) long size,
                          JobTemplateVO jobTemplateVO) {
@@ -44,7 +44,7 @@ public class JobTemplateController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation("根据id查询任务模板")
+    @ApiOperation(value = "根据id查询任务模板")
     public ResultVO<JobTemplateVO> findById(@PathVariable @NotNull(message = "任务模板id不能为空") @ApiParam(value = "任务模板id", required = true) Integer id) {
         JobTemplate jobTemplate = jobTemplateService.customGetById(id);
         JobTemplateVO jobTemplateVO = (JobTemplateVO) ModelUtil.copy(jobTemplate, new ModelUtil.Mapping(JobTemplate.class, JobTemplateVO.class));
@@ -52,7 +52,7 @@ public class JobTemplateController {
     }
 
     @PostMapping
-    @ApiOperation("保存任务模板")
+    @ApiOperation(value = "保存任务模板")
     public ResultVO save(@Validated({Insert.class}) @RequestBody JobTemplateVO jobTemplateVO) {
         JobTemplate jobTemplate = (JobTemplate) ModelUtil.copy(jobTemplateVO, new ModelUtil.Mapping(JobTemplateVO.class, JobTemplate.class));
         jobTemplateService.customSave(jobTemplate);
@@ -60,7 +60,7 @@ public class JobTemplateController {
     }
 
     @PutMapping
-    @ApiOperation("更新任务模板")
+    @ApiOperation(value = "更新任务模板")
     public ResultVO update(@Validated({Update.class}) @RequestBody JobTemplateVO jobTemplateVO) {
         JobTemplate jobTemplate = (JobTemplate) ModelUtil.copy(jobTemplateVO, new ModelUtil.Mapping(JobTemplateVO.class, JobTemplate.class));
         jobTemplateService.customUpdateById(jobTemplate);
@@ -68,7 +68,7 @@ public class JobTemplateController {
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation("删除任务模板")
+    @ApiOperation(value = "删除任务模板")
     public ResultVO delete(@PathVariable @NotNull(message = "任务模板id不能为空") @ApiParam(value = "任务模板id", required = true) Integer id) {
         jobTemplateService.removeById(id);
         return new ResultVO<>(SUCCESS, "删除任务模板成功！", null);

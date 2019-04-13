@@ -27,7 +27,7 @@ public class JobController {
     private Scheduler scheduler;
 
     @PostMapping("/testJob")
-    @ApiOperation("创建testJob")
+    @ApiOperation(value = "创建testJob")
     public ResultVO saveTestJob() throws SchedulerException {
         //设置开始时间为1分钟后
         long startAtTime = System.currentTimeMillis() + 1000 * 60;
@@ -46,7 +46,7 @@ public class JobController {
     }
 
     @PostMapping("/testCronJob")
-    @ApiOperation("创建testCronJob")
+    @ApiOperation(value = "创建testCronJob")
     public ResultVO saveTestCronJob() throws SchedulerException {
         //任务名称
         String name = "testCronJob-"+UUID.randomUUID().toString();

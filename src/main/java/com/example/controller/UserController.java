@@ -82,7 +82,7 @@ public class UserController {
         if (!StringUtils.isEmpty(password)) {
             user.setPassword(passwordEncoder.encode(password));
         }
-        userService.customUpdate(user);
+        userService.customUpdateById(user);
         return new ResultVO<>(SUCCESS, "更新用户成功！", null);
     }
 

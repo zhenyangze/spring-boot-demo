@@ -67,7 +67,7 @@ public class RoleController {
     @ApiOperation(value = "更新角色")
     public ResultVO update(@Validated({RoleUpdate.class}) @RequestBody RoleVO roleVO) {
         Role role = (Role) ModelUtil.copy(roleVO, new ModelUtil.Mapping(RoleVO.class, Role.class));
-        roleService.customUpdate(role);
+        roleService.customUpdateById(role);
         return new ResultVO<>(SUCCESS, "更新角色成功！", null);
     }
 

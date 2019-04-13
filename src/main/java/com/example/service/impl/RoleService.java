@@ -40,7 +40,7 @@ public class RoleService extends BaseService<RoleMapper, Role> implements IRoleS
 
     @Override
     @Transactional
-    public void customUpdate(Role role) {
+    public void customUpdateById(Role role) {
         baseMapper.updateById(role);
         Integer roleId = role.getId();
         List<Resource> resources = role.getResources();

@@ -40,7 +40,7 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
 
     @Override
     @Transactional
-    public void customUpdate(User user) {
+    public void customUpdateById(User user) {
         baseMapper.updateById(user);
         Integer userId = user.getId();
         List<Role> roles = user.getRoles();

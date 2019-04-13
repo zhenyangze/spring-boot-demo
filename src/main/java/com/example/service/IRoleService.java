@@ -8,6 +8,6 @@ public interface IRoleService extends IBaseService<Role> {
 
     void customSave(Role role);
 
-    void customUpdate(Role role);
+    void customUpdateById(Role role);
 
 }

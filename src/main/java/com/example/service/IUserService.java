@@ -8,6 +8,6 @@ public interface IUserService extends IBaseService<User> {
 
     void customSave(User user);
 
-    void customUpdate(User user);
+    void customUpdateById(User user);
 
 }

@@ -25,9 +25,9 @@ public class JobTemplate extends BaseModel {
     @ApiModelProperty("任务名称")
     @NotNull(groups = {JobTemplateInsert.class, JobTemplateUpdate.class}, message = "任务名称不能为空")
     private String jobName;
-    @ApiModelProperty("org.quartz.Job的实现类或org.springframework.scheduling.quartz.QuartzJobBean的子类")
+    @ApiModelProperty("任务类名")
     @NotNull(groups = {JobTemplateInsert.class, JobTemplateUpdate.class}, message = "任务类名不能为空")
-    private String jobClassName;
+    private String jobClassName; // org.quartz.Job的实现类或org.springframework.scheduling.quartz.QuartzJobBean的子类
     @ApiModelProperty("任务描述")
     @NotNull(groups = {JobTemplateInsert.class, JobTemplateUpdate.class}, message = "任务描述不能为空")
     private String jobDesc;

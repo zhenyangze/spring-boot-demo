@@ -1,7 +1,7 @@
 package com.example.group;
 
 /**
- * 常规查询
+ * 通用查询
  */
 public interface Select {
 }

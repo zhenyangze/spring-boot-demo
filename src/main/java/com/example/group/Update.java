@@ -1,7 +1,7 @@
 package com.example.group;
 
 /**
- * 常规更新
+ * 通用更新
  */
 public interface Update {
 }

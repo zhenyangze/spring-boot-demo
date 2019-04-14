@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-04-14 21:05:01
+Date: 2019-04-14 23:57:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -65,6 +65,7 @@ CREATE TABLE `qrtz_cron_triggers` (
 -- ----------------------------
 -- Records of qrtz_cron_triggers
 -- ----------------------------
+INSERT INTO `qrtz_cron_triggers` VALUES ('clusteredScheduler', 'trigger-打印指定用户信息-49765b11-4499-4ccf-b332-77a1ab014d3e', 'trigger-com.example.job.LogUserJob', '0/20 * * * * ?', 'Asia/Shanghai');
 
 -- ----------------------------
 -- Table structure for qrtz_fired_triggers
@@ -120,6 +121,7 @@ CREATE TABLE `qrtz_job_details` (
 -- ----------------------------
 -- Records of qrtz_job_details
 -- ----------------------------
+INSERT INTO `qrtz_job_details` VALUES ('clusteredScheduler', 'job-打印指定用户信息-49765b11-4499-4ccf-b332-77a1ab014d3e', 'job-com.example.job.LogUserJob', null, 'com.example.job.LogUserJob', '0', '0', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C77080000001000000001740008757365726E616D65740003786C6B7800);
 
 -- ----------------------------
 -- Table structure for qrtz_locks
@@ -134,6 +136,8 @@ CREATE TABLE `qrtz_locks` (
 -- ----------------------------
 -- Records of qrtz_locks
 -- ----------------------------
+INSERT INTO `qrtz_locks` VALUES ('clusteredScheduler', 'STATE_ACCESS');
+INSERT INTO `qrtz_locks` VALUES ('clusteredScheduler', 'TRIGGER_ACCESS');
 
 -- ----------------------------
 -- Table structure for qrtz_paused_trigger_grps
@@ -164,6 +168,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
+INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'LAPTOP-AH9VLMG11555257341017', '1555257363865', '10000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -251,6 +256,7 @@ CREATE TABLE `qrtz_triggers` (
 -- ----------------------------
 -- Records of qrtz_triggers
 -- ----------------------------
+INSERT INTO `qrtz_triggers` VALUES ('clusteredScheduler', 'trigger-打印指定用户信息-49765b11-4499-4ccf-b332-77a1ab014d3e', 'trigger-com.example.job.LogUserJob', 'job-打印指定用户信息-49765b11-4499-4ccf-b332-77a1ab014d3e', 'job-com.example.job.LogUserJob', null, '1555257380000', '1555257360000', '5', 'WAITING', 'CRON', '1555256520000', '1555343940000', null, '0', '');
 
 -- ----------------------------
 -- Table structure for t_attachment
@@ -390,27 +396,36 @@ CREATE TABLE `t_job` (
   PRIMARY KEY (`id`),
   KEY `t_job_fk_job_template_id` (`job_template_id`),
   CONSTRAINT `t_job_fk_job_template_id` FOREIGN KEY (`job_template_id`) REFERENCES `t_job_template` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_job
 -- ----------------------------
+INSERT INTO `t_job` VALUES ('2', '测试更新定时任务', '2019-04-14 23:16:00', '2019-04-14 23:28:00', '0/10 * * * * ?', '2', 'clusteredScheduler', 'job-测试-e01bd431-dc46-49a3-bd3e-bf9b1ec07e4b', 'job-com.example.job.TestJob', 'trigger-测试-e01bd431-dc46-49a3-bd3e-bf9b1ec07e4b', 'trigger-com.example.job.TestJob');
+INSERT INTO `t_job` VALUES ('4', '打印username=xlk的用户信息', '2019-04-14 23:42:00', '2019-04-15 23:59:00', '0/20 * * * * ?', '7', 'clusteredScheduler', 'job-打印指定用户信息-49765b11-4499-4ccf-b332-77a1ab014d3e', 'job-com.example.job.LogUserJob', 'trigger-打印指定用户信息-49765b11-4499-4ccf-b332-77a1ab014d3e', 'trigger-com.example.job.LogUserJob');
 
 -- ----------------------------
 -- Table structure for t_job_parameter
 -- ----------------------------
 DROP TABLE IF EXISTS `t_job_parameter`;
 CREATE TABLE `t_job_parameter` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `parameter_name` varchar(200) DEFAULT NULL COMMENT '参数名称',
   `parameter_value` varchar(200) DEFAULT NULL COMMENT '参数值',
   `job_id` int(11) DEFAULT NULL COMMENT '定时任务id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_job_parameter
 -- ----------------------------
+INSERT INTO `t_job_parameter` VALUES ('1', 'name', '薛凌康', '2');
+INSERT INTO `t_job_parameter` VALUES ('2', 'age', '28', '2');
+INSERT INTO `t_job_parameter` VALUES ('3', 'weight', '99.99', '2');
+INSERT INTO `t_job_parameter` VALUES ('4', 'name', '薛凌康', '3');
+INSERT INTO `t_job_parameter` VALUES ('5', 'age', '28', '3');
+INSERT INTO `t_job_parameter` VALUES ('6', 'salary', '3.14', '3');
+INSERT INTO `t_job_parameter` VALUES ('7', 'username', 'xlk', '4');
 
 -- ----------------------------
 -- Table structure for t_job_template
@@ -422,11 +437,13 @@ CREATE TABLE `t_job_template` (
   `job_class_name` varchar(50) DEFAULT NULL COMMENT 'org.quartz.Job的实现类或org.springframework.scheduling.quartz.QuartzJobBean的子类',
   `job_desc` varchar(2000) DEFAULT NULL COMMENT '任务描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_job_template
 -- ----------------------------
+INSERT INTO `t_job_template` VALUES ('2', '测试', 'com.example.job.TestJob', '测试更新定时任务模板');
+INSERT INTO `t_job_template` VALUES ('7', '打印指定用户信息', 'com.example.job.LogUserJob', '打印指定用户信息');
 
 -- ----------------------------
 -- Table structure for t_job_template_parameter
@@ -441,11 +458,15 @@ CREATE TABLE `t_job_template_parameter` (
   PRIMARY KEY (`id`),
   KEY `t_job_template_parameter_fk_job_template_id` (`job_template_id`),
   CONSTRAINT `t_job_template_parameter_fk_job_template_id` FOREIGN KEY (`job_template_id`) REFERENCES `t_job_template` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_job_template_parameter
 -- ----------------------------
+INSERT INTO `t_job_template_parameter` VALUES ('3', 'name', 'string', '字符串参数', '2');
+INSERT INTO `t_job_template_parameter` VALUES ('4', 'age', 'int', '整数参数', '2');
+INSERT INTO `t_job_template_parameter` VALUES ('5', 'weight', 'float', '浮点参数', '2');
+INSERT INTO `t_job_template_parameter` VALUES ('7', 'username', 'string', '用户名', '7');
 
 -- ----------------------------
 -- Table structure for t_resource
@@ -458,7 +479,7 @@ CREATE TABLE `t_resource` (
   `resource_method` varchar(20) DEFAULT NULL COMMENT '请求方法',
   `resource_desc` varchar(50) DEFAULT NULL COMMENT '资源描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_resource
@@ -503,6 +524,13 @@ INSERT INTO `t_resource` VALUES ('40', 'http', '/jobTemplate/*', 'GET', '任务�
 INSERT INTO `t_resource` VALUES ('41', 'http', '/jobTemplate', 'POST', '保存任务模板');
 INSERT INTO `t_resource` VALUES ('42', 'http', '/jobTemplate', 'PUT', '更新任务模板');
 INSERT INTO `t_resource` VALUES ('43', 'http', '/jobTemplate/*', 'DELETE', '删除任务模板');
+INSERT INTO `t_resource` VALUES ('44', 'http', '/job/*/*', 'GET', '定时任务列表');
+INSERT INTO `t_resource` VALUES ('45', 'http', '/job/*', 'GET', '定时任务详情');
+INSERT INTO `t_resource` VALUES ('46', 'http', '/job', 'POST', '保存定时任务');
+INSERT INTO `t_resource` VALUES ('47', 'http', '/job', 'PUT', '更新定时任务');
+INSERT INTO `t_resource` VALUES ('48', 'http', '/job/*', 'DELETE', '删除定时任务');
+INSERT INTO `t_resource` VALUES ('49', 'http', '/job/pause/*', 'PATCH', '暂停定时任务');
+INSERT INTO `t_resource` VALUES ('50', 'http', '/job/resume/*', 'PATCH', '恢复定时任务');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -636,6 +664,13 @@ INSERT INTO `t_role_resource_link` VALUES ('1', '40');
 INSERT INTO `t_role_resource_link` VALUES ('1', '41');
 INSERT INTO `t_role_resource_link` VALUES ('1', '42');
 INSERT INTO `t_role_resource_link` VALUES ('1', '43');
+INSERT INTO `t_role_resource_link` VALUES ('1', '44');
+INSERT INTO `t_role_resource_link` VALUES ('1', '45');
+INSERT INTO `t_role_resource_link` VALUES ('1', '46');
+INSERT INTO `t_role_resource_link` VALUES ('1', '47');
+INSERT INTO `t_role_resource_link` VALUES ('1', '48');
+INSERT INTO `t_role_resource_link` VALUES ('1', '49');
+INSERT INTO `t_role_resource_link` VALUES ('1', '50');
 
 -- ----------------------------
 -- Table structure for t_user

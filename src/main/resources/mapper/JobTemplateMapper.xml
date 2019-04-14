@@ -10,7 +10,7 @@
     <resultMap id="baseResultMap" type="com.example.model.po.JobTemplate">
         <id column="t_job_template_id" property="id" />
         <result column="t_job_template_job_name" property="jobName" />
-        <result column="job_class_name" property="jobClassName" />
+        <result column="t_job_template_job_class_name" property="jobClassName" />
         <result column="t_job_template_job_desc" property="jobDesc" />
     </resultMap>
 

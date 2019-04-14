@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.util.List;
@@ -35,6 +36,7 @@ public class JobTemplate extends BaseModel {
     @TableField(exist = false)
     @ApiModelProperty(value = "任务参数")
     @IgnoreSwaggerParameter
+    @Valid
     private List<JobTemplateParameter> parameters;
 
 }

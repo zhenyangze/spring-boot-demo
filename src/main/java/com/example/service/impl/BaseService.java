@@ -11,6 +11,7 @@ import com.example.model.po.User;
 import com.example.model.vo.UserDetailsImpl;
 import com.example.service.IBaseService;
 import com.example.service.ITokenService;
+import io.jsonwebtoken.lang.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
@@ -47,7 +48,7 @@ public class BaseService<M extends BaseMapper<T>, T extends BaseModel> extends S
         if (queryWrapper==null || StringUtils.isEmpty(queryWrapper.getCustomSqlSegment())) {
             throw new LogicException("queryWrapper查询条件不能为空！");
         }
-        if (collection==null || collection.isEmpty()) {
+        if (Collections.isEmpty(collection)) {
             remove(queryWrapper);
             return;
         }
@@ -91,7 +92,7 @@ public class BaseService<M extends BaseMapper<T>, T extends BaseModel> extends S
         if (flag) {
             remove(deleteWrapper);
         }
-        if (!collection.isEmpty()) {
+        if (!Collections.isEmpty(collection)) {
             saveBatch(collection, batchSize);
         }
     }

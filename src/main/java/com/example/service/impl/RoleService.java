@@ -7,6 +7,7 @@ import com.example.model.po.Role;
 import com.example.model.po.RoleResourceLink;
 import com.example.service.IRoleResourceLinkService;
 import com.example.service.IRoleService;
+import io.jsonwebtoken.lang.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,10 +33,12 @@ public class RoleService extends BaseService<RoleMapper, Role> implements IRoleS
         Integer roleId = role.getId();
         List<Resource> resources = role.getResources();
         List<RoleResourceLink> links = new ArrayList<>();
-        for (Resource resource: resources) {
-            links.add(new RoleResourceLink(roleId, resource.getId()));
+        if (!Collections.isEmpty(resources)) {
+            for (Resource resource: resources) {
+                links.add(new RoleResourceLink(roleId, resource.getId()));
+            }
+            roleResourceLinkService.saveBatch(links);
         }
-        roleResourceLinkService.saveBatch(links);
     }
 
     @Override
@@ -45,8 +48,10 @@ public class RoleService extends BaseService<RoleMapper, Role> implements IRoleS
         Integer roleId = role.getId();
         List<Resource> resources = role.getResources();
         List<RoleResourceLink> links = new ArrayList<>();
-        for (Resource resource: resources) {
-            links.add(new RoleResourceLink(roleId, resource.getId()));
+        if (!Collections.isEmpty(resources)) {
+            for (Resource resource: resources) {
+                links.add(new RoleResourceLink(roleId, resource.getId()));
+            }
         }
         roleResourceLinkService.merge(links, new QueryWrapper<RoleResourceLink>().eq("role_id", roleId));
     }

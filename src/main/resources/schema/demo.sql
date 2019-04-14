@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-04-13 18:13:59
+Date: 2019-04-14 21:05:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -65,7 +65,6 @@ CREATE TABLE `qrtz_cron_triggers` (
 -- ----------------------------
 -- Records of qrtz_cron_triggers
 -- ----------------------------
-INSERT INTO `qrtz_cron_triggers` VALUES ('clusteredScheduler', 'testCronJob-344dd5e3-4ca4-4960-83e4-ac3169076150', 'com.example.job.TestCronJob', '0/30 * * * * ?', 'Asia/Shanghai');
 
 -- ----------------------------
 -- Table structure for qrtz_fired_triggers
@@ -121,7 +120,6 @@ CREATE TABLE `qrtz_job_details` (
 -- ----------------------------
 -- Records of qrtz_job_details
 -- ----------------------------
-INSERT INTO `qrtz_job_details` VALUES ('clusteredScheduler', 'testCronJob-344dd5e3-4ca4-4960-83e4-ac3169076150', 'com.example.job.TestCronJob', null, 'com.example.job.TestCronJob', '0', '0', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C770800000010000000017400046E616D6574000B7465737443726F6E4A6F627800);
 
 -- ----------------------------
 -- Table structure for qrtz_locks
@@ -136,8 +134,6 @@ CREATE TABLE `qrtz_locks` (
 -- ----------------------------
 -- Records of qrtz_locks
 -- ----------------------------
-INSERT INTO `qrtz_locks` VALUES ('clusteredScheduler', 'STATE_ACCESS');
-INSERT INTO `qrtz_locks` VALUES ('clusteredScheduler', 'TRIGGER_ACCESS');
 
 -- ----------------------------
 -- Table structure for qrtz_paused_trigger_grps
@@ -168,7 +164,6 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'SKY-20171110MWL1555147954031', '1555147996193', '10000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -256,7 +251,6 @@ CREATE TABLE `qrtz_triggers` (
 -- ----------------------------
 -- Records of qrtz_triggers
 -- ----------------------------
-INSERT INTO `qrtz_triggers` VALUES ('clusteredScheduler', 'testCronJob-344dd5e3-4ca4-4960-83e4-ac3169076150', 'com.example.job.TestCronJob', 'testCronJob-344dd5e3-4ca4-4960-83e4-ac3169076150', 'com.example.job.TestCronJob', null, '1555148010000', '1555147980000', '5', 'WAITING', 'CRON', '1555137433000', '0', null, '0', '');
 
 -- ----------------------------
 -- Table structure for t_attachment
@@ -376,6 +370,47 @@ INSERT INTO `t_dept` VALUES ('2', '测试部门');
 INSERT INTO `t_dept` VALUES ('3', '改下名啊');
 INSERT INTO `t_dept` VALUES ('4', '测试部门3');
 INSERT INTO `t_dept` VALUES ('5', '5555');
+
+-- ----------------------------
+-- Table structure for t_job
+-- ----------------------------
+DROP TABLE IF EXISTS `t_job`;
+CREATE TABLE `t_job` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `job_desc` varchar(200) DEFAULT NULL COMMENT '任务描述',
+  `start_time` timestamp NULL DEFAULT NULL COMMENT '开始时间',
+  `end_time` timestamp NULL DEFAULT NULL COMMENT '结束时间',
+  `cron_expression` varchar(20) DEFAULT NULL COMMENT 'cron表达式',
+  `job_template_id` int(11) DEFAULT NULL COMMENT '任务模板id',
+  `sched_name` varchar(120) DEFAULT NULL COMMENT '调度器名称',
+  `job_name` varchar(190) DEFAULT NULL COMMENT '任务名称',
+  `job_group` varchar(190) DEFAULT NULL COMMENT '任务组',
+  `trigger_name` varchar(190) DEFAULT NULL COMMENT '触发器名称',
+  `trigger_group` varchar(190) DEFAULT NULL COMMENT '触发器组',
+  PRIMARY KEY (`id`),
+  KEY `t_job_fk_job_template_id` (`job_template_id`),
+  CONSTRAINT `t_job_fk_job_template_id` FOREIGN KEY (`job_template_id`) REFERENCES `t_job_template` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_job
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_job_parameter
+-- ----------------------------
+DROP TABLE IF EXISTS `t_job_parameter`;
+CREATE TABLE `t_job_parameter` (
+  `id` int(11) NOT NULL,
+  `parameter_name` varchar(200) DEFAULT NULL COMMENT '参数名称',
+  `parameter_value` varchar(200) DEFAULT NULL COMMENT '参数值',
+  `job_id` int(11) DEFAULT NULL COMMENT '定时任务id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_job_parameter
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for t_job_template

@@ -7,6 +7,7 @@ import com.example.model.po.User;
 import com.example.model.po.UserRoleLink;
 import com.example.service.IUserRoleLinkService;
 import com.example.service.IUserService;
+import io.jsonwebtoken.lang.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,10 +33,12 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
         Integer userId = user.getId();
         List<Role> roles = user.getRoles();
         List<UserRoleLink> links = new ArrayList<>();
-        for (Role role: roles) {
-            links.add(new UserRoleLink(userId, role.getId()));
+        if (!Collections.isEmpty(roles)) {
+            for (Role role: roles) {
+                links.add(new UserRoleLink(userId, role.getId()));
+            }
+            userRoleLinkService.saveBatch(links);
         }
-        userRoleLinkService.saveBatch(links);
     }
 
     @Override
@@ -45,8 +48,10 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
         Integer userId = user.getId();
         List<Role> roles = user.getRoles();
         List<UserRoleLink> links = new ArrayList<>();
-        for (Role role: roles) {
-            links.add(new UserRoleLink(userId, role.getId()));
+        if (!Collections.isEmpty(roles)) {
+            for (Role role: roles) {
+                links.add(new UserRoleLink(userId, role.getId()));
+            }
         }
         userRoleLinkService.merge(links, new QueryWrapper<UserRoleLink>().eq("user_id", userId));
     }

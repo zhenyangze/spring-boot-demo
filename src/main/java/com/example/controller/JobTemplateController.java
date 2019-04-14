@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.group.Insert;
-import com.example.group.Update;
+import com.example.group.JobTemplateInsert;
+import com.example.group.JobTemplateUpdate;
 import com.example.model.po.JobTemplate;
 import com.example.model.vo.JobTemplateVO;
 import com.example.model.vo.ResultVO;
@@ -53,7 +53,7 @@ public class JobTemplateController {
 
     @PostMapping
     @ApiOperation(value = "保存任务模板")
-    public ResultVO save(@Validated({Insert.class}) @RequestBody JobTemplateVO jobTemplateVO) {
+    public ResultVO save(@Validated({JobTemplateInsert.class}) @RequestBody JobTemplateVO jobTemplateVO) {
         JobTemplate jobTemplate = (JobTemplate) ModelUtil.copy(jobTemplateVO, new ModelUtil.Mapping(JobTemplateVO.class, JobTemplate.class));
         jobTemplateService.customSave(jobTemplate);
         return new ResultVO<>(SUCCESS, "保存任务模板成功！", null);
@@ -61,7 +61,7 @@ public class JobTemplateController {
 
     @PutMapping
     @ApiOperation(value = "更新任务模板")
-    public ResultVO update(@Validated({Update.class}) @RequestBody JobTemplateVO jobTemplateVO) {
+    public ResultVO update(@Validated({JobTemplateUpdate.class}) @RequestBody JobTemplateVO jobTemplateVO) {
         JobTemplate jobTemplate = (JobTemplate) ModelUtil.copy(jobTemplateVO, new ModelUtil.Mapping(JobTemplateVO.class, JobTemplate.class));
         jobTemplateService.customUpdateById(jobTemplate);
         return new ResultVO<>(SUCCESS, "更新任务模板成功！", null);

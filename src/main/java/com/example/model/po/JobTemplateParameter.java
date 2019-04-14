@@ -28,7 +28,7 @@ public class JobTemplateParameter extends BaseModel {
     @NotNull(groups = {JobTemplateInsert.class, JobTemplateUpdate.class}, message = "参数描述不能为空")
     private String parameterDesc;
     @ApiModelProperty(value = "任务模板id")
-    @Null(groups = {JobTemplateInsert.class, JobTemplateUpdate.class}, message = "任务模板id必须为空")
+    @Null(groups = {JobTemplateInsert.class}, message = "任务模板id必须为空")
     private Integer jobTemplateId;
 
 }

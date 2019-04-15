@@ -3,8 +3,9 @@
 <mapper namespace="com.example.mapper.UserMapper">
 
     <sql id="baseCol">
-        t_user.id t_user_id, t_user.username t_user_username, t_user.password t_user_password, t_user.nickname t_user_nickname,
-        t_user.birth t_user_birth, t_user.logintime t_user_logintime, t_user.dept_id t_user_dept_id
+        t_user.id t_user_id, t_user.username t_user_username, t_user.password t_user_password,
+        t_user.email t_user_email, t_user.nickname t_user_nickname, t_user.birth t_user_birth,
+        t_user.logintime t_user_logintime, t_user.dept_id t_user_dept_id
     </sql>
 
     <resultMap id="baseResultMap" type="com.example.model.po.User">

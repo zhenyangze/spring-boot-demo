@@ -15,14 +15,16 @@
     </resultMap>
 
     <sql id="sendUserCol">
-        send_user.id send_user_id, send_user.username send_user_username, send_user.password send_user_password, send_user.nickname send_user_nickname,
-        send_user.birth send_user_birth, send_user.logintime send_user_logintime, send_user.dept_id send_user_dept_id
+        send_user.id send_user_id, send_user.username send_user_username, send_user.password send_user_password,
+        send_user.email send_user_email, send_user.nickname send_user_nickname, send_user.birth send_user_birth,
+        send_user.logintime send_user_logintime, send_user.dept_id send_user_dept_id
     </sql>
 
     <resultMap id="sendUserResultMap" type="com.example.model.po.User">
         <id column="send_user_id" property="id" />
         <result column="send_user_username" property="username" />
         <result column="send_user_password" property="password" />
+        <result column="send_user_email" property="email" />
         <result column="send_user_nickname" property="nickname" />
         <result column="send_user_birth" property="birth" />
         <result column="send_user_logintime" property="logintime" />

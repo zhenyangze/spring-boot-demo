@@ -1,15 +1,11 @@
 package com.example;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.mapper.UserMapper;
-import com.example.model.po.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 

@@ -26,7 +26,7 @@ import static com.example.model.vo.ResultVO.SUCCESS;
 @RequestMapping(value = "/resource", produces = "application/json; charset=UTF-8")
 @Api(tags = "资源")
 @Validated
-public class ResourceController {
+public class ResourceController implements IBaseController<ResourceVO> {
 
     @Autowired
     private IResourceService resourceService;

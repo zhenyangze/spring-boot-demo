@@ -33,7 +33,7 @@ import static com.example.model.vo.ResultVO.SUCCESS;
 @RequestMapping(value = "/chat", produces = "application/json; charset=UTF-8")
 @Api(tags = "点对点消息")
 @Validated
-public class ChatMessageController {
+public class ChatMessageController implements IBaseController<ChatMessageVO> {
 
     @Value("${websocket.destination.chat}")
     private String chat;
@@ -88,7 +88,7 @@ public class ChatMessageController {
 
     @PostMapping
     @ApiOperation(value = "发送消息")
-    public ResultVO chat(@Validated({Insert.class}) ChatMessageVO chatMessageVO) {
+    public ResultVO save(@Validated({Insert.class}) ChatMessageVO chatMessageVO) {
         ChatMessage chatMessage = (ChatMessage) ModelUtil.copy(chatMessageVO, new ModelUtil.Mapping(ChatMessageVO.class, ChatMessage.class));
         Timestamp now = new Timestamp(System.currentTimeMillis());
         chatMessage.setSendTime(now);

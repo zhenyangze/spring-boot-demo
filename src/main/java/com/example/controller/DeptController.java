@@ -26,7 +26,7 @@ import static com.example.model.vo.ResultVO.SUCCESS;
 @RequestMapping(value = "/dept", produces = "application/json; charset=UTF-8")
 @Api(tags = "部门")
 @Validated
-public class DeptController {
+public class DeptController implements IBaseController<DeptVO> {
 
     @Autowired
     private IDeptService deptService;

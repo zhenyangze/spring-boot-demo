@@ -80,7 +80,7 @@ public class ControllerExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResultVO handleProjectException(ProjectException e) {
         log.error(e.getMessage(), e);
-        return new ResultVO<>(FAILURE, "服务器异常！", null);
+        return new ResultVO<>(FAILURE, e.getMessage(), null);
     }
 
     // 其他异常

@@ -24,13 +24,13 @@ spring:
   redis:
     host: localhost # 默认localhost
     port: 6379 # 默认6379
-    #    password: couga # 密码
+#    password: couga # 密码
     database: 5 # 采用哪个数据库，默认0
     timeout: 500 # 连接超时时间（毫秒）
     # 使用sentinel集群时将以下三行注释打开
-    #    sentinel:
-    #      master: cougamaster # master名称
-    #      nodes: ceshi:26379,ceshi:26380,ceshi:26381 # sentinel地址
+#    sentinel:
+#      master: cougamaster # master名称
+#      nodes: ceshi:26379,ceshi:26380,ceshi:26381 # sentinel地址
     lettuce:
       shutdown-timeout: 100ms
       pool:
@@ -38,6 +38,19 @@ spring:
         max-wait: -1 # 连接池最大阻塞等待时间（使用负值表示没有限制）
         max-idle: 8 # 连接池中的最大空闲连接
         min-idle: 1 # 连接池中的最小空闲连接
+
+  # 邮件
+  mail:
+    host: smtp.163.com
+    username: xuelingkang@163.com
+    password: 163sqm
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
 
 server:
   port: 8080
@@ -49,7 +62,18 @@ log:
   home: E:/IdeaProjects/logs/dev # 日志目录
 
 attachment:
-  save-dir: E:/IdeaProjects/file # 文件保存路径
+  save-dir: /home/demofile # 文件保存路径
 
 swagger2:
   enable: true # 启用swagger2
+
+# sftp
+sftp:
+  host: 192.168.52.217
+  port: 22
+  username: root
+  password: root
+  pool:
+    max-total: 10
+    max-idle: 10
+    min-idle: 5

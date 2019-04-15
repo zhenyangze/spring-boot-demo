@@ -33,7 +33,7 @@ public class BaseModel implements Cloneable, Serializable {
             field.setAccessible(true);
             return field.get(this);
         } catch (Exception e) {
-            throw new ProjectException(e);
+            throw new ProjectException("获取字段"+fieldName+"的值出错", e);
         }
     }
 
@@ -48,7 +48,7 @@ public class BaseModel implements Cloneable, Serializable {
             field.setAccessible(true);
             field.set(this, value);
         } catch (Exception e) {
-            throw new ProjectException(e);
+            throw new ProjectException("设置字段"+fieldName+"的值为"+value+"出错", e);
         }
     }
 

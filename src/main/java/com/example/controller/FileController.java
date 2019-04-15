@@ -69,7 +69,7 @@ public class FileController {
             FileUtils.copyInputStreamToFile(file.getInputStream(), saveFile);
             // file.transferTo(saveFile); // 这个方法不稳定
         } catch (IOException e) {
-            throw new ProjectException(e);
+            throw new ProjectException("保存文件时出错", e);
         }
         // 访问路径
         String address = addressPrefix+(addressPrefix.endsWith(fileSeparator)? "": fileSeparator)+relativePath;

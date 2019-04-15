@@ -166,7 +166,7 @@ public class CustomizeWebMvcStompEndpointRegistry extends WebMvcStompEndpointReg
             }
         } catch (NoSuchFieldException|IllegalAccessException e) {
             log.error(e.getMessage(), e);
-            throw new ProjectException(e);
+            throw new ProjectException("获取"+fieldName+"的值出错", e);
         }
         return ret;
     }

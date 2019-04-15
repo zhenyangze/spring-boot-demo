@@ -112,7 +112,7 @@ public class AccessDecisionFromClientInterceptor implements FromClientIntercepto
             decorator.sendMessage(new TextMessage(" "+JSON.toJSONString(singleMessage)));
         } catch (IOException e) {
             log.error(e.getMessage(), e);
-            throw new ProjectException(e);
+            throw new ProjectException("发送消息出错！", e);
         }
     }
 

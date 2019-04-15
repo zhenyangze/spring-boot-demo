@@ -41,7 +41,7 @@ public class ModelUtil {
                 return collection;
             } catch (InstantiationException|IllegalAccessException e) {
                 log.error(e.getMessage(), e);
-                throw new ProjectException(e);
+                throw new ProjectException("复制对象属性出错", e);
             }
         }
         // 数组
@@ -69,7 +69,7 @@ public class ModelUtil {
             target = targetClass.newInstance();
         } catch (InstantiationException|IllegalAccessException e) {
             log.error(e.getMessage(), e);
-            throw new ProjectException(e);
+            throw new ProjectException("反射创建对象出错", e);
         }
         for (PropertyDescriptor targetPd : targetPds) {
             Method writeMethod = targetPd.getWriteMethod();

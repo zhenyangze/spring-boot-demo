@@ -20,13 +20,13 @@ public class SerializeUtil {
             oos.writeObject(obj);
             return baos.toByteArray();
         } catch (Exception e) {
-            throw new ProjectException(e);
+            throw new ProjectException("序列化对象出错", e);
         } finally {
             if (oos!=null) {
                 try {
                     oos.close();
                 } catch (IOException e) {
-                    throw new ProjectException(e);
+                    throw new ProjectException("关闭对象输出流出错", e);
                 }
             }
         }
@@ -56,13 +56,13 @@ public class SerializeUtil {
             ois = new ObjectInputStream(bais);
             return ois.readObject();
         } catch (Exception e) {
-            throw new ProjectException(e);
+            throw new ProjectException("反序列化对象出错", e);
         } finally {
             if (ois!=null) {
                 try {
                     ois.close();
                 } catch (IOException e) {
-                    throw new ProjectException(e);
+                    throw new ProjectException("关闭对象输入流出错", e);
                 }
             }
         }

@@ -90,7 +90,7 @@ public class JobService extends BaseService<JobMapper, Job> implements IJobServi
         try {
             scheduler.pauseTrigger(new TriggerKey(job.getTriggerName(), job.getTriggerGroup()));
         } catch (SchedulerException e) {
-            throw new ProjectException(e);
+            throw new ProjectException("暂停定时任务触发器时出错", e);
         }
     }
 
@@ -101,7 +101,7 @@ public class JobService extends BaseService<JobMapper, Job> implements IJobServi
         try {
             scheduler.resumeTrigger(new TriggerKey(job.getTriggerName(), job.getTriggerGroup()));
         } catch (SchedulerException e) {
-            throw new ProjectException(e);
+            throw new ProjectException("恢复定时任务触发器时出错", e);
         }
     }
 
@@ -115,7 +115,7 @@ public class JobService extends BaseService<JobMapper, Job> implements IJobServi
         try {
             schedName = scheduler.getSchedulerName();
         } catch (SchedulerException e) {
-            throw new ProjectException(e);
+            throw new ProjectException("获取任务调度器名称出错", e);
         }
         // 名称
         String name = jobTemplate.getJobName() + "-" + UUID.randomUUID().toString();
@@ -141,7 +141,7 @@ public class JobService extends BaseService<JobMapper, Job> implements IJobServi
         try {
             jobClass = Class.forName(jobTemplate.getJobClassName());
         } catch (ClassNotFoundException e) {
-            throw new ProjectException(e);
+            throw new ProjectException("获取任务类对象出错", e);
         }
         JobDetail jobDetail = JobBuilder
                 .newJob(jobClass)
@@ -167,7 +167,7 @@ public class JobService extends BaseService<JobMapper, Job> implements IJobServi
             // 将触发器与任务绑定到调度器内
             scheduler.scheduleJob(jobDetail, trigger);
         } catch (SchedulerException e) {
-            throw new ProjectException(e);
+            throw new ProjectException("创建定时任务时出错", e);
         }
         // 设置job属性
         job.setSchedName(schedName);
@@ -183,7 +183,7 @@ public class JobService extends BaseService<JobMapper, Job> implements IJobServi
         try {
             scheduler.unscheduleJob(new TriggerKey(job.getTriggerName(), job.getTriggerGroup()));
         } catch (SchedulerException e) {
-            throw new ProjectException(e);
+            throw new ProjectException("删除定时任务触发器时出错", e);
         }
     }
 

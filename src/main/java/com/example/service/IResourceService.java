@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IResourceService extends IBaseService<Resource> {
 
-    /** 查询所有资源 */
+    /** 根据资源类型查询资源 */
     List<Resource> getByType(String type);
 
 }

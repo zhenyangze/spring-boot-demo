@@ -1,10 +1,6 @@
 package com.example.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.model.po.Role;
 
-public interface RoleMapper extends BaseMapper<Role> {
-
-    Role customSelectById(Integer id);
-
+public interface RoleMapper extends IBaseMapper<Role> {
 }

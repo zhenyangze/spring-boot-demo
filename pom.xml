@@ -24,6 +24,7 @@
         <jwt.version>0.9.1</jwt.version>
         <spring-security-messaging.version>5.1.4.RELEASE</spring-security-messaging.version>
         <json-lib.version>2.4</json-lib.version>
+        <sftp.version>0.1.55</sftp.version>
     </properties>
 
     <dependencies>
@@ -136,6 +137,17 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-quartz</artifactId>
+        </dependency>
+        <!-- mail -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <!-- sftp -->
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>${sftp.version}</version>
         </dependency>
         <!-- lombok -->
         <dependency>

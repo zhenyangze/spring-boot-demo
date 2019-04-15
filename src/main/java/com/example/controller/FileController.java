@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.exception.ProjectException;
+import com.example.ftp.SftpHelper;
 import com.example.model.po.Attachment;
 import com.example.model.vo.AttachmentVO;
 import com.example.model.vo.ResultVO;
@@ -9,7 +10,6 @@ import com.example.util.ModelUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
-import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 
@@ -31,6 +30,8 @@ public class FileController {
 
     @Autowired
     private IAttachmentService attachmentService;
+    @Autowired
+    private SftpHelper sftpHelper;
     @Value("${attachment.save-dir}")
     private String saveDir;
     @Value("${attachment.address-prefix}")
@@ -54,28 +55,21 @@ public class FileController {
         String year = String.valueOf(calendar.get(Calendar.YEAR));
         // 月
         String month = String.valueOf(calendar.get(Calendar.MONTH)+1);
-        // 相对路径
-        String relativePath = type+fileSeparator+year+fileSeparator+month+fileSeparator+name;
-        // 本地文件路径
-        String localPath = saveDir+(saveDir.endsWith(fileSeparator)? "": fileSeparator)+relativePath;
-        // 创建文件夹
-        File saveFile = new File(localPath);
-        File saveDir = new File(saveFile.getParent());
-        if (!saveDir.exists()) {
-            saveDir.mkdirs();
-        }
+        // 目录相对路径
+        String relativeDir = type+fileSeparator+year+fileSeparator+month;
+        // 目录绝对路径
+        String absoluteDir = saveDir+(saveDir.endsWith(fileSeparator)? "": fileSeparator)+relativeDir;
         try {
-            // 保存文件
-            FileUtils.copyInputStreamToFile(file.getInputStream(), saveFile);
-            // file.transferTo(saveFile); // 这个方法不稳定
+            // 上传到ftp
+            sftpHelper.upload(absoluteDir, name, file.getInputStream());
         } catch (IOException e) {
             throw new ProjectException("保存文件时出错", e);
         }
         // 访问路径
-        String address = addressPrefix+(addressPrefix.endsWith(fileSeparator)? "": fileSeparator)+relativePath;
+        String address = addressPrefix+(addressPrefix.endsWith(fileSeparator)? "": fileSeparator)+relativeDir+fileSeparator+name;
         Attachment attachment = new Attachment();
         attachment.setAttachmentName(file.getOriginalFilename());
-        attachment.setAttachmentPath(localPath);
+        attachment.setAttachmentPath(absoluteDir+fileSeparator+name);
         attachment.setAttachmentAddress(address);
         attachmentService.save(attachment);
         AttachmentVO attachmentVO = (AttachmentVO) ModelUtil.copy(attachment, new ModelUtil.Mapping(Attachment.class, AttachmentVO.class, "attachmentPath"));

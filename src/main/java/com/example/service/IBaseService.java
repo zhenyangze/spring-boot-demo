@@ -1,15 +1,39 @@
 package com.example.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.exception.ProjectException;
 import com.example.model.BaseModel;
 import com.example.model.po.User;
+import com.example.params.Params;
 
 import java.util.Collection;
 
 public interface IBaseService<T extends BaseModel> extends IService<T> {
 
     User currentUser();
+
+    default IPage<T> customPage(Page<T> page, Params<T> params) {
+        throw new ProjectException("方法未实现！");
+    }
+
+    default T customGetById(Integer id) {
+        throw new ProjectException("方法未实现！");
+    }
+
+    default void customSave(T model) {
+        throw new ProjectException("方法未实现！");
+    }
+
+    default void customUpdateById(T model) {
+        throw new ProjectException("方法未实现！");
+    }
+
+    default void customRemoveById(Integer id) {
+        throw new ProjectException("方法未实现！");
+    }
 
     /**
      * 类似oracle的merge语法

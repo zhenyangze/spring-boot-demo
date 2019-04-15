@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-04-14 23:57:40
+Date: 2019-04-16 00:01:25
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -65,7 +65,6 @@ CREATE TABLE `qrtz_cron_triggers` (
 -- ----------------------------
 -- Records of qrtz_cron_triggers
 -- ----------------------------
-INSERT INTO `qrtz_cron_triggers` VALUES ('clusteredScheduler', 'trigger-打印指定用户信息-49765b11-4499-4ccf-b332-77a1ab014d3e', 'trigger-com.example.job.LogUserJob', '0/20 * * * * ?', 'Asia/Shanghai');
 
 -- ----------------------------
 -- Table structure for qrtz_fired_triggers
@@ -121,7 +120,6 @@ CREATE TABLE `qrtz_job_details` (
 -- ----------------------------
 -- Records of qrtz_job_details
 -- ----------------------------
-INSERT INTO `qrtz_job_details` VALUES ('clusteredScheduler', 'job-打印指定用户信息-49765b11-4499-4ccf-b332-77a1ab014d3e', 'job-com.example.job.LogUserJob', null, 'com.example.job.LogUserJob', '0', '0', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C77080000001000000001740008757365726E616D65740003786C6B7800);
 
 -- ----------------------------
 -- Table structure for qrtz_locks
@@ -168,7 +166,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'LAPTOP-AH9VLMG11555257341017', '1555257363865', '10000');
+INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'LAPTOP-AH9VLMG11555343521320', '1555343774427', '10000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -256,7 +254,6 @@ CREATE TABLE `qrtz_triggers` (
 -- ----------------------------
 -- Records of qrtz_triggers
 -- ----------------------------
-INSERT INTO `qrtz_triggers` VALUES ('clusteredScheduler', 'trigger-打印指定用户信息-49765b11-4499-4ccf-b332-77a1ab014d3e', 'trigger-com.example.job.LogUserJob', 'job-打印指定用户信息-49765b11-4499-4ccf-b332-77a1ab014d3e', 'job-com.example.job.LogUserJob', null, '1555257380000', '1555257360000', '5', 'WAITING', 'CRON', '1555256520000', '1555343940000', null, '0', '');
 
 -- ----------------------------
 -- Table structure for t_attachment
@@ -402,7 +399,7 @@ CREATE TABLE `t_job` (
 -- Records of t_job
 -- ----------------------------
 INSERT INTO `t_job` VALUES ('2', '测试更新定时任务', '2019-04-14 23:16:00', '2019-04-14 23:28:00', '0/10 * * * * ?', '2', 'clusteredScheduler', 'job-测试-e01bd431-dc46-49a3-bd3e-bf9b1ec07e4b', 'job-com.example.job.TestJob', 'trigger-测试-e01bd431-dc46-49a3-bd3e-bf9b1ec07e4b', 'trigger-com.example.job.TestJob');
-INSERT INTO `t_job` VALUES ('4', '打印username=xlk的用户信息', '2019-04-14 23:42:00', '2019-04-15 23:59:00', '0/20 * * * * ?', '7', 'clusteredScheduler', 'job-打印指定用户信息-49765b11-4499-4ccf-b332-77a1ab014d3e', 'job-com.example.job.LogUserJob', 'trigger-打印指定用户信息-49765b11-4499-4ccf-b332-77a1ab014d3e', 'trigger-com.example.job.LogUserJob');
+INSERT INTO `t_job` VALUES ('4', '打印username=xlk的用户信息', '2019-04-14 23:42:00', '2019-04-15 23:55:00', '0/20 * * * * ?', '7', 'clusteredScheduler', 'job-打印指定用户信息-6b77d688-4c52-4f01-a8fe-e4e2ae1dc2c6', 'job-com.example.job.LogUserJob', 'trigger-打印指定用户信息-6b77d688-4c52-4f01-a8fe-e4e2ae1dc2c6', 'trigger-com.example.job.LogUserJob');
 
 -- ----------------------------
 -- Table structure for t_job_parameter
@@ -467,6 +464,64 @@ INSERT INTO `t_job_template_parameter` VALUES ('3', 'name', 'string', '字符串
 INSERT INTO `t_job_template_parameter` VALUES ('4', 'age', 'int', '整数参数', '2');
 INSERT INTO `t_job_template_parameter` VALUES ('5', 'weight', 'float', '浮点参数', '2');
 INSERT INTO `t_job_template_parameter` VALUES ('7', 'username', 'string', '用户名', '7');
+
+-- ----------------------------
+-- Table structure for t_mail
+-- ----------------------------
+DROP TABLE IF EXISTS `t_mail`;
+CREATE TABLE `t_mail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `mail_subject` varchar(200) DEFAULT NULL COMMENT '邮件标题',
+  `mail_type` varchar(50) DEFAULT NULL COMMENT '邮件类型',
+  `mail_status` varchar(50) DEFAULT NULL COMMENT '邮件状态',
+  `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  `send_time` timestamp NULL DEFAULT NULL COMMENT '发送时间',
+  `send_user_id` int(11) DEFAULT NULL COMMENT '发送用户id',
+  `to_user_id` int(11) DEFAULT NULL COMMENT '接收用户id',
+  PRIMARY KEY (`id`),
+  KEY `t_mail_fk_send_user_id` (`send_user_id`),
+  KEY `t_mail_fk_to_user_id` (`to_user_id`),
+  CONSTRAINT `t_mail_fk_send_user_id` FOREIGN KEY (`send_user_id`) REFERENCES `t_user` (`id`),
+  CONSTRAINT `t_mail_fk_to_user_id` FOREIGN KEY (`to_user_id`) REFERENCES `t_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_mail
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_mail_attachment_link
+-- ----------------------------
+DROP TABLE IF EXISTS `t_mail_attachment_link`;
+CREATE TABLE `t_mail_attachment_link` (
+  `mail_id` int(11) NOT NULL COMMENT '邮件id',
+  `attachment_id` int(11) NOT NULL COMMENT '附件id',
+  PRIMARY KEY (`mail_id`,`attachment_id`),
+  KEY `t_mail_attachment_link_fk_attachment_id` (`attachment_id`),
+  CONSTRAINT `t_mail_attachment_link_fk_attachment_id` FOREIGN KEY (`attachment_id`) REFERENCES `t_attachment` (`id`),
+  CONSTRAINT `t_mail_attachment_link_fk_mail_id` FOREIGN KEY (`mail_id`) REFERENCES `t_mail` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_mail_attachment_link
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for t_mail_content
+-- ----------------------------
+DROP TABLE IF EXISTS `t_mail_content`;
+CREATE TABLE `t_mail_content` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `content` mediumint(9) DEFAULT NULL COMMENT '邮件内容',
+  `mail_id` int(11) DEFAULT NULL COMMENT '邮件id',
+  PRIMARY KEY (`id`),
+  KEY `t_mail_content_fk_mail_id` (`mail_id`),
+  CONSTRAINT `t_mail_content_fk_mail_id` FOREIGN KEY (`mail_id`) REFERENCES `t_mail` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_mail_content
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for t_resource
@@ -680,12 +735,14 @@ CREATE TABLE `t_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL COMMENT '用户名',
   `password` varchar(200) NOT NULL COMMENT '密码',
+  `email` varchar(200) DEFAULT NULL COMMENT '邮箱',
   `nickname` varchar(50) DEFAULT NULL COMMENT '昵称',
   `birth` date DEFAULT NULL COMMENT '生日',
   `logintime` timestamp NULL DEFAULT NULL COMMENT '登陆时间',
   `dept_id` int(11) DEFAULT NULL COMMENT '部门id',
   PRIMARY KEY (`id`),
   UNIQUE KEY `t_user_idx_username` (`username`),
+  UNIQUE KEY `t_user_uk_email` (`email`),
   KEY `t_user_fk_dept_id` (`dept_id`),
   CONSTRAINT `t_user_fk_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `t_dept` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
@@ -693,10 +750,10 @@ CREATE TABLE `t_user` (
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('1', 'xlk', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', '薛凌康', '1990-10-14', '2019-03-24 11:25:54', '1');
-INSERT INTO `t_user` VALUES ('2', 'xue', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', '薛', '1990-10-14', '2019-03-24 11:25:54', '1');
-INSERT INTO `t_user` VALUES ('3', 'bcd', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', null, null, null, '1');
-INSERT INTO `t_user` VALUES ('5', 'def', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', null, null, null, '1');
+INSERT INTO `t_user` VALUES ('1', 'xlk', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', null, '薛凌康', '1990-10-14', '2019-03-24 11:25:54', '1');
+INSERT INTO `t_user` VALUES ('2', 'xue', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', null, '薛', '1990-10-14', '2019-03-24 11:25:54', '1');
+INSERT INTO `t_user` VALUES ('3', 'bcd', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', null, null, null, null, '1');
+INSERT INTO `t_user` VALUES ('5', 'def', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', null, null, null, null, '1');
 
 -- ----------------------------
 -- Table structure for t_user_role_link

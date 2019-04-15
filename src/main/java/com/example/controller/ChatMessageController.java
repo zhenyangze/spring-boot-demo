@@ -33,7 +33,7 @@ import static com.example.model.vo.ResultVO.SUCCESS;
 @RequestMapping(value = "/chat", produces = "application/json; charset=UTF-8")
 @Api(tags = "点对点消息")
 @Validated
-public class ChatMessageController implements IBaseController<ChatMessageVO> {
+public class ChatMessageController {
 
     @Value("${websocket.destination.chat}")
     private String chat;

@@ -24,7 +24,7 @@ import static com.example.model.vo.ResultVO.SUCCESS;
 @RequestMapping(value = "/attachment", produces = "application/json; charset=UTF-8")
 @Api(tags = "附件")
 @Validated
-public class AttachmentController implements IBaseController<AttachmentVO> {
+public class AttachmentController {
 
     @Autowired
     private IAttachmentService attachmentService;

@@ -26,7 +26,7 @@ import static com.example.model.vo.ResultVO.SUCCESS;
 @RequestMapping(value = "/jobTemplate", produces = "application/json; charset=UTF-8")
 @Api(tags = "任务模板")
 @Validated
-public class JobTemplateController implements IBaseController<JobTemplateVO> {
+public class JobTemplateController {
 
     @Autowired
     private IJobTemplateService jobTemplateService;

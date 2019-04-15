@@ -30,7 +30,7 @@ import static com.example.model.vo.ResultVO.SUCCESS;
 @RequestMapping(value = "/user", produces="application/json; charset=UTF-8")
 @Api(tags="用户")
 @Validated
-public class UserController implements IBaseController<UserVO> {
+public class UserController {
 
     @Autowired
     private IUserService userService;

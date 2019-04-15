@@ -31,7 +31,7 @@ import static com.example.model.vo.ResultVO.SUCCESS;
 @RequestMapping(value = "/broadcast", produces = "application/json; charset=UTF-8")
 @Api(tags = "广播")
 @Validated
-public class BroadcastMessageController implements IBaseController<BroadcastMessageVO> {
+public class BroadcastMessageController {
 
     @Value("${websocket.destination.broadcast}")
     private String broadcast;

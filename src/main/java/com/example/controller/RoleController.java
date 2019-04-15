@@ -28,7 +28,7 @@ import static com.example.model.vo.ResultVO.SUCCESS;
 @RequestMapping(value = "/role", produces = "application/json; charset=UTF-8")
 @Api(tags = "角色")
 @Validated
-public class RoleController implements IBaseController<RoleVO> {
+public class RoleController {
 
     @Autowired
     private IRoleService roleService;

@@ -46,7 +46,7 @@ public class ChatMessageController {
 
     @GetMapping("/{current}/{size}")
     @ApiOperation(value = "查询消息列表")
-    public ResultVO list(@PathVariable @NotNull(message = "当前页不能为空") @ApiParam(value = "当前页", defaultValue = "1", required = true) long current,
+    public ResultVO findPage(@PathVariable @NotNull(message = "当前页不能为空") @ApiParam(value = "当前页", defaultValue = "1", required = true) long current,
                          @PathVariable @NotNull(message = "每页显示条数不能为空") @ApiParam(value = "每页显示条数", defaultValue = "10", required = true) long size,
                          ChatMessageVO chatMessageVO) {
         Page<ChatMessage> page = new Page<>(current, size);

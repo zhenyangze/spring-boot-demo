@@ -28,18 +28,15 @@ public class Role extends BaseModel {
     private Integer id;
     @ApiModelProperty(value = "角色名称")
     @NotNull(groups = {RoleInsert.class, RoleUpdate.class}, message = "角色名称不能为空")
-    @Null(groups = {UserInsert.class, UserUpdate.class}, message = "角色名称必须为空")
     private String roleName;
     @ApiModelProperty(value = "角色描述")
     @NotNull(groups = {RoleInsert.class, RoleUpdate.class}, message = "角色描述不能为空")
-    @Null(groups = {UserInsert.class, UserUpdate.class}, message = "角色描述必须为空")
     private String roleDesc;
 
     @TableField(exist = false)
     @ApiModelProperty(value = "资源信息")
     @IgnoreSwaggerParameter
     @NotEmpty(groups = {RoleInsert.class, RoleUpdate.class}, message = "资源信息不能为空")
-    @Null(groups = {UserInsert.class, UserUpdate.class}, message = "资源信息必须为空")
     @Valid
     private List<Resource> resources;
 

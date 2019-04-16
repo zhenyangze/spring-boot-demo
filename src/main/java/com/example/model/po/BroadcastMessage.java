@@ -21,13 +21,11 @@ public class BroadcastMessage extends BaseModel {
     @Null(groups = {Insert.class}, message = "消息id必须为空")
     private Integer id;
     @ApiModelProperty(value = "发送时间")
-    @Null(groups = {Insert.class}, message = "发送时间必须为空")
     private Timestamp sendTime;
     @ApiModelProperty(value = "消息内容")
     @NotNull(groups = {Insert.class}, message = "消息内容不能为空")
     private String content;
     @ApiModelProperty(value = "发送用户id")
-    @Null(groups = {Insert.class}, message = "发送用户id必须为空")
     private Integer sendUserId;
 
     @TableField(exist = false)

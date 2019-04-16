@@ -58,7 +58,6 @@ public class User extends BaseModel {
     @TableField(exist = false)
     @ApiModelProperty(value = "部门信息")
     @IgnoreSwaggerParameter
-    @Null(groups = {UserInsert.class, UserUpdate.class}, message = "部门信息必须为空")
     private Dept dept;
     @TableField(exist = false)
     @ApiModelProperty(value = "角色信息")

@@ -43,12 +43,10 @@ public class ChatMessage extends BaseModel {
     @TableField(exist = false)
     @ApiModelProperty(value = "发送用户")
     @IgnoreSwaggerParameter
-    @Null(groups = {Insert.class, Update.class}, message = "发送用户必须为空")
     private User sendUser;
     @TableField(exist = false)
     @ApiModelProperty(value = "接收用户")
     @IgnoreSwaggerParameter
-    @Null(groups = {Insert.class, Update.class}, message = "接收用户必须为空")
     private User toUser;
 
 }

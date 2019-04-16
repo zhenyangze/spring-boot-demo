@@ -23,17 +23,13 @@ public class Resource extends BaseModel {
     private Integer id;
     @ApiModelProperty(value="资源类型", allowableValues = "http,websocket")
     @NotNull(groups = {Insert.class, Update.class}, message = "资源类型不能为空")
-    @Null(groups = {RoleInsert.class, RoleUpdate.class}, message = "资源类型必须为空")
     private String resourceType;
     @ApiModelProperty(value = "资源pattern")
-    @Null(groups = {RoleInsert.class, RoleUpdate.class}, message = "资源pattern必须为空")
     private String resourcePattern;
-    @ApiModelProperty(value="请求方法", allowableValues = "GET,POST,PUT,PATCH,DELETE,SUBSCRIBE,SEND")
-    @Null(groups = {RoleInsert.class, RoleUpdate.class}, message = "请求方法必须为空")
+    @ApiModelProperty(value="请求方法", allowableValues = "GET,POST,PUT,PATCH,DELETE,SUBSCRIBE")
     private String resourceMethod;
     @ApiModelProperty(value = "资源描述")
     @NotNull(groups = {Insert.class, Update.class}, message = "资源描述不能为空")
-    @Null(groups = {RoleInsert.class, RoleUpdate.class}, message = "资源描述必须为空")
     private String resourceDesc;
 
 }

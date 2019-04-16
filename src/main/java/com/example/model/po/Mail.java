@@ -45,7 +45,6 @@ public class Mail extends BaseModel {
 
     @TableField(exist = false)
     @ApiModelProperty(value = "接收用户聚合信息")
-    @Null(groups = {MailInsert.class, MailUpdate.class}, message = "接收用户聚合信息必须为空")
     @IgnoreSwaggerParameter
     private String toUsersInfo;
     @TableField(exist = false)
@@ -56,7 +55,6 @@ public class Mail extends BaseModel {
     private MailContent mailContent;
     @TableField(exist = false)
     @ApiModelProperty(value = "发送用户")
-    @Null(groups = {MailInsert.class, MailUpdate.class}, message = "发送用户必须为空")
     @IgnoreSwaggerParameter
     private User sendUser;
     @TableField(exist = false)

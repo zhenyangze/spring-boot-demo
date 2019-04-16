@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-04-16 00:01:25
+Date: 2019-04-16 14:04:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -166,7 +166,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'LAPTOP-AH9VLMG11555343521320', '1555343774427', '10000');
+INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'SKY-20171110MWL1555392143792', '1555392726313', '10000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -265,7 +265,7 @@ CREATE TABLE `t_attachment` (
   `attachment_address` varchar(200) DEFAULT NULL COMMENT '访问地址',
   `attachment_path` varchar(200) DEFAULT NULL COMMENT '本地路径',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_attachment
@@ -293,6 +293,9 @@ INSERT INTO `t_attachment` VALUES ('29', '1553701128644.rar', '/demofile/eee/201
 INSERT INTO `t_attachment` VALUES ('30', '1553701128644.rar', '/demofile/ceshi/2019/4/1554529074722.rar', 'E:/IdeaProjects/file/ceshi/2019/4/1554529074722.rar');
 INSERT INTO `t_attachment` VALUES ('31', '1553700913857.rar', '/demofile/ceshi/2019/4/1554529266591.rar', 'E:/IdeaProjects/file/ceshi/2019/4/1554529266591.rar');
 INSERT INTO `t_attachment` VALUES ('32', '1553700913857.rar', '/demofile/ceshi/2019/4/1554529387508.rar', 'E:/IdeaProjects/file/ceshi/2019/4/1554529387508.rar');
+INSERT INTO `t_attachment` VALUES ('33', '一键发布.rar', '/demofile/ceshi/2019/4/一键发布.rar', '/home/demofile/ceshi/2019/4/一键发布.rar');
+INSERT INTO `t_attachment` VALUES ('34', 'config-sharding.yaml', '/demofile/ceshi/2019/4/config-sharding.yaml', '/home/demofile/ceshi/2019/4/config-sharding.yaml');
+INSERT INTO `t_attachment` VALUES ('35', '客有家PC官网.xlsx', '/demofile/ceshi/2019/4/客有家PC官网.xlsx', '/home/demofile/ceshi/2019/4/客有家PC官网.xlsx');
 
 -- ----------------------------
 -- Table structure for t_broadcast_message
@@ -399,7 +402,7 @@ CREATE TABLE `t_job` (
 -- Records of t_job
 -- ----------------------------
 INSERT INTO `t_job` VALUES ('2', '测试更新定时任务', '2019-04-14 23:16:00', '2019-04-14 23:28:00', '0/10 * * * * ?', '2', 'clusteredScheduler', 'job-测试-e01bd431-dc46-49a3-bd3e-bf9b1ec07e4b', 'job-com.example.job.TestJob', 'trigger-测试-e01bd431-dc46-49a3-bd3e-bf9b1ec07e4b', 'trigger-com.example.job.TestJob');
-INSERT INTO `t_job` VALUES ('4', '打印username=xlk的用户信息', '2019-04-14 23:42:00', '2019-04-15 23:55:00', '0/20 * * * * ?', '7', 'clusteredScheduler', 'job-打印指定用户信息-6b77d688-4c52-4f01-a8fe-e4e2ae1dc2c6', 'job-com.example.job.LogUserJob', 'trigger-打印指定用户信息-6b77d688-4c52-4f01-a8fe-e4e2ae1dc2c6', 'trigger-com.example.job.LogUserJob');
+INSERT INTO `t_job` VALUES ('4', '打印username=xue的用户信息', '2019-04-14 23:42:00', '2019-04-15 09:30:00', '0/20 * * * * ?', '7', 'clusteredScheduler', 'job-打印指定用户信息-d639cb01-4144-4167-8aac-17e10cc5b896', 'job-com.example.job.LogUserJob', 'trigger-打印指定用户信息-d639cb01-4144-4167-8aac-17e10cc5b896', 'trigger-com.example.job.LogUserJob');
 
 -- ----------------------------
 -- Table structure for t_job_parameter
@@ -422,7 +425,7 @@ INSERT INTO `t_job_parameter` VALUES ('3', 'weight', '99.99', '2');
 INSERT INTO `t_job_parameter` VALUES ('4', 'name', '薛凌康', '3');
 INSERT INTO `t_job_parameter` VALUES ('5', 'age', '28', '3');
 INSERT INTO `t_job_parameter` VALUES ('6', 'salary', '3.14', '3');
-INSERT INTO `t_job_parameter` VALUES ('7', 'username', 'xlk', '4');
+INSERT INTO `t_job_parameter` VALUES ('7', 'username', 'xue', '4');
 
 -- ----------------------------
 -- Table structure for t_job_template
@@ -471,7 +474,7 @@ INSERT INTO `t_job_template_parameter` VALUES ('7', 'username', 'string', '用�
 DROP TABLE IF EXISTS `t_mail`;
 CREATE TABLE `t_mail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `mail_subject` varchar(200) DEFAULT NULL COMMENT '邮件标题',
+  `mail_subject` varchar(500) DEFAULT NULL COMMENT '邮件标题',
   `mail_type` varchar(50) DEFAULT NULL COMMENT '邮件类型',
   `mail_status` varchar(50) DEFAULT NULL COMMENT '邮件状态',
   `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
@@ -483,19 +486,20 @@ CREATE TABLE `t_mail` (
   KEY `t_mail_fk_to_user_id` (`to_user_id`),
   CONSTRAINT `t_mail_fk_send_user_id` FOREIGN KEY (`send_user_id`) REFERENCES `t_user` (`id`),
   CONSTRAINT `t_mail_fk_to_user_id` FOREIGN KEY (`to_user_id`) REFERENCES `t_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_mail
 -- ----------------------------
+INSERT INTO `t_mail` VALUES ('1', '测试一下群发和附件', 'info', 'sent', '2019-04-16 13:17:26', '2019-04-16 13:23:42', '1', null);
 
 -- ----------------------------
 -- Table structure for t_mail_attachment_link
 -- ----------------------------
 DROP TABLE IF EXISTS `t_mail_attachment_link`;
 CREATE TABLE `t_mail_attachment_link` (
-  `mail_id` int(11) NOT NULL COMMENT '邮件id',
-  `attachment_id` int(11) NOT NULL COMMENT '附件id',
+  `mail_id` int(11) NOT NULL,
+  `attachment_id` int(11) NOT NULL,
   PRIMARY KEY (`mail_id`,`attachment_id`),
   KEY `t_mail_attachment_link_fk_attachment_id` (`attachment_id`),
   CONSTRAINT `t_mail_attachment_link_fk_attachment_id` FOREIGN KEY (`attachment_id`) REFERENCES `t_attachment` (`id`),
@@ -505,6 +509,9 @@ CREATE TABLE `t_mail_attachment_link` (
 -- ----------------------------
 -- Records of t_mail_attachment_link
 -- ----------------------------
+INSERT INTO `t_mail_attachment_link` VALUES ('1', '33');
+INSERT INTO `t_mail_attachment_link` VALUES ('1', '34');
+INSERT INTO `t_mail_attachment_link` VALUES ('1', '35');
 
 -- ----------------------------
 -- Table structure for t_mail_content
@@ -512,16 +519,36 @@ CREATE TABLE `t_mail_attachment_link` (
 DROP TABLE IF EXISTS `t_mail_content`;
 CREATE TABLE `t_mail_content` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `content` mediumint(9) DEFAULT NULL COMMENT '邮件内容',
+  `content` mediumtext COMMENT '邮件内容',
   `mail_id` int(11) DEFAULT NULL COMMENT '邮件id',
   PRIMARY KEY (`id`),
   KEY `t_mail_content_fk_mail_id` (`mail_id`),
   CONSTRAINT `t_mail_content_fk_mail_id` FOREIGN KEY (`mail_id`) REFERENCES `t_mail` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_mail_content
 -- ----------------------------
+INSERT INTO `t_mail_content` VALUES ('1', '<h1>测试一下群发和附件</h1>', '1');
+
+-- ----------------------------
+-- Table structure for t_mail_to_user_link
+-- ----------------------------
+DROP TABLE IF EXISTS `t_mail_to_user_link`;
+CREATE TABLE `t_mail_to_user_link` (
+  `mail_id` int(11) NOT NULL COMMENT '邮件id',
+  `to_user_id` int(11) NOT NULL COMMENT '接收用户id',
+  PRIMARY KEY (`mail_id`,`to_user_id`),
+  KEY `t_mail_to_user_link_fk_to_user_id` (`to_user_id`),
+  CONSTRAINT `t_mail_to_user_link_fk_mail_id` FOREIGN KEY (`mail_id`) REFERENCES `t_mail` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `t_mail_to_user_link_fk_to_user_id` FOREIGN KEY (`to_user_id`) REFERENCES `t_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of t_mail_to_user_link
+-- ----------------------------
+INSERT INTO `t_mail_to_user_link` VALUES ('1', '1');
+INSERT INTO `t_mail_to_user_link` VALUES ('1', '2');
 
 -- ----------------------------
 -- Table structure for t_resource
@@ -534,7 +561,7 @@ CREATE TABLE `t_resource` (
   `resource_method` varchar(20) DEFAULT NULL COMMENT '请求方法',
   `resource_desc` varchar(50) DEFAULT NULL COMMENT '资源描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_resource
@@ -586,6 +613,12 @@ INSERT INTO `t_resource` VALUES ('47', 'http', '/job', 'PUT', '更新定时任�
 INSERT INTO `t_resource` VALUES ('48', 'http', '/job/*', 'DELETE', '删除定时任务');
 INSERT INTO `t_resource` VALUES ('49', 'http', '/job/pause/*', 'PATCH', '暂停定时任务');
 INSERT INTO `t_resource` VALUES ('50', 'http', '/job/resume/*', 'PATCH', '恢复定时任务');
+INSERT INTO `t_resource` VALUES ('51', 'http', '/mail/*/*', 'GET', '邮件列表');
+INSERT INTO `t_resource` VALUES ('52', 'http', '/mail/*', 'GET', '邮件详情');
+INSERT INTO `t_resource` VALUES ('53', 'http', '/mail', 'POST', '保存邮件');
+INSERT INTO `t_resource` VALUES ('54', 'http', '/mail', 'PUT', '更新邮件');
+INSERT INTO `t_resource` VALUES ('55', 'http', '/mail/*', 'PATCH', '发送邮件');
+INSERT INTO `t_resource` VALUES ('56', 'http', '/mail/*', 'DELETE', '删除邮件');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -726,6 +759,12 @@ INSERT INTO `t_role_resource_link` VALUES ('1', '47');
 INSERT INTO `t_role_resource_link` VALUES ('1', '48');
 INSERT INTO `t_role_resource_link` VALUES ('1', '49');
 INSERT INTO `t_role_resource_link` VALUES ('1', '50');
+INSERT INTO `t_role_resource_link` VALUES ('1', '51');
+INSERT INTO `t_role_resource_link` VALUES ('1', '52');
+INSERT INTO `t_role_resource_link` VALUES ('1', '53');
+INSERT INTO `t_role_resource_link` VALUES ('1', '54');
+INSERT INTO `t_role_resource_link` VALUES ('1', '55');
+INSERT INTO `t_role_resource_link` VALUES ('1', '56');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -735,7 +774,7 @@ CREATE TABLE `t_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL COMMENT '用户名',
   `password` varchar(200) NOT NULL COMMENT '密码',
-  `email` varchar(200) DEFAULT NULL COMMENT '邮箱',
+  `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
   `nickname` varchar(50) DEFAULT NULL COMMENT '昵称',
   `birth` date DEFAULT NULL COMMENT '生日',
   `logintime` timestamp NULL DEFAULT NULL COMMENT '登陆时间',
@@ -745,15 +784,13 @@ CREATE TABLE `t_user` (
   UNIQUE KEY `t_user_uk_email` (`email`),
   KEY `t_user_fk_dept_id` (`dept_id`),
   CONSTRAINT `t_user_fk_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `t_dept` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('1', 'xlk', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', null, '薛凌康', '1990-10-14', '2019-03-24 11:25:54', '1');
-INSERT INTO `t_user` VALUES ('2', 'xue', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', null, '薛', '1990-10-14', '2019-03-24 11:25:54', '1');
-INSERT INTO `t_user` VALUES ('3', 'bcd', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', null, null, null, null, '1');
-INSERT INTO `t_user` VALUES ('5', 'def', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', null, null, null, null, '1');
+INSERT INTO `t_user` VALUES ('1', 'xlk', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', 'xuelingkang@163.com', '薛凌康', '1990-10-14', '2019-03-24 11:25:54', '1');
+INSERT INTO `t_user` VALUES ('2', 'xue', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', '574290057@qq.com', '薛', '1990-10-14', '2019-03-24 11:25:54', '1');
 
 -- ----------------------------
 -- Table structure for t_user_role_link
@@ -773,3 +810,9 @@ CREATE TABLE `t_user_role_link` (
 -- ----------------------------
 INSERT INTO `t_user_role_link` VALUES ('1', '1');
 INSERT INTO `t_user_role_link` VALUES ('2', '1');
+
+-- ----------------------------
+-- View structure for t_mail_to_users
+-- ----------------------------
+DROP VIEW IF EXISTS `t_mail_to_users`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`skip-grants user`@`skip-grants host` SQL SECURITY DEFINER VIEW `t_mail_to_users` AS select `t_mail_to_user_link`.`mail_id` AS `mail_id`,group_concat(`t_user`.`username` separator ',') AS `info` from (`t_mail_to_user_link` left join `t_user` on((`t_user`.`id` = `t_mail_to_user_link`.`to_user_id`))) group by `t_mail_to_user_link`.`mail_id` ;

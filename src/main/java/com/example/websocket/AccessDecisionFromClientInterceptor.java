@@ -104,12 +104,12 @@ public class AccessDecisionFromClientInterceptor implements FromClientIntercepto
 
     // 通知用户
     private void notifyUser(WebSocketSession session, String message) {
-        ChatMessageVO singleMessage = new ChatMessageVO();
-        singleMessage.setSendTime(new Timestamp(System.currentTimeMillis()));
-        singleMessage.setContent(message);
+        ChatMessageVO chatMessageVO = new ChatMessageVO();
+        chatMessageVO.setSendTime(new Timestamp(System.currentTimeMillis()));
+        chatMessageVO.setContent(message);
         ConcurrentWebSocketSessionDecorator decorator = new ConcurrentWebSocketSessionDecorator(session, -1, -1);
         try {
-            decorator.sendMessage(new TextMessage(" "+JSON.toJSONString(singleMessage)));
+            decorator.sendMessage(new TextMessage(" "+JSON.toJSONString(chatMessageVO)));
         } catch (IOException e) {
             log.error(e.getMessage(), e);
             throw new ProjectException("发送消息出错！", e);

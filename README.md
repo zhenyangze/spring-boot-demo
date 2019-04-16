@@ -35,6 +35,8 @@ spring boot项目模板<br>
 >应用：使用stomp子协议，继承并扩展了StompSubProtocolHandler，增加了对拦截器的支持，实现对SUBSCRIBE请求的动态授权，实现了群发消息和点对点消息
 * 邮件：javax.mail
 >应用：实现了群发和附件
+* 参数校验：hibernate validation
+>应用：支持@Validate（自定义分组校验）和@Valid（嵌套校验对象中的属性）注解
 * restful文档：swagger2
 >优点：只需要配置注解即可动态生成文档<br>
 应用：继承并扩展了ModelAttributeParameterExpander，增加了@IgnoreSwaggerParameter注解，用来隐藏不需要递归展开的属性
@@ -43,8 +45,6 @@ spring boot项目模板<br>
 由于swagger通过springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration的swagger2ControllerMapping方法将/v2/api-docs请求映射到Swagger2Controller<br>
 ![Image text](images/Swagger2DocumetationConfiguration.png)<br>
 Swagger2Controller不是spring容器中的bean，无法使用aop和拦截器，所以在过滤器中拦截了/v2/api-docs请求，将登录和登出动态添加到返回值中
-* 参数校验：hibernate validation
->应用：支持@Validate（自定义分组校验）和@Valid（嵌套校验对象中的属性）注解
 
 #### 其他配置
 * 线程池和异步任务支持

@@ -36,7 +36,7 @@ spring boot项目模板<br>
 * 邮件：javax.mail
 >应用：实现了群发和附件
 * 参数校验：hibernate validation
->应用：支持@Validate（自定义分组校验）和@Valid（嵌套校验对象中的属性）注解
+>应用：支持@Validate（自定义分组校验）和@Valid（嵌套校验对象中的属性）注解，在全局异常处理中捕获校验异常，并封装返回值
 * restful文档：swagger2
 >优点：只需要配置注解即可动态生成文档<br>
 应用：继承并扩展了ModelAttributeParameterExpander，增加了@IgnoreSwaggerParameter注解，用来隐藏不需要递归展开的属性

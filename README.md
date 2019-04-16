@@ -5,9 +5,9 @@ spring boot项目模板<br>
 文档地址：http://localhost:8080/demo/swagger-ui.html
 
 #### TODO
-* 定时任务
-* 邮件
 * 工作流
+* 技术选型
+* 文档
 
 #### 技术应用
 1. Core

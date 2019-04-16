@@ -72,6 +72,17 @@ spring:
             threadPriority: 5 # 线程优先级
             threadsInheritContextClassLoaderOfInitializingThread: true # 线程继承初始化线程的上下文类加载程序，默认false
 
+  # 邮件
+  mail:
+    host: smtp.163.com
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
 server:
   port: 8080
   servlet:

@@ -1,5 +1,6 @@
 package com.example.model.po;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.example.annotation.IgnoreSwaggerParameter;
 import com.example.group.MailInsert;
 import com.example.group.MailUpdate;
@@ -41,23 +42,29 @@ public class Mail extends BaseModel {
     @ApiModelProperty(value = "发送用户id")
     @NotNull(groups = {MailInsert.class, MailUpdate.class}, message = "发送用户id不能为空")
     private Integer sendUserId;
-    @ApiModelProperty(value = "接收用户id")
-    @NotNull(groups = {MailInsert.class, MailUpdate.class}, message = "接收用户id不能为空")
-    private Integer toUserId;
 
+    @TableField(exist = false)
+    @ApiModelProperty(value = "接收用户聚合信息")
+    @Null(groups = {MailInsert.class, MailUpdate.class}, message = "接收用户聚合信息必须为空")
+    @IgnoreSwaggerParameter
+    private String toUsersInfo;
+    @TableField(exist = false)
     @ApiModelProperty("邮件内容")
     @NotNull(groups = {MailInsert.class, MailUpdate.class}, message = "邮件内容不能为空")
     @IgnoreSwaggerParameter
     @Valid
     private MailContent mailContent;
+    @TableField(exist = false)
     @ApiModelProperty(value = "发送用户")
     @Null(groups = {MailInsert.class, MailUpdate.class}, message = "发送用户必须为空")
     @IgnoreSwaggerParameter
     private User sendUser;
+    @TableField(exist = false)
     @ApiModelProperty(value = "接收用户")
-    @Null(groups = {MailInsert.class, MailUpdate.class}, message = "接收用户必须为空")
+    @NotNull(groups = {MailInsert.class, MailUpdate.class}, message = "接收用户不能为空")
     @IgnoreSwaggerParameter
-    private User toUser;
+    private List<User> toUsers;
+    @TableField(exist = false)
     @ApiModelProperty(value = "邮件附件")
     @IgnoreSwaggerParameter
     @Valid

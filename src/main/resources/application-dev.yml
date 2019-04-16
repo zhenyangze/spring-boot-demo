@@ -41,16 +41,8 @@ spring:
 
   # 邮件
   mail:
-    host: smtp.163.com
     username: xuelingkang@163.com
     password: 163sqm
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-            required: true
 
 server:
   port: 8080

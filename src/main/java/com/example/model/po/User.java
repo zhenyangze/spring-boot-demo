@@ -3,6 +3,8 @@ package com.example.model.po;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.example.annotation.IgnoreSwaggerParameter;
+import com.example.group.MailInsert;
+import com.example.group.MailUpdate;
 import com.example.group.UserInsert;
 import com.example.group.UserUpdate;
 import com.example.model.BaseModel;
@@ -25,7 +27,7 @@ public class User extends BaseModel {
 
     private static final long serialVersionUID = 1L;
     @ApiModelProperty(value = "用户id")
-    @NotNull(groups = {UserUpdate.class}, message = "用户id不能为空")
+    @NotNull(groups = {UserUpdate.class, MailInsert.class, MailUpdate.class}, message = "用户id不能为空")
     @Null(groups = {UserInsert.class}, message = "用户id必须为空")
     private Integer id;
     @ApiModelProperty(value = "用户名")

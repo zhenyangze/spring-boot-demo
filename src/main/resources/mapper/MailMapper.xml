@@ -6,7 +6,7 @@
         t_mail.id t_mail_id, t_mail.mail_subject t_mail_mail_subject,
         t_mail.mail_type t_mail_mail_type, t_mail.mail_status t_mail_mail_status,
         t_mail.create_time t_mail_create_time, t_mail.send_time t_mail_send_time,
-        t_mail.send_user_id t_mail_send_user_id, t_mail.to_user_id t_mail_to_user_id
+        t_mail.send_user_id t_mail_send_user_id
     </sql>
 
     <resultMap id="baseResultMap" type="com.example.model.po.Mail">
@@ -17,7 +17,7 @@
         <result column="t_mail_create_time" property="createTime" />
         <result column="t_mail_send_time" property="sendTime" />
         <result column="t_mail_send_user_id" property="sendUserId" />
-        <result column="t_mail_to_user_id" property="toUserId" />
+        <result column="t_mail_to_users_info" property="toUsersInfo" />
     </resultMap>
 
     <sql id="sendUserCol">
@@ -57,7 +57,7 @@
     <resultMap id="resultMap" type="com.example.model.po.Mail" extends="baseResultMap">
         <association column="t_mail_id" property="mailContent" resultMap="com.example.mapper.MailContentMapper.baseResultMap" />
         <association column="t_mail_send_user_id" property="sendUser" resultMap="sendUserResultMap" />
-        <association column="t_mail_to_user_id" property="toUser" resultMap="toUserResultMap" />
+        <collection column="t_mail_to_user_id" property="toUsers" resultMap="toUserResultMap" />
         <collection column="t_mail_id" property="attachments" resultMap="com.example.mapper.AttachmentMapper.baseResultMap" />
     </resultMap>
 
@@ -65,12 +65,15 @@
         select <include refid="baseCol" />,
                <include refid="com.example.mapper.MailContentMapper.baseCol" />,
                <include refid="sendUserCol" />,
-               <include refid="toUserCol" />
+               t_mail_to_users.info t_mail_to_users_info
         from t_mail t_mail
         left join t_mail_content t_mail_content on t_mail_content.mail_id = t_mail.id
         left join t_user send_user on send_user.id = t_mail.send_user_id
-        left join t_user to_user on to_user.id = t_mail.to_user_id
+        left join t_mail_to_users t_mail_to_users on t_mail_to_users.mail_id = t_mail.id
         <where>
+            <if test=" params.entity.toUsersInfo != null and params.entity.toUsersInfo != ''.toString() ">
+                and instr(t_mail_to_users.info, #{params.entity.toUsersInfo}) > 0
+            </if>
             <if test=" params.entity.mailSubject != null and params.entity.mailSubject != ''.toString() ">
                 and instr(t_mail.mail_subject, #{params.entity.mailSubject}) > 0
             </if>
@@ -82,9 +85,6 @@
             </if>
             <if test=" params.entity.sendUserId != null ">
                 and t_mail.send_user_id = #{params.entity.sendUserId}
-            </if>
-            <if test=" params.entity.toUserId != null ">
-                and t_mail.to_user_id = #{params.entity.toUserId}
             </if>
         </where>
         order by t_mail.create_time desc
@@ -99,7 +99,8 @@
         from t_mail t_mail
         left join t_mail_content t_mail_content on t_mail_content.mail_id = t_mail.id
         left join t_user send_user on send_user.id = t_mail.send_user_id
-        left join t_user to_user on to_user.id = t_mail.to_user_id
+        left join t_mail_to_user_link t_mail_to_user_link on t_mail_to_user_link.mail_id = t_mail.id
+        left join t_user to_user on to_user.id = t_mail_to_user_link.to_user_id
         left join t_mail_attachment_link t_mail_attachment_link on t_mail_attachment_link.mail_id = t_mail.id
         left join t_attachment t_attachment on t_attachment.id = t_mail_attachment_link.attachment_id
         where t_mail.id = #{id}

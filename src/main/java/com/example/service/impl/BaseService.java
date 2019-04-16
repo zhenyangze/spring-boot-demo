@@ -2,10 +2,10 @@ package com.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.exception.LogicException;
 import com.example.filter.TokenFilter;
+import com.example.mapper.IBaseMapper;
 import com.example.model.BaseModel;
 import com.example.model.po.User;
 import com.example.model.vo.UserDetailsImpl;
@@ -22,7 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class BaseService<M extends BaseMapper<T>, T extends BaseModel> extends ServiceImpl<M, T> implements IBaseService<T> {
+public class BaseService<M extends IBaseMapper<T>, T extends BaseModel> extends ServiceImpl<M, T> implements IBaseService<T> {
 
     @Autowired
     private HttpServletRequest request;

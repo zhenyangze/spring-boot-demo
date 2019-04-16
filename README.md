@@ -19,7 +19,7 @@ spring boot项目模板<br>
 应用：配置了监控服务
 * orm框架：mybatis-plus
 >优点：减少重复编码量<br>
-应用：扩展了IBaseMapper
+应用：继承并扩展了IBaseMapper IService ServiceImpl，增加泛型边界，增加了类似oracle的merge方法，并统一常用方法命名
 * 缓存：redis
 >优点：减少数据库访问量，提高响应速度<br>
 应用：换用用户token和方法返回值
@@ -57,7 +57,6 @@ Swagger2Controller不是spring容器中的bean，无法使用aop和拦截器，�
 >com.example.config.GlobalCorsConfig
 * sftp
 >实现了sftp连接池，sftp上传下载等功能
-
 
 #### 提交命令
 1. 查看状态

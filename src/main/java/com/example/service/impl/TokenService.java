@@ -6,18 +6,16 @@ import com.example.service.ITokenService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -40,7 +38,18 @@ public class TokenService implements ITokenService {
         userDetails.setToken(UUID.randomUUID().toString());
         cacheUserDetails(userDetails);
         String token = createToken(userDetails);
-        return new TokenVO(token, userDetails.getLoginTime());
+        Set<String> authorities = new HashSet<>();
+        userDetails.getUser().getRoles().forEach(role -> {
+            role.getResources().forEach(resource -> {
+                authorities.add(
+                        resource.getResourceType()+
+                        "."+
+                        resource.getResourcePattern()+
+                        "."+
+                        resource.getResourceMethod());
+            });
+        });
+        return new TokenVO(token, userDetails.getLoginTime(), authorities);
     }
 
     @Override

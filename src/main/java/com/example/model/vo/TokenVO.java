@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Set;
 
 // 令牌
 @Data
@@ -17,5 +18,7 @@ public class TokenVO implements Serializable {
     private String token;
     // 登录时间戳
     private Long loginTime;
+    // 资源
+    private Set<String> authorities;
 
 }

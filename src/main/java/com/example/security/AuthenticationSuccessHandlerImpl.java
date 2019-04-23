@@ -27,7 +27,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         TokenVO tokenVO = tokenService.saveToken(userDetails);
-        ResultVO resultVO = new ResultVO<>(SUCCESS, "登陆成功！", tokenVO);
+        ResultVO resultVO = new ResultVO<>(SUCCESS, "登录成功！", tokenVO);
         ResponseUtil.println(response, resultVO);
     }
 

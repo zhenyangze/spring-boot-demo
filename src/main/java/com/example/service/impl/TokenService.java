@@ -1,7 +1,11 @@
 package com.example.service.impl;
 
+import com.example.mapper.RoleMapper;
+import com.example.model.po.Role;
+import com.example.model.po.User;
 import com.example.model.vo.TokenVO;
 import com.example.model.vo.UserDetailsImpl;
+import com.example.params.Params;
 import com.example.service.ITokenService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -24,11 +28,13 @@ public class TokenService implements ITokenService {
 
     @Value("${token.expire-seconds}")
     private Integer expireSeconds;
-    @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
     // 私钥
     @Value("${token.jwt-secret}")
     private String jwtSecret;
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
+    @Autowired
+    private RoleMapper roleMapper;
 
     private static Key KEY = null;
     private static final String LOGIN_USER_KEY = "LOGIN_USER_KEY";
@@ -76,6 +82,15 @@ public class TokenService implements ITokenService {
                 redisTemplate.delete(key);
             }
         }
+    }
+
+    @Override
+    public UserDetailsImpl getGuest() {
+        Params<Role> params = new Params<>();
+        params.setEntity(new Role().setRoleName(GUEST_ROLE_NAME));
+        List<Role> roles = new ArrayList<>();
+        roles.add(roleMapper.customSelectOne(params));
+        return new UserDetailsImpl().setUser(new User().setRoles(roles));
     }
 
     // 生成token

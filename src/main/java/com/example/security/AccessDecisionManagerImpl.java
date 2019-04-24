@@ -4,8 +4,6 @@ import io.jsonwebtoken.lang.Collections;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,10 +18,6 @@ public class AccessDecisionManagerImpl implements AccessDecisionManager {
 
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
-        // 必须登录
-        if (authentication instanceof AnonymousAuthenticationToken) {
-            throw new BadCredentialsException("未登录！");
-        }
         // 当前用户资源
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         if (!Collections.isEmpty(configAttributes) && !Collections.isEmpty(authorities)) {

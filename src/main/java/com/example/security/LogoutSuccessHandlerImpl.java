@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Set;
 
 import static com.example.model.vo.ResultVO.SUCCESS;
 import static com.example.model.vo.ResultVO.UNAUTHORIZED;
@@ -38,7 +39,9 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
                 return;
             }
         }
-        ResultVO resultVO = new ResultVO<>(SUCCESS, "退出成功！", null);
+        // 返回游客资源
+        Set<String> authorities = tokenService.getAuthorityString(tokenService.getGuest());
+        ResultVO<Set<String>> resultVO = new ResultVO<>(SUCCESS, "退出成功！", authorities);
         ResponseUtil.println(response, resultVO);
     }
 

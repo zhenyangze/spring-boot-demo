@@ -32,7 +32,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         TokenVO tokenVO = tokenService.saveToken(userDetails);
-        ResultVO resultVO = new ResultVO<>(SUCCESS, "登录成功！", tokenVO);
+        ResultVO<TokenVO> resultVO = new ResultVO<>(SUCCESS, "登录成功！", tokenVO);
         ResponseUtil.println(response, resultVO);
         // 设置登录时间
         User user = userDetails.getUser();

@@ -1,9 +1,12 @@
 package com.example.security;
 
+import com.example.service.ITokenService;
 import io.jsonwebtoken.lang.Collections;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,10 +19,20 @@ import java.util.List;
 @Component
 public class AccessDecisionManagerImpl implements AccessDecisionManager {
 
+    @Autowired
+    private ITokenService tokenService;
+
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
         // 当前用户资源
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        Collection<? extends GrantedAuthority> authorities;
+        if (authentication instanceof AnonymousAuthenticationToken) {
+            // 游客资源
+            authorities = tokenService.getGuest().getAuthorities();
+        } else {
+            // 当前用户资源
+            authorities = authentication.getAuthorities();
+        }
         if (!Collections.isEmpty(configAttributes) && !Collections.isEmpty(authorities)) {
             // 需求资源id
             String resourceId = ((List<ConfigAttribute>) configAttributes).get(0).getAttribute();

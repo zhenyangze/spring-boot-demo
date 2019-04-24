@@ -3,6 +3,8 @@ package com.example.service;
 import com.example.model.vo.TokenVO;
 import com.example.model.vo.UserDetailsImpl;
 
+import java.util.Set;
+
 public interface ITokenService {
 
     // 游客角色名称
@@ -22,5 +24,8 @@ public interface ITokenService {
 
     // 获取游客
     UserDetailsImpl getGuest();
+
+    // 获取资源字符串
+    Set<String> getAuthorityString(UserDetailsImpl userDetails);
 
 }

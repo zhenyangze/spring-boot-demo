@@ -44,17 +44,7 @@ public class TokenService implements ITokenService {
         userDetails.setToken(UUID.randomUUID().toString());
         cacheUserDetails(userDetails);
         String token = createToken(userDetails);
-        Set<String> authorities = new HashSet<>();
-        userDetails.getUser().getRoles().forEach(role -> {
-            role.getResources().forEach(resource -> {
-                authorities.add(
-                        resource.getResourceType()+
-                        "."+
-                        resource.getResourcePattern()+
-                        "."+
-                        resource.getResourceMethod());
-            });
-        });
+        Set<String> authorities = getAuthorityString(userDetails);
         return new TokenVO(token, userDetails.getLoginTime(), authorities);
     }
 
@@ -91,6 +81,22 @@ public class TokenService implements ITokenService {
         return new UserDetailsImpl().setUser(new User().setRoles(roles));
     }
 
+    @Override
+    public Set<String> getAuthorityString(UserDetailsImpl userDetails) {
+        Set<String> authorities = new HashSet<>();
+        userDetails.getUser().getRoles().forEach(role -> {
+            role.getResources().forEach(resource -> {
+                authorities.add(
+                        resource.getResourceType() +
+                        "." +
+                        resource.getResourcePattern() +
+                        "." +
+                        resource.getResourceMethod());
+            });
+        });
+        return authorities;
+    }
+
     // 生成token
     private String createToken(UserDetailsImpl userDetails) {
         Map<String, Object> claims = new HashMap<>();
@@ -120,7 +126,7 @@ public class TokenService implements ITokenService {
         long now = System.currentTimeMillis();
         userDetails.setLoginTime(now);
         userDetails.setExpireTime(now + expireSeconds* 1000);
-        // 根据uuid将loginUser缓存
+        // 根据uuid将userDetails缓存
         redisTemplate.boundValueOps(getTokenKey(userDetails.getToken())).set(userDetails, expireSeconds, TimeUnit.SECONDS);
     }
 

@@ -38,7 +38,6 @@ public class UserInfoController {
 
     @GetMapping
     @ApiOperation(value = "查询个人信息")
-    @Validated
     public ResultVO<UserVO> currentUser() {
         User user = userService.currentUser();
         UserVO userVO = (UserVO) ModelUtil.copy(user,

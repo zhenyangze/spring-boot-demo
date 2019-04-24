@@ -38,11 +38,13 @@ public class User extends BaseModel {
     @Email(groups = {UserInsert.class, UserUpdate.class, UserInfoInsert.class, UserInfoUpdate.class}, message = "邮箱地址不合法")
     private String email;
     @ApiModelProperty(value = "昵称")
-    @NotNull(groups = {UserInsert.class, UserUpdate.class, UserInfoInsert.class, UserInfoUpdate.class}, message = "昵称不能为空")
+    @NotNull(groups = {UserInsert.class, UserUpdate.class, UserInfoUpdate.class}, message = "昵称不能为空")
+    @Null(groups = {UserInfoInsert.class}, message = "昵称必须为空")
     private String nickname;
     @JSONField(format = "yyyy-MM-dd")
     @ApiModelProperty(value = "生日")
-    @NotNull(groups = {UserInsert.class, UserUpdate.class, UserInfoInsert.class, UserInfoUpdate.class}, message = "生日不能为空")
+    @NotNull(groups = {UserInsert.class, UserUpdate.class, UserInfoUpdate.class}, message = "生日不能为空")
+    @Null(groups = {UserInfoInsert.class}, message = "生日必须为空")
     private Date birth;
     @JSONField(format = "yyyy-MM-dd HH:mm")
     @ApiModelProperty(value="登录时间")

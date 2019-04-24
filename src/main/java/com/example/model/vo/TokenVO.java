@@ -18,7 +18,7 @@ public class TokenVO implements Serializable {
     private String token;
     // 登录时间戳
     private Long loginTime;
-    // 资源
+    // 当前用户资源
     private Set<String> authorities;
 
 }

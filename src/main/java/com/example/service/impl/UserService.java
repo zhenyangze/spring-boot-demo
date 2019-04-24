@@ -5,6 +5,7 @@ import com.example.mapper.UserMapper;
 import com.example.model.po.Role;
 import com.example.model.po.User;
 import com.example.model.po.UserRoleLink;
+import com.example.params.Params;
 import com.example.service.IUserRoleLinkService;
 import com.example.service.IUserService;
 import io.jsonwebtoken.lang.Collections;
@@ -24,6 +25,11 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
     @Override
     public User customGetById(Integer id) {
         return baseMapper.customSelectById(id);
+    }
+
+    @Override
+    public User customGetOne(Params<User> params) {
+        return baseMapper.customSelectOne(params);
     }
 
     @Override

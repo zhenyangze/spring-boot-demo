@@ -60,7 +60,7 @@ public class UserInfoController {
         List<Role> defaultRoles = new ArrayList<>();
         defaultRoles.add(roleService.customGetOne(new Params<>(new Role().setRoleName(IRoleService.DEFAULT_ROLE_NAME))));
         userService.customSave(user.setRoles(defaultRoles));
-        return new ResultVO<>(SUCCESS, "保存用户成功！", null);
+        return new ResultVO<>(SUCCESS, "注册个人信息成功！", null);
     }
 
     @PutMapping
@@ -71,11 +71,8 @@ public class UserInfoController {
         if (!StringUtils.isEmpty(password)) {
             user.setPassword(passwordEncoder.encode(password));
         }
-        userService.customUpdateById(
-                user
-                .setId(userService.currentUser().getId())
-                .setRoles(null));
-        return new ResultVO<>(SUCCESS, "更新用户成功！", null);
+        userService.updateById(user.setId(userService.currentUser().getId()));
+        return new ResultVO<>(SUCCESS, "更新个人信息成功！", null);
     }
 
 }

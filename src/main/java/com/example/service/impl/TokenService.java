@@ -1,11 +1,11 @@
 package com.example.service.impl;
 
-import com.example.mapper.RoleMapper;
 import com.example.model.po.Role;
 import com.example.model.po.User;
 import com.example.model.vo.TokenVO;
 import com.example.model.vo.UserDetailsImpl;
 import com.example.params.Params;
+import com.example.service.IRoleService;
 import com.example.service.ITokenService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -34,7 +34,7 @@ public class TokenService implements ITokenService {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
     @Autowired
-    private RoleMapper roleMapper;
+    private IRoleService roleService;
 
     private static Key KEY = null;
     private static final String LOGIN_USER_KEY = "LOGIN_USER_KEY";
@@ -86,10 +86,8 @@ public class TokenService implements ITokenService {
 
     @Override
     public UserDetailsImpl getGuest() {
-        Params<Role> params = new Params<>();
-        params.setEntity(new Role().setRoleName(GUEST_ROLE_NAME));
         List<Role> roles = new ArrayList<>();
-        roles.add(roleMapper.customSelectOne(params));
+        roles.add(roleService.customGetOne(new Params<>(new Role().setRoleName(GUEST_ROLE_NAME))));
         return new UserDetailsImpl().setUser(new User().setRoles(roles));
     }
 

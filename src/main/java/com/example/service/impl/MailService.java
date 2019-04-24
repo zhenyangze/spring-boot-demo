@@ -109,8 +109,8 @@ public class MailService extends BaseService<MailMapper, Mail> implements IMailS
             for (User toUser : toUsers) {
                 toUserLinks.add(new MailToUserLink(mailId, toUser.getId()));
             }
+            mailToUserLinkService.merge(toUserLinks, new QueryWrapper<MailToUserLink>().eq("mail_id", mailId));
         }
-        mailToUserLinkService.merge(toUserLinks, new QueryWrapper<MailToUserLink>().eq("mail_id", mailId));
         // 更新附件
         List<Attachment> attachments = mail.getAttachments();
         List<MailAttachmentLink> attachmentLinks = new ArrayList<>();

@@ -5,6 +5,7 @@ import com.example.mapper.RoleMapper;
 import com.example.model.po.Resource;
 import com.example.model.po.Role;
 import com.example.model.po.RoleResourceLink;
+import com.example.params.Params;
 import com.example.service.IRoleResourceLinkService;
 import com.example.service.IRoleService;
 import io.jsonwebtoken.lang.Collections;
@@ -24,6 +25,11 @@ public class RoleService extends BaseService<RoleMapper, Role> implements IRoleS
     @Override
     public Role customGetById(Integer id) {
         return baseMapper.customSelectById(id);
+    }
+
+    @Override
+    public Role customGetOne(Params<Role> params) {
+        return baseMapper.customSelectOne(params);
     }
 
     @Override
@@ -52,8 +58,8 @@ public class RoleService extends BaseService<RoleMapper, Role> implements IRoleS
             for (Resource resource: resources) {
                 links.add(new RoleResourceLink(roleId, resource.getId()));
             }
+            roleResourceLinkService.merge(links, new QueryWrapper<RoleResourceLink>().eq("role_id", roleId));
         }
-        roleResourceLinkService.merge(links, new QueryWrapper<RoleResourceLink>().eq("role_id", roleId));
     }
 
 }

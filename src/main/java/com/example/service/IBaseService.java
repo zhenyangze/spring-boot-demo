@@ -23,6 +23,10 @@ public interface IBaseService<T extends BaseModel> extends IService<T> {
         throw new ProjectException("方法未实现！");
     }
 
+    default T customGetOne(Params<T> params) {
+        throw new ProjectException("方法未实现！");
+    }
+
     default void customSave(T model) {
         throw new ProjectException("方法未实现！");
     }

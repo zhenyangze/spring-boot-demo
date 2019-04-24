@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -28,6 +30,11 @@ public class TokenFilter extends OncePerRequestFilter {
     public static final String TOKEN_KEY = "token";
     private static final String GUEST_KEY_PREFIX = "GUEST-";
     private static final Long MINUTES_10 = 10 * 60 * 1000L;
+    private static final RequestMatcher[] IGNORE_PATH = {
+            new AntPathRequestMatcher("/login", "POST"), // 登录
+            new AntPathRequestMatcher("/logout", "GET"), // 登出
+            new AntPathRequestMatcher("/userinfo", "POST"), // 注册
+    };
     @Autowired
     private ITokenService tokenService;
 
@@ -40,7 +47,14 @@ public class TokenFilter extends OncePerRequestFilter {
             try {
                 UserDetailsImpl userDetails = tokenService.getUserDetalis(token);
                 if (userDetails == null) {
-                    if (!"/login".equals(request.getServletPath())) {
+                    boolean flag = true;
+                    for (RequestMatcher requestMatcher : IGNORE_PATH) {
+                        if (requestMatcher.matches(request)) {
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if (flag) {
                         ResultVO resultVO = new ResultVO<>(UNAUTHORIZED, "登录过期！", null);
                         ResponseUtil.println(response, resultVO);
                         return;

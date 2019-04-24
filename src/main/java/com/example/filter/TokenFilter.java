@@ -40,9 +40,11 @@ public class TokenFilter extends OncePerRequestFilter {
             try {
                 UserDetailsImpl userDetails = tokenService.getUserDetalis(token);
                 if (userDetails == null) {
-                    ResultVO resultVO = new ResultVO<>(UNAUTHORIZED, "登录过期！", null);
-                    ResponseUtil.println(response, resultVO);
-                    return;
+                    if (!"/login".equals(request.getServletPath())) {
+                        ResultVO resultVO = new ResultVO<>(UNAUTHORIZED, "登录过期！", null);
+                        ResponseUtil.println(response, resultVO);
+                        return;
+                    }
                 } else {
                     checkExpireTime(userDetails);
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails,

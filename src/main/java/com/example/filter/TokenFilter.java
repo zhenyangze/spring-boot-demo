@@ -1,7 +1,10 @@
 package com.example.filter;
 
+import com.example.model.vo.ResultVO;
 import com.example.model.vo.UserDetailsImpl;
 import com.example.service.ITokenService;
+import com.example.util.ResponseUtil;
+import io.jsonwebtoken.MalformedJwtException;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -16,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.UUID;
+
+import static com.example.model.vo.ResultVO.UNAUTHORIZED;
 
 @Component
 public class TokenFilter extends OncePerRequestFilter {
@@ -32,14 +37,22 @@ public class TokenFilter extends OncePerRequestFilter {
         if (StringUtils.isEmpty(token) || "null".equals(token)) {
             SecurityContextHolder.getContext().setAuthentication(getGuestToken());
         } else {
-            UserDetailsImpl userDetails = tokenService.getUserDetalis(token);
-            if (userDetails == null) {
-                SecurityContextHolder.getContext().setAuthentication(getGuestToken());
-            } else {
-                checkExpireTime(userDetails);
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails,
-                        null, userDetails.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+            try {
+                UserDetailsImpl userDetails = tokenService.getUserDetalis(token);
+                if (userDetails == null) {
+                    ResultVO resultVO = new ResultVO<>(UNAUTHORIZED, "登录过期！", null);
+                    ResponseUtil.println(response, resultVO);
+                    return;
+                } else {
+                    checkExpireTime(userDetails);
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails,
+                            null, userDetails.getAuthorities());
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+            } catch (MalformedJwtException e) {
+                ResultVO resultVO = new ResultVO<>(UNAUTHORIZED, "非法认证！", null);
+                ResponseUtil.println(response, resultVO);
+                return;
             }
         }
         filterChain.doFilter(request, response);

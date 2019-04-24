@@ -131,17 +131,12 @@ public class TokenService implements ITokenService {
         if (StringUtils.isEmpty(token)) {
             return null;
         }
-        try {
-            Map<String, Object> jwtClaims = Jwts.parser().setSigningKey(getKeyInstance()).parseClaimsJws(token).getBody();
-            if (jwtClaims != null) {
-                Object uuid = jwtClaims.get(LOGIN_USER_KEY);
-                if (uuid != null) {
-                    return uuid.toString();
-                }
+        Map<String, Object> jwtClaims = Jwts.parser().setSigningKey(getKeyInstance()).parseClaimsJws(token).getBody();
+        if (jwtClaims != null) {
+            Object uuid = jwtClaims.get(LOGIN_USER_KEY);
+            if (uuid != null) {
+                return uuid.toString();
             }
-            return null;
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
         }
         return null;
     }

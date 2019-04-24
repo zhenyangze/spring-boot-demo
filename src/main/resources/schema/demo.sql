@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-04-16 16:33:09
+Date: 2019-04-24 12:47:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -166,7 +166,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'SKY-20171110MWL1555392143792', '1555392726313', '10000');
+INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'SKY-20171110MWL1556081074131', '1556081166437', '10000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -561,7 +561,7 @@ CREATE TABLE `t_resource` (
   `resource_method` varchar(20) DEFAULT NULL COMMENT '请求方法',
   `resource_desc` varchar(50) DEFAULT NULL COMMENT '资源描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_resource
@@ -619,6 +619,9 @@ INSERT INTO `t_resource` VALUES ('53', 'http', '/mail', 'POST', '保存邮件');
 INSERT INTO `t_resource` VALUES ('54', 'http', '/mail', 'PUT', '更新邮件');
 INSERT INTO `t_resource` VALUES ('55', 'http', '/mail/*', 'PATCH', '发送邮件');
 INSERT INTO `t_resource` VALUES ('56', 'http', '/mail/*', 'DELETE', '删除邮件');
+INSERT INTO `t_resource` VALUES ('57', 'http', '/userinfo', 'GET', '查询个人信息');
+INSERT INTO `t_resource` VALUES ('58', 'http', '/userinfo', 'POST', '注册个人信息');
+INSERT INTO `t_resource` VALUES ('59', 'http', '/userinfo', 'PUT', '更新个人信息');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -630,7 +633,7 @@ CREATE TABLE `t_role` (
   `role_desc` varchar(200) DEFAULT NULL COMMENT '角色描述',
   PRIMARY KEY (`id`),
   UNIQUE KEY `t_role_idx_role_name` (`role_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_role
@@ -641,6 +644,7 @@ INSERT INTO `t_role` VALUES ('3', 'ROLE_FINANCE', '财务');
 INSERT INTO `t_role` VALUES ('4', 'ROLE_HR', '人资');
 INSERT INTO `t_role` VALUES ('5', 'ROLE_STAFF', '员工');
 INSERT INTO `t_role` VALUES ('6', 'ROLE_LOGIN', '登录用户');
+INSERT INTO `t_role` VALUES ('7', 'ROLE_GUEST', '游客');
 
 -- ----------------------------
 -- Table structure for t_role_resource_link
@@ -660,17 +664,21 @@ CREATE TABLE `t_role_resource_link` (
 -- ----------------------------
 INSERT INTO `t_role_resource_link` VALUES ('1', '1');
 INSERT INTO `t_role_resource_link` VALUES ('5', '1');
+INSERT INTO `t_role_resource_link` VALUES ('6', '1');
 INSERT INTO `t_role_resource_link` VALUES ('1', '2');
 INSERT INTO `t_role_resource_link` VALUES ('5', '2');
+INSERT INTO `t_role_resource_link` VALUES ('6', '2');
 INSERT INTO `t_role_resource_link` VALUES ('1', '3');
 INSERT INTO `t_role_resource_link` VALUES ('1', '4');
 INSERT INTO `t_role_resource_link` VALUES ('2', '4');
 INSERT INTO `t_role_resource_link` VALUES ('4', '4');
 INSERT INTO `t_role_resource_link` VALUES ('5', '4');
+INSERT INTO `t_role_resource_link` VALUES ('6', '4');
 INSERT INTO `t_role_resource_link` VALUES ('1', '5');
 INSERT INTO `t_role_resource_link` VALUES ('2', '5');
 INSERT INTO `t_role_resource_link` VALUES ('4', '5');
 INSERT INTO `t_role_resource_link` VALUES ('5', '5');
+INSERT INTO `t_role_resource_link` VALUES ('6', '5');
 INSERT INTO `t_role_resource_link` VALUES ('1', '6');
 INSERT INTO `t_role_resource_link` VALUES ('2', '6');
 INSERT INTO `t_role_resource_link` VALUES ('4', '6');
@@ -730,9 +738,11 @@ INSERT INTO `t_role_resource_link` VALUES ('5', '21');
 INSERT INTO `t_role_resource_link` VALUES ('1', '22');
 INSERT INTO `t_role_resource_link` VALUES ('2', '22');
 INSERT INTO `t_role_resource_link` VALUES ('4', '22');
+INSERT INTO `t_role_resource_link` VALUES ('7', '22');
 INSERT INTO `t_role_resource_link` VALUES ('1', '23');
 INSERT INTO `t_role_resource_link` VALUES ('2', '23');
 INSERT INTO `t_role_resource_link` VALUES ('4', '23');
+INSERT INTO `t_role_resource_link` VALUES ('6', '23');
 INSERT INTO `t_role_resource_link` VALUES ('1', '24');
 INSERT INTO `t_role_resource_link` VALUES ('2', '24');
 INSERT INTO `t_role_resource_link` VALUES ('4', '24');
@@ -765,6 +775,9 @@ INSERT INTO `t_role_resource_link` VALUES ('1', '53');
 INSERT INTO `t_role_resource_link` VALUES ('1', '54');
 INSERT INTO `t_role_resource_link` VALUES ('1', '55');
 INSERT INTO `t_role_resource_link` VALUES ('1', '56');
+INSERT INTO `t_role_resource_link` VALUES ('6', '57');
+INSERT INTO `t_role_resource_link` VALUES ('7', '58');
+INSERT INTO `t_role_resource_link` VALUES ('6', '59');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -784,13 +797,15 @@ CREATE TABLE `t_user` (
   UNIQUE KEY `t_user_uk_email` (`email`),
   KEY `t_user_fk_dept_id` (`dept_id`),
   CONSTRAINT `t_user_fk_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `t_dept` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('1', 'xlk', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', 'xuelingkang@163.com', '薛凌康', '1990-10-14', '2019-03-24 11:25:54', '1');
+INSERT INTO `t_user` VALUES ('1', 'xlk', '$2a$10$UX6fLV/PkpK4s7Iota0Jy.GA3x1AlOlCfQlx8yRzZqfe/4Y.j3jAe', 'xuelingkang@163.com', '薛凌康', '1990-10-14', '2019-04-24 12:44:41', '1');
 INSERT INTO `t_user` VALUES ('2', 'xue', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', '574290057@qq.com', '薛', '1990-10-14', '2019-03-24 11:25:54', '1');
+INSERT INTO `t_user` VALUES ('3', 'kk', '$2a$10$lEnRZl010AjnAapZPyk1y.4tIabA2QPilWG8DP3R8a7WNmV9O77Gu', 'kk@163.com', 'kk', '1990-10-14', '2019-04-24 12:02:06', '1');
+INSERT INTO `t_user` VALUES ('4', 'xxx', '$2a$10$2sTlVRalWZfGa2hxzaUlYOaqJ3od5QcD66FZlJt0U1z0FAs/MAGOa', 'xxx@163.com', 'xxx', '1990-10-15', '2019-04-24 12:32:57', null);
 
 -- ----------------------------
 -- Table structure for t_user_role_link
@@ -810,6 +825,10 @@ CREATE TABLE `t_user_role_link` (
 -- ----------------------------
 INSERT INTO `t_user_role_link` VALUES ('1', '1');
 INSERT INTO `t_user_role_link` VALUES ('2', '1');
+INSERT INTO `t_user_role_link` VALUES ('1', '6');
+INSERT INTO `t_user_role_link` VALUES ('2', '6');
+INSERT INTO `t_user_role_link` VALUES ('3', '6');
+INSERT INTO `t_user_role_link` VALUES ('4', '6');
 
 -- ----------------------------
 -- View structure for t_mail_to_users

@@ -2,7 +2,7 @@
 
 #### 介绍
 spring boot项目模板<br>
-环境：jdk8 mysql-5.7 redis-3.2
+环境：jdk8 mysql-5.7 redis-5.0
 
 #### TODO
 * 工作流

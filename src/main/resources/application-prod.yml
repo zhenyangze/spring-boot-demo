@@ -50,7 +50,7 @@ attachment:
   save-dir: /home/demofile # 文件保存路径
 
 swagger2:
-  enable: false # 关闭swagger2
+  enable: true # 关闭swagger2
 
 # sftp
 sftp:

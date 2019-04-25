@@ -1,4 +1,7 @@
 spring:
+  profiles:
+    active: @profileActive@
+
   servlet:
     multipart:
       max-file-size: 50MB # 单个文件的最大值

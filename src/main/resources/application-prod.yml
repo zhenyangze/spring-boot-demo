@@ -2,9 +2,9 @@
 spring:
   # 数据源
   datasource:
-    url: jdbc:mysql://sfy-lsh:3306/demo?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false
-    username: root
-    password: root
+    url: jdbc:mysql://centos7.jituandb.com:3306/demo?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: demo
+    password: demo
     druid:
       initial-size: 5  # 初始化大小
       min-idle: 5  # 最小
@@ -15,15 +15,16 @@ spring:
 
   # redis
   redis:
-    host: localhost # 默认localhost
-    port: 6379 # 默认6379
-#    password: couga # 密码
+    # 使用单机redis时将一下两行注释打开
+#    host: localhost # 默认localhost
+#    port: 6379 # 默认6379
+    password: demo # 密码
     database: 5 # 采用哪个数据库，默认0
     timeout: 500 # 连接超时时间（毫秒）
     # 使用sentinel集群时将以下三行注释打开
-#    sentinel:
-#      master: cougamaster # master名称
-#      nodes: ceshi:26379,ceshi:26380,ceshi:26381 # sentinel地址
+    sentinel:
+      master: demomaster # master名称
+      nodes: centos7.server01.com:26379,centos7.server01.com:26380,centos7.server01.com:26381 # sentinel地址
     lettuce:
       shutdown-timeout: 100ms
       pool:
@@ -38,7 +39,7 @@ spring:
     password: xxxxxx
 
 server:
-  port: 80
+  port: 8080
   jetty:
     accesslog:
       enabled: true # 开启访问日志，默认false
@@ -54,10 +55,10 @@ swagger2:
 
 # sftp
 sftp:
-  host: sfy-lsh
+  host: centos7.jituandb.com
   port: 22
-  username: root
-  password: root
+  username: demofile
+  password: demo
   pool:
     max-total: 10
     max-idle: 10

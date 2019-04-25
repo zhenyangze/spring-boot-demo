@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-04-24 12:47:26
+Date: 2019-04-25 10:23:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,14 +20,14 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_blob_triggers`;
 CREATE TABLE `qrtz_blob_triggers` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(190) NOT NULL,
-  `TRIGGER_GROUP` varchar(190) NOT NULL,
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_bin NOT NULL,
+  `TRIGGER_NAME` varchar(190) COLLATE utf8mb4_bin NOT NULL,
+  `TRIGGER_GROUP` varchar(190) COLLATE utf8mb4_bin NOT NULL,
   `BLOB_DATA` blob,
   PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
   KEY `SCHED_NAME` (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
   CONSTRAINT `qrtz_blob_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- ----------------------------
 -- Records of qrtz_blob_triggers
@@ -38,11 +38,11 @@ CREATE TABLE `qrtz_blob_triggers` (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_calendars`;
 CREATE TABLE `qrtz_calendars` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `CALENDAR_NAME` varchar(190) NOT NULL,
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_bin NOT NULL,
+  `CALENDAR_NAME` varchar(190) COLLATE utf8mb4_bin NOT NULL,
   `CALENDAR` blob NOT NULL,
   PRIMARY KEY (`SCHED_NAME`,`CALENDAR_NAME`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- ----------------------------
 -- Records of qrtz_calendars
@@ -53,14 +53,14 @@ CREATE TABLE `qrtz_calendars` (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_cron_triggers`;
 CREATE TABLE `qrtz_cron_triggers` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(190) NOT NULL,
-  `TRIGGER_GROUP` varchar(190) NOT NULL,
-  `CRON_EXPRESSION` varchar(120) NOT NULL,
-  `TIME_ZONE_ID` varchar(80) DEFAULT NULL,
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_bin NOT NULL,
+  `TRIGGER_NAME` varchar(190) COLLATE utf8mb4_bin NOT NULL,
+  `TRIGGER_GROUP` varchar(190) COLLATE utf8mb4_bin NOT NULL,
+  `CRON_EXPRESSION` varchar(120) COLLATE utf8mb4_bin NOT NULL,
+  `TIME_ZONE_ID` varchar(80) COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
   CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- ----------------------------
 -- Records of qrtz_cron_triggers
@@ -71,19 +71,19 @@ CREATE TABLE `qrtz_cron_triggers` (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_fired_triggers`;
 CREATE TABLE `qrtz_fired_triggers` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `ENTRY_ID` varchar(95) NOT NULL,
-  `TRIGGER_NAME` varchar(190) NOT NULL,
-  `TRIGGER_GROUP` varchar(190) NOT NULL,
-  `INSTANCE_NAME` varchar(190) NOT NULL,
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_bin NOT NULL,
+  `ENTRY_ID` varchar(95) COLLATE utf8mb4_bin NOT NULL,
+  `TRIGGER_NAME` varchar(190) COLLATE utf8mb4_bin NOT NULL,
+  `TRIGGER_GROUP` varchar(190) COLLATE utf8mb4_bin NOT NULL,
+  `INSTANCE_NAME` varchar(190) COLLATE utf8mb4_bin NOT NULL,
   `FIRED_TIME` bigint(13) NOT NULL,
   `SCHED_TIME` bigint(13) NOT NULL,
   `PRIORITY` int(11) NOT NULL,
-  `STATE` varchar(16) NOT NULL,
-  `JOB_NAME` varchar(190) DEFAULT NULL,
-  `JOB_GROUP` varchar(190) DEFAULT NULL,
-  `IS_NONCONCURRENT` varchar(1) DEFAULT NULL,
-  `REQUESTS_RECOVERY` varchar(1) DEFAULT NULL,
+  `STATE` varchar(16) COLLATE utf8mb4_bin NOT NULL,
+  `JOB_NAME` varchar(190) COLLATE utf8mb4_bin DEFAULT NULL,
+  `JOB_GROUP` varchar(190) COLLATE utf8mb4_bin DEFAULT NULL,
+  `IS_NONCONCURRENT` varchar(1) COLLATE utf8mb4_bin DEFAULT NULL,
+  `REQUESTS_RECOVERY` varchar(1) COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`SCHED_NAME`,`ENTRY_ID`),
   KEY `IDX_QRTZ_FT_TRIG_INST_NAME` (`SCHED_NAME`,`INSTANCE_NAME`),
   KEY `IDX_QRTZ_FT_INST_JOB_REQ_RCVRY` (`SCHED_NAME`,`INSTANCE_NAME`,`REQUESTS_RECOVERY`),
@@ -91,7 +91,7 @@ CREATE TABLE `qrtz_fired_triggers` (
   KEY `IDX_QRTZ_FT_JG` (`SCHED_NAME`,`JOB_GROUP`),
   KEY `IDX_QRTZ_FT_T_G` (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
   KEY `IDX_QRTZ_FT_TG` (`SCHED_NAME`,`TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- ----------------------------
 -- Records of qrtz_fired_triggers
@@ -102,20 +102,20 @@ CREATE TABLE `qrtz_fired_triggers` (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_job_details`;
 CREATE TABLE `qrtz_job_details` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `JOB_NAME` varchar(190) NOT NULL,
-  `JOB_GROUP` varchar(190) NOT NULL,
-  `DESCRIPTION` varchar(250) DEFAULT NULL,
-  `JOB_CLASS_NAME` varchar(250) NOT NULL,
-  `IS_DURABLE` varchar(1) NOT NULL,
-  `IS_NONCONCURRENT` varchar(1) NOT NULL,
-  `IS_UPDATE_DATA` varchar(1) NOT NULL,
-  `REQUESTS_RECOVERY` varchar(1) NOT NULL,
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_bin NOT NULL,
+  `JOB_NAME` varchar(190) COLLATE utf8mb4_bin NOT NULL,
+  `JOB_GROUP` varchar(190) COLLATE utf8mb4_bin NOT NULL,
+  `DESCRIPTION` varchar(250) COLLATE utf8mb4_bin DEFAULT NULL,
+  `JOB_CLASS_NAME` varchar(250) COLLATE utf8mb4_bin NOT NULL,
+  `IS_DURABLE` varchar(1) COLLATE utf8mb4_bin NOT NULL,
+  `IS_NONCONCURRENT` varchar(1) COLLATE utf8mb4_bin NOT NULL,
+  `IS_UPDATE_DATA` varchar(1) COLLATE utf8mb4_bin NOT NULL,
+  `REQUESTS_RECOVERY` varchar(1) COLLATE utf8mb4_bin NOT NULL,
   `JOB_DATA` blob,
   PRIMARY KEY (`SCHED_NAME`,`JOB_NAME`,`JOB_GROUP`),
   KEY `IDX_QRTZ_J_REQ_RECOVERY` (`SCHED_NAME`,`REQUESTS_RECOVERY`),
   KEY `IDX_QRTZ_J_GRP` (`SCHED_NAME`,`JOB_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- ----------------------------
 -- Records of qrtz_job_details
@@ -126,26 +126,24 @@ CREATE TABLE `qrtz_job_details` (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_locks`;
 CREATE TABLE `qrtz_locks` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `LOCK_NAME` varchar(40) NOT NULL,
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_bin NOT NULL,
+  `LOCK_NAME` varchar(40) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`SCHED_NAME`,`LOCK_NAME`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- ----------------------------
 -- Records of qrtz_locks
 -- ----------------------------
-INSERT INTO `qrtz_locks` VALUES ('clusteredScheduler', 'STATE_ACCESS');
-INSERT INTO `qrtz_locks` VALUES ('clusteredScheduler', 'TRIGGER_ACCESS');
 
 -- ----------------------------
 -- Table structure for qrtz_paused_trigger_grps
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_paused_trigger_grps`;
 CREATE TABLE `qrtz_paused_trigger_grps` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_GROUP` varchar(190) NOT NULL,
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_bin NOT NULL,
+  `TRIGGER_GROUP` varchar(190) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`SCHED_NAME`,`TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- ----------------------------
 -- Records of qrtz_paused_trigger_grps
@@ -156,32 +154,31 @@ CREATE TABLE `qrtz_paused_trigger_grps` (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_scheduler_state`;
 CREATE TABLE `qrtz_scheduler_state` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `INSTANCE_NAME` varchar(190) NOT NULL,
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_bin NOT NULL,
+  `INSTANCE_NAME` varchar(190) COLLATE utf8mb4_bin NOT NULL,
   `LAST_CHECKIN_TIME` bigint(13) NOT NULL,
   `CHECKIN_INTERVAL` bigint(13) NOT NULL,
   PRIMARY KEY (`SCHED_NAME`,`INSTANCE_NAME`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'SKY-20171110MWL1556081074131', '1556081166437', '10000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_simple_triggers`;
 CREATE TABLE `qrtz_simple_triggers` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(190) NOT NULL,
-  `TRIGGER_GROUP` varchar(190) NOT NULL,
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_bin NOT NULL,
+  `TRIGGER_NAME` varchar(190) COLLATE utf8mb4_bin NOT NULL,
+  `TRIGGER_GROUP` varchar(190) COLLATE utf8mb4_bin NOT NULL,
   `REPEAT_COUNT` bigint(7) NOT NULL,
   `REPEAT_INTERVAL` bigint(12) NOT NULL,
   `TIMES_TRIGGERED` bigint(10) NOT NULL,
   PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
   CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- ----------------------------
 -- Records of qrtz_simple_triggers
@@ -192,23 +189,23 @@ CREATE TABLE `qrtz_simple_triggers` (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_simprop_triggers`;
 CREATE TABLE `qrtz_simprop_triggers` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(190) NOT NULL,
-  `TRIGGER_GROUP` varchar(190) NOT NULL,
-  `STR_PROP_1` varchar(512) DEFAULT NULL,
-  `STR_PROP_2` varchar(512) DEFAULT NULL,
-  `STR_PROP_3` varchar(512) DEFAULT NULL,
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_bin NOT NULL,
+  `TRIGGER_NAME` varchar(190) COLLATE utf8mb4_bin NOT NULL,
+  `TRIGGER_GROUP` varchar(190) COLLATE utf8mb4_bin NOT NULL,
+  `STR_PROP_1` varchar(512) COLLATE utf8mb4_bin DEFAULT NULL,
+  `STR_PROP_2` varchar(512) COLLATE utf8mb4_bin DEFAULT NULL,
+  `STR_PROP_3` varchar(512) COLLATE utf8mb4_bin DEFAULT NULL,
   `INT_PROP_1` int(11) DEFAULT NULL,
   `INT_PROP_2` int(11) DEFAULT NULL,
   `LONG_PROP_1` bigint(20) DEFAULT NULL,
   `LONG_PROP_2` bigint(20) DEFAULT NULL,
   `DEC_PROP_1` decimal(13,4) DEFAULT NULL,
   `DEC_PROP_2` decimal(13,4) DEFAULT NULL,
-  `BOOL_PROP_1` varchar(1) DEFAULT NULL,
-  `BOOL_PROP_2` varchar(1) DEFAULT NULL,
+  `BOOL_PROP_1` varchar(1) COLLATE utf8mb4_bin DEFAULT NULL,
+  `BOOL_PROP_2` varchar(1) COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
   CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- ----------------------------
 -- Records of qrtz_simprop_triggers
@@ -219,20 +216,20 @@ CREATE TABLE `qrtz_simprop_triggers` (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_triggers`;
 CREATE TABLE `qrtz_triggers` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(190) NOT NULL,
-  `TRIGGER_GROUP` varchar(190) NOT NULL,
-  `JOB_NAME` varchar(190) NOT NULL,
-  `JOB_GROUP` varchar(190) NOT NULL,
-  `DESCRIPTION` varchar(250) DEFAULT NULL,
+  `SCHED_NAME` varchar(120) COLLATE utf8mb4_bin NOT NULL,
+  `TRIGGER_NAME` varchar(190) COLLATE utf8mb4_bin NOT NULL,
+  `TRIGGER_GROUP` varchar(190) COLLATE utf8mb4_bin NOT NULL,
+  `JOB_NAME` varchar(190) COLLATE utf8mb4_bin NOT NULL,
+  `JOB_GROUP` varchar(190) COLLATE utf8mb4_bin NOT NULL,
+  `DESCRIPTION` varchar(250) COLLATE utf8mb4_bin DEFAULT NULL,
   `NEXT_FIRE_TIME` bigint(13) DEFAULT NULL,
   `PREV_FIRE_TIME` bigint(13) DEFAULT NULL,
   `PRIORITY` int(11) DEFAULT NULL,
-  `TRIGGER_STATE` varchar(16) NOT NULL,
-  `TRIGGER_TYPE` varchar(8) NOT NULL,
+  `TRIGGER_STATE` varchar(16) COLLATE utf8mb4_bin NOT NULL,
+  `TRIGGER_TYPE` varchar(8) COLLATE utf8mb4_bin NOT NULL,
   `START_TIME` bigint(13) NOT NULL,
   `END_TIME` bigint(13) DEFAULT NULL,
-  `CALENDAR_NAME` varchar(190) DEFAULT NULL,
+  `CALENDAR_NAME` varchar(190) COLLATE utf8mb4_bin DEFAULT NULL,
   `MISFIRE_INSTR` smallint(2) DEFAULT NULL,
   `JOB_DATA` blob,
   PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
@@ -249,7 +246,7 @@ CREATE TABLE `qrtz_triggers` (
   KEY `IDX_QRTZ_T_NFT_ST_MISFIRE` (`SCHED_NAME`,`MISFIRE_INSTR`,`NEXT_FIRE_TIME`,`TRIGGER_STATE`),
   KEY `IDX_QRTZ_T_NFT_ST_MISFIRE_GRP` (`SCHED_NAME`,`MISFIRE_INSTR`,`NEXT_FIRE_TIME`,`TRIGGER_GROUP`,`TRIGGER_STATE`),
   CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) REFERENCES `qrtz_job_details` (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- ----------------------------
 -- Records of qrtz_triggers
@@ -261,9 +258,9 @@ CREATE TABLE `qrtz_triggers` (
 DROP TABLE IF EXISTS `t_attachment`;
 CREATE TABLE `t_attachment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `attachment_name` varchar(200) DEFAULT NULL COMMENT '附件名称',
-  `attachment_address` varchar(200) DEFAULT NULL COMMENT '访问地址',
-  `attachment_path` varchar(200) DEFAULT NULL COMMENT '本地路径',
+  `attachment_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '附件名称',
+  `attachment_address` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '访问地址',
+  `attachment_path` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '本地路径',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
 
@@ -304,7 +301,7 @@ DROP TABLE IF EXISTS `t_broadcast_message`;
 CREATE TABLE `t_broadcast_message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `send_time` timestamp NULL DEFAULT NULL COMMENT '发送时间',
-  `content` varchar(2000) DEFAULT NULL COMMENT '消息内容',
+  `content` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '消息内容',
   `send_user_id` int(11) DEFAULT NULL COMMENT '发送用户id',
   PRIMARY KEY (`id`),
   KEY `t_broadcast_message_fk_send_user_id` (`send_user_id`),
@@ -340,7 +337,7 @@ DROP TABLE IF EXISTS `t_chat_message`;
 CREATE TABLE `t_chat_message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `send_time` timestamp NULL DEFAULT NULL COMMENT '发送时间',
-  `content` varchar(2000) DEFAULT NULL COMMENT '消息内容',
+  `content` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '消息内容',
   `send_user_id` int(11) DEFAULT NULL COMMENT '发送用户id',
   `to_user_id` int(11) DEFAULT NULL COMMENT '接收用户id',
   `read_status` tinyint(1) DEFAULT NULL COMMENT '阅读状态，1已读，0未读',
@@ -364,7 +361,7 @@ INSERT INTO `t_chat_message` VALUES ('3', '2019-04-11 17:33:12', '我是一条�
 DROP TABLE IF EXISTS `t_dept`;
 CREATE TABLE `t_dept` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `dept_name` varchar(50) DEFAULT NULL COMMENT '部门名称',
+  `dept_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '部门名称',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
@@ -383,16 +380,16 @@ INSERT INTO `t_dept` VALUES ('5', '5555');
 DROP TABLE IF EXISTS `t_job`;
 CREATE TABLE `t_job` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `job_desc` varchar(200) DEFAULT NULL COMMENT '任务描述',
+  `job_desc` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '任务描述',
   `start_time` timestamp NULL DEFAULT NULL COMMENT '开始时间',
   `end_time` timestamp NULL DEFAULT NULL COMMENT '结束时间',
-  `cron_expression` varchar(20) DEFAULT NULL COMMENT 'cron表达式',
+  `cron_expression` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'cron表达式',
   `job_template_id` int(11) DEFAULT NULL COMMENT '任务模板id',
-  `sched_name` varchar(120) DEFAULT NULL COMMENT '调度器名称',
-  `job_name` varchar(190) DEFAULT NULL COMMENT '任务名称',
-  `job_group` varchar(190) DEFAULT NULL COMMENT '任务组',
-  `trigger_name` varchar(190) DEFAULT NULL COMMENT '触发器名称',
-  `trigger_group` varchar(190) DEFAULT NULL COMMENT '触发器组',
+  `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '调度器名称',
+  `job_name` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '任务名称',
+  `job_group` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '任务组',
+  `trigger_name` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '触发器名称',
+  `trigger_group` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '触发器组',
   PRIMARY KEY (`id`),
   KEY `t_job_fk_job_template_id` (`job_template_id`),
   CONSTRAINT `t_job_fk_job_template_id` FOREIGN KEY (`job_template_id`) REFERENCES `t_job_template` (`id`)
@@ -410,8 +407,8 @@ INSERT INTO `t_job` VALUES ('4', '打印username=xue的用户信息', '2019-04-1
 DROP TABLE IF EXISTS `t_job_parameter`;
 CREATE TABLE `t_job_parameter` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `parameter_name` varchar(200) DEFAULT NULL COMMENT '参数名称',
-  `parameter_value` varchar(200) DEFAULT NULL COMMENT '参数值',
+  `parameter_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '参数名称',
+  `parameter_value` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '参数值',
   `job_id` int(11) DEFAULT NULL COMMENT '定时任务id',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
@@ -433,9 +430,9 @@ INSERT INTO `t_job_parameter` VALUES ('7', 'username', 'xue', '4');
 DROP TABLE IF EXISTS `t_job_template`;
 CREATE TABLE `t_job_template` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `job_name` varchar(20) DEFAULT NULL COMMENT '任务名称',
-  `job_class_name` varchar(50) DEFAULT NULL COMMENT 'org.quartz.Job的实现类或org.springframework.scheduling.quartz.QuartzJobBean的子类',
-  `job_desc` varchar(2000) DEFAULT NULL COMMENT '任务描述',
+  `job_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '任务名称',
+  `job_class_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'org.quartz.Job的实现类或org.springframework.scheduling.quartz.QuartzJobBean的子类',
+  `job_desc` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '任务描述',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
@@ -451,9 +448,9 @@ INSERT INTO `t_job_template` VALUES ('7', '打印指定用户信息', 'com.examp
 DROP TABLE IF EXISTS `t_job_template_parameter`;
 CREATE TABLE `t_job_template_parameter` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `parameter_name` varchar(20) DEFAULT NULL COMMENT '参数名称',
-  `parameter_type` varchar(20) DEFAULT NULL COMMENT '参数类型',
-  `parameter_desc` varchar(500) DEFAULT NULL COMMENT '参数描述',
+  `parameter_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '参数名称',
+  `parameter_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '参数类型',
+  `parameter_desc` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '参数描述',
   `job_template_id` int(11) DEFAULT NULL COMMENT '任务模板id',
   PRIMARY KEY (`id`),
   KEY `t_job_template_parameter_fk_job_template_id` (`job_template_id`),
@@ -474,9 +471,9 @@ INSERT INTO `t_job_template_parameter` VALUES ('7', 'username', 'string', '用�
 DROP TABLE IF EXISTS `t_mail`;
 CREATE TABLE `t_mail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `mail_subject` varchar(500) DEFAULT NULL COMMENT '邮件标题',
-  `mail_type` varchar(50) DEFAULT NULL COMMENT '邮件类型',
-  `mail_status` varchar(50) DEFAULT NULL COMMENT '邮件状态',
+  `mail_subject` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '邮件标题',
+  `mail_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '邮件类型',
+  `mail_status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '邮件状态',
   `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   `send_time` timestamp NULL DEFAULT NULL COMMENT '发送时间',
   `send_user_id` int(11) DEFAULT NULL COMMENT '发送用户id',
@@ -519,7 +516,7 @@ INSERT INTO `t_mail_attachment_link` VALUES ('1', '35');
 DROP TABLE IF EXISTS `t_mail_content`;
 CREATE TABLE `t_mail_content` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `content` mediumtext COMMENT '邮件内容',
+  `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin COMMENT '邮件内容',
   `mail_id` int(11) DEFAULT NULL COMMENT '邮件id',
   PRIMARY KEY (`id`),
   KEY `t_mail_content_fk_mail_id` (`mail_id`),
@@ -529,7 +526,7 @@ CREATE TABLE `t_mail_content` (
 -- ----------------------------
 -- Records of t_mail_content
 -- ----------------------------
-INSERT INTO `t_mail_content` VALUES ('1', '<h1>测试一下群发和附件</h1>', '1');
+INSERT INTO `t_mail_content` VALUES ('1', 0x3C68313EE6B58BE8AF95E4B880E4B88BE7BEA4E58F91E5928CE99984E4BBB63C2F68313E, '1');
 
 -- ----------------------------
 -- Table structure for t_mail_to_user_link
@@ -556,10 +553,10 @@ INSERT INTO `t_mail_to_user_link` VALUES ('1', '2');
 DROP TABLE IF EXISTS `t_resource`;
 CREATE TABLE `t_resource` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `resource_type` varchar(50) DEFAULT NULL COMMENT '资源类型',
-  `resource_pattern` varchar(50) DEFAULT NULL COMMENT '资源pattern',
-  `resource_method` varchar(20) DEFAULT NULL COMMENT '请求方法',
-  `resource_desc` varchar(50) DEFAULT NULL COMMENT '资源描述',
+  `resource_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '资源类型',
+  `resource_pattern` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '资源pattern',
+  `resource_method` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '请求方法',
+  `resource_desc` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '资源描述',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4;
 
@@ -620,7 +617,6 @@ INSERT INTO `t_resource` VALUES ('54', 'http', '/mail', 'PUT', '更新邮件');
 INSERT INTO `t_resource` VALUES ('55', 'http', '/mail/*', 'PATCH', '发送邮件');
 INSERT INTO `t_resource` VALUES ('56', 'http', '/mail/*', 'DELETE', '删除邮件');
 INSERT INTO `t_resource` VALUES ('57', 'http', '/userinfo', 'GET', '查询个人信息');
-INSERT INTO `t_resource` VALUES ('58', 'http', '/userinfo', 'POST', '注册个人信息');
 INSERT INTO `t_resource` VALUES ('59', 'http', '/userinfo', 'PUT', '更新个人信息');
 
 -- ----------------------------
@@ -629,8 +625,8 @@ INSERT INTO `t_resource` VALUES ('59', 'http', '/userinfo', 'PUT', '更新个人
 DROP TABLE IF EXISTS `t_role`;
 CREATE TABLE `t_role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `role_name` varchar(50) DEFAULT NULL COMMENT '角色名称',
-  `role_desc` varchar(200) DEFAULT NULL COMMENT '角色描述',
+  `role_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '角色名称',
+  `role_desc` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '角色描述',
   PRIMARY KEY (`id`),
   UNIQUE KEY `t_role_idx_role_name` (`role_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
@@ -674,6 +670,7 @@ INSERT INTO `t_role_resource_link` VALUES ('2', '4');
 INSERT INTO `t_role_resource_link` VALUES ('4', '4');
 INSERT INTO `t_role_resource_link` VALUES ('5', '4');
 INSERT INTO `t_role_resource_link` VALUES ('6', '4');
+INSERT INTO `t_role_resource_link` VALUES ('7', '4');
 INSERT INTO `t_role_resource_link` VALUES ('1', '5');
 INSERT INTO `t_role_resource_link` VALUES ('2', '5');
 INSERT INTO `t_role_resource_link` VALUES ('4', '5');
@@ -738,7 +735,6 @@ INSERT INTO `t_role_resource_link` VALUES ('5', '21');
 INSERT INTO `t_role_resource_link` VALUES ('1', '22');
 INSERT INTO `t_role_resource_link` VALUES ('2', '22');
 INSERT INTO `t_role_resource_link` VALUES ('4', '22');
-INSERT INTO `t_role_resource_link` VALUES ('7', '22');
 INSERT INTO `t_role_resource_link` VALUES ('1', '23');
 INSERT INTO `t_role_resource_link` VALUES ('2', '23');
 INSERT INTO `t_role_resource_link` VALUES ('4', '23');
@@ -776,7 +772,6 @@ INSERT INTO `t_role_resource_link` VALUES ('1', '54');
 INSERT INTO `t_role_resource_link` VALUES ('1', '55');
 INSERT INTO `t_role_resource_link` VALUES ('1', '56');
 INSERT INTO `t_role_resource_link` VALUES ('6', '57');
-INSERT INTO `t_role_resource_link` VALUES ('7', '58');
 INSERT INTO `t_role_resource_link` VALUES ('6', '59');
 
 -- ----------------------------
@@ -785,10 +780,10 @@ INSERT INTO `t_role_resource_link` VALUES ('6', '59');
 DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) NOT NULL COMMENT '用户名',
-  `password` varchar(200) NOT NULL COMMENT '密码',
-  `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
-  `nickname` varchar(50) DEFAULT NULL COMMENT '昵称',
+  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '用户名',
+  `password` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '密码',
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '邮箱',
+  `nickname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '昵称',
   `birth` date DEFAULT NULL COMMENT '生日',
   `logintime` timestamp NULL DEFAULT NULL COMMENT '登陆时间',
   `dept_id` int(11) DEFAULT NULL COMMENT '部门id',
@@ -797,15 +792,18 @@ CREATE TABLE `t_user` (
   UNIQUE KEY `t_user_uk_email` (`email`),
   KEY `t_user_fk_dept_id` (`dept_id`),
   CONSTRAINT `t_user_fk_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `t_dept` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('1', 'xlk', '$2a$10$UX6fLV/PkpK4s7Iota0Jy.GA3x1AlOlCfQlx8yRzZqfe/4Y.j3jAe', 'xuelingkang@163.com', '薛凌康', '1990-10-14', '2019-04-24 12:44:41', '1');
+INSERT INTO `t_user` VALUES ('1', 'xlk', '$2a$10$UX6fLV/PkpK4s7Iota0Jy.GA3x1AlOlCfQlx8yRzZqfe/4Y.j3jAe', 'xuelingkang@163.com', '薛凌康', '1990-10-14', '2019-04-24 17:57:21', '1');
 INSERT INTO `t_user` VALUES ('2', 'xue', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', '574290057@qq.com', '薛', '1990-10-14', '2019-03-24 11:25:54', '1');
 INSERT INTO `t_user` VALUES ('3', 'kk', '$2a$10$lEnRZl010AjnAapZPyk1y.4tIabA2QPilWG8DP3R8a7WNmV9O77Gu', 'kk@163.com', 'kk', '1990-10-14', '2019-04-24 12:02:06', '1');
 INSERT INTO `t_user` VALUES ('4', 'xxx', '$2a$10$2sTlVRalWZfGa2hxzaUlYOaqJ3od5QcD66FZlJt0U1z0FAs/MAGOa', 'xxx@163.com', 'xxx', '1990-10-15', '2019-04-24 12:32:57', null);
+INSERT INTO `t_user` VALUES ('5', 'xuelingkang', '$2a$10$YLV1TEJJ//j3vVuzxDD/keXY0SQOJ7tTomDCLriCEWGkDlLQPFuj2', 'xuelingkang@126.com', null, null, null, null);
+INSERT INTO `t_user` VALUES ('7', 'xuelingkang1', '$2a$10$XpybUE1PKdrFEWUcNHSkEeM8uc6Iyim19pOhgpuRDHXVkDXUEdlLS', 'xuelingkang1@126.com', null, null, null, null);
+INSERT INTO `t_user` VALUES ('8', 'xlk123', '$2a$10$6SBUs/iR.QL/yA8fW0swdes3Y2re05QE8h7FXGmXKqYQDdqRtHKQy', 'xlk123@163.com', null, null, '2019-04-24 16:27:19', null);
 
 -- ----------------------------
 -- Table structure for t_user_role_link
@@ -829,6 +827,9 @@ INSERT INTO `t_user_role_link` VALUES ('1', '6');
 INSERT INTO `t_user_role_link` VALUES ('2', '6');
 INSERT INTO `t_user_role_link` VALUES ('3', '6');
 INSERT INTO `t_user_role_link` VALUES ('4', '6');
+INSERT INTO `t_user_role_link` VALUES ('5', '6');
+INSERT INTO `t_user_role_link` VALUES ('7', '6');
+INSERT INTO `t_user_role_link` VALUES ('8', '6');
 
 -- ----------------------------
 -- View structure for t_mail_to_users

@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
-Source Server Version : 50725
-Source Host           : localhost:3306
+Source Server         : centos7.jituandb.com
+Source Server Version : 50722
+Source Host           : centos7.jituandb.com:3306
 Source Database       : demo
 
 Target Server Type    : MYSQL
-Target Server Version : 50725
+Target Server Version : 50722
 File Encoding         : 65001
 
-Date: 2019-04-25 10:23:17
+Date: 2019-05-07 09:31:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -134,6 +134,8 @@ CREATE TABLE `qrtz_locks` (
 -- ----------------------------
 -- Records of qrtz_locks
 -- ----------------------------
+INSERT INTO `qrtz_locks` VALUES ('clusteredScheduler', 'STATE_ACCESS');
+INSERT INTO `qrtz_locks` VALUES ('clusteredScheduler', 'TRIGGER_ACCESS');
 
 -- ----------------------------
 -- Table structure for qrtz_paused_trigger_grps
@@ -164,6 +166,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
+INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011556200492829', '1557209637904', '10000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -262,7 +265,7 @@ CREATE TABLE `t_attachment` (
   `attachment_address` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '访问地址',
   `attachment_path` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '本地路径',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_attachment
@@ -293,6 +296,7 @@ INSERT INTO `t_attachment` VALUES ('32', '1553700913857.rar', '/demofile/ceshi/2
 INSERT INTO `t_attachment` VALUES ('33', '一键发布.rar', '/demofile/ceshi/2019/4/一键发布.rar', '/home/demofile/ceshi/2019/4/一键发布.rar');
 INSERT INTO `t_attachment` VALUES ('34', 'config-sharding.yaml', '/demofile/ceshi/2019/4/config-sharding.yaml', '/home/demofile/ceshi/2019/4/config-sharding.yaml');
 INSERT INTO `t_attachment` VALUES ('35', '客有家PC官网.xlsx', '/demofile/ceshi/2019/4/客有家PC官网.xlsx', '/home/demofile/ceshi/2019/4/客有家PC官网.xlsx');
+INSERT INTO `t_attachment` VALUES ('36', 'firewall.txt', '/demofile/test/2019/4/firewall.txt', '/home/demofile/test/2019/4/firewall.txt');
 
 -- ----------------------------
 -- Table structure for t_broadcast_message
@@ -483,12 +487,13 @@ CREATE TABLE `t_mail` (
   KEY `t_mail_fk_to_user_id` (`to_user_id`),
   CONSTRAINT `t_mail_fk_send_user_id` FOREIGN KEY (`send_user_id`) REFERENCES `t_user` (`id`),
   CONSTRAINT `t_mail_fk_to_user_id` FOREIGN KEY (`to_user_id`) REFERENCES `t_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_mail
 -- ----------------------------
 INSERT INTO `t_mail` VALUES ('1', '测试一下群发和附件', 'info', 'sent', '2019-04-16 13:17:26', '2019-04-16 13:23:42', '1', null);
+INSERT INTO `t_mail` VALUES ('2', '试试', 'info', 'sent', '2019-04-25 22:02:28', '2019-04-25 22:03:08', '1', null);
 
 -- ----------------------------
 -- Table structure for t_mail_attachment_link
@@ -521,12 +526,13 @@ CREATE TABLE `t_mail_content` (
   PRIMARY KEY (`id`),
   KEY `t_mail_content_fk_mail_id` (`mail_id`),
   CONSTRAINT `t_mail_content_fk_mail_id` FOREIGN KEY (`mail_id`) REFERENCES `t_mail` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_mail_content
 -- ----------------------------
 INSERT INTO `t_mail_content` VALUES ('1', 0x3C68313EE6B58BE8AF95E4B880E4B88BE7BEA4E58F91E5928CE99984E4BBB63C2F68313E, '1');
+INSERT INTO `t_mail_content` VALUES ('2', 0xE8AF95E8AF95E58F91E4B8AAE982AEE4BBB6, '2');
 
 -- ----------------------------
 -- Table structure for t_mail_to_user_link
@@ -546,6 +552,7 @@ CREATE TABLE `t_mail_to_user_link` (
 -- ----------------------------
 INSERT INTO `t_mail_to_user_link` VALUES ('1', '1');
 INSERT INTO `t_mail_to_user_link` VALUES ('1', '2');
+INSERT INTO `t_mail_to_user_link` VALUES ('2', '2');
 
 -- ----------------------------
 -- Table structure for t_resource
@@ -797,7 +804,7 @@ CREATE TABLE `t_user` (
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('1', 'xlk', '$2a$10$UX6fLV/PkpK4s7Iota0Jy.GA3x1AlOlCfQlx8yRzZqfe/4Y.j3jAe', 'xuelingkang@163.com', '薛凌康', '1990-10-14', '2019-04-24 17:57:21', '1');
+INSERT INTO `t_user` VALUES ('1', 'xlk', '$2a$10$UX6fLV/PkpK4s7Iota0Jy.GA3x1AlOlCfQlx8yRzZqfe/4Y.j3jAe', 'xuelingkang@163.com', '薛凌康', '1990-10-14', '2019-04-25 22:10:42', '1');
 INSERT INTO `t_user` VALUES ('2', 'xue', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', '574290057@qq.com', '薛', '1990-10-14', '2019-03-24 11:25:54', '1');
 INSERT INTO `t_user` VALUES ('3', 'kk', '$2a$10$lEnRZl010AjnAapZPyk1y.4tIabA2QPilWG8DP3R8a7WNmV9O77Gu', 'kk@163.com', 'kk', '1990-10-14', '2019-04-24 12:02:06', '1');
 INSERT INTO `t_user` VALUES ('4', 'xxx', '$2a$10$2sTlVRalWZfGa2hxzaUlYOaqJ3od5QcD66FZlJt0U1z0FAs/MAGOa', 'xxx@163.com', 'xxx', '1990-10-15', '2019-04-24 12:32:57', null);

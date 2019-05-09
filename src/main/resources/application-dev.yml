@@ -10,8 +10,8 @@ spring:
   # 数据源
   datasource:
     url: jdbc:mysql://server02:3306/demo?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false
-    username: demo
-    password: demo
+    username: root
+    password: root
     druid:
       initial-size: 5  # 初始化大小
       min-idle: 5  # 最小

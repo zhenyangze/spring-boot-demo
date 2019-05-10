@@ -1,1 +1,1 @@
-var storage_token_key = '/demo/token';
+var storage_token_key = 'token';

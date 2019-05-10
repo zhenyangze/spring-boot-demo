@@ -137,7 +137,7 @@ log:
   charset: UTF-8 # 日志编码
 
 token:
-  expire-seconds: 7200 # token过期时间（秒）
+  expire-seconds: 86400 # token过期时间（秒）
   jwt-secret: SPRING-BOOT-DEMO # jwt密钥
 
 resource:

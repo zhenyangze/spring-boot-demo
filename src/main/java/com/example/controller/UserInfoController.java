@@ -9,6 +9,7 @@ import com.example.model.po.User;
 import com.example.model.vo.*;
 import com.example.params.Params;
 import com.example.service.IRoleService;
+import com.example.service.ITokenService;
 import com.example.service.IUserService;
 import com.example.util.ModelUtil;
 import io.swagger.annotations.Api;
@@ -31,6 +32,8 @@ public class UserInfoController {
 
     @Autowired
     private IUserService userService;
+    @Autowired
+    private ITokenService tokenService;
     @Autowired
     private IRoleService roleService;
     @Autowired
@@ -59,7 +62,9 @@ public class UserInfoController {
         List<Role> defaultRoles = new ArrayList<>();
         defaultRoles.add(roleService.customGetOne(new Params<>(new Role().setRoleName(IRoleService.DEFAULT_ROLE_NAME))));
         userService.customSave(user.setRoles(defaultRoles));
-        return new ResultVO<>(SUCCESS, "注册个人信息成功！", null);
+        // 自动登录
+        TokenVO tokenVO = tokenService.saveToken(new UserDetailsImpl(user));
+        return new ResultVO<>(SUCCESS, "注册个人信息成功！", tokenVO);
     }
 
     @PutMapping

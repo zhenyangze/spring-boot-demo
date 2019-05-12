@@ -28,7 +28,8 @@ public class User extends BaseModel {
     @Null(groups = {UserInsert.class, UserInfoInsert.class, UserInfoUpdate.class}, message = "用户id必须为空")
     private Integer id;
     @ApiModelProperty(value = "用户名")
-    @NotNull(groups = {UserInsert.class, UserUpdate.class, UserInfoInsert.class, UserInfoUpdate.class}, message = "用户名不能为空")
+    @Null(groups = {UserUpdate.class, UserInfoUpdate.class}, message = "用户名必须为空")
+    @NotNull(groups = {UserInsert.class, UserInfoInsert.class}, message = "用户名不能为空")
     private String username;
     @ApiModelProperty(value = "密码")
     @NotNull(groups = {UserInsert.class, UserInfoInsert.class}, message = "密码不能为空")

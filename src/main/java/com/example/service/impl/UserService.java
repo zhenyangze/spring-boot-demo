@@ -1,6 +1,7 @@
 package com.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.exception.LogicException;
 import com.example.mapper.UserMapper;
 import com.example.model.po.Role;
 import com.example.model.po.User;
@@ -35,6 +36,7 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
     @Override
     @Transactional
     public void customSave(User user) {
+        checkUsernameAndEmail(user);
         baseMapper.insert(user);
         Integer userId = user.getId();
         List<Role> roles = user.getRoles();
@@ -50,6 +52,7 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
     @Override
     @Transactional
     public void customUpdateById(User user) {
+        checkUsernameAndEmail(user);
         baseMapper.updateById(user);
         Integer userId = user.getId();
         List<Role> roles = user.getRoles();
@@ -59,6 +62,24 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
                 links.add(new UserRoleLink(userId, role.getId()));
             }
             userRoleLinkService.merge(links, new QueryWrapper<UserRoleLink>().eq("user_id", userId));
+        }
+    }
+
+    @Override
+    @Transactional
+    public boolean updateById(User user) {
+        checkUsernameAndEmail(user);
+        return super.updateById(user);
+    }
+
+    private void checkUsernameAndEmail(User user) {
+        User byUsername = baseMapper.selectOne(new QueryWrapper<>(new User().setUsername(user.getUsername())));
+        if (byUsername!=null) {
+            throw new LogicException("用户名已存在！");
+        }
+        User byEmail = baseMapper.selectOne(new QueryWrapper<>(new User().setEmail(user.getEmail())));
+        if (byEmail!=null) {
+            throw new LogicException("邮箱已存在！");
         }
     }
 

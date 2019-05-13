@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : centos7.jituandb.com
-Source Server Version : 50722
-Source Host           : centos7.jituandb.com:3306
+Source Server         : server02
+Source Server Version : 50726
+Source Host           : server02:3306
 Source Database       : demo
 
 Target Server Type    : MYSQL
-Target Server Version : 50722
+Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2019-05-07 09:31:41
+Date: 2019-05-13 18:38:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -166,7 +166,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011556200492829', '1557209637904', '10000');
+INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011557729639577', '1557743911395', '10000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -265,7 +265,7 @@ CREATE TABLE `t_attachment` (
   `attachment_address` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '访问地址',
   `attachment_path` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '本地路径',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_attachment
@@ -297,6 +297,7 @@ INSERT INTO `t_attachment` VALUES ('33', '一键发布.rar', '/demofile/ceshi/20
 INSERT INTO `t_attachment` VALUES ('34', 'config-sharding.yaml', '/demofile/ceshi/2019/4/config-sharding.yaml', '/home/demofile/ceshi/2019/4/config-sharding.yaml');
 INSERT INTO `t_attachment` VALUES ('35', '客有家PC官网.xlsx', '/demofile/ceshi/2019/4/客有家PC官网.xlsx', '/home/demofile/ceshi/2019/4/客有家PC官网.xlsx');
 INSERT INTO `t_attachment` VALUES ('36', 'firewall.txt', '/demofile/test/2019/4/firewall.txt', '/home/demofile/test/2019/4/firewall.txt');
+INSERT INTO `t_attachment` VALUES ('37', 'smiley_001.png', '/demofile/test/2019/5/1557416417480.png', '/home/demofile/test/2019/5/1557416417480.png');
 
 -- ----------------------------
 -- Table structure for t_broadcast_message
@@ -310,7 +311,7 @@ CREATE TABLE `t_broadcast_message` (
   PRIMARY KEY (`id`),
   KEY `t_broadcast_message_fk_send_user_id` (`send_user_id`),
   CONSTRAINT `t_broadcast_message_fk_send_user_id` FOREIGN KEY (`send_user_id`) REFERENCES `t_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_broadcast_message
@@ -333,6 +334,7 @@ INSERT INTO `t_broadcast_message` VALUES ('15', '2019-04-11 11:55:04', '群发�
 INSERT INTO `t_broadcast_message` VALUES ('16', '2019-04-11 11:55:15', '群发消息', '1');
 INSERT INTO `t_broadcast_message` VALUES ('17', '2019-04-11 16:06:35', '我是一条广播', '1');
 INSERT INTO `t_broadcast_message` VALUES ('18', '2019-04-11 16:11:07', '我是一条广播', '1');
+INSERT INTO `t_broadcast_message` VALUES ('19', '2019-05-10 10:30:44', '121212121', '1');
 
 -- ----------------------------
 -- Table structure for t_chat_message
@@ -350,7 +352,7 @@ CREATE TABLE `t_chat_message` (
   KEY `t_single_message_fk_to_user_id` (`to_user_id`),
   CONSTRAINT `t_single_message_fk_send_user_id` FOREIGN KEY (`send_user_id`) REFERENCES `t_user` (`id`),
   CONSTRAINT `t_single_message_fk_to_user_id` FOREIGN KEY (`to_user_id`) REFERENCES `t_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_chat_message
@@ -358,6 +360,7 @@ CREATE TABLE `t_chat_message` (
 INSERT INTO `t_chat_message` VALUES ('1', '2019-04-11 17:30:33', '我是一条点对点消息', '1', '1', '1');
 INSERT INTO `t_chat_message` VALUES ('2', '2019-04-11 17:31:44', '我是一条点对点消息', '1', '1', '1');
 INSERT INTO `t_chat_message` VALUES ('3', '2019-04-11 17:33:12', '我是一条点对点消息', '1', '1', '0');
+INSERT INTO `t_chat_message` VALUES ('4', '2019-05-10 10:31:34', '3xcgdsd', '1', '1', '0');
 
 -- ----------------------------
 -- Table structure for t_dept
@@ -366,17 +369,22 @@ DROP TABLE IF EXISTS `t_dept`;
 CREATE TABLE `t_dept` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `dept_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '部门名称',
-  PRIMARY KEY (`id`)
+  `pid` int(11) DEFAULT NULL COMMENT '上级部门id',
+  `seq` int(5) DEFAULT NULL COMMENT '顺序',
+  PRIMARY KEY (`id`),
+  KEY `t_dept_fk_pid` (`pid`),
+  KEY `t_dept_idx_seq` (`seq`),
+  CONSTRAINT `t_dept_fk_pid` FOREIGN KEY (`pid`) REFERENCES `t_dept` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_dept
 -- ----------------------------
-INSERT INTO `t_dept` VALUES ('1', '改下名');
-INSERT INTO `t_dept` VALUES ('2', '测试部门');
-INSERT INTO `t_dept` VALUES ('3', '改下名啊');
-INSERT INTO `t_dept` VALUES ('4', '测试部门3');
-INSERT INTO `t_dept` VALUES ('5', '5555');
+INSERT INTO `t_dept` VALUES ('1', '改下名', null, null);
+INSERT INTO `t_dept` VALUES ('2', '测试部门', null, null);
+INSERT INTO `t_dept` VALUES ('3', '改下名啊', null, null);
+INSERT INTO `t_dept` VALUES ('4', '测试部门3', null, null);
+INSERT INTO `t_dept` VALUES ('5', '5555', null, null);
 
 -- ----------------------------
 -- Table structure for t_job
@@ -799,18 +807,19 @@ CREATE TABLE `t_user` (
   UNIQUE KEY `t_user_uk_email` (`email`),
   KEY `t_user_fk_dept_id` (`dept_id`),
   CONSTRAINT `t_user_fk_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `t_dept` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('1', 'xlk', '$2a$10$UX6fLV/PkpK4s7Iota0Jy.GA3x1AlOlCfQlx8yRzZqfe/4Y.j3jAe', 'xuelingkang@163.com', '薛凌康', '1990-10-14', '2019-04-25 22:10:42', '1');
+INSERT INTO `t_user` VALUES ('1', 'xlk', '$2a$10$UX6fLV/PkpK4s7Iota0Jy.GA3x1AlOlCfQlx8yRzZqfe/4Y.j3jAe', 'xuelingkang123@163.com', '薛凌康', '1990-10-14', '2019-05-10 17:53:57', '1');
 INSERT INTO `t_user` VALUES ('2', 'xue', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', '574290057@qq.com', '薛', '1990-10-14', '2019-03-24 11:25:54', '1');
 INSERT INTO `t_user` VALUES ('3', 'kk', '$2a$10$lEnRZl010AjnAapZPyk1y.4tIabA2QPilWG8DP3R8a7WNmV9O77Gu', 'kk@163.com', 'kk', '1990-10-14', '2019-04-24 12:02:06', '1');
 INSERT INTO `t_user` VALUES ('4', 'xxx', '$2a$10$2sTlVRalWZfGa2hxzaUlYOaqJ3od5QcD66FZlJt0U1z0FAs/MAGOa', 'xxx@163.com', 'xxx', '1990-10-15', '2019-04-24 12:32:57', null);
 INSERT INTO `t_user` VALUES ('5', 'xuelingkang', '$2a$10$YLV1TEJJ//j3vVuzxDD/keXY0SQOJ7tTomDCLriCEWGkDlLQPFuj2', 'xuelingkang@126.com', null, null, null, null);
 INSERT INTO `t_user` VALUES ('7', 'xuelingkang1', '$2a$10$XpybUE1PKdrFEWUcNHSkEeM8uc6Iyim19pOhgpuRDHXVkDXUEdlLS', 'xuelingkang1@126.com', null, null, null, null);
 INSERT INTO `t_user` VALUES ('8', 'xlk123', '$2a$10$6SBUs/iR.QL/yA8fW0swdes3Y2re05QE8h7FXGmXKqYQDdqRtHKQy', 'xlk123@163.com', null, null, '2019-04-24 16:27:19', null);
+INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$3.pkW2p6bN8pBw8Ds/piruq7LK7LhckVc5gxuhI0UyiMKjW8Tb0DO', 'xuelingkang@163.com', '薛凌康', '1990-10-14', null, '1');
 
 -- ----------------------------
 -- Table structure for t_user_role_link
@@ -830,6 +839,7 @@ CREATE TABLE `t_user_role_link` (
 -- ----------------------------
 INSERT INTO `t_user_role_link` VALUES ('1', '1');
 INSERT INTO `t_user_role_link` VALUES ('2', '1');
+INSERT INTO `t_user_role_link` VALUES ('9', '1');
 INSERT INTO `t_user_role_link` VALUES ('1', '6');
 INSERT INTO `t_user_role_link` VALUES ('2', '6');
 INSERT INTO `t_user_role_link` VALUES ('3', '6');
@@ -837,6 +847,7 @@ INSERT INTO `t_user_role_link` VALUES ('4', '6');
 INSERT INTO `t_user_role_link` VALUES ('5', '6');
 INSERT INTO `t_user_role_link` VALUES ('7', '6');
 INSERT INTO `t_user_role_link` VALUES ('8', '6');
+INSERT INTO `t_user_role_link` VALUES ('9', '6');
 
 -- ----------------------------
 -- View structure for t_mail_to_users

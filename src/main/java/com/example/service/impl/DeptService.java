@@ -31,8 +31,17 @@ public class DeptService extends BaseService<DeptMapper, Dept> implements IDeptS
     @Override
     @Transactional
     @CacheEvict(cacheNames = {"dept.multiple"}, allEntries = true)
-    public boolean save(Dept dept) {
-        return super.save(dept);
+    public void customSave(Dept dept) {
+        Integer pid = dept.getPid();
+        if (pid==null) {
+            dept.setLevel(1);
+            dept.setFullName(dept.getDeptName());
+        } else {
+            Dept pDept = baseMapper.selectById(pid);
+            dept.setLevel(pDept.getLevel()+1);
+            dept.setFullName(pDept.getFullName()+"-"+dept.getDeptName());
+        }
+        super.save(dept);
     }
 
     @Override
@@ -43,8 +52,8 @@ public class DeptService extends BaseService<DeptMapper, Dept> implements IDeptS
                     @CacheEvict(cacheNames = {"dept:single"}, key = "'dept:'+#dept.id")
             }
     )
-    public boolean updateById(Dept dept) {
-        return super.updateById(dept);
+    public void customUpdateById(Dept dept) {
+        super.updateById(dept);
     }
 
     @Override

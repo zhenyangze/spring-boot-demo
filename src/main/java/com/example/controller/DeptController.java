@@ -55,7 +55,7 @@ public class DeptController {
     @ApiOperation(value = "保存部门")
     public ResultVO save(@Validated({Insert.class}) DeptVO deptVO) {
         Dept dept = (Dept) ModelUtil.copy(deptVO, new ModelUtil.Mapping(DeptVO.class, Dept.class));
-        deptService.save(dept);
+        deptService.customSave(dept);
         return new ResultVO<>(SUCCESS, "保存部门成功！", null);
     }
 
@@ -63,7 +63,7 @@ public class DeptController {
     @ApiOperation(value = "更新部门")
     public ResultVO update(@Validated({Update.class}) DeptVO deptVO) {
         Dept dept = (Dept) ModelUtil.copy(deptVO, new ModelUtil.Mapping(DeptVO.class, Dept.class));
-        deptService.updateById(dept);
+        deptService.customUpdateById(dept);
         return new ResultVO<>(SUCCESS, "更新部门成功！", null);
     }
 

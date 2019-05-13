@@ -3,12 +3,17 @@
 <mapper namespace="com.example.mapper.DeptMapper">
 
     <sql id="baseCol">
-        t_dept.id t_dept_id, t_dept.dept_name t_dept_dept_name
+        t_dept.id t_dept_id, t_dept.dept_name t_dept_dept_name, t_dept.level t_dept_level,
+        t_dept.pid t_dept_pid, t_dept.seq t_dept_seq, t_dept.full_name t_dept_full_name
     </sql>
 
     <resultMap id="baseResultMap" type="com.example.model.po.Dept">
         <id column="t_dept_id" property="id" />
         <result column="t_dept_dept_name" property="deptName" />
+        <result column="t_dept_level" property="level" />
+        <result column="t_dept_pid" property="pid" />
+        <result column="t_dept_seq" property="seq" />
+        <result column="t_dept_full_name" property="fullName" />
     </resultMap>
 
 </mapper>

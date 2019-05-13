@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2019-05-13 18:38:38
+Date: 2019-05-13 23:31:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -166,7 +166,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011557729639577', '1557743911395', '10000');
+INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011557671582871', '1557761501914', '10000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -369,8 +369,10 @@ DROP TABLE IF EXISTS `t_dept`;
 CREATE TABLE `t_dept` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `dept_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '部门名称',
+  `level` int(2) DEFAULT NULL COMMENT '部门等级',
   `pid` int(11) DEFAULT NULL COMMENT '上级部门id',
   `seq` int(5) DEFAULT NULL COMMENT '顺序',
+  `full_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '全名',
   PRIMARY KEY (`id`),
   KEY `t_dept_fk_pid` (`pid`),
   KEY `t_dept_idx_seq` (`seq`),
@@ -380,11 +382,11 @@ CREATE TABLE `t_dept` (
 -- ----------------------------
 -- Records of t_dept
 -- ----------------------------
-INSERT INTO `t_dept` VALUES ('1', '改下名', null, null);
-INSERT INTO `t_dept` VALUES ('2', '测试部门', null, null);
-INSERT INTO `t_dept` VALUES ('3', '改下名啊', null, null);
-INSERT INTO `t_dept` VALUES ('4', '测试部门3', null, null);
-INSERT INTO `t_dept` VALUES ('5', '5555', null, null);
+INSERT INTO `t_dept` VALUES ('1', '改下名', null, null, null, null);
+INSERT INTO `t_dept` VALUES ('2', '测试部门', null, null, null, null);
+INSERT INTO `t_dept` VALUES ('3', '改下名啊', null, null, null, null);
+INSERT INTO `t_dept` VALUES ('4', '测试部门3', null, null, null, null);
+INSERT INTO `t_dept` VALUES ('5', '5555', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for t_job

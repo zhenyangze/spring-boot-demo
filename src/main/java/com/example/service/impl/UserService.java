@@ -123,8 +123,8 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
         content += "<p>您好：</p>";
         content += "<p>您在REACT中后台申请找回密码，验证码：<span style='color:#F00'>"+code+"</span>，有效期30分钟。</p>";
         content += "<p>如果您没有进行过找回密码的操作，请无视此邮件。</p>";
-        content += "<p style='text-align:right'>REACT中后台</p>";
-        content += "<p style='text-align:right'>"+new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date())+"</p>";
+        content += "<p>REACT中后台</p>";
+        content += "<p>"+new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date())+"</p>";
         mail.setMailContent(new MailContent().setContent(content));
         mail.setToUsers(Lists.newArrayList(user));
         return mail;

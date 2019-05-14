@@ -123,6 +123,7 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
         content += "<p>您好：</p>";
         content += "<p>您在REACT中后台申请找回密码，验证码：<span style='color:#F00'>"+code+"</span>，有效期30分钟。</p>";
         content += "<p>如果您没有进行过找回密码的操作，请无视此邮件。</p>";
+        content += "<p>----------------------------------</p>";
         content += "<p>REACT中后台</p>";
         content += "<p>"+new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date())+"</p>";
         mail.setMailContent(new MailContent().setContent(content));
@@ -139,8 +140,8 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
             throw new LogicException("验证码错误！");
         }
         User user_ = baseMapper.customSelectOne(new Params<>(new User().setUsername(user.getUsername())));
-        user.setId(user_.getId());
-        baseMapper.updateById(user);
+        user_.setPassword(user.getPassword());
+        baseMapper.updateById(user_);
         // 删除验证码
         redisTemplate.delete(key);
     }

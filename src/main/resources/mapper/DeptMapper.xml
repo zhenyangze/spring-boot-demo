@@ -16,4 +16,24 @@
         <result column="t_dept_full_name" property="fullName" />
     </resultMap>
 
+    <select id="customSelectPage" parameterType="com.example.params.Params" resultMap="baseResultMap">
+        select <include refid="baseCol" />
+        from t_dept t_dept
+        <where>
+            <if test=" params.entity.deptName != null and params.entity.deptName != ''.toString() ">
+                and instr(t_dept.dept_name, #{params.entity.deptName}) > 0
+            </if>
+            <if test=" params.entity.fullName != null and params.entity.fullName != ''.toString() ">
+                and instr(t_dept.full_name, #{params.entity.fullName}) > 0
+            </if>
+            <if test=" params.entity.pid != null ">
+                and t_dept.pid = #{params.entity.pid}
+            </if>
+            <if test=" params.entity.level != null ">
+                and t_dept.level = #{params.entity.level}
+            </if>
+        </where>
+        order by t_dept.level, t_dept.seq
+    </select>
+
 </mapper>

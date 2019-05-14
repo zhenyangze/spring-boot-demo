@@ -2,7 +2,7 @@ package com.example.model;
 
 import java.util.List;
 
-public interface Tree<T> {
+public interface Tree<T extends Tree> {
 
     Integer getId();
 
@@ -12,6 +12,6 @@ public interface Tree<T> {
 
     List<T> getSubs();
 
-    void setSubs(List<T> subs);
+    T setSubs(List<T> subs);
 
 }

@@ -1,7 +1,5 @@
 package com.example.controller;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.group.Insert;
@@ -9,6 +7,7 @@ import com.example.group.Update;
 import com.example.model.po.Dept;
 import com.example.model.vo.DeptVO;
 import com.example.model.vo.ResultVO;
+import com.example.params.Params;
 import com.example.service.IDeptService;
 import com.example.util.ModelUtil;
 import io.swagger.annotations.Api;
@@ -19,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 import static com.example.model.vo.ResultVO.SUCCESS;
 
@@ -31,14 +31,22 @@ public class DeptController {
     @Autowired
     private IDeptService deptService;
 
+    @GetMapping("/tree")
+    @ApiOperation(value = "部门树形结构")
+    public ResultVO tree() {
+        List<Dept> list = deptService.tree();
+        List tree = (List) ModelUtil.copy(list, new ModelUtil.Mapping(Dept.class, DeptVO.class));
+        return new ResultVO<>(SUCCESS, "", tree);
+    }
+
     @GetMapping("/{current}/{size}")
     @ApiOperation(value = "查询部门列表")
     public ResultVO findPage(@PathVariable @NotNull(message = "当前页不能为空") @ApiParam(value = "当前页", defaultValue = "1", required = true) long current,
                          @PathVariable @NotNull(message = "每页显示条数不能为空") @ApiParam(value = "每页显示条数", defaultValue = "10", required = true) long size,
                          DeptVO deptVO) {
         Page<Dept> page = new Page<>(current, size);
-        Wrapper<Dept> wrapper = new QueryWrapper<>(deptVO);
-        IPage<Dept> iPage = deptService.page(page, wrapper);
+        Params<Dept> params = new Params<>(deptVO);
+        IPage<Dept> iPage = deptService.customPage(page, params);
         IPage depts = (IPage) ModelUtil.copy(iPage, new ModelUtil.Mapping(Dept.class, DeptVO.class));
         return new ResultVO<>(SUCCESS, "", depts);
     }

@@ -10,6 +10,7 @@ import com.example.params.Params;
 import com.example.service.IUserRoleLinkService;
 import com.example.service.IUserService;
 import io.jsonwebtoken.lang.Collections;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,13 +74,19 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
     }
 
     private void checkUsernameAndEmail(User user) {
-        User byUsername = baseMapper.selectOne(new QueryWrapper<>(new User().setUsername(user.getUsername())));
-        if (byUsername!=null) {
-            throw new LogicException("用户名已存在！");
+        String username = user.getUsername();
+        if (StringUtils.isNotEmpty(username)) {
+            User byUsername = baseMapper.selectOne(new QueryWrapper<>(new User().setUsername(username)));
+            if (byUsername!=null && !byUsername.getId().equals(user.getId())) {
+                throw new LogicException("用户名已存在！");
+            }
         }
-        User byEmail = baseMapper.selectOne(new QueryWrapper<>(new User().setEmail(user.getEmail())));
-        if (byEmail!=null) {
-            throw new LogicException("邮箱已存在！");
+        String email = user.getEmail();
+        if (StringUtils.isNotEmpty(email)) {
+            User byEmail = baseMapper.selectOne(new QueryWrapper<>(new User().setEmail(email)));
+            if (byEmail!=null && !byEmail.getId().equals(user.getId())) {
+                throw new LogicException("邮箱已存在！");
+            }
         }
     }
 

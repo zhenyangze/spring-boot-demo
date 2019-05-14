@@ -35,8 +35,8 @@ spring:
 
   # 邮件
   mail:
-    username: xuelingkang@163.com
-    password: 163sqm
+    username: xxxxxx@163.com
+    password: xxxxxx
 
 server:
   port: 8080

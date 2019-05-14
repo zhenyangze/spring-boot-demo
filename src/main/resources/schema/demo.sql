@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2019-05-14 11:44:41
+Date: 2019-05-14 19:06:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -134,6 +134,8 @@ CREATE TABLE `qrtz_locks` (
 -- ----------------------------
 -- Records of qrtz_locks
 -- ----------------------------
+INSERT INTO `qrtz_locks` VALUES ('clusteredScheduler', 'STATE_ACCESS');
+INSERT INTO `qrtz_locks` VALUES ('clusteredScheduler', 'TRIGGER_ACCESS');
 
 -- ----------------------------
 -- Table structure for qrtz_paused_trigger_grps
@@ -164,7 +166,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011557804958188', '1557805474228', '10000');
+INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011557831480756', '1557831958346', '10000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -440,17 +442,16 @@ CREATE TABLE `t_mail` (
   `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   `send_time` timestamp NULL DEFAULT NULL COMMENT '发送时间',
   `send_user_id` int(11) DEFAULT NULL COMMENT '发送用户id',
-  `to_user_id` int(11) DEFAULT NULL COMMENT '接收用户id',
   PRIMARY KEY (`id`),
   KEY `t_mail_fk_send_user_id` (`send_user_id`),
-  KEY `t_mail_fk_to_user_id` (`to_user_id`),
-  CONSTRAINT `t_mail_fk_send_user_id` FOREIGN KEY (`send_user_id`) REFERENCES `t_user` (`id`),
-  CONSTRAINT `t_mail_fk_to_user_id` FOREIGN KEY (`to_user_id`) REFERENCES `t_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+  CONSTRAINT `t_mail_fk_send_user_id` FOREIGN KEY (`send_user_id`) REFERENCES `t_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_mail
 -- ----------------------------
+INSERT INTO `t_mail` VALUES ('4', 'REACT中后台找回密码', 'info', 'sent', '2019-05-14 18:51:30', '2019-05-14 18:52:05', null);
+INSERT INTO `t_mail` VALUES ('5', 'REACT中后台找回密码', 'info', 'sent', '2019-05-14 19:03:58', '2019-05-14 19:04:26', null);
 
 -- ----------------------------
 -- Table structure for t_mail_attachment_link
@@ -480,11 +481,13 @@ CREATE TABLE `t_mail_content` (
   PRIMARY KEY (`id`),
   KEY `t_mail_content_fk_mail_id` (`mail_id`),
   CONSTRAINT `t_mail_content_fk_mail_id` FOREIGN KEY (`mail_id`) REFERENCES `t_mail` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_mail_content
 -- ----------------------------
+INSERT INTO `t_mail_content` VALUES ('4', 0x3C703EE682A8E5A5BDEFBC9A3C2F703E3C703EE682A8E59CA85245414354E4B8ADE5908EE58FB0E794B3E8AFB7E689BEE59B9EE5AF86E7A081EFBC8CE9AA8CE8AF81E7A081EFBC9A3C7370616E207374796C653D27636F6C6F723A23463030273E5853414B45393C2F7370616E3EEFBC8CE69C89E69588E69C9F3330E58886E9929FE380823C2F703E3C703EE5A682E69E9CE682A8E6B2A1E69C89E8BF9BE8A18CE8BF87E689BEE59B9EE5AF86E7A081E79A84E6938DE4BD9CEFBC8CE8AFB7E697A0E8A786E6ADA4E982AEE4BBB6E380823C2F703E3C70207374796C653D27746578742D616C69676E3A7269676874273E5245414354E4B8ADE5908EE58FB03C2F703E3C70207374796C653D27746578742D616C69676E3A7269676874273E323031392D30352D31342031383A35313C2F703E, '4');
+INSERT INTO `t_mail_content` VALUES ('5', 0x3C703EE682A8E5A5BDEFBC9A3C2F703E3C703EE682A8E59CA85245414354E4B8ADE5908EE58FB0E794B3E8AFB7E689BEE59B9EE5AF86E7A081EFBC8CE9AA8CE8AF81E7A081EFBC9A3C7370616E207374796C653D27636F6C6F723A23463030273E324C794D746E3C2F7370616E3EEFBC8CE69C89E69588E69C9F3330E58886E9929FE380823C2F703E3C703EE5A682E69E9CE682A8E6B2A1E69C89E8BF9BE8A18CE8BF87E689BEE59B9EE5AF86E7A081E79A84E6938DE4BD9CEFBC8CE8AFB7E697A0E8A786E6ADA4E982AEE4BBB6E380823C2F703E3C70207374796C653D27746578742D616C69676E3A7269676874273E5245414354E4B8ADE5908EE58FB03C2F703E3C70207374796C653D27746578742D616C69676E3A7269676874273E323031392D30352D31342031393A30333C2F703E, '5');
 
 -- ----------------------------
 -- Table structure for t_mail_to_user_link
@@ -502,6 +505,8 @@ CREATE TABLE `t_mail_to_user_link` (
 -- ----------------------------
 -- Records of t_mail_to_user_link
 -- ----------------------------
+INSERT INTO `t_mail_to_user_link` VALUES ('4', '10');
+INSERT INTO `t_mail_to_user_link` VALUES ('5', '10');
 
 -- ----------------------------
 -- Table structure for t_resource
@@ -514,7 +519,7 @@ CREATE TABLE `t_resource` (
   `resource_method` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '请求方法',
   `resource_desc` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '资源描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_resource
@@ -574,6 +579,8 @@ INSERT INTO `t_resource` VALUES ('55', 'http', '/mail/*', 'PATCH', '发送邮件
 INSERT INTO `t_resource` VALUES ('56', 'http', '/mail/*', 'DELETE', '删除邮件');
 INSERT INTO `t_resource` VALUES ('57', 'http', '/userinfo', 'GET', '查询个人信息');
 INSERT INTO `t_resource` VALUES ('59', 'http', '/userinfo', 'PUT', '更新个人信息');
+INSERT INTO `t_resource` VALUES ('60', 'http', '/retrieve_password_mail', 'POST', '发送找回密码邮件');
+INSERT INTO `t_resource` VALUES ('61', 'http', '/retrieve_password', 'POST', '找回密码');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -729,6 +736,8 @@ INSERT INTO `t_role_resource_link` VALUES ('1', '55');
 INSERT INTO `t_role_resource_link` VALUES ('1', '56');
 INSERT INTO `t_role_resource_link` VALUES ('6', '57');
 INSERT INTO `t_role_resource_link` VALUES ('6', '59');
+INSERT INTO `t_role_resource_link` VALUES ('7', '60');
+INSERT INTO `t_role_resource_link` VALUES ('7', '61');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -748,12 +757,20 @@ CREATE TABLE `t_user` (
   UNIQUE KEY `t_user_uk_email` (`email`),
   KEY `t_user_fk_dept_id` (`dept_id`),
   CONSTRAINT `t_user_fk_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `t_dept` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$3.pkW2p6bN8pBw8Ds/piruq7LK7LhckVc5gxuhI0UyiMKjW8Tb0DO', 'xuelingkang@163.com', '薛凌康', '1990-10-14', null, '1');
+INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$3Dpctl4wDz78Mah4jWIzBOHSSrvL675ovwVOci3TW9G5ZyAhvQfV.', 'xuelingkang@163.com', '薛凌康', '1990-08-15', '2019-05-14 17:25:45', '1');
+INSERT INTO `t_user` VALUES ('10', 'manager', '$2a$10$BzVvJAGxMCpZoq4yDjf5guadssmsI0N7y4drYChCd14nUtxEPZDRe', '574290057@qq.com', null, null, null, null);
+INSERT INTO `t_user` VALUES ('11', 'xuelingkang', '$2a$10$WfYorw.m6/WguojKlKW3jO03hMB19nkVicxfZUoLMKfLfc2P5flvq', 'xuelingkang123@163.com', null, null, null, null);
+INSERT INTO `t_user` VALUES ('17', '777777', '$2a$10$B75oNc/UXELCh9gcA8DHV.KK3NinusChwXeL1T2bU1EEauzDZwO46', '777777@163.com', null, null, null, null);
+INSERT INTO `t_user` VALUES ('18', 'cdfdlwee', '$2a$10$UQSOmITflYC8ZmZRCwijoOQaVPkE9tgmr2txn6.dGSXXWWsTbBAPy', 'cdfdlwee@163.com', null, null, null, null);
+INSERT INTO `t_user` VALUES ('19', 'hhhhhhhhhhh', '$2a$10$r64ShjoliMype1aaNmQrNePjidi6EH/0vx/iwRUC02RScivl7Es9m', 'hhhhhhhhhhh@163.com', null, null, null, null);
+INSERT INTO `t_user` VALUES ('20', 'uuuuuu', '$2a$10$gfdRYrYBrzeRf93e0Cy0lu1GTkG5PcNcQaU6Z8MmVrUXSVvv9i6P.', 'uuuuuu@163.com', null, null, null, null);
+INSERT INTO `t_user` VALUES ('21', 'ccccccccccccc', '$2a$10$ZcyH6xLZ5hUHYyTJwKbR5.OyJ41gOJkL81kWmdWRhFNXl9FtKM7ie', 'ccccccccccccc@163.com', null, null, null, null);
+INSERT INTO `t_user` VALUES ('22', 'xxxxxxxxx', '$2a$10$kQTmNLBDXWTrMjGGPkWpGeFfQY7TKG99J4V1YbuEtlpKK25GYsjJO', 'xxxxxxxxx@163.com', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for t_user_role_link
@@ -773,6 +790,14 @@ CREATE TABLE `t_user_role_link` (
 -- ----------------------------
 INSERT INTO `t_user_role_link` VALUES ('9', '1');
 INSERT INTO `t_user_role_link` VALUES ('9', '6');
+INSERT INTO `t_user_role_link` VALUES ('10', '6');
+INSERT INTO `t_user_role_link` VALUES ('11', '6');
+INSERT INTO `t_user_role_link` VALUES ('17', '6');
+INSERT INTO `t_user_role_link` VALUES ('18', '6');
+INSERT INTO `t_user_role_link` VALUES ('19', '6');
+INSERT INTO `t_user_role_link` VALUES ('20', '6');
+INSERT INTO `t_user_role_link` VALUES ('21', '6');
+INSERT INTO `t_user_role_link` VALUES ('22', '6');
 
 -- ----------------------------
 -- View structure for t_mail_to_users

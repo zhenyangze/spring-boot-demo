@@ -133,10 +133,10 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
 
     @Override
     @Transactional
-    public void retrievePassword(User user, String code) {
+    public void retrievePassword(User user, String verification) {
         String key = RETRIEVE_PASSWORD_CODE_PREFIX+user.getUsername()+"-"+user.getEmail();
-        String code_ = (String) redisTemplate.opsForValue().get(key);
-        if (!code.equals(code_)) {
+        String verification_ = (String) redisTemplate.opsForValue().get(key);
+        if (!verification.equals(verification_)) {
             throw new LogicException("验证码错误！");
         }
         User user_ = baseMapper.customSelectOne(new Params<>(new User().setUsername(user.getUsername())));

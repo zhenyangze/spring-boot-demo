@@ -94,13 +94,13 @@ public class UserInfoController {
     @PostMapping("/retrieve_password")
     @ApiOperation(value = "找回密码")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "code", value = "验证码", required = true, dataTypeClass = String.class)
+            @ApiImplicitParam(name = "verification", value = "验证码", required = true, dataTypeClass = String.class)
     })
-    public ResultVO retrievePassword(@Validated({RetrievePassword.class}) UserVO userVO, String code) {
+    public ResultVO retrievePassword(@Validated({RetrievePassword.class}) UserVO userVO, String verification) {
         User user = (User) ModelUtil.copy(userVO, new ModelUtil.Mapping(UserVO.class, User.class));
         String password = user.getPassword();
         user.setPassword(passwordEncoder.encode(password));
-        userService.retrievePassword(user, code);
+        userService.retrievePassword(user, verification);
         return new ResultVO<>(SUCCESS, "修改密码成功！", null);
     }
 

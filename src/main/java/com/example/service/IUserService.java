@@ -8,6 +8,6 @@ public interface IUserService extends IBaseService<User> {
 
     void retrievePasswordMail(User user);
 
-    void retrievePassword(User user, String code);
+    void retrievePassword(User user, String verification);
 
 }

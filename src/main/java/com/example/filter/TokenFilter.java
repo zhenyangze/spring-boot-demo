@@ -26,7 +26,6 @@ import static com.example.model.vo.ResultVO.UNAUTHORIZED;
 public class TokenFilter extends OncePerRequestFilter {
 
     public static final String TOKEN_KEY = "token";
-    private static final String GUEST_KEY_PREFIX = "GUEST-";
     private static final Long MINUTES_10 = 10 * 60 * 1000L;
     private static final RequestMatcher[] IGNORE_PATH = {
             new AntPathRequestMatcher("/login", "POST"), // 登录

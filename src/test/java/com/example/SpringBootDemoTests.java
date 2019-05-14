@@ -1,6 +1,7 @@
 package com.example;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Test;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
@@ -47,6 +48,11 @@ public class SpringBootDemoTests {
         wrapper.eq("role_id", 3);
         wrapper.or();
         System.out.println(wrapper.getCustomSqlSegment());
+    }
+
+    @Test
+    public void testRandomString() {
+        System.out.println(RandomStringUtils.randomAlphanumeric(6));
     }
 
 }

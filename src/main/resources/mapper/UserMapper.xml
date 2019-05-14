@@ -52,6 +52,9 @@
             <if test=" params.entity.username != null and params.entity.username != ''.toString() ">
                 and t_user.username = #{params.entity.username}
             </if>
+            <if test=" params.entity.email != null and params.entity.email != ''.toString() ">
+                and t_user.email = #{params.entity.email}
+            </if>
         </where>
     </select>
 

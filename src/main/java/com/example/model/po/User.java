@@ -35,8 +35,8 @@ public class User extends BaseModel {
     @NotNull(groups = {UserInsert.class, UserInfoInsert.class, RetrievePassword.class}, message = "密码不能为空")
     private String password;
     @ApiModelProperty(value = "邮箱")
-    @NotNull(groups = {UserInsert.class, UserUpdate.class, UserInfoInsert.class, UserInfoUpdate.class, RetrievePasswordMail.class, RetrievePassword.class}, message = "邮箱不能为空")
-    @Email(groups = {UserInsert.class, UserUpdate.class, UserInfoInsert.class, UserInfoUpdate.class, RetrievePasswordMail.class, RetrievePassword.class}, message = "邮箱地址不合法")
+    @NotNull(groups = {UserInsert.class, UserUpdate.class, UserInfoInsert.class, UserInfoUpdate.class}, message = "邮箱不能为空")
+    @Email(groups = {UserInsert.class, UserUpdate.class, UserInfoInsert.class, UserInfoUpdate.class}, message = "邮箱地址不合法")
     private String email;
     @ApiModelProperty(value = "昵称")
     @NotNull(groups = {UserInsert.class, UserUpdate.class, UserInfoUpdate.class}, message = "昵称不能为空")

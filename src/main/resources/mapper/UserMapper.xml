@@ -12,6 +12,7 @@
         <id column="t_user_id" property="id" />
         <result column="t_user_username" property="username" />
         <result column="t_user_password" property="password" />
+        <result column="t_user_email" property="email" />
         <result column="t_user_nickname" property="nickname" />
         <result column="t_user_birth" property="birth" />
         <result column="t_user_logintime" property="logintime" />

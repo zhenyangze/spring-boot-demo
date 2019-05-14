@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Queue;
 import java.util.concurrent.LinkedTransferQueue;
@@ -53,6 +54,11 @@ public class SpringBootDemoTests {
     @Test
     public void testRandomString() {
         System.out.println(RandomStringUtils.randomAlphanumeric(6));
+    }
+
+    @Test
+    public void testSplit() {
+        System.out.println(Arrays.toString("574290057@qq.com".split("@")));
     }
 
 }

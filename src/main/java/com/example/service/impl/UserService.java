@@ -101,27 +101,28 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
 
     @Override
     @Transactional
-    public void retrievePasswordMail(User user) {
-        User user_ = baseMapper.customSelectOne(new Params<>(user));
+    public String retrievePasswordMail(User user) {
+        User user_ = baseMapper.selectOne(new QueryWrapper<>(new User().setUsername(user.getUsername())));
         if (user_==null) {
-            throw new LogicException("用户不存在，请检查用户名和密码是否输入正确");
+            throw new LogicException("用户不存在，请检查用户名是否输入正确");
         }
-        String code = RandomStringUtils.randomAlphanumeric(6);
-        Mail mail = createRetrievePasswordMail(user_, code);
+        String verification = RandomStringUtils.randomAlphanumeric(6);
+        Mail mail = createRetrievePasswordMail(user_, verification);
         mailService.customSave(mail);
         mailService.send(mail.getId());
         // 将验证码保存到redis
-        redisTemplate.boundValueOps(RETRIEVE_PASSWORD_CODE_PREFIX+user.getUsername()+"-"+user.getEmail()).set(code, 30*60, TimeUnit.SECONDS);
+        redisTemplate.boundValueOps(RETRIEVE_PASSWORD_VERIFICATION_PREFIX+user.getUsername()).set(verification, 30*60, TimeUnit.SECONDS);
+        return user_.getEmail();
     }
 
     // 找回密码邮件
-    private Mail createRetrievePasswordMail(User user, String code) {
+    private Mail createRetrievePasswordMail(User user, String verification) {
         Mail mail = new Mail();
         mail.setMailSubject("REACT中后台找回密码");
         mail.setMailType("info");
         String content = "";
         content += "<p>您好：</p>";
-        content += "<p>您在REACT中后台申请找回密码，验证码：<span style='color:#F00'>"+code+"</span>，有效期30分钟。</p>";
+        content += "<p>您在REACT中后台申请找回密码，验证码：<span style='color:#F00'>"+verification+"</span>，有效期30分钟。</p>";
         content += "<p>如果您没有进行过找回密码的操作，请无视此邮件。</p>";
         content += "<p>----------------------------------</p>";
         content += "<p>REACT中后台</p>";
@@ -134,7 +135,7 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
     @Override
     @Transactional
     public void retrievePassword(User user, String verification) {
-        String key = RETRIEVE_PASSWORD_CODE_PREFIX+user.getUsername()+"-"+user.getEmail();
+        String key = RETRIEVE_PASSWORD_VERIFICATION_PREFIX+user.getUsername();
         String verification_ = (String) redisTemplate.opsForValue().get(key);
         if (!verification.equals(verification_)) {
             throw new LogicException("验证码错误！");

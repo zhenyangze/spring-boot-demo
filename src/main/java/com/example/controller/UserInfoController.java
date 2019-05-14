@@ -87,8 +87,18 @@ public class UserInfoController {
     @ApiOperation(value = "发送找回密码邮件")
     public ResultVO retrievePasswordMail(@Validated({RetrievePasswordMail.class}) UserVO userVO) {
         User user = (User) ModelUtil.copy(userVO, new ModelUtil.Mapping(UserVO.class, User.class));
-        userService.retrievePasswordMail(user);
-        return new ResultVO<>(SUCCESS, "验证码已发送至邮箱", null);
+        String email = userService.retrievePasswordMail(user);
+        String[] emailArr = email.split("@");
+        String emailName = emailArr[0];
+        String emailExt = emailArr[1];
+        int length = emailName.length();
+        String email_;
+        if (length>3) {
+            email_ = emailName.substring(0, 3) + "*@" + emailExt;
+        } else {
+            email_ = "*@" + emailExt;
+        }
+        return new ResultVO<>(SUCCESS, "验证码已发送至"+email_, null);
     }
 
     @PostMapping("/retrieve_password")
@@ -99,7 +109,9 @@ public class UserInfoController {
     public ResultVO retrievePassword(@Validated({RetrievePassword.class}) UserVO userVO, String verification) {
         User user = (User) ModelUtil.copy(userVO, new ModelUtil.Mapping(UserVO.class, User.class));
         String password = user.getPassword();
-        user.setPassword(passwordEncoder.encode(password));
+        if (!StringUtils.isEmpty(password)) {
+            user.setPassword(passwordEncoder.encode(password));
+        }
         userService.retrievePassword(user, verification);
         return new ResultVO<>(SUCCESS, "修改密码成功！", null);
     }

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2019-05-13 23:31:42
+Date: 2019-05-14 11:44:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -134,8 +134,6 @@ CREATE TABLE `qrtz_locks` (
 -- ----------------------------
 -- Records of qrtz_locks
 -- ----------------------------
-INSERT INTO `qrtz_locks` VALUES ('clusteredScheduler', 'STATE_ACCESS');
-INSERT INTO `qrtz_locks` VALUES ('clusteredScheduler', 'TRIGGER_ACCESS');
 
 -- ----------------------------
 -- Table structure for qrtz_paused_trigger_grps
@@ -166,7 +164,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011557671582871', '1557761501914', '10000');
+INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011557804958188', '1557805474228', '10000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -270,34 +268,6 @@ CREATE TABLE `t_attachment` (
 -- ----------------------------
 -- Records of t_attachment
 -- ----------------------------
-INSERT INTO `t_attachment` VALUES ('9', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571592112.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571592112.rar');
-INSERT INTO `t_attachment` VALUES ('10', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571597869.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571597869.rar');
-INSERT INTO `t_attachment` VALUES ('11', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571598898.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571598898.rar');
-INSERT INTO `t_attachment` VALUES ('12', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571600367.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571600367.rar');
-INSERT INTO `t_attachment` VALUES ('13', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571630659.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571630659.rar');
-INSERT INTO `t_attachment` VALUES ('14', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571631448.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571631448.rar');
-INSERT INTO `t_attachment` VALUES ('15', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571632180.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571632180.rar');
-INSERT INTO `t_attachment` VALUES ('16', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571634337.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571634337.rar');
-INSERT INTO `t_attachment` VALUES ('17', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571635176.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571635176.rar');
-INSERT INTO `t_attachment` VALUES ('18', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571635889.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571635889.rar');
-INSERT INTO `t_attachment` VALUES ('19', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571636706.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571636706.rar');
-INSERT INTO `t_attachment` VALUES ('20', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571637506.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571637506.rar');
-INSERT INTO `t_attachment` VALUES ('21', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571638284.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571638284.rar');
-INSERT INTO `t_attachment` VALUES ('23', 'apache-tomcat-8.5.4-windows-x64.rar', '/demofile/abc/2019/3/1553571663964.rar', 'E:/IdeaProjects/file/abc/2019/3/1553571663964.rar');
-INSERT INTO `t_attachment` VALUES ('24', 'exe4j_64b_jb51.rar', '/demofile/abc/2019/3/1553700244598.rar', 'E:/IdeaProjects/file/abc/2019/3/1553700244598.rar');
-INSERT INTO `t_attachment` VALUES ('25', 'exe4j_64b_jb51.rar', '/demofile/abc/2019/3/1553700913857.rar', 'E:/IdeaProjects/file/abc/2019/3/1553700913857.rar');
-INSERT INTO `t_attachment` VALUES ('26', 'exe4j_64b_jb51.rar', '/demofile/abc/2019/3/1553700924452.rar', 'E:/IdeaProjects/file/abc/2019/3/1553700924452.rar');
-INSERT INTO `t_attachment` VALUES ('27', '桌面.rar', '/demofile/abc/2019/3/1553701128644.rar', 'E:/IdeaProjects/file/abc/2019/3/1553701128644.rar');
-INSERT INTO `t_attachment` VALUES ('28', '1553701128644.rar', '/demofile/bcd/2019/3/1553701660654.rar', 'E:/IdeaProjects/file/bcd/2019/3/1553701660654.rar');
-INSERT INTO `t_attachment` VALUES ('29', '1553701128644.rar', '/demofile/eee/2019/3/1553940007584.rar', 'E:/IdeaProjects/file/eee/2019/3/1553940007584.rar');
-INSERT INTO `t_attachment` VALUES ('30', '1553701128644.rar', '/demofile/ceshi/2019/4/1554529074722.rar', 'E:/IdeaProjects/file/ceshi/2019/4/1554529074722.rar');
-INSERT INTO `t_attachment` VALUES ('31', '1553700913857.rar', '/demofile/ceshi/2019/4/1554529266591.rar', 'E:/IdeaProjects/file/ceshi/2019/4/1554529266591.rar');
-INSERT INTO `t_attachment` VALUES ('32', '1553700913857.rar', '/demofile/ceshi/2019/4/1554529387508.rar', 'E:/IdeaProjects/file/ceshi/2019/4/1554529387508.rar');
-INSERT INTO `t_attachment` VALUES ('33', '一键发布.rar', '/demofile/ceshi/2019/4/一键发布.rar', '/home/demofile/ceshi/2019/4/一键发布.rar');
-INSERT INTO `t_attachment` VALUES ('34', 'config-sharding.yaml', '/demofile/ceshi/2019/4/config-sharding.yaml', '/home/demofile/ceshi/2019/4/config-sharding.yaml');
-INSERT INTO `t_attachment` VALUES ('35', '客有家PC官网.xlsx', '/demofile/ceshi/2019/4/客有家PC官网.xlsx', '/home/demofile/ceshi/2019/4/客有家PC官网.xlsx');
-INSERT INTO `t_attachment` VALUES ('36', 'firewall.txt', '/demofile/test/2019/4/firewall.txt', '/home/demofile/test/2019/4/firewall.txt');
-INSERT INTO `t_attachment` VALUES ('37', 'smiley_001.png', '/demofile/test/2019/5/1557416417480.png', '/home/demofile/test/2019/5/1557416417480.png');
 
 -- ----------------------------
 -- Table structure for t_broadcast_message
@@ -316,25 +286,6 @@ CREATE TABLE `t_broadcast_message` (
 -- ----------------------------
 -- Records of t_broadcast_message
 -- ----------------------------
-INSERT INTO `t_broadcast_message` VALUES ('1', '2019-04-11 00:00:14', '下面广播通知：斯凯孚红烧', '1');
-INSERT INTO `t_broadcast_message` VALUES ('2', '2019-04-11 00:02:03', '下面广播通知：斯凯孚红烧', '1');
-INSERT INTO `t_broadcast_message` VALUES ('3', '2019-04-11 00:03:27', '下面广播通知：斯凯孚红烧', '1');
-INSERT INTO `t_broadcast_message` VALUES ('4', '2019-04-11 00:04:20', '下面广播通知：斯凯孚红烧', '1');
-INSERT INTO `t_broadcast_message` VALUES ('5', '2019-04-11 00:04:28', '下面广播通知：斯凯孚红烧ffgf', '1');
-INSERT INTO `t_broadcast_message` VALUES ('6', '2019-04-11 00:08:29', '下面广播通知：红烧肉', '1');
-INSERT INTO `t_broadcast_message` VALUES ('7', '2019-04-11 00:09:37', '下面广播通知：红烧肉', '1');
-INSERT INTO `t_broadcast_message` VALUES ('8', '2019-04-11 10:54:25', '群发消息', '1');
-INSERT INTO `t_broadcast_message` VALUES ('9', '2019-04-11 10:54:37', '群发消息', '1');
-INSERT INTO `t_broadcast_message` VALUES ('10', '2019-04-11 10:55:26', '群发消息', '1');
-INSERT INTO `t_broadcast_message` VALUES ('11', '2019-04-11 11:04:43', '群发消息', '1');
-INSERT INTO `t_broadcast_message` VALUES ('12', '2019-04-11 11:06:36', '群发消息', '1');
-INSERT INTO `t_broadcast_message` VALUES ('13', '2019-04-11 11:08:23', '群发消息', '1');
-INSERT INTO `t_broadcast_message` VALUES ('14', '2019-04-11 11:48:52', '群发消息', '1');
-INSERT INTO `t_broadcast_message` VALUES ('15', '2019-04-11 11:55:04', '群发消息', '1');
-INSERT INTO `t_broadcast_message` VALUES ('16', '2019-04-11 11:55:15', '群发消息', '1');
-INSERT INTO `t_broadcast_message` VALUES ('17', '2019-04-11 16:06:35', '我是一条广播', '1');
-INSERT INTO `t_broadcast_message` VALUES ('18', '2019-04-11 16:11:07', '我是一条广播', '1');
-INSERT INTO `t_broadcast_message` VALUES ('19', '2019-05-10 10:30:44', '121212121', '1');
 
 -- ----------------------------
 -- Table structure for t_chat_message
@@ -357,10 +308,6 @@ CREATE TABLE `t_chat_message` (
 -- ----------------------------
 -- Records of t_chat_message
 -- ----------------------------
-INSERT INTO `t_chat_message` VALUES ('1', '2019-04-11 17:30:33', '我是一条点对点消息', '1', '1', '1');
-INSERT INTO `t_chat_message` VALUES ('2', '2019-04-11 17:31:44', '我是一条点对点消息', '1', '1', '1');
-INSERT INTO `t_chat_message` VALUES ('3', '2019-04-11 17:33:12', '我是一条点对点消息', '1', '1', '0');
-INSERT INTO `t_chat_message` VALUES ('4', '2019-05-10 10:31:34', '3xcgdsd', '1', '1', '0');
 
 -- ----------------------------
 -- Table structure for t_dept
@@ -377,16 +324,25 @@ CREATE TABLE `t_dept` (
   KEY `t_dept_fk_pid` (`pid`),
   KEY `t_dept_idx_seq` (`seq`),
   CONSTRAINT `t_dept_fk_pid` FOREIGN KEY (`pid`) REFERENCES `t_dept` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_dept
 -- ----------------------------
-INSERT INTO `t_dept` VALUES ('1', '改下名', null, null, null, null);
-INSERT INTO `t_dept` VALUES ('2', '测试部门', null, null, null, null);
-INSERT INTO `t_dept` VALUES ('3', '改下名啊', null, null, null, null);
-INSERT INTO `t_dept` VALUES ('4', '测试部门3', null, null, null, null);
-INSERT INTO `t_dept` VALUES ('5', '5555', null, null, null, null);
+INSERT INTO `t_dept` VALUES ('1', '公司', '1', null, '100', '公司');
+INSERT INTO `t_dept` VALUES ('2', '人资行政部', '2', '1', '100', '公司-人资行政部');
+INSERT INTO `t_dept` VALUES ('3', '财务部', '2', '1', '200', '公司-财务部');
+INSERT INTO `t_dept` VALUES ('4', '市场部', '2', '1', '300', '公司-市场部');
+INSERT INTO `t_dept` VALUES ('5', '技术部', '2', '1', '400', '公司-技术部');
+INSERT INTO `t_dept` VALUES ('6', '人事部', '3', '2', '100', '公司-人资行政部-人事部');
+INSERT INTO `t_dept` VALUES ('7', '行政部', '3', '2', '200', '公司-人资行政部-行政部');
+INSERT INTO `t_dept` VALUES ('8', '产品部', '3', '5', '100', '公司-技术部-产品部');
+INSERT INTO `t_dept` VALUES ('9', '开发部', '3', '5', '200', '公司-技术部-开发部');
+INSERT INTO `t_dept` VALUES ('10', '运维部', '3', '5', '300', '公司-技术部-运维部');
+INSERT INTO `t_dept` VALUES ('11', '测试部', '3', '5', '400', '公司-技术部-测试部');
+INSERT INTO `t_dept` VALUES ('12', '销售部', '3', '4', '100', '公司-市场部-销售部');
+INSERT INTO `t_dept` VALUES ('13', '售后部', '3', '4', '200', '公司-市场部-售后部');
+INSERT INTO `t_dept` VALUES ('14', '客服部', '3', '4', '300', '公司-市场部-客服部');
 
 -- ----------------------------
 -- Table structure for t_job
@@ -412,8 +368,6 @@ CREATE TABLE `t_job` (
 -- ----------------------------
 -- Records of t_job
 -- ----------------------------
-INSERT INTO `t_job` VALUES ('2', '测试更新定时任务', '2019-04-14 23:16:00', '2019-04-14 23:28:00', '0/10 * * * * ?', '2', 'clusteredScheduler', 'job-测试-e01bd431-dc46-49a3-bd3e-bf9b1ec07e4b', 'job-com.example.job.TestJob', 'trigger-测试-e01bd431-dc46-49a3-bd3e-bf9b1ec07e4b', 'trigger-com.example.job.TestJob');
-INSERT INTO `t_job` VALUES ('4', '打印username=xue的用户信息', '2019-04-14 23:42:00', '2019-04-15 09:30:00', '0/20 * * * * ?', '7', 'clusteredScheduler', 'job-打印指定用户信息-d639cb01-4144-4167-8aac-17e10cc5b896', 'job-com.example.job.LogUserJob', 'trigger-打印指定用户信息-d639cb01-4144-4167-8aac-17e10cc5b896', 'trigger-com.example.job.LogUserJob');
 
 -- ----------------------------
 -- Table structure for t_job_parameter
@@ -424,19 +378,14 @@ CREATE TABLE `t_job_parameter` (
   `parameter_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '参数名称',
   `parameter_value` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '参数值',
   `job_id` int(11) DEFAULT NULL COMMENT '定时任务id',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `t_job_parameter_fk_job_id` (`job_id`),
+  CONSTRAINT `t_job_parameter_fk_job_id` FOREIGN KEY (`job_id`) REFERENCES `t_job` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_job_parameter
 -- ----------------------------
-INSERT INTO `t_job_parameter` VALUES ('1', 'name', '薛凌康', '2');
-INSERT INTO `t_job_parameter` VALUES ('2', 'age', '28', '2');
-INSERT INTO `t_job_parameter` VALUES ('3', 'weight', '99.99', '2');
-INSERT INTO `t_job_parameter` VALUES ('4', 'name', '薛凌康', '3');
-INSERT INTO `t_job_parameter` VALUES ('5', 'age', '28', '3');
-INSERT INTO `t_job_parameter` VALUES ('6', 'salary', '3.14', '3');
-INSERT INTO `t_job_parameter` VALUES ('7', 'username', 'xue', '4');
 
 -- ----------------------------
 -- Table structure for t_job_template
@@ -502,8 +451,6 @@ CREATE TABLE `t_mail` (
 -- ----------------------------
 -- Records of t_mail
 -- ----------------------------
-INSERT INTO `t_mail` VALUES ('1', '测试一下群发和附件', 'info', 'sent', '2019-04-16 13:17:26', '2019-04-16 13:23:42', '1', null);
-INSERT INTO `t_mail` VALUES ('2', '试试', 'info', 'sent', '2019-04-25 22:02:28', '2019-04-25 22:03:08', '1', null);
 
 -- ----------------------------
 -- Table structure for t_mail_attachment_link
@@ -521,9 +468,6 @@ CREATE TABLE `t_mail_attachment_link` (
 -- ----------------------------
 -- Records of t_mail_attachment_link
 -- ----------------------------
-INSERT INTO `t_mail_attachment_link` VALUES ('1', '33');
-INSERT INTO `t_mail_attachment_link` VALUES ('1', '34');
-INSERT INTO `t_mail_attachment_link` VALUES ('1', '35');
 
 -- ----------------------------
 -- Table structure for t_mail_content
@@ -541,8 +485,6 @@ CREATE TABLE `t_mail_content` (
 -- ----------------------------
 -- Records of t_mail_content
 -- ----------------------------
-INSERT INTO `t_mail_content` VALUES ('1', 0x3C68313EE6B58BE8AF95E4B880E4B88BE7BEA4E58F91E5928CE99984E4BBB63C2F68313E, '1');
-INSERT INTO `t_mail_content` VALUES ('2', 0xE8AF95E8AF95E58F91E4B8AAE982AEE4BBB6, '2');
 
 -- ----------------------------
 -- Table structure for t_mail_to_user_link
@@ -560,9 +502,6 @@ CREATE TABLE `t_mail_to_user_link` (
 -- ----------------------------
 -- Records of t_mail_to_user_link
 -- ----------------------------
-INSERT INTO `t_mail_to_user_link` VALUES ('1', '1');
-INSERT INTO `t_mail_to_user_link` VALUES ('1', '2');
-INSERT INTO `t_mail_to_user_link` VALUES ('2', '2');
 
 -- ----------------------------
 -- Table structure for t_resource
@@ -814,13 +753,6 @@ CREATE TABLE `t_user` (
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('1', 'xlk', '$2a$10$UX6fLV/PkpK4s7Iota0Jy.GA3x1AlOlCfQlx8yRzZqfe/4Y.j3jAe', 'xuelingkang123@163.com', '薛凌康', '1990-10-14', '2019-05-10 17:53:57', '1');
-INSERT INTO `t_user` VALUES ('2', 'xue', '$2a$10$yINz8uU8ZxNcseNx/MWjAuKFZLB8S7GBI2RmWJQnYLmvkSri5Dw8a', '574290057@qq.com', '薛', '1990-10-14', '2019-03-24 11:25:54', '1');
-INSERT INTO `t_user` VALUES ('3', 'kk', '$2a$10$lEnRZl010AjnAapZPyk1y.4tIabA2QPilWG8DP3R8a7WNmV9O77Gu', 'kk@163.com', 'kk', '1990-10-14', '2019-04-24 12:02:06', '1');
-INSERT INTO `t_user` VALUES ('4', 'xxx', '$2a$10$2sTlVRalWZfGa2hxzaUlYOaqJ3od5QcD66FZlJt0U1z0FAs/MAGOa', 'xxx@163.com', 'xxx', '1990-10-15', '2019-04-24 12:32:57', null);
-INSERT INTO `t_user` VALUES ('5', 'xuelingkang', '$2a$10$YLV1TEJJ//j3vVuzxDD/keXY0SQOJ7tTomDCLriCEWGkDlLQPFuj2', 'xuelingkang@126.com', null, null, null, null);
-INSERT INTO `t_user` VALUES ('7', 'xuelingkang1', '$2a$10$XpybUE1PKdrFEWUcNHSkEeM8uc6Iyim19pOhgpuRDHXVkDXUEdlLS', 'xuelingkang1@126.com', null, null, null, null);
-INSERT INTO `t_user` VALUES ('8', 'xlk123', '$2a$10$6SBUs/iR.QL/yA8fW0swdes3Y2re05QE8h7FXGmXKqYQDdqRtHKQy', 'xlk123@163.com', null, null, '2019-04-24 16:27:19', null);
 INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$3.pkW2p6bN8pBw8Ds/piruq7LK7LhckVc5gxuhI0UyiMKjW8Tb0DO', 'xuelingkang@163.com', '薛凌康', '1990-10-14', null, '1');
 
 -- ----------------------------
@@ -839,16 +771,7 @@ CREATE TABLE `t_user_role_link` (
 -- ----------------------------
 -- Records of t_user_role_link
 -- ----------------------------
-INSERT INTO `t_user_role_link` VALUES ('1', '1');
-INSERT INTO `t_user_role_link` VALUES ('2', '1');
 INSERT INTO `t_user_role_link` VALUES ('9', '1');
-INSERT INTO `t_user_role_link` VALUES ('1', '6');
-INSERT INTO `t_user_role_link` VALUES ('2', '6');
-INSERT INTO `t_user_role_link` VALUES ('3', '6');
-INSERT INTO `t_user_role_link` VALUES ('4', '6');
-INSERT INTO `t_user_role_link` VALUES ('5', '6');
-INSERT INTO `t_user_role_link` VALUES ('7', '6');
-INSERT INTO `t_user_role_link` VALUES ('8', '6');
 INSERT INTO `t_user_role_link` VALUES ('9', '6');
 
 -- ----------------------------

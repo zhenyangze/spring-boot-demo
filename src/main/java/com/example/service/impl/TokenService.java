@@ -45,7 +45,7 @@ public class TokenService implements ITokenService {
         cacheUserDetails(userDetails);
         String token = createToken(userDetails);
         Set<String> authorities = getAuthorityString(userDetails);
-        return new TokenVO(token, userDetails.getLoginTime(), authorities);
+        return new TokenVO(token, userDetails.getLoginTime(), authorities, userDetails.getUser());
     }
 
     @Override

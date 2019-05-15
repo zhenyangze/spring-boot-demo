@@ -153,3 +153,11 @@ websocket:
 attachment:
   address-prefix: /demofile # 文件访问前缀
   file-separator: / # 文件路径分隔符
+
+mail:
+  max-retry: 3 # 发送邮件失败时的最大重试次数
+
+retrieve-password:
+  max-retry: 3 # 发送找回密码验证码失败重试次数
+  min-wait: 60 # 发送找回密码验证码最小等待时间，秒
+  expire: 30 # 验证码有效期，分钟

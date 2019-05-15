@@ -10,10 +10,13 @@ import com.example.service.IUserRoleLinkService;
 import com.example.service.IUserService;
 import com.google.common.collect.Lists;
 import io.jsonwebtoken.lang.Collections;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,8 +27,15 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
+@Slf4j
 public class UserService extends BaseService<UserMapper, User> implements IUserService {
 
+    @Value("${retrieve-password.max-retry}")
+    private Integer maxRetry;
+    @Value("${retrieve-password.min-wait}")
+    private Integer minWait;
+    @Value("${retrieve-password.expire}")
+    private Integer expire;
     @Autowired
     private IUserRoleLinkService userRoleLinkService;
     @Autowired
@@ -101,28 +111,41 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
 
     @Override
     @Transactional
-    public String retrievePasswordMail(User user) {
+    public Mail retrievePasswordMail(User user) {
         User user_ = baseMapper.selectOne(new QueryWrapper<>(new User().setUsername(user.getUsername())));
         if (user_==null) {
-            throw new LogicException("用户不存在，请检查用户名是否输入正确");
+            throw new LogicException("用户不存在，请检查用户名是否正确");
         }
-        String verification = RandomStringUtils.randomAlphanumeric(6);
-        Mail mail = createRetrievePasswordMail(user_, verification);
+        // 查询redis中是否已存在验证码
+        String key = RETRIEVE_PASSWORD_VERIFICATION_PREFIX+user.getUsername();
+        Verification verification = (Verification) redisTemplate.opsForValue().get(key);
+        if (verification!=null) {
+            // 检查是否到时间
+            Date nextCanSendTime = verification.getNextCanSendTime();
+            if (nextCanSendTime.after(new Date())) {
+                throw new LogicException("发送过快，请稍后再试！");
+            }
+        }
+        String code = RandomStringUtils.randomAlphanumeric(6);
+        Date nextCanSendTime = new Date(System.currentTimeMillis()+minWait*1000);
+        Verification verification_ = new Verification();
+        verification_.setCode(code);
+        verification_.setNextCanSendTime(nextCanSendTime);
+        Mail mail = createRetrievePasswordMail(user_, code);
         mailService.customSave(mail);
-        mailService.send(mail.getId());
         // 将验证码保存到redis
-        redisTemplate.boundValueOps(RETRIEVE_PASSWORD_VERIFICATION_PREFIX+user.getUsername()).set(verification, 30*60, TimeUnit.SECONDS);
-        return user_.getEmail();
+        redisTemplate.boundValueOps(key).set(verification_, expire*60, TimeUnit.SECONDS);
+        return mail;
     }
 
     // 找回密码邮件
-    private Mail createRetrievePasswordMail(User user, String verification) {
+    private Mail createRetrievePasswordMail(User user, String code) {
         Mail mail = new Mail();
         mail.setMailSubject("REACT中后台找回密码");
         mail.setMailType("info");
         String content = "";
         content += "<p>您好：</p>";
-        content += "<p>您在REACT中后台申请找回密码，验证码：<span style='color:#F00'>"+verification+"</span>，有效期30分钟。</p>";
+        content += "<p>您在REACT中后台申请找回密码，验证码：<span style='color:#F00'>"+code+"</span>，有效期"+expire+"分钟。</p>";
         content += "<p>如果您没有进行过找回密码的操作，请无视此邮件。</p>";
         content += "<p>----------------------------------</p>";
         content += "<p>REACT中后台</p>";
@@ -134,13 +157,28 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
 
     @Override
     @Transactional
-    public void retrievePassword(User user, String verification) {
+    @Async
+    public void sendRetrievePasswordMail(Integer mailId) {
+        for (int i=0; i<maxRetry; i++) {
+            try {
+                mailService.send(mailId);
+                log.info("发送验证码邮件["+mailId+"]成功");
+                return;
+            } catch (Exception e) {
+                log.info("发送验证码邮件["+mailId+"]失败，准备重试");
+            }
+        }
+    }
+
+    @Override
+    @Transactional
+    public void retrievePassword(User user, String code) {
         String key = RETRIEVE_PASSWORD_VERIFICATION_PREFIX+user.getUsername();
-        String verification_ = (String) redisTemplate.opsForValue().get(key);
-        if (!verification.equals(verification_)) {
+        Verification verification = (Verification) redisTemplate.opsForValue().get(key);
+        if (verification==null || !code.equals(verification.getCode())) {
             throw new LogicException("验证码错误！");
         }
-        User user_ = baseMapper.customSelectOne(new Params<>(new User().setUsername(user.getUsername())));
+        User user_ = baseMapper.selectOne(new QueryWrapper<>(new User().setUsername(user.getUsername())));
         user_.setPassword(user.getPassword());
         baseMapper.updateById(user_);
         // 删除验证码

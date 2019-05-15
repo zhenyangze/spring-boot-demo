@@ -4,10 +4,7 @@ import com.example.group.RetrievePassword;
 import com.example.group.RetrievePasswordMail;
 import com.example.group.UserInfoInsert;
 import com.example.group.UserInfoUpdate;
-import com.example.model.po.Dept;
-import com.example.model.po.Resource;
-import com.example.model.po.Role;
-import com.example.model.po.User;
+import com.example.model.po.*;
 import com.example.model.vo.*;
 import com.example.params.Params;
 import com.example.service.IRoleService;
@@ -87,8 +84,10 @@ public class UserInfoController {
     @ApiOperation(value = "发送找回密码邮件")
     public ResultVO retrievePasswordMail(@Validated({RetrievePasswordMail.class}) UserVO userVO) {
         User user = (User) ModelUtil.copy(userVO, new ModelUtil.Mapping(UserVO.class, User.class));
-        String email = userService.retrievePasswordMail(user);
-        String[] emailArr = email.split("@");
+        Mail mail = userService.retrievePasswordMail(user);
+        userService.sendRetrievePasswordMail(mail.getId());
+        String emailAddr = mail.getToUsers().get(0).getEmail();
+        String[] emailArr = emailAddr.split("@");
         String emailName = emailArr[0];
         String emailExt = emailArr[1];
         int length = emailName.length();

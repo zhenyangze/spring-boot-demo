@@ -131,6 +131,7 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
         Verification verification_ = new Verification();
         verification_.setCode(code);
         verification_.setNextCanSendTime(nextCanSendTime);
+        verification_.setStatus(true);
         Mail mail = createRetrievePasswordMail(user_, code);
         mailService.customSave(mail);
         // 将验证码保存到redis
@@ -175,14 +176,15 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
     public void retrievePassword(User user, String code) {
         String key = RETRIEVE_PASSWORD_VERIFICATION_PREFIX+user.getUsername();
         Verification verification = (Verification) redisTemplate.opsForValue().get(key);
-        if (verification==null || !code.equals(verification.getCode())) {
+        if (verification==null || !code.equals(verification.getCode()) || !verification.isStatus()) {
             throw new LogicException("验证码错误！");
         }
         User user_ = baseMapper.selectOne(new QueryWrapper<>(new User().setUsername(user.getUsername())));
         user_.setPassword(user.getPassword());
         baseMapper.updateById(user_);
-        // 删除验证码
-        redisTemplate.delete(key);
+        // 修改验证码状态
+        verification.setStatus(false);
+        redisTemplate.boundValueOps(key).set(verification, minWait, TimeUnit.SECONDS);
     }
 
 }

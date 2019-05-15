@@ -5,7 +5,7 @@ import com.example.model.po.User;
 
 public interface IUserService extends IBaseService<User> {
 
-    String RETRIEVE_PASSWORD_VERIFICATION_PREFIX = "retrievePassword:";
+    String RETRIEVE_PASSWORD_VERIFICATION_PREFIX = "demo:retrievePassword:";
 
     Mail retrievePasswordMail(User user);
 

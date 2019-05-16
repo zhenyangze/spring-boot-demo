@@ -8,4 +8,6 @@ public interface IDeptService extends IBaseService<Dept> {
 
     List<Dept> tree();
 
+    List<Dept> all();
+
 }

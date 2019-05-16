@@ -31,6 +31,12 @@ public class DeptService extends BaseService<DeptMapper, Dept> implements IDeptS
 
     @Override
     @Cacheable(cacheNames = {"dept:multiple"}, keyGenerator = "defaultPageKeyGenerator")
+    public List<Dept> all() {
+        return baseMapper.selectList(null);
+    }
+
+    @Override
+    @Cacheable(cacheNames = {"dept:multiple"}, keyGenerator = "defaultPageKeyGenerator")
     public IPage<Dept> page(IPage<Dept> page, Wrapper<Dept> queryWrapper) {
         return super.page(page, queryWrapper);
     }

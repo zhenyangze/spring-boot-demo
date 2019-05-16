@@ -39,6 +39,14 @@ public class DeptController {
         return new ResultVO<>(SUCCESS, "", tree);
     }
 
+    @GetMapping("/all")
+    @ApiOperation(value = "查询所有部门")
+    public ResultVO all() {
+        List<Dept> list = deptService.all();
+        List all = (List) ModelUtil.copy(list, new ModelUtil.Mapping(Dept.class, DeptVO.class));
+        return new ResultVO<>(SUCCESS, "", all);
+    }
+
     @GetMapping("/{current}/{size}")
     @ApiOperation(value = "查询部门列表")
     public ResultVO findPage(@PathVariable @NotNull(message = "当前页不能为空") @ApiParam(value = "当前页", defaultValue = "1", required = true) long current,

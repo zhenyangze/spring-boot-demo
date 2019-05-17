@@ -18,7 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 import static com.example.model.vo.ResultVO.SUCCESS;
 
@@ -67,10 +69,14 @@ public class ResourceController {
         return new ResultVO<>(SUCCESS, "更新资源成功！", null);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{ids}")
     @ApiOperation(value = "删除资源")
-    public ResultVO delete(@PathVariable @NotNull(message = "资源id不能为空") @ApiParam(value = "资源id", required = true) Integer id) {
-        resourceService.removeById(id);
+    public ResultVO delete(
+            @PathVariable
+            @NotNull(message = "资源id不能为空")
+            @NotEmpty(message = "资源id不能为空")
+            @ApiParam(value = "资源id，多个用逗号分隔", required = true) List<Integer> ids) {
+        resourceService.customRemoveByIds(ids);
         return new ResultVO<>(SUCCESS, "删除资源成功！", null);
     }
 

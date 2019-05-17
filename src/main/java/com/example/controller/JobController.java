@@ -13,12 +13,14 @@ import com.example.util.ModelUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 import static com.example.model.vo.ResultVO.SUCCESS;
 
@@ -80,10 +82,14 @@ public class JobController {
         return new ResultVO<>(SUCCESS, "更新定时任务成功！", null);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{ids}")
     @ApiOperation("删除定时任务")
-    public ResultVO delete(@PathVariable @NotNull(message = "任务id不能为空") @ApiParam(value = "任务id", required = true) Integer id) {
-        jobService.customRemoveById(id);
+    public ResultVO delete(
+            @PathVariable
+            @NotNull(message = "任务id不能为空")
+            @NotEmpty(message = "任务id不能为空")
+            @ApiParam(value = "任务id，多个用逗号分隔", required = true) List<Integer> ids) {
+        jobService.customRemoveByIds(ids);
         return new ResultVO<>(SUCCESS, "删除定时任务成功！", null);
     }
 

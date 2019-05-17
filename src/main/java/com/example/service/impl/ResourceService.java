@@ -62,10 +62,11 @@ public class ResourceService extends BaseService<ResourceMapper, Resource> imple
     @Caching(
             evict = {
                     @CacheEvict(cacheNames = {"resource:multiple"}, allEntries = true),
-                    @CacheEvict(cacheNames = {"resource:single"}, key = "'resource:'+#id")
+                    @CacheEvict(cacheNames = {"resource:single"}, allEntries = true)
             }
     )
-    public boolean removeById(Serializable id) {
-        return super.removeById(id);
+    public void customRemoveByIds(List<Integer> ids) {
+        super.removeByIds(ids);
     }
+
 }

@@ -22,7 +22,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 import static com.example.model.vo.ResultVO.SUCCESS;
 
@@ -86,10 +88,14 @@ public class UserController {
         return new ResultVO<>(SUCCESS, "更新用户成功！", null);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{ids}")
     @ApiOperation(value = "删除用户")
-    public ResultVO delete(@PathVariable @NotNull(message = "用户id不能为空") @ApiParam(value = "用户id", required = true) Integer id) {
-        userService.removeById(id);
+    public ResultVO delete(
+            @PathVariable
+            @NotNull(message = "用户id不能为空")
+            @NotEmpty(message = "用户id不能为空")
+            @ApiParam(value = "用户id，多个用逗号分隔", required = true) List<Integer> ids) {
+        userService.removeByIds(ids);
         return new ResultVO<>(SUCCESS, "删除用户成功！", null);
     }
 

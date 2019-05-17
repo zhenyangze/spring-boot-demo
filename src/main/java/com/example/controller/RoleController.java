@@ -20,7 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 import static com.example.model.vo.ResultVO.SUCCESS;
 
@@ -71,10 +73,14 @@ public class RoleController {
         return new ResultVO<>(SUCCESS, "更新角色成功！", null);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{ids}")
     @ApiOperation(value = "删除角色")
-    public ResultVO delete(@PathVariable @NotNull(message = "角色id不能为空") @ApiParam(value = "角色id", required = true) Integer id) {
-        roleService.removeById(id);
+    public ResultVO delete(
+            @PathVariable
+            @NotNull(message = "角色id不能为空")
+            @NotEmpty(message = "角色id不能为空")
+            @ApiParam(value = "角色id，多个用逗号分隔", required = true) List<Integer> ids) {
+        roleService.removeByIds(ids);
         return new ResultVO<>(SUCCESS, "删除角色成功！", null);
     }
 

@@ -78,9 +78,11 @@ public class JobService extends BaseService<JobMapper, Job> implements IJobServi
 
     @Override
     @Transactional
-    public void customRemoveById(Integer id) {
-        unscheduleJob(id);
-        super.removeById(id);
+    public void customRemoveByIds(List<Integer> ids) {
+        for (Integer id: ids) {
+            unscheduleJob(id);
+        }
+        super.removeByIds(ids);
     }
 
     @Override

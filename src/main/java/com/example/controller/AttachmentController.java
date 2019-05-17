@@ -16,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 import static com.example.model.vo.ResultVO.SUCCESS;
 
@@ -49,10 +51,14 @@ public class AttachmentController {
         return new ResultVO<>(SUCCESS, "", attachmentVO);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{ids}")
     @ApiOperation(value = "删除附件")
-    public ResultVO delete(@PathVariable @NotNull(message = "附件id不能为空") @ApiParam(value = "附件id", required = true) Integer id) {
-        attachmentService.customRemoveById(id);
+    public ResultVO delete(
+            @PathVariable
+            @NotNull(message = "附件id不能为空")
+            @NotEmpty(message = "附件id不能为空")
+            @ApiParam(value = "附件id，多个用逗号分隔", required = true) List<Integer> ids) {
+        attachmentService.customRemoveByIds(ids);
         return new ResultVO<>(SUCCESS, "删除附件成功！", null);
     }
 

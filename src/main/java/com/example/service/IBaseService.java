@@ -10,6 +10,7 @@ import com.example.model.po.User;
 import com.example.params.Params;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface IBaseService<T extends BaseModel> extends IService<T> {
 
@@ -36,6 +37,10 @@ public interface IBaseService<T extends BaseModel> extends IService<T> {
     }
 
     default void customRemoveById(Integer id) {
+        throw new ProjectException("方法未实现！");
+    }
+
+    default void customRemoveByIds(List<Integer>ids) {
         throw new ProjectException("方法未实现！");
     }
 

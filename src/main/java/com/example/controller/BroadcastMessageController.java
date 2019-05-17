@@ -3,12 +3,12 @@ package com.example.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.group.Insert;
-import com.example.params.Params;
 import com.example.model.po.BroadcastMessage;
 import com.example.model.po.User;
 import com.example.model.vo.BroadcastMessageVO;
 import com.example.model.vo.ResultVO;
 import com.example.model.vo.UserVO;
+import com.example.params.Params;
 import com.example.service.IBroadcastMessageService;
 import com.example.util.GenericMessageBuilder;
 import com.example.util.ModelUtil;
@@ -22,8 +22,10 @@ import org.springframework.messaging.support.GenericMessage;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.List;
 
 import static com.example.model.vo.ResultVO.SUCCESS;
 
@@ -64,10 +66,14 @@ public class BroadcastMessageController {
         return new ResultVO<>(SUCCESS, "", broadcastMessageVO);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{ids}")
     @ApiOperation(value = "删除广播")
-    public ResultVO delete(@PathVariable @NotNull(message = "广播id不能为空") @ApiParam(value = "广播id", required = true) Integer id) {
-        broadcastMessageService.removeById(id);
+    public ResultVO delete(
+            @PathVariable
+            @NotNull(message = "广播id不能为空")
+            @NotEmpty(message = "广播id不能为空")
+            @ApiParam(value = "广播id，多个用逗号分隔", required = true) List<Integer> ids) {
+        broadcastMessageService.removeByIds(ids);
         return new ResultVO<>(SUCCESS, "删除广播成功！", null);
     }
 

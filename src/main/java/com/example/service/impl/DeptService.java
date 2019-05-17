@@ -119,11 +119,11 @@ public class DeptService extends BaseService<DeptMapper, Dept> implements IDeptS
     @Caching(
             evict = {
                     @CacheEvict(cacheNames = {"dept:multiple"}, allEntries = true),
-                    @CacheEvict(cacheNames = {"dept:single"}, key = "'dept:'+#id")
+                    @CacheEvict(cacheNames = {"dept:single"}, allEntries = true)
             }
     )
-    public boolean removeById(Serializable id) {
-        return super.removeById(id);
+    public void customRemoveByIds(List<Integer> ids) {
+        super.removeByIds(ids);
     }
 
 }

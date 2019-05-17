@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -83,10 +84,14 @@ public class DeptController {
         return new ResultVO<>(SUCCESS, "更新部门成功！", null);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{ids}")
     @ApiOperation(value = "删除部门")
-    public ResultVO delete(@PathVariable @NotNull(message = "部门id不能为空") @ApiParam(value = "部门id", required = true) Integer id) {
-        deptService.removeById(id);
+    public ResultVO delete(
+            @PathVariable
+            @NotNull(message = "部门id不能为空")
+            @NotEmpty(message = "部门id不能为空")
+            @ApiParam(value = "部门id，多个用逗号分隔", required = true, example = "1,2,3") List<Integer> ids) {
+        deptService.customRemoveByIds(ids);
         return new ResultVO<>(SUCCESS, "删除部门成功！", null);
     }
 

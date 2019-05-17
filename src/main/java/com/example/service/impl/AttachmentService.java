@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class AttachmentService extends BaseService<AttachmentMapper, Attachment> implements IAttachmentService {
@@ -50,13 +52,19 @@ public class AttachmentService extends BaseService<AttachmentMapper, Attachment>
 
     @Override
     @Transactional
-    public void customRemoveById(Integer id) {
-        Attachment attachment = baseMapper.selectById(id);
-        baseMapper.deleteById(id);
-        String path = attachment.getAttachmentPath();
-        String dir = path.substring(0, path.lastIndexOf(fileSeparator));
-        String name = path.substring(path.lastIndexOf(fileSeparator)+1);
-        sftpHelper.delete(dir, name);
+    public void customRemoveByIds(List<Integer> ids) {
+        List<String[]> toDelete = new ArrayList<>();
+        for (Integer id: ids) {
+            Attachment attachment = baseMapper.selectById(id);
+            baseMapper.deleteById(id);
+            String path = attachment.getAttachmentPath();
+            String dir = path.substring(0, path.lastIndexOf(fileSeparator));
+            String name = path.substring(path.lastIndexOf(fileSeparator)+1);
+            toDelete.add(new String[]{dir, name});
+        }
+        for (String[] arr: toDelete) {
+            sftpHelper.delete(arr[0], arr[1]);
+        }
     }
 
 }

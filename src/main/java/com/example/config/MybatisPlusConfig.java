@@ -12,7 +12,8 @@ public class MybatisPlusConfig {
     // 分页插件
     @Bean
     public PaginationInterceptor paginationInterceptor() {
-        return new PaginationInterceptor();
+        return new PaginationInterceptor()
+                .setOverflow(true); // 超出总页数时设置为第一页
     }
 
 }

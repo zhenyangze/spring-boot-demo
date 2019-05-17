@@ -1,6 +1,5 @@
 package com.example.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mapper.DeptMapper;
@@ -37,11 +36,6 @@ public class DeptService extends BaseService<DeptMapper, Dept> implements IDeptS
 
     @Override
     @Cacheable(cacheNames = {"dept:multiple"}, keyGenerator = "defaultPageKeyGenerator")
-    public IPage<Dept> page(IPage<Dept> page, Wrapper<Dept> queryWrapper) {
-        return super.page(page, queryWrapper);
-    }
-
-    @Override
     public IPage<Dept> customPage(Page<Dept> page, Params<Dept> params) {
         return page.setRecords(baseMapper.customSelectPage(page, params));
     }
@@ -54,7 +48,7 @@ public class DeptService extends BaseService<DeptMapper, Dept> implements IDeptS
 
     @Override
     @Transactional
-    @CacheEvict(cacheNames = {"dept.multiple"}, allEntries = true)
+    @CacheEvict(cacheNames = {"dept:multiple"}, allEntries = true)
     public void customSave(Dept dept) {
         Integer pid = dept.getPid();
         if (pid==null) {

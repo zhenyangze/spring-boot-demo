@@ -39,7 +39,7 @@ public class ResourceController {
                          @PathVariable @NotNull(message = "每页显示条数不能为空") @ApiParam(value = "每页显示条数", defaultValue = "10", required = true) long size,
                          ResourceVO resourceVO) {
         Page<Resource> page = new Page<>(current, size);
-        Wrapper<Resource> wrapper = new QueryWrapper<>(resourceVO);
+        Wrapper<Resource> wrapper = new QueryWrapper<>((Resource) resourceVO).orderByAsc("resource_seq");
         IPage<Resource> iPage = resourceService.page(page, wrapper);
         IPage resources = (IPage) ModelUtil.copy(iPage, new ModelUtil.Mapping(Resource.class, ResourceVO.class));
         return new ResultVO<>(SUCCESS, "", resources);

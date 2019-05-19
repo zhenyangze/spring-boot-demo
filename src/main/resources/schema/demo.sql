@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2019-05-17 18:44:54
+Date: 2019-05-20 00:28:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -166,7 +166,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011558089836289', '1558089901790', '10000');
+INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011558282386597', '1558283303586', '10000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -265,7 +265,7 @@ CREATE TABLE `t_attachment` (
   `attachment_address` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '访问地址',
   `attachment_path` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '本地路径',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_attachment
@@ -283,7 +283,7 @@ CREATE TABLE `t_broadcast_message` (
   PRIMARY KEY (`id`),
   KEY `t_broadcast_message_fk_send_user_id` (`send_user_id`),
   CONSTRAINT `t_broadcast_message_fk_send_user_id` FOREIGN KEY (`send_user_id`) REFERENCES `t_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_broadcast_message
@@ -305,7 +305,7 @@ CREATE TABLE `t_chat_message` (
   KEY `t_single_message_fk_to_user_id` (`to_user_id`),
   CONSTRAINT `t_single_message_fk_send_user_id` FOREIGN KEY (`send_user_id`) REFERENCES `t_user` (`id`),
   CONSTRAINT `t_single_message_fk_to_user_id` FOREIGN KEY (`to_user_id`) REFERENCES `t_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_chat_message
@@ -326,7 +326,7 @@ CREATE TABLE `t_dept` (
   KEY `t_dept_fk_pid` (`pid`),
   KEY `t_dept_idx_seq` (`seq`),
   CONSTRAINT `t_dept_fk_pid` FOREIGN KEY (`pid`) REFERENCES `t_dept` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_dept
@@ -365,7 +365,7 @@ CREATE TABLE `t_job` (
   PRIMARY KEY (`id`),
   KEY `t_job_fk_job_template_id` (`job_template_id`),
   CONSTRAINT `t_job_fk_job_template_id` FOREIGN KEY (`job_template_id`) REFERENCES `t_job_template` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_job
@@ -383,7 +383,7 @@ CREATE TABLE `t_job_parameter` (
   PRIMARY KEY (`id`),
   KEY `t_job_parameter_fk_job_id` (`job_id`),
   CONSTRAINT `t_job_parameter_fk_job_id` FOREIGN KEY (`job_id`) REFERENCES `t_job` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_job_parameter
@@ -445,7 +445,7 @@ CREATE TABLE `t_mail` (
   PRIMARY KEY (`id`),
   KEY `t_mail_fk_send_user_id` (`send_user_id`),
   CONSTRAINT `t_mail_fk_send_user_id` FOREIGN KEY (`send_user_id`) REFERENCES `t_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_mail
@@ -486,7 +486,6 @@ INSERT INTO `t_mail` VALUES ('46', 'REACT中后台找回密码', 'info', 'sent',
 INSERT INTO `t_mail` VALUES ('47', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 14:09:08', '2019-05-15 14:09:16', null);
 INSERT INTO `t_mail` VALUES ('48', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 14:09:57', '2019-05-15 14:10:13', null);
 INSERT INTO `t_mail` VALUES ('49', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 14:31:20', '2019-05-15 14:31:20', null);
-INSERT INTO `t_mail` VALUES ('50', 'REACT中后台找回密码', 'info', 'sent', '2019-05-17 10:35:14', '2019-05-17 10:35:15', null);
 
 -- ----------------------------
 -- Table structure for t_mail_attachment_link
@@ -516,7 +515,7 @@ CREATE TABLE `t_mail_content` (
   PRIMARY KEY (`id`),
   KEY `t_mail_content_fk_mail_id` (`mail_id`),
   CONSTRAINT `t_mail_content_fk_mail_id` FOREIGN KEY (`mail_id`) REFERENCES `t_mail` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_mail_content
@@ -557,7 +556,6 @@ INSERT INTO `t_mail_content` VALUES ('46', 0x3C703EE682A8E5A5BDEFBC9A3C2F703E3C7
 INSERT INTO `t_mail_content` VALUES ('47', 0x3C703EE682A8E5A5BDEFBC9A3C2F703E3C703EE682A8E59CA85245414354E4B8ADE5908EE58FB0E794B3E8AFB7E689BEE59B9EE5AF86E7A081EFBC8CE9AA8CE8AF81E7A081EFBC9A3C7370616E207374796C653D27636F6C6F723A23463030273E614B686E4C703C2F7370616E3EEFBC8CE69C89E69588E69C9F3330E58886E9929FE380823C2F703E3C703EE5A682E69E9CE682A8E6B2A1E69C89E8BF9BE8A18CE8BF87E689BEE59B9EE5AF86E7A081E79A84E6938DE4BD9CEFBC8CE8AFB7E697A0E8A786E6ADA4E982AEE4BBB6E380823C2F703E3C703E2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D3C2F703E3C703E5245414354E4B8ADE5908EE58FB03C2F703E3C703E323031392D30352D31352031343A30393C2F703E, '47');
 INSERT INTO `t_mail_content` VALUES ('48', 0x3C703EE682A8E5A5BDEFBC9A3C2F703E3C703EE682A8E59CA85245414354E4B8ADE5908EE58FB0E794B3E8AFB7E689BEE59B9EE5AF86E7A081EFBC8CE9AA8CE8AF81E7A081EFBC9A3C7370616E207374796C653D27636F6C6F723A23463030273E5961617576363C2F7370616E3EEFBC8CE69C89E69588E69C9F3330E58886E9929FE380823C2F703E3C703EE5A682E69E9CE682A8E6B2A1E69C89E8BF9BE8A18CE8BF87E689BEE59B9EE5AF86E7A081E79A84E6938DE4BD9CEFBC8CE8AFB7E697A0E8A786E6ADA4E982AEE4BBB6E380823C2F703E3C703E2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D3C2F703E3C703E5245414354E4B8ADE5908EE58FB03C2F703E3C703E323031392D30352D31352031343A30393C2F703E, '48');
 INSERT INTO `t_mail_content` VALUES ('49', 0x3C703EE682A8E5A5BDEFBC9A3C2F703E3C703EE682A8E59CA85245414354E4B8ADE5908EE58FB0E794B3E8AFB7E689BEE59B9EE5AF86E7A081EFBC8CE9AA8CE8AF81E7A081EFBC9A3C7370616E207374796C653D27636F6C6F723A23463030273E73415675706B3C2F7370616E3EEFBC8CE69C89E69588E69C9F3330E58886E9929FE380823C2F703E3C703EE5A682E69E9CE682A8E6B2A1E69C89E8BF9BE8A18CE8BF87E689BEE59B9EE5AF86E7A081E79A84E6938DE4BD9CEFBC8CE8AFB7E697A0E8A786E6ADA4E982AEE4BBB6E380823C2F703E3C703E2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D3C2F703E3C703E5245414354E4B8ADE5908EE58FB03C2F703E3C703E323031392D30352D31352031343A33313C2F703E, '49');
-INSERT INTO `t_mail_content` VALUES ('50', 0x3C703EE682A8E5A5BDEFBC9A3C2F703E3C703EE682A8E59CA85245414354E4B8ADE5908EE58FB0E794B3E8AFB7E689BEE59B9EE5AF86E7A081EFBC8CE9AA8CE8AF81E7A081EFBC9A3C7370616E207374796C653D27636F6C6F723A23463030273E6D6E434172753C2F7370616E3EEFBC8CE69C89E69588E69C9F3330E58886E9929FE380823C2F703E3C703EE5A682E69E9CE682A8E6B2A1E69C89E8BF9BE8A18CE8BF87E689BEE59B9EE5AF86E7A081E79A84E6938DE4BD9CEFBC8CE8AFB7E697A0E8A786E6ADA4E982AEE4BBB6E380823C2F703E3C703E2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D3C2F703E3C703E5245414354E4B8ADE5908EE58FB03C2F703E3C703E323031392D30352D31372031303A33353C2F703E, '50');
 
 -- ----------------------------
 -- Table structure for t_mail_to_user_link
@@ -611,7 +609,6 @@ INSERT INTO `t_mail_to_user_link` VALUES ('45', '10');
 INSERT INTO `t_mail_to_user_link` VALUES ('46', '10');
 INSERT INTO `t_mail_to_user_link` VALUES ('47', '10');
 INSERT INTO `t_mail_to_user_link` VALUES ('49', '10');
-INSERT INTO `t_mail_to_user_link` VALUES ('50', '10');
 
 -- ----------------------------
 -- Table structure for t_resource
@@ -619,74 +616,77 @@ INSERT INTO `t_mail_to_user_link` VALUES ('50', '10');
 DROP TABLE IF EXISTS `t_resource`;
 CREATE TABLE `t_resource` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `resource_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '资源类型',
+  `resource_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '协议类型',
+  `resource_category` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '资源类别',
+  `resource_seq` int(5) DEFAULT NULL COMMENT '资源顺序',
   `resource_pattern` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '资源pattern',
   `resource_method` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '请求方法',
   `resource_desc` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '资源描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_resource
 -- ----------------------------
-INSERT INTO `t_resource` VALUES ('1', 'http', '/attachment/*/*', 'GET', '附件列表');
-INSERT INTO `t_resource` VALUES ('2', 'http', '/attachment/*', 'GET', '附件详情');
-INSERT INTO `t_resource` VALUES ('3', 'http', '/attachment/*', 'DELETE', '删除附件');
-INSERT INTO `t_resource` VALUES ('4', 'http', '/dept/*/*', 'GET', '部门列表');
-INSERT INTO `t_resource` VALUES ('5', 'http', '/dept/*', 'GET', '部门详情');
-INSERT INTO `t_resource` VALUES ('6', 'http', '/dept', 'POST', '保存部门');
-INSERT INTO `t_resource` VALUES ('7', 'http', '/dept', 'PUT', '更新部门');
-INSERT INTO `t_resource` VALUES ('8', 'http', '/dept/*', 'DELETE', '删除部门');
-INSERT INTO `t_resource` VALUES ('9', 'http', '/file/*/*', 'POST', '上传文件');
-INSERT INTO `t_resource` VALUES ('10', 'http', '/resource/*/*', 'GET', '资源列表');
-INSERT INTO `t_resource` VALUES ('11', 'http', '/resource/*', 'GET', '资源详情');
-INSERT INTO `t_resource` VALUES ('12', 'http', '/resource', 'POST', '保存资源');
-INSERT INTO `t_resource` VALUES ('13', 'http', '/resource', 'PUT', '更新资源');
-INSERT INTO `t_resource` VALUES ('14', 'http', '/resource/*', 'DELETE', '删除资源');
-INSERT INTO `t_resource` VALUES ('15', 'http', '/role/*/*', 'GET', '角色列表');
-INSERT INTO `t_resource` VALUES ('16', 'http', '/role/*', 'GET', '角色详情');
-INSERT INTO `t_resource` VALUES ('17', 'http', '/role', 'POST', '保存角色');
-INSERT INTO `t_resource` VALUES ('18', 'http', '/role', 'PUT', '更新角色');
-INSERT INTO `t_resource` VALUES ('19', 'http', '/role/*', 'DELETE', '删除角色');
-INSERT INTO `t_resource` VALUES ('20', 'http', '/user/*/*', 'GET', '用户列表');
-INSERT INTO `t_resource` VALUES ('21', 'http', '/user/*', 'GET', '用户详情');
-INSERT INTO `t_resource` VALUES ('22', 'http', '/user', 'POST', '保存用户');
-INSERT INTO `t_resource` VALUES ('23', 'http', '/user', 'PUT', '更新用户');
-INSERT INTO `t_resource` VALUES ('24', 'http', '/user/*', 'DELETE', '删除用户');
-INSERT INTO `t_resource` VALUES ('25', 'http', '/endpoint/**', null, '获取websocket信息及握手');
-INSERT INTO `t_resource` VALUES ('26', 'websocket', '/topic/broadcast', 'SUBSCRIBE', '订阅广播消息');
-INSERT INTO `t_resource` VALUES ('28', 'http', '/broadcast', 'POST', '发送广播消息');
-INSERT INTO `t_resource` VALUES ('29', 'http', '/broadcast/*/*', 'GET', '广播列表');
-INSERT INTO `t_resource` VALUES ('30', 'http', '/broadcast/*', 'GET', '广播详情');
-INSERT INTO `t_resource` VALUES ('31', 'http', '/chat/*/*', 'GET', '消息列表');
-INSERT INTO `t_resource` VALUES ('32', 'http', '/chat/*', 'GET', '消息详情');
-INSERT INTO `t_resource` VALUES ('33', 'http', '/chat/*/*/*/*', 'GET', '往来消息');
-INSERT INTO `t_resource` VALUES ('34', 'http', '/chat', 'PUT', '更新消息');
-INSERT INTO `t_resource` VALUES ('35', 'http', '/chat', 'POST', '发送点对点消息');
-INSERT INTO `t_resource` VALUES ('36', 'websocket', '/user/topic/chat', 'SUBSCRIBE', '订阅点对点消息');
-INSERT INTO `t_resource` VALUES ('39', 'http', '/jobTemplate/*/*', 'GET', '任务模板列表');
-INSERT INTO `t_resource` VALUES ('40', 'http', '/jobTemplate/*', 'GET', '任务模板详情');
-INSERT INTO `t_resource` VALUES ('41', 'http', '/jobTemplate', 'POST', '保存任务模板');
-INSERT INTO `t_resource` VALUES ('42', 'http', '/jobTemplate', 'PUT', '更新任务模板');
-INSERT INTO `t_resource` VALUES ('43', 'http', '/jobTemplate/*', 'DELETE', '删除任务模板');
-INSERT INTO `t_resource` VALUES ('44', 'http', '/job/*/*', 'GET', '定时任务列表');
-INSERT INTO `t_resource` VALUES ('45', 'http', '/job/*', 'GET', '定时任务详情');
-INSERT INTO `t_resource` VALUES ('46', 'http', '/job', 'POST', '保存定时任务');
-INSERT INTO `t_resource` VALUES ('47', 'http', '/job', 'PUT', '更新定时任务');
-INSERT INTO `t_resource` VALUES ('48', 'http', '/job/*', 'DELETE', '删除定时任务');
-INSERT INTO `t_resource` VALUES ('49', 'http', '/job/pause/*', 'PATCH', '暂停定时任务');
-INSERT INTO `t_resource` VALUES ('50', 'http', '/job/resume/*', 'PATCH', '恢复定时任务');
-INSERT INTO `t_resource` VALUES ('51', 'http', '/mail/*/*', 'GET', '邮件列表');
-INSERT INTO `t_resource` VALUES ('52', 'http', '/mail/*', 'GET', '邮件详情');
-INSERT INTO `t_resource` VALUES ('53', 'http', '/mail', 'POST', '保存邮件');
-INSERT INTO `t_resource` VALUES ('54', 'http', '/mail', 'PUT', '更新邮件');
-INSERT INTO `t_resource` VALUES ('55', 'http', '/mail/*', 'PATCH', '发送邮件');
-INSERT INTO `t_resource` VALUES ('56', 'http', '/mail/*', 'DELETE', '删除邮件');
-INSERT INTO `t_resource` VALUES ('57', 'http', '/userinfo', 'GET', '查询个人信息');
-INSERT INTO `t_resource` VALUES ('59', 'http', '/userinfo', 'PUT', '更新个人信息');
-INSERT INTO `t_resource` VALUES ('60', 'http', '/retrieve_password_mail', 'POST', '发送找回密码邮件');
-INSERT INTO `t_resource` VALUES ('61', 'http', '/retrieve_password', 'POST', '找回密码');
-INSERT INTO `t_resource` VALUES ('62', 'http', '/dept/all', 'GET', '查询所有部门');
+INSERT INTO `t_resource` VALUES ('1', 'http', '附件', '1300', '/attachment/*/*', 'GET', '附件列表');
+INSERT INTO `t_resource` VALUES ('2', 'http', '附件', '1400', '/attachment/*', 'GET', '附件详情');
+INSERT INTO `t_resource` VALUES ('3', 'http', '附件', '1500', '/attachment/*', 'DELETE', '删除附件');
+INSERT INTO `t_resource` VALUES ('4', 'http', '部门', '700', '/dept/*/*', 'GET', '部门列表');
+INSERT INTO `t_resource` VALUES ('5', 'http', '部门', '800', '/dept/*', 'GET', '部门详情');
+INSERT INTO `t_resource` VALUES ('6', 'http', '部门', '900', '/dept', 'POST', '保存部门');
+INSERT INTO `t_resource` VALUES ('7', 'http', '部门', '1000', '/dept', 'PUT', '更新部门');
+INSERT INTO `t_resource` VALUES ('8', 'http', '部门', '1100', '/dept/*', 'DELETE', '删除部门');
+INSERT INTO `t_resource` VALUES ('9', 'http', '附件', '1200', '/file/*/*', 'POST', '上传文件');
+INSERT INTO `t_resource` VALUES ('10', 'http', '权限', '2600', '/resource/*/*', 'GET', '资源列表');
+INSERT INTO `t_resource` VALUES ('11', 'http', '权限', '2700', '/resource/*', 'GET', '资源详情');
+INSERT INTO `t_resource` VALUES ('12', 'http', '权限', '2800', '/resource', 'POST', '保存资源');
+INSERT INTO `t_resource` VALUES ('13', 'http', '权限', '2900', '/resource', 'PUT', '更新资源');
+INSERT INTO `t_resource` VALUES ('14', 'http', '权限', '3000', '/resource/*', 'DELETE', '删除资源');
+INSERT INTO `t_resource` VALUES ('15', 'http', '角色', '2100', '/role/*/*', 'GET', '角色列表');
+INSERT INTO `t_resource` VALUES ('16', 'http', '角色', '2200', '/role/*', 'GET', '角色详情');
+INSERT INTO `t_resource` VALUES ('17', 'http', '角色', '2300', '/role', 'POST', '保存角色');
+INSERT INTO `t_resource` VALUES ('18', 'http', '角色', '2400', '/role', 'PUT', '更新角色');
+INSERT INTO `t_resource` VALUES ('19', 'http', '角色', '2500', '/role/*', 'DELETE', '删除角色');
+INSERT INTO `t_resource` VALUES ('20', 'http', '用户', '1600', '/user/*/*', 'GET', '用户列表');
+INSERT INTO `t_resource` VALUES ('21', 'http', '用户', '1700', '/user/*', 'GET', '用户详情');
+INSERT INTO `t_resource` VALUES ('22', 'http', '用户', '1800', '/user', 'POST', '保存用户');
+INSERT INTO `t_resource` VALUES ('23', 'http', '用户', '1900', '/user', 'PUT', '更新用户');
+INSERT INTO `t_resource` VALUES ('24', 'http', '用户', '2000', '/user/*', 'DELETE', '删除用户');
+INSERT INTO `t_resource` VALUES ('25', 'http', 'websocket', '3100', '/endpoint/**', null, '获取websocket信息及握手');
+INSERT INTO `t_resource` VALUES ('26', 'websocket', 'websocket', '3200', '/topic/broadcast', 'SUBSCRIBE', '订阅广播消息');
+INSERT INTO `t_resource` VALUES ('28', 'http', '广播', '3400', '/broadcast', 'POST', '发送广播消息');
+INSERT INTO `t_resource` VALUES ('29', 'http', '广播', '3500', '/broadcast/*/*', 'GET', '广播列表');
+INSERT INTO `t_resource` VALUES ('30', 'http', '广播', '3600', '/broadcast/*', 'GET', '广播详情');
+INSERT INTO `t_resource` VALUES ('31', 'http', '消息', '3700', '/chat/*/*', 'GET', '消息列表');
+INSERT INTO `t_resource` VALUES ('32', 'http', '消息', '3800', '/chat/*', 'GET', '消息详情');
+INSERT INTO `t_resource` VALUES ('33', 'http', '消息', '3900', '/chat/*/*/*/*', 'GET', '往来消息');
+INSERT INTO `t_resource` VALUES ('34', 'http', '消息', '4000', '/chat', 'PUT', '更新消息');
+INSERT INTO `t_resource` VALUES ('35', 'http', '消息', '4100', '/chat', 'POST', '发送点对点消息');
+INSERT INTO `t_resource` VALUES ('36', 'websocket', 'websocket', '3300', '/user/topic/chat', 'SUBSCRIBE', '订阅点对点消息');
+INSERT INTO `t_resource` VALUES ('39', 'http', '定时任务模板', '4200', '/jobTemplate/*/*', 'GET', '任务模板列表');
+INSERT INTO `t_resource` VALUES ('40', 'http', '定时任务模板', '4300', '/jobTemplate/*', 'GET', '任务模板详情');
+INSERT INTO `t_resource` VALUES ('41', 'http', '定时任务模板', '4400', '/jobTemplate', 'POST', '保存任务模板');
+INSERT INTO `t_resource` VALUES ('42', 'http', '定时任务模板', '4500', '/jobTemplate', 'PUT', '更新任务模板');
+INSERT INTO `t_resource` VALUES ('43', 'http', '定时任务模板', '4600', '/jobTemplate/*', 'DELETE', '删除任务模板');
+INSERT INTO `t_resource` VALUES ('44', 'http', '定时任务', '4700', '/job/*/*', 'GET', '定时任务列表');
+INSERT INTO `t_resource` VALUES ('45', 'http', '定时任务', '4800', '/job/*', 'GET', '定时任务详情');
+INSERT INTO `t_resource` VALUES ('46', 'http', '定时任务', '4900', '/job', 'POST', '保存定时任务');
+INSERT INTO `t_resource` VALUES ('47', 'http', '定时任务', '5000', '/job', 'PUT', '更新定时任务');
+INSERT INTO `t_resource` VALUES ('48', 'http', '定时任务', '5100', '/job/*', 'DELETE', '删除定时任务');
+INSERT INTO `t_resource` VALUES ('49', 'http', '定时任务', '5200', '/job/pause/*', 'PATCH', '暂停定时任务');
+INSERT INTO `t_resource` VALUES ('50', 'http', '定时任务', '5300', '/job/resume/*', 'PATCH', '恢复定时任务');
+INSERT INTO `t_resource` VALUES ('51', 'http', '邮件', '5400', '/mail/*/*', 'GET', '邮件列表');
+INSERT INTO `t_resource` VALUES ('52', 'http', '邮件', '5500', '/mail/*', 'GET', '邮件详情');
+INSERT INTO `t_resource` VALUES ('53', 'http', '邮件', '5600', '/mail', 'POST', '保存邮件');
+INSERT INTO `t_resource` VALUES ('54', 'http', '邮件', '5700', '/mail', 'PUT', '更新邮件');
+INSERT INTO `t_resource` VALUES ('55', 'http', '邮件', '5800', '/mail/*', 'PATCH', '发送邮件');
+INSERT INTO `t_resource` VALUES ('56', 'http', '邮件', '5900', '/mail/*', 'DELETE', '删除邮件');
+INSERT INTO `t_resource` VALUES ('57', 'http', '个人信息', '300', '/userinfo', 'GET', '查询个人信息');
+INSERT INTO `t_resource` VALUES ('59', 'http', '个人信息', '200', '/userinfo', 'PUT', '更新个人信息');
+INSERT INTO `t_resource` VALUES ('60', 'http', '个人信息', '400', '/userinfo/retrieve_password_mail', 'POST', '发送找回密码邮件');
+INSERT INTO `t_resource` VALUES ('61', 'http', '个人信息', '500', '/userinfo/retrieve_password', 'POST', '找回密码');
+INSERT INTO `t_resource` VALUES ('62', 'http', '部门', '600', '/dept/all', 'GET', '查询所有部门');
+INSERT INTO `t_resource` VALUES ('63', 'http', '个人信息', '100', '/userinfo', 'POST', '注册个人信息');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -864,14 +864,13 @@ CREATE TABLE `t_user` (
   UNIQUE KEY `t_user_uk_email` (`email`),
   KEY `t_user_fk_dept_id` (`dept_id`),
   CONSTRAINT `t_user_fk_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `t_dept` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$LDF6/2iT/I/giJfRFW97deoMJ8lyGnCTFJ8TtAktnoTL/.8bWh7b2', 'xuelingkang@163.com', '薛凌康', '1990-08-16', '2019-05-17 17:49:36', '1');
-INSERT INTO `t_user` VALUES ('10', 'manager', '$2a$10$JHYeoW2vvO3bmv5C4FUXkOiZQgwE3YjUi0OWwYGwOOhdvSErX9Mem', '574290057@qq.com', '总经理', '1990-08-16', '2019-05-15 15:53:56', '1');
-INSERT INTO `t_user` VALUES ('23', 'abcdef', '$2a$10$VvimnrBH.G/xiqHCF.V6BenR.xspZtwhB13XN.y7rAXHrentoNi36', 'abcdef@163.com', null, null, null, null);
+INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$LDF6/2iT/I/giJfRFW97deoMJ8lyGnCTFJ8TtAktnoTL/.8bWh7b2', 'xuelingkang@163.com', '薛凌康', '1990-08-16', '2019-05-20 00:27:21', '1');
+INSERT INTO `t_user` VALUES ('10', 'manager', '$2a$10$2hirJGBN11/wAdzk6H/1q.fA30VbmbjaCo5cF41Y5V8.i6bKIfLyu', '574290057@qq.com', '总经理', '1990-08-16', '2019-05-19 04:17:11', '1');
 
 -- ----------------------------
 -- Table structure for t_user_role_link
@@ -892,7 +891,6 @@ CREATE TABLE `t_user_role_link` (
 INSERT INTO `t_user_role_link` VALUES ('9', '1');
 INSERT INTO `t_user_role_link` VALUES ('9', '6');
 INSERT INTO `t_user_role_link` VALUES ('10', '6');
-INSERT INTO `t_user_role_link` VALUES ('23', '6');
 
 -- ----------------------------
 -- View structure for t_mail_to_users

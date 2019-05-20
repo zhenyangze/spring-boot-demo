@@ -1,10 +1,11 @@
 package com.example.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mapper.ResourceMapper;
 import com.example.model.po.Resource;
+import com.example.params.Params;
 import com.example.service.IResourceService;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -19,6 +20,11 @@ import java.util.List;
 public class ResourceService extends BaseService<ResourceMapper, Resource> implements IResourceService {
 
     @Override
+    public List<String> categorys() {
+        return baseMapper.selectAllCategorys();
+    }
+
+    @Override
     @Cacheable(cacheNames = {"resource:multiple"}, keyGenerator = "defaultPageKeyGenerator")
     public List<Resource> getByType(String type) {
         QueryWrapper<Resource> queryWrapper = new QueryWrapper<>();
@@ -28,8 +34,8 @@ public class ResourceService extends BaseService<ResourceMapper, Resource> imple
 
     @Override
     @Cacheable(cacheNames = {"resource:multiple"}, keyGenerator = "defaultPageKeyGenerator")
-    public IPage<Resource> page(IPage<Resource> page, Wrapper<Resource> queryWrapper) {
-        return super.page(page, queryWrapper);
+    public IPage<Resource> customPage(Page<Resource> page, Params<Resource> params) {
+        return page.setRecords(baseMapper.customSelectPage(page, params));
     }
 
     @Override

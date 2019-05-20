@@ -1,7 +1,5 @@
 package com.example.controller;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.group.Insert;
@@ -9,6 +7,7 @@ import com.example.group.Update;
 import com.example.model.po.Resource;
 import com.example.model.vo.ResourceVO;
 import com.example.model.vo.ResultVO;
+import com.example.params.Params;
 import com.example.service.IResourceService;
 import com.example.util.ModelUtil;
 import io.swagger.annotations.Api;
@@ -33,14 +32,21 @@ public class ResourceController {
     @Autowired
     private IResourceService resourceService;
 
+    @GetMapping("categorys")
+    @ApiOperation(value = "查询所有资源类别")
+    public ResultVO categorys() {
+        List<String> categorys = resourceService.categorys();
+        return new ResultVO<>(SUCCESS, "", categorys);
+    }
+
     @GetMapping("/{current}/{size}")
     @ApiOperation(value = "查询资源列表")
     public ResultVO findPage(@PathVariable @NotNull(message = "当前页不能为空") @ApiParam(value = "当前页", defaultValue = "1", required = true) long current,
                          @PathVariable @NotNull(message = "每页显示条数不能为空") @ApiParam(value = "每页显示条数", defaultValue = "10", required = true) long size,
                          ResourceVO resourceVO) {
         Page<Resource> page = new Page<>(current, size);
-        Wrapper<Resource> wrapper = new QueryWrapper<>((Resource) resourceVO).orderByAsc("resource_seq");
-        IPage<Resource> iPage = resourceService.page(page, wrapper);
+        Params<Resource> params = new Params<>(resourceVO);
+        IPage<Resource> iPage = resourceService.customPage(page, params);
         IPage resources = (IPage) ModelUtil.copy(iPage, new ModelUtil.Mapping(Resource.class, ResourceVO.class));
         return new ResultVO<>(SUCCESS, "", resources);
     }

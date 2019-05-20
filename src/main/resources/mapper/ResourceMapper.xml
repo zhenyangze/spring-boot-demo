@@ -19,4 +19,32 @@
         <result column="t_resource_resource_desc" property="resourceDesc" />
     </resultMap>
 
+    <select id="customSelectPage" parameterType="com.example.params.Params" resultMap="baseResultMap">
+        select <include refid="baseCol" />
+        from t_resource t_resource
+        <where>
+            <if test=" params.entity.resourceType != null and params.entity.resourceType != ''.toString() ">
+                and t_resource.resource_type = #{params.entity.resourceType}
+            </if>
+            <if test=" params.entity.resourceCategory != null and params.entity.resourceCategory != ''.toString() ">
+                and t_resource.resource_category = #{params.entity.resourceCategory}
+            </if>
+            <if test=" params.entity.resourcePattern != null and params.entity.resourcePattern != ''.toString() ">
+                and instr(t_resource.resource_pattern, #{params.entity.resourcePattern}) > 0
+            </if>
+            <if test=" params.entity.resourceMethod != null and params.entity.resourceMethod != ''.toString() ">
+                and t_resource.resource_method = #{params.entity.resourceMethod}
+            </if>
+            <if test=" params.entity.resourceDesc != null and params.entity.resourceDesc != ''.toString() ">
+                and instr(t_resource.resource_desc, #{params.entity.resourceDesc}) > 0
+            </if>
+        </where>
+        order by t_resource.resource_seq
+    </select>
+
+    <select id="selectAllCategorys" resultType="string">
+        select distinct t_resource.resource_category
+        from demo.t_resource t_resource
+    </select>
+
 </mapper>

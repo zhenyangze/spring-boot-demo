@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2019-05-20 13:31:56
+Date: 2019-05-20 19:06:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -166,7 +166,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011558330176696', '1558330311763', '10000');
+INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011558346084797', '1558350372393', '10000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -629,7 +629,7 @@ CREATE TABLE `t_resource` (
   `resource_method` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '请求方法',
   `resource_desc` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '资源描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_resource
@@ -694,6 +694,8 @@ INSERT INTO `t_resource` VALUES ('61', 'http', '个人信息', '500', '/userinfo
 INSERT INTO `t_resource` VALUES ('62', 'http', '部门', '600', '/dept/all', 'GET', '查询所有部门');
 INSERT INTO `t_resource` VALUES ('63', 'http', '个人信息', '100', '/userinfo', 'POST', '注册个人信息');
 INSERT INTO `t_resource` VALUES ('65', 'http', '权限', '2550', '/resource/categorys', 'GET', '查询所有资源类别');
+INSERT INTO `t_resource` VALUES ('66', 'http', '权限', '2570', '/resource/all', 'GET', '查询所有资源');
+INSERT INTO `t_resource` VALUES ('67', 'http', '角色', '2050', '/role/all', 'GET', '查询所有角色');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -854,6 +856,8 @@ INSERT INTO `t_role_resource_link` VALUES ('7', '60');
 INSERT INTO `t_role_resource_link` VALUES ('7', '61');
 INSERT INTO `t_role_resource_link` VALUES ('6', '62');
 INSERT INTO `t_role_resource_link` VALUES ('1', '65');
+INSERT INTO `t_role_resource_link` VALUES ('1', '66');
+INSERT INTO `t_role_resource_link` VALUES ('1', '67');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -878,7 +882,7 @@ CREATE TABLE `t_user` (
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$LDF6/2iT/I/giJfRFW97deoMJ8lyGnCTFJ8TtAktnoTL/.8bWh7b2', 'xuelingkang@163.com', '薛凌康', '1990-08-16', '2019-05-20 11:49:40', '1');
+INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$LDF6/2iT/I/giJfRFW97deoMJ8lyGnCTFJ8TtAktnoTL/.8bWh7b2', 'xuelingkang@163.com', '薛凌康', '1990-08-16', '2019-05-20 17:51:28', '1');
 INSERT INTO `t_user` VALUES ('10', 'manager', '$2a$10$SdJnQ0gss13ZiaJAZvnxgeouf4RrbnN4YjoJiidTNzOGPKiHcwl4a', '574290057@qq.com', '总经理', '1990-08-16', '2019-05-19 04:17:11', '1');
 
 -- ----------------------------
@@ -911,4 +915,4 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`skip-grants user`@`skip-grants host` SQL SEC
 -- View structure for t_role_resources_info
 -- ----------------------------
 DROP VIEW IF EXISTS `t_role_resources_info`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`skip-grants user`@`skip-grants host` SQL SECURITY DEFINER VIEW `t_role_resources_info` AS select `demo`.`t_role`.`id` AS `id`,group_concat(`t_resource`.`resources_info` order by `t_resource`.`resource_seq` ASC separator ',') AS `resources_info` from ((`demo`.`t_role` left join `demo`.`t_role_resource_link` on((`demo`.`t_role`.`id` = `demo`.`t_role_resource_link`.`role_id`))) left join (select `res`.`id` AS `id`,`res`.`resource_seq` AS `resource_seq`,(case when isnull(`res`.`resource_method`) then concat(`res`.`resource_type`,'.',`res`.`resource_pattern`) else concat(`res`.`resource_type`,'.',`res`.`resource_pattern`,'.',`res`.`resource_method`) end) AS `resources_info` from `demo`.`t_resource` `res`) `t_resource` on((`demo`.`t_role_resource_link`.`resource_id` = `t_resource`.`id`))) group by `demo`.`t_role`.`id` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`skip-grants user`@`skip-grants host` SQL SECURITY DEFINER VIEW `t_role_resources_info` AS select `t_role`.`id` AS `id`,group_concat(`t_resource`.`resource_pattern` separator ',') AS `resources_info` from ((`t_role` left join `t_role_resource_link` on((`t_role`.`id` = `t_role_resource_link`.`role_id`))) left join `t_resource` on((`t_role_resource_link`.`resource_id` = `t_resource`.`id`))) group by `t_role`.`id` ;

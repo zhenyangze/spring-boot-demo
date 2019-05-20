@@ -22,7 +22,7 @@ public class ResourceService extends BaseService<ResourceMapper, Resource> imple
     @Override
     @Cacheable(cacheNames = {"resource:multiple"}, keyGenerator = "defaultPageKeyGenerator")
     public List<Resource> all() {
-        return baseMapper.selectList(null);
+        return baseMapper.selectList(new QueryWrapper<Resource>().orderByAsc("resource_seq"));
     }
 
     @Override

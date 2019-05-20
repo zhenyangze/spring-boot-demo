@@ -26,7 +26,7 @@ public class RoleService extends BaseService<RoleMapper, Role> implements IRoleS
 
     @Override
     public List<Role> all() {
-        return baseMapper.selectList(null);
+        return baseMapper.selectList(new QueryWrapper<Role>().orderByAsc("role_seq"));
     }
 
     @Override

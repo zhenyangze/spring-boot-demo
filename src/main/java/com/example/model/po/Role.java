@@ -43,7 +43,7 @@ public class Role extends BaseModel {
     @Valid
     private List<Resource> resources;
     @TableField(exist = false)
-    @ApiModelProperty(value = "资源聚合信息")
+    @ApiModelProperty(value = "资源pattern集合")
     private String resourcesInfo;
 
 }

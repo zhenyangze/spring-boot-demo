@@ -36,6 +36,7 @@
         left join t_role_resource_link t_role_resource_link on t_role.id = t_role_resource_link.role_id
         left join t_resource t_resource on t_role_resource_link.resource_id = t_resource.id
         where t_user.id = #{id}
+        order by t_role.role_seq, t_resource.resource_seq
     </select>
 
     <select id="customSelectOne" parameterType="com.example.params.Params" resultMap="resultMap">
@@ -57,6 +58,7 @@
                 and t_user.email = #{params.entity.email}
             </if>
         </where>
+        order by t_role.role_seq, t_resource.resource_seq
     </select>
 
 </mapper>

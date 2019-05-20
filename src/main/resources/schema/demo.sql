@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2019-05-20 00:28:26
+Date: 2019-05-20 13:31:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -166,7 +166,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011558282386597', '1558283303586', '10000');
+INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011558330176696', '1558330311763', '10000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -445,7 +445,7 @@ CREATE TABLE `t_mail` (
   PRIMARY KEY (`id`),
   KEY `t_mail_fk_send_user_id` (`send_user_id`),
   CONSTRAINT `t_mail_fk_send_user_id` FOREIGN KEY (`send_user_id`) REFERENCES `t_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_mail
@@ -486,6 +486,8 @@ INSERT INTO `t_mail` VALUES ('46', 'REACT中后台找回密码', 'info', 'sent',
 INSERT INTO `t_mail` VALUES ('47', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 14:09:08', '2019-05-15 14:09:16', null);
 INSERT INTO `t_mail` VALUES ('48', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 14:09:57', '2019-05-15 14:10:13', null);
 INSERT INTO `t_mail` VALUES ('49', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 14:31:20', '2019-05-15 14:31:20', null);
+INSERT INTO `t_mail` VALUES ('50', 'REACT中后台找回密码', 'info', 'sent', '2019-05-20 11:21:39', '2019-05-20 11:21:40', null);
+INSERT INTO `t_mail` VALUES ('51', 'REACT中后台找回密码', 'info', 'sent', '2019-05-20 11:31:20', '2019-05-20 11:31:30', null);
 
 -- ----------------------------
 -- Table structure for t_mail_attachment_link
@@ -515,7 +517,7 @@ CREATE TABLE `t_mail_content` (
   PRIMARY KEY (`id`),
   KEY `t_mail_content_fk_mail_id` (`mail_id`),
   CONSTRAINT `t_mail_content_fk_mail_id` FOREIGN KEY (`mail_id`) REFERENCES `t_mail` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_mail_content
@@ -556,6 +558,8 @@ INSERT INTO `t_mail_content` VALUES ('46', 0x3C703EE682A8E5A5BDEFBC9A3C2F703E3C7
 INSERT INTO `t_mail_content` VALUES ('47', 0x3C703EE682A8E5A5BDEFBC9A3C2F703E3C703EE682A8E59CA85245414354E4B8ADE5908EE58FB0E794B3E8AFB7E689BEE59B9EE5AF86E7A081EFBC8CE9AA8CE8AF81E7A081EFBC9A3C7370616E207374796C653D27636F6C6F723A23463030273E614B686E4C703C2F7370616E3EEFBC8CE69C89E69588E69C9F3330E58886E9929FE380823C2F703E3C703EE5A682E69E9CE682A8E6B2A1E69C89E8BF9BE8A18CE8BF87E689BEE59B9EE5AF86E7A081E79A84E6938DE4BD9CEFBC8CE8AFB7E697A0E8A786E6ADA4E982AEE4BBB6E380823C2F703E3C703E2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D3C2F703E3C703E5245414354E4B8ADE5908EE58FB03C2F703E3C703E323031392D30352D31352031343A30393C2F703E, '47');
 INSERT INTO `t_mail_content` VALUES ('48', 0x3C703EE682A8E5A5BDEFBC9A3C2F703E3C703EE682A8E59CA85245414354E4B8ADE5908EE58FB0E794B3E8AFB7E689BEE59B9EE5AF86E7A081EFBC8CE9AA8CE8AF81E7A081EFBC9A3C7370616E207374796C653D27636F6C6F723A23463030273E5961617576363C2F7370616E3EEFBC8CE69C89E69588E69C9F3330E58886E9929FE380823C2F703E3C703EE5A682E69E9CE682A8E6B2A1E69C89E8BF9BE8A18CE8BF87E689BEE59B9EE5AF86E7A081E79A84E6938DE4BD9CEFBC8CE8AFB7E697A0E8A786E6ADA4E982AEE4BBB6E380823C2F703E3C703E2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D3C2F703E3C703E5245414354E4B8ADE5908EE58FB03C2F703E3C703E323031392D30352D31352031343A30393C2F703E, '48');
 INSERT INTO `t_mail_content` VALUES ('49', 0x3C703EE682A8E5A5BDEFBC9A3C2F703E3C703EE682A8E59CA85245414354E4B8ADE5908EE58FB0E794B3E8AFB7E689BEE59B9EE5AF86E7A081EFBC8CE9AA8CE8AF81E7A081EFBC9A3C7370616E207374796C653D27636F6C6F723A23463030273E73415675706B3C2F7370616E3EEFBC8CE69C89E69588E69C9F3330E58886E9929FE380823C2F703E3C703EE5A682E69E9CE682A8E6B2A1E69C89E8BF9BE8A18CE8BF87E689BEE59B9EE5AF86E7A081E79A84E6938DE4BD9CEFBC8CE8AFB7E697A0E8A786E6ADA4E982AEE4BBB6E380823C2F703E3C703E2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D3C2F703E3C703E5245414354E4B8ADE5908EE58FB03C2F703E3C703E323031392D30352D31352031343A33313C2F703E, '49');
+INSERT INTO `t_mail_content` VALUES ('50', 0x3C703EE682A8E5A5BDEFBC9A3C2F703E3C703EE682A8E59CA85245414354E4B8ADE5908EE58FB0E794B3E8AFB7E689BEE59B9EE5AF86E7A081EFBC8CE9AA8CE8AF81E7A081EFBC9A3C7370616E207374796C653D27636F6C6F723A23463030273E46436F3864453C2F7370616E3EEFBC8CE69C89E69588E69C9F3330E58886E9929FE380823C2F703E3C703EE5A682E69E9CE682A8E6B2A1E69C89E8BF9BE8A18CE8BF87E689BEE59B9EE5AF86E7A081E79A84E6938DE4BD9CEFBC8CE8AFB7E697A0E8A786E6ADA4E982AEE4BBB6E380823C2F703E3C703E2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D3C2F703E3C703E5245414354E4B8ADE5908EE58FB03C2F703E3C703E323031392D30352D32302031313A32313C2F703E, '50');
+INSERT INTO `t_mail_content` VALUES ('51', 0x3C703EE682A8E5A5BDEFBC9A3C2F703E3C703EE682A8E59CA85245414354E4B8ADE5908EE58FB0E794B3E8AFB7E689BEE59B9EE5AF86E7A081EFBC8CE9AA8CE8AF81E7A081EFBC9A3C7370616E207374796C653D27636F6C6F723A23463030273E3457617665453C2F7370616E3EEFBC8CE69C89E69588E69C9F3330E58886E9929FE380823C2F703E3C703EE5A682E69E9CE682A8E6B2A1E69C89E8BF9BE8A18CE8BF87E689BEE59B9EE5AF86E7A081E79A84E6938DE4BD9CEFBC8CE8AFB7E697A0E8A786E6ADA4E982AEE4BBB6E380823C2F703E3C703E2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D2D3C2F703E3C703E5245414354E4B8ADE5908EE58FB03C2F703E3C703E323031392D30352D32302031313A33313C2F703E, '51');
 
 -- ----------------------------
 -- Table structure for t_mail_to_user_link
@@ -609,6 +613,8 @@ INSERT INTO `t_mail_to_user_link` VALUES ('45', '10');
 INSERT INTO `t_mail_to_user_link` VALUES ('46', '10');
 INSERT INTO `t_mail_to_user_link` VALUES ('47', '10');
 INSERT INTO `t_mail_to_user_link` VALUES ('49', '10');
+INSERT INTO `t_mail_to_user_link` VALUES ('50', '10');
+INSERT INTO `t_mail_to_user_link` VALUES ('51', '10');
 
 -- ----------------------------
 -- Table structure for t_resource
@@ -623,7 +629,7 @@ CREATE TABLE `t_resource` (
   `resource_method` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '请求方法',
   `resource_desc` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '资源描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_resource
@@ -687,6 +693,7 @@ INSERT INTO `t_resource` VALUES ('60', 'http', '个人信息', '400', '/userinfo
 INSERT INTO `t_resource` VALUES ('61', 'http', '个人信息', '500', '/userinfo/retrieve_password', 'POST', '找回密码');
 INSERT INTO `t_resource` VALUES ('62', 'http', '部门', '600', '/dept/all', 'GET', '查询所有部门');
 INSERT INTO `t_resource` VALUES ('63', 'http', '个人信息', '100', '/userinfo', 'POST', '注册个人信息');
+INSERT INTO `t_resource` VALUES ('65', 'http', '权限', '2550', '/resource/categorys', 'GET', '查询所有资源类别');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -696,6 +703,7 @@ CREATE TABLE `t_role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `role_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '角色名称',
   `role_desc` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '角色描述',
+  `role_seq` int(5) DEFAULT NULL COMMENT '角色顺序',
   PRIMARY KEY (`id`),
   UNIQUE KEY `t_role_idx_role_name` (`role_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
@@ -703,13 +711,13 @@ CREATE TABLE `t_role` (
 -- ----------------------------
 -- Records of t_role
 -- ----------------------------
-INSERT INTO `t_role` VALUES ('1', 'ROLE_ADMIN', '管理员');
-INSERT INTO `t_role` VALUES ('2', 'ROLE_MANAGER', '总经理');
-INSERT INTO `t_role` VALUES ('3', 'ROLE_FINANCE', '财务');
-INSERT INTO `t_role` VALUES ('4', 'ROLE_HR', '人资');
-INSERT INTO `t_role` VALUES ('5', 'ROLE_STAFF', '员工');
-INSERT INTO `t_role` VALUES ('6', 'ROLE_LOGIN', '登录用户');
-INSERT INTO `t_role` VALUES ('7', 'ROLE_GUEST', '游客');
+INSERT INTO `t_role` VALUES ('1', 'ROLE_ADMIN', '管理员', '100');
+INSERT INTO `t_role` VALUES ('2', 'ROLE_MANAGER', '总经理', '200');
+INSERT INTO `t_role` VALUES ('3', 'ROLE_FINANCE', '财务', '300');
+INSERT INTO `t_role` VALUES ('4', 'ROLE_HR', '人资', '400');
+INSERT INTO `t_role` VALUES ('5', 'ROLE_STAFF', '员工', '500');
+INSERT INTO `t_role` VALUES ('6', 'ROLE_LOGIN', '登录用户', '600');
+INSERT INTO `t_role` VALUES ('7', 'ROLE_GUEST', '游客', '700');
 
 -- ----------------------------
 -- Table structure for t_role_resource_link
@@ -845,6 +853,7 @@ INSERT INTO `t_role_resource_link` VALUES ('6', '59');
 INSERT INTO `t_role_resource_link` VALUES ('7', '60');
 INSERT INTO `t_role_resource_link` VALUES ('7', '61');
 INSERT INTO `t_role_resource_link` VALUES ('6', '62');
+INSERT INTO `t_role_resource_link` VALUES ('1', '65');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -869,8 +878,8 @@ CREATE TABLE `t_user` (
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$LDF6/2iT/I/giJfRFW97deoMJ8lyGnCTFJ8TtAktnoTL/.8bWh7b2', 'xuelingkang@163.com', '薛凌康', '1990-08-16', '2019-05-20 00:27:21', '1');
-INSERT INTO `t_user` VALUES ('10', 'manager', '$2a$10$2hirJGBN11/wAdzk6H/1q.fA30VbmbjaCo5cF41Y5V8.i6bKIfLyu', '574290057@qq.com', '总经理', '1990-08-16', '2019-05-19 04:17:11', '1');
+INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$LDF6/2iT/I/giJfRFW97deoMJ8lyGnCTFJ8TtAktnoTL/.8bWh7b2', 'xuelingkang@163.com', '薛凌康', '1990-08-16', '2019-05-20 11:49:40', '1');
+INSERT INTO `t_user` VALUES ('10', 'manager', '$2a$10$SdJnQ0gss13ZiaJAZvnxgeouf4RrbnN4YjoJiidTNzOGPKiHcwl4a', '574290057@qq.com', '总经理', '1990-08-16', '2019-05-19 04:17:11', '1');
 
 -- ----------------------------
 -- Table structure for t_user_role_link
@@ -897,3 +906,9 @@ INSERT INTO `t_user_role_link` VALUES ('10', '6');
 -- ----------------------------
 DROP VIEW IF EXISTS `t_mail_to_users`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`skip-grants user`@`skip-grants host` SQL SECURITY DEFINER VIEW `t_mail_to_users` AS select `t_mail_to_user_link`.`mail_id` AS `mail_id`,group_concat(`t_user`.`username` separator ',') AS `info` from (`t_mail_to_user_link` left join `t_user` on((`t_user`.`id` = `t_mail_to_user_link`.`to_user_id`))) group by `t_mail_to_user_link`.`mail_id` ;
+
+-- ----------------------------
+-- View structure for t_role_resources_info
+-- ----------------------------
+DROP VIEW IF EXISTS `t_role_resources_info`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`skip-grants user`@`skip-grants host` SQL SECURITY DEFINER VIEW `t_role_resources_info` AS select `demo`.`t_role`.`id` AS `id`,group_concat(`t_resource`.`resources_info` order by `t_resource`.`resource_seq` ASC separator ',') AS `resources_info` from ((`demo`.`t_role` left join `demo`.`t_role_resource_link` on((`demo`.`t_role`.`id` = `demo`.`t_role_resource_link`.`role_id`))) left join (select `res`.`id` AS `id`,`res`.`resource_seq` AS `resource_seq`,(case when isnull(`res`.`resource_method`) then concat(`res`.`resource_type`,'.',`res`.`resource_pattern`) else concat(`res`.`resource_type`,'.',`res`.`resource_pattern`,'.',`res`.`resource_method`) end) AS `resources_info` from `demo`.`t_resource` `res`) `t_resource` on((`demo`.`t_role_resource_link`.`resource_id` = `t_resource`.`id`))) group by `demo`.`t_role`.`id` ;

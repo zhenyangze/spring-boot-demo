@@ -20,6 +20,13 @@ import java.util.List;
 public class ResourceService extends BaseService<ResourceMapper, Resource> implements IResourceService {
 
     @Override
+    @Cacheable(cacheNames = {"resource:multiple"}, keyGenerator = "defaultPageKeyGenerator")
+    public List<Resource> all() {
+        return baseMapper.selectList(null);
+    }
+
+    @Override
+    @Cacheable(cacheNames = {"resource:multiple"}, keyGenerator = "defaultPageKeyGenerator")
     public List<String> categorys() {
         return baseMapper.selectAllCategorys();
     }

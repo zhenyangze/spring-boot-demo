@@ -32,6 +32,14 @@ public class ResourceController {
     @Autowired
     private IResourceService resourceService;
 
+    @GetMapping("all")
+    @ApiOperation(value = "查询所有资源")
+    public ResultVO all() {
+        List<Resource> list = resourceService.all();
+        List all = (List) ModelUtil.copy(list, new ModelUtil.Mapping(Resource.class, ResourceVO.class));
+        return new ResultVO<>(SUCCESS, "", all);
+    }
+
     @GetMapping("categorys")
     @ApiOperation(value = "查询所有资源类别")
     public ResultVO categorys() {

@@ -1,7 +1,5 @@
 package com.example.controller;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.group.RoleInsert;
@@ -11,6 +9,7 @@ import com.example.model.po.Role;
 import com.example.model.vo.ResourceVO;
 import com.example.model.vo.ResultVO;
 import com.example.model.vo.RoleVO;
+import com.example.params.Params;
 import com.example.service.IRoleService;
 import com.example.util.ModelUtil;
 import io.swagger.annotations.Api;
@@ -41,8 +40,8 @@ public class RoleController {
                          @PathVariable @NotNull(message = "每页显示条数不能为空") @ApiParam(value = "每页显示条数", defaultValue = "10", required = true) long size,
                          RoleVO roleVO) {
         Page<Role> page = new Page<>(current, size);
-        Wrapper<Role> wrapper = new QueryWrapper<>(roleVO);
-        IPage<Role> iPage = roleService.page(page, wrapper);
+        Params<Role> params = new Params<>(roleVO);
+        IPage<Role> iPage = roleService.customPage(page, params);
         IPage roles = (IPage) ModelUtil.copy(iPage, new ModelUtil.Mapping(Role.class, RoleVO.class));
         return new ResultVO<>(SUCCESS, "", roles);
     }

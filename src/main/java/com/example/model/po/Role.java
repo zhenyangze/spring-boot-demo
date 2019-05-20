@@ -32,6 +32,9 @@ public class Role extends BaseModel {
     @ApiModelProperty(value = "角色描述")
     @NotNull(groups = {RoleInsert.class, RoleUpdate.class}, message = "角色描述不能为空")
     private String roleDesc;
+    @ApiModelProperty(value = "角色顺序")
+    @NotNull(groups = {RoleInsert.class, RoleUpdate.class}, message = "角色顺序不能为空")
+    private Integer roleSeq;
 
     @TableField(exist = false)
     @ApiModelProperty(value = "资源信息")
@@ -39,5 +42,8 @@ public class Role extends BaseModel {
     @NotEmpty(groups = {RoleInsert.class, RoleUpdate.class}, message = "资源信息不能为空")
     @Valid
     private List<Resource> resources;
+    @TableField(exist = false)
+    @ApiModelProperty(value = "资源聚合信息")
+    private String resourcesInfo;
 
 }

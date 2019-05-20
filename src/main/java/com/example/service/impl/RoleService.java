@@ -1,6 +1,8 @@
 package com.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mapper.RoleMapper;
 import com.example.model.po.Resource;
 import com.example.model.po.Role;
@@ -30,6 +32,11 @@ public class RoleService extends BaseService<RoleMapper, Role> implements IRoleS
     @Override
     public Role customGetOne(Params<Role> params) {
         return baseMapper.customSelectOne(params);
+    }
+
+    @Override
+    public IPage<Role> customPage(Page<Role> page, Params<Role> params) {
+        return page.setRecords(baseMapper.customSelectPage(page, params));
     }
 
     @Override

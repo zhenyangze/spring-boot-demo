@@ -3,18 +3,38 @@
 <mapper namespace="com.example.mapper.RoleMapper">
 
     <sql id="baseCol">
-        t_role.id t_role_id, t_role.role_name t_role_role_name, t_role.role_desc t_role_role_desc
+        t_role.id t_role_id, t_role.role_name t_role_role_name, t_role.role_desc t_role_role_desc, t_role.role_seq t_role_role_seq
     </sql>
 
     <resultMap id="baseResultMap" type="com.example.model.po.Role">
         <id column="t_role_id" property="id" />
         <result column="t_role_role_name" property="roleName" />
         <result column="t_role_role_desc" property="roleDesc" />
+        <result column="t_role_role_seq" property="roleSeq" />
+        <result column="t_role_resources_info" property="resourcesInfo" />
     </resultMap>
 
     <resultMap id="resultMap" type="com.example.model.po.Role" extends="baseResultMap">
         <collection column="t_role_id" property="resources" resultMap="com.example.mapper.ResourceMapper.baseResultMap" />
     </resultMap>
+
+    <select id="customSelectPage" parameterType="com.example.params.Params" resultMap="baseResultMap">
+        select <include refid="baseCol" />, t_role_info.resources_info t_role_resources_info
+        from t_role t_role
+        left join t_role_resources_info t_role_info on t_role_info.id = t_role.id
+        <where>
+            <if test=" params.entity.roleName != null and params.entity.roleName != ''.toString() ">
+                and instr(t_role.role_name, #{params.entity.roleName}) > 0
+            </if>
+            <if test=" params.entity.roleDesc != null and params.entity.roleDesc != ''.toString() ">
+                and instr(t_role.role_desc, #{params.entity.roleDesc}) > 0
+            </if>
+            <if test=" params.entity.resourcesInfo != null and params.entity.resourcesInfo != ''.toString() ">
+                and instr(t_role_info.resources_info, #{params.entity.resourcesInfo}) > 0
+            </if>
+        </where>
+        order by t_role.role_seq
+    </select>
 
     <select id="customSelectById" parameterType="int" resultMap="resultMap">
         select <include refid="baseCol" />,

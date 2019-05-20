@@ -25,6 +25,11 @@ public class RoleService extends BaseService<RoleMapper, Role> implements IRoleS
     private IRoleResourceLinkService roleResourceLinkService;
 
     @Override
+    public List<Role> all() {
+        return baseMapper.selectList(null);
+    }
+
+    @Override
     public Role customGetById(Integer id) {
         return baseMapper.customSelectById(id);
     }

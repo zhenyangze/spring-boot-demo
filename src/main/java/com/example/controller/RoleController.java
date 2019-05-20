@@ -34,6 +34,14 @@ public class RoleController {
     @Autowired
     private IRoleService roleService;
 
+    @GetMapping("all")
+    @ApiOperation(value = "查询所有角色")
+    public ResultVO all() {
+        List<Role> list = roleService.all();
+        List all = (List) ModelUtil.copy(list, new ModelUtil.Mapping(Role.class, RoleVO.class));
+        return new ResultVO<>(SUCCESS, "", all);
+    }
+
     @GetMapping("/{current}/{size}")
     @ApiOperation(value = "查询角色列表")
     public ResultVO findPage(@PathVariable @NotNull(message = "当前页不能为空") @ApiParam(value = "当前页", defaultValue = "1", required = true) long current,

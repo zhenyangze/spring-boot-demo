@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2019-05-21 18:59:47
+Date: 2019-05-21 23:09:24
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -166,7 +166,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011558409991129', '1558436384882', '10000');
+INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011558445805369', '1558451357456', '10000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -714,25 +714,19 @@ CREATE TABLE `t_role` (
 -- ----------------------------
 -- Records of t_role
 -- ----------------------------
-INSERT INTO `t_role` VALUES ('1', 'ROLE_ADMIN', '管理员', '100');
-INSERT INTO `t_role` VALUES ('2', 'ROLE_MANAGER', '总经理', '200');
-INSERT INTO `t_role` VALUES ('3', 'ROLE_FINANCE', '财务', '300');
-INSERT INTO `t_role` VALUES ('4', 'ROLE_HR', '人资', '400');
-INSERT INTO `t_role` VALUES ('5', 'ROLE_STAFF', '员工', '500');
-INSERT INTO `t_role` VALUES ('6', 'ROLE_LOGIN', '登录用户', '600');
-INSERT INTO `t_role` VALUES ('7', 'ROLE_GUEST', '游客', '700');
-INSERT INTO `t_role` VALUES ('8', 'ROLE_PERSONAL', '个人信息管理', '800');
-INSERT INTO `t_role` VALUES ('9', 'ROLE_BASE', '基础数据查询', '900');
-INSERT INTO `t_role` VALUES ('10', 'ROLE_DEPT', '部门管理', '1000');
-INSERT INTO `t_role` VALUES ('11', 'ROLE_ATTACHMENT', '附件管理', '1100');
-INSERT INTO `t_role` VALUES ('12', 'ROLE_USER', '用户管理', '1200');
-INSERT INTO `t_role` VALUES ('13', 'ROLE_ROLE', '角色管理', '1300');
-INSERT INTO `t_role` VALUES ('14', 'ROLE_RESOURCE', '权限管理', '1400');
-INSERT INTO `t_role` VALUES ('15', 'ROLE_CHAT', 'websocket点对点聊天', '1500');
-INSERT INTO `t_role` VALUES ('16', 'ROLE_SUBSCRIBE', '订阅广播消息', '1600');
-INSERT INTO `t_role` VALUES ('17', 'ROLE_BROADCAST', '发送广播消息', '1700');
-INSERT INTO `t_role` VALUES ('18', 'ROLE_SCHEDULER', '定时任务管理', '1800');
-INSERT INTO `t_role` VALUES ('19', 'ROLE_MAIL', '邮件管理', '1900');
+INSERT INTO `t_role` VALUES ('7', 'ROLE_GUEST', '游客', '100');
+INSERT INTO `t_role` VALUES ('8', 'ROLE_PERSONAL', '个人信息管理', '200');
+INSERT INTO `t_role` VALUES ('9', 'ROLE_BASE', '基础数据查询', '300');
+INSERT INTO `t_role` VALUES ('10', 'ROLE_DEPT', '部门管理', '600');
+INSERT INTO `t_role` VALUES ('11', 'ROLE_ATTACHMENT', '附件管理', '700');
+INSERT INTO `t_role` VALUES ('12', 'ROLE_USER', '用户管理', '800');
+INSERT INTO `t_role` VALUES ('13', 'ROLE_ROLE', '角色管理', '900');
+INSERT INTO `t_role` VALUES ('14', 'ROLE_RESOURCE', '权限管理', '1000');
+INSERT INTO `t_role` VALUES ('15', 'ROLE_CHAT', 'websocket点对点聊天', '400');
+INSERT INTO `t_role` VALUES ('16', 'ROLE_SUBSCRIBE', '订阅广播消息', '500');
+INSERT INTO `t_role` VALUES ('17', 'ROLE_BROADCAST', '发送广播消息', '1100');
+INSERT INTO `t_role` VALUES ('18', 'ROLE_SCHEDULER', '定时任务管理', '1200');
+INSERT INTO `t_role` VALUES ('19', 'ROLE_MAIL', '邮件管理', '1300');
 
 -- ----------------------------
 -- Table structure for t_role_resource_link
@@ -750,193 +744,73 @@ CREATE TABLE `t_role_resource_link` (
 -- ----------------------------
 -- Records of t_role_resource_link
 -- ----------------------------
-INSERT INTO `t_role_resource_link` VALUES ('1', '1');
-INSERT INTO `t_role_resource_link` VALUES ('5', '1');
-INSERT INTO `t_role_resource_link` VALUES ('6', '1');
 INSERT INTO `t_role_resource_link` VALUES ('11', '1');
-INSERT INTO `t_role_resource_link` VALUES ('1', '2');
-INSERT INTO `t_role_resource_link` VALUES ('5', '2');
-INSERT INTO `t_role_resource_link` VALUES ('6', '2');
 INSERT INTO `t_role_resource_link` VALUES ('11', '2');
-INSERT INTO `t_role_resource_link` VALUES ('1', '3');
 INSERT INTO `t_role_resource_link` VALUES ('11', '3');
-INSERT INTO `t_role_resource_link` VALUES ('1', '4');
-INSERT INTO `t_role_resource_link` VALUES ('2', '4');
-INSERT INTO `t_role_resource_link` VALUES ('4', '4');
-INSERT INTO `t_role_resource_link` VALUES ('5', '4');
-INSERT INTO `t_role_resource_link` VALUES ('6', '4');
 INSERT INTO `t_role_resource_link` VALUES ('10', '4');
-INSERT INTO `t_role_resource_link` VALUES ('1', '5');
-INSERT INTO `t_role_resource_link` VALUES ('2', '5');
-INSERT INTO `t_role_resource_link` VALUES ('4', '5');
-INSERT INTO `t_role_resource_link` VALUES ('5', '5');
-INSERT INTO `t_role_resource_link` VALUES ('6', '5');
 INSERT INTO `t_role_resource_link` VALUES ('10', '5');
-INSERT INTO `t_role_resource_link` VALUES ('1', '6');
-INSERT INTO `t_role_resource_link` VALUES ('2', '6');
-INSERT INTO `t_role_resource_link` VALUES ('4', '6');
 INSERT INTO `t_role_resource_link` VALUES ('10', '6');
-INSERT INTO `t_role_resource_link` VALUES ('1', '7');
-INSERT INTO `t_role_resource_link` VALUES ('2', '7');
-INSERT INTO `t_role_resource_link` VALUES ('4', '7');
 INSERT INTO `t_role_resource_link` VALUES ('10', '7');
-INSERT INTO `t_role_resource_link` VALUES ('1', '8');
-INSERT INTO `t_role_resource_link` VALUES ('2', '8');
-INSERT INTO `t_role_resource_link` VALUES ('4', '8');
 INSERT INTO `t_role_resource_link` VALUES ('10', '8');
-INSERT INTO `t_role_resource_link` VALUES ('1', '9');
-INSERT INTO `t_role_resource_link` VALUES ('3', '9');
-INSERT INTO `t_role_resource_link` VALUES ('5', '9');
 INSERT INTO `t_role_resource_link` VALUES ('11', '9');
-INSERT INTO `t_role_resource_link` VALUES ('1', '10');
-INSERT INTO `t_role_resource_link` VALUES ('2', '10');
-INSERT INTO `t_role_resource_link` VALUES ('4', '10');
-INSERT INTO `t_role_resource_link` VALUES ('5', '10');
 INSERT INTO `t_role_resource_link` VALUES ('14', '10');
-INSERT INTO `t_role_resource_link` VALUES ('1', '11');
-INSERT INTO `t_role_resource_link` VALUES ('2', '11');
-INSERT INTO `t_role_resource_link` VALUES ('4', '11');
-INSERT INTO `t_role_resource_link` VALUES ('5', '11');
 INSERT INTO `t_role_resource_link` VALUES ('14', '11');
-INSERT INTO `t_role_resource_link` VALUES ('1', '12');
-INSERT INTO `t_role_resource_link` VALUES ('2', '12');
-INSERT INTO `t_role_resource_link` VALUES ('4', '12');
 INSERT INTO `t_role_resource_link` VALUES ('14', '12');
-INSERT INTO `t_role_resource_link` VALUES ('1', '13');
-INSERT INTO `t_role_resource_link` VALUES ('2', '13');
-INSERT INTO `t_role_resource_link` VALUES ('4', '13');
 INSERT INTO `t_role_resource_link` VALUES ('14', '13');
-INSERT INTO `t_role_resource_link` VALUES ('1', '14');
-INSERT INTO `t_role_resource_link` VALUES ('2', '14');
-INSERT INTO `t_role_resource_link` VALUES ('4', '14');
 INSERT INTO `t_role_resource_link` VALUES ('14', '14');
-INSERT INTO `t_role_resource_link` VALUES ('1', '15');
-INSERT INTO `t_role_resource_link` VALUES ('2', '15');
-INSERT INTO `t_role_resource_link` VALUES ('4', '15');
-INSERT INTO `t_role_resource_link` VALUES ('5', '15');
 INSERT INTO `t_role_resource_link` VALUES ('13', '15');
-INSERT INTO `t_role_resource_link` VALUES ('1', '16');
-INSERT INTO `t_role_resource_link` VALUES ('2', '16');
-INSERT INTO `t_role_resource_link` VALUES ('4', '16');
-INSERT INTO `t_role_resource_link` VALUES ('5', '16');
 INSERT INTO `t_role_resource_link` VALUES ('13', '16');
-INSERT INTO `t_role_resource_link` VALUES ('1', '17');
-INSERT INTO `t_role_resource_link` VALUES ('2', '17');
-INSERT INTO `t_role_resource_link` VALUES ('4', '17');
 INSERT INTO `t_role_resource_link` VALUES ('13', '17');
-INSERT INTO `t_role_resource_link` VALUES ('1', '18');
-INSERT INTO `t_role_resource_link` VALUES ('2', '18');
-INSERT INTO `t_role_resource_link` VALUES ('4', '18');
 INSERT INTO `t_role_resource_link` VALUES ('13', '18');
-INSERT INTO `t_role_resource_link` VALUES ('1', '19');
-INSERT INTO `t_role_resource_link` VALUES ('2', '19');
-INSERT INTO `t_role_resource_link` VALUES ('4', '19');
 INSERT INTO `t_role_resource_link` VALUES ('13', '19');
-INSERT INTO `t_role_resource_link` VALUES ('1', '20');
-INSERT INTO `t_role_resource_link` VALUES ('2', '20');
-INSERT INTO `t_role_resource_link` VALUES ('3', '20');
-INSERT INTO `t_role_resource_link` VALUES ('4', '20');
-INSERT INTO `t_role_resource_link` VALUES ('5', '20');
 INSERT INTO `t_role_resource_link` VALUES ('12', '20');
-INSERT INTO `t_role_resource_link` VALUES ('1', '21');
-INSERT INTO `t_role_resource_link` VALUES ('2', '21');
-INSERT INTO `t_role_resource_link` VALUES ('3', '21');
-INSERT INTO `t_role_resource_link` VALUES ('4', '21');
-INSERT INTO `t_role_resource_link` VALUES ('5', '21');
 INSERT INTO `t_role_resource_link` VALUES ('12', '21');
-INSERT INTO `t_role_resource_link` VALUES ('1', '22');
-INSERT INTO `t_role_resource_link` VALUES ('2', '22');
-INSERT INTO `t_role_resource_link` VALUES ('4', '22');
 INSERT INTO `t_role_resource_link` VALUES ('12', '22');
-INSERT INTO `t_role_resource_link` VALUES ('1', '23');
-INSERT INTO `t_role_resource_link` VALUES ('2', '23');
-INSERT INTO `t_role_resource_link` VALUES ('4', '23');
-INSERT INTO `t_role_resource_link` VALUES ('6', '23');
 INSERT INTO `t_role_resource_link` VALUES ('12', '23');
-INSERT INTO `t_role_resource_link` VALUES ('1', '24');
-INSERT INTO `t_role_resource_link` VALUES ('2', '24');
-INSERT INTO `t_role_resource_link` VALUES ('4', '24');
 INSERT INTO `t_role_resource_link` VALUES ('12', '24');
-INSERT INTO `t_role_resource_link` VALUES ('1', '25');
 INSERT INTO `t_role_resource_link` VALUES ('15', '25');
 INSERT INTO `t_role_resource_link` VALUES ('16', '25');
 INSERT INTO `t_role_resource_link` VALUES ('17', '25');
-INSERT INTO `t_role_resource_link` VALUES ('1', '26');
 INSERT INTO `t_role_resource_link` VALUES ('16', '26');
 INSERT INTO `t_role_resource_link` VALUES ('17', '26');
-INSERT INTO `t_role_resource_link` VALUES ('1', '28');
 INSERT INTO `t_role_resource_link` VALUES ('17', '28');
-INSERT INTO `t_role_resource_link` VALUES ('1', '29');
 INSERT INTO `t_role_resource_link` VALUES ('16', '29');
 INSERT INTO `t_role_resource_link` VALUES ('17', '29');
-INSERT INTO `t_role_resource_link` VALUES ('1', '30');
 INSERT INTO `t_role_resource_link` VALUES ('16', '30');
 INSERT INTO `t_role_resource_link` VALUES ('17', '30');
-INSERT INTO `t_role_resource_link` VALUES ('1', '31');
 INSERT INTO `t_role_resource_link` VALUES ('15', '31');
-INSERT INTO `t_role_resource_link` VALUES ('1', '32');
 INSERT INTO `t_role_resource_link` VALUES ('15', '32');
-INSERT INTO `t_role_resource_link` VALUES ('1', '33');
 INSERT INTO `t_role_resource_link` VALUES ('15', '33');
-INSERT INTO `t_role_resource_link` VALUES ('1', '34');
 INSERT INTO `t_role_resource_link` VALUES ('15', '34');
-INSERT INTO `t_role_resource_link` VALUES ('1', '35');
 INSERT INTO `t_role_resource_link` VALUES ('15', '35');
-INSERT INTO `t_role_resource_link` VALUES ('1', '36');
 INSERT INTO `t_role_resource_link` VALUES ('15', '36');
-INSERT INTO `t_role_resource_link` VALUES ('1', '39');
 INSERT INTO `t_role_resource_link` VALUES ('18', '39');
-INSERT INTO `t_role_resource_link` VALUES ('1', '40');
 INSERT INTO `t_role_resource_link` VALUES ('18', '40');
-INSERT INTO `t_role_resource_link` VALUES ('1', '41');
 INSERT INTO `t_role_resource_link` VALUES ('18', '41');
-INSERT INTO `t_role_resource_link` VALUES ('1', '42');
 INSERT INTO `t_role_resource_link` VALUES ('18', '42');
-INSERT INTO `t_role_resource_link` VALUES ('1', '43');
 INSERT INTO `t_role_resource_link` VALUES ('18', '43');
-INSERT INTO `t_role_resource_link` VALUES ('1', '44');
 INSERT INTO `t_role_resource_link` VALUES ('18', '44');
-INSERT INTO `t_role_resource_link` VALUES ('1', '45');
 INSERT INTO `t_role_resource_link` VALUES ('18', '45');
-INSERT INTO `t_role_resource_link` VALUES ('1', '46');
 INSERT INTO `t_role_resource_link` VALUES ('18', '46');
-INSERT INTO `t_role_resource_link` VALUES ('1', '47');
 INSERT INTO `t_role_resource_link` VALUES ('18', '47');
-INSERT INTO `t_role_resource_link` VALUES ('1', '48');
 INSERT INTO `t_role_resource_link` VALUES ('18', '48');
-INSERT INTO `t_role_resource_link` VALUES ('1', '49');
 INSERT INTO `t_role_resource_link` VALUES ('18', '49');
-INSERT INTO `t_role_resource_link` VALUES ('1', '50');
 INSERT INTO `t_role_resource_link` VALUES ('18', '50');
-INSERT INTO `t_role_resource_link` VALUES ('1', '51');
 INSERT INTO `t_role_resource_link` VALUES ('19', '51');
-INSERT INTO `t_role_resource_link` VALUES ('1', '52');
 INSERT INTO `t_role_resource_link` VALUES ('19', '52');
-INSERT INTO `t_role_resource_link` VALUES ('1', '53');
 INSERT INTO `t_role_resource_link` VALUES ('19', '53');
-INSERT INTO `t_role_resource_link` VALUES ('1', '54');
 INSERT INTO `t_role_resource_link` VALUES ('19', '54');
-INSERT INTO `t_role_resource_link` VALUES ('1', '55');
 INSERT INTO `t_role_resource_link` VALUES ('19', '55');
-INSERT INTO `t_role_resource_link` VALUES ('1', '56');
 INSERT INTO `t_role_resource_link` VALUES ('19', '56');
-INSERT INTO `t_role_resource_link` VALUES ('6', '57');
 INSERT INTO `t_role_resource_link` VALUES ('8', '57');
-INSERT INTO `t_role_resource_link` VALUES ('6', '59');
 INSERT INTO `t_role_resource_link` VALUES ('8', '59');
 INSERT INTO `t_role_resource_link` VALUES ('7', '60');
 INSERT INTO `t_role_resource_link` VALUES ('7', '61');
-INSERT INTO `t_role_resource_link` VALUES ('1', '62');
-INSERT INTO `t_role_resource_link` VALUES ('6', '62');
 INSERT INTO `t_role_resource_link` VALUES ('9', '62');
 INSERT INTO `t_role_resource_link` VALUES ('7', '63');
-INSERT INTO `t_role_resource_link` VALUES ('1', '65');
 INSERT INTO `t_role_resource_link` VALUES ('9', '65');
-INSERT INTO `t_role_resource_link` VALUES ('1', '66');
 INSERT INTO `t_role_resource_link` VALUES ('9', '66');
-INSERT INTO `t_role_resource_link` VALUES ('1', '67');
 INSERT INTO `t_role_resource_link` VALUES ('9', '67');
-INSERT INTO `t_role_resource_link` VALUES ('1', '68');
 INSERT INTO `t_role_resource_link` VALUES ('9', '68');
 
 -- ----------------------------
@@ -959,16 +833,13 @@ CREATE TABLE `t_user` (
   UNIQUE KEY `t_user_uk_email` (`email`),
   KEY `t_user_fk_dept_id` (`dept_id`),
   CONSTRAINT `t_user_fk_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `t_dept` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$LDF6/2iT/I/giJfRFW97deoMJ8lyGnCTFJ8TtAktnoTL/.8bWh7b2', 'xuelingkang@163.com', '薛凌康', null, '1', '19900816000000', '20190521171702', '1');
-INSERT INTO `t_user` VALUES ('10', 'manager', '$2a$10$SdJnQ0gss13ZiaJAZvnxgeouf4RrbnN4YjoJiidTNzOGPKiHcwl4a', '574290057@qq.com', '总经理', null, '1', '19900816000000', '20190519041711', '1');
-INSERT INTO `t_user` VALUES ('11', 'ceshi', '$2a$10$25zbIW3VAhDL8FaAKBJAoeBSSWE.q0O6z7tWrGvPUnHsFEo20o6cO', 'ceshi@123.com', '测试', null, '1', '20190521000000', null, '1');
-INSERT INTO `t_user` VALUES ('12', 'ceshi2', '$2a$10$229dz7K46KBQHmFEPjNrbuvB9BZLw9zJuO3IqGqTHWon3GPjbbjZi', 'ceshi2@163.com', '测试', null, '0', '20190521000000', null, '1');
-INSERT INTO `t_user` VALUES ('13', 'ceshi3', '$2a$10$y17Jw/f0azju254jn.wJiOig.6uNB.6G2Nq8Nys.OJNLzZNNoujIG', 'ceshi@1233.com', 'ceshi', null, '1', '19900816172841', null, '1');
+INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$cLtKQQcuCeoYYdu..2/.Ju01TC4goaFmc5zVf5sGrzAxLsKaCKLv.', 'xuelingkang@163.com', '薛凌康', null, '1', '650736000736', '1558447140699', '1');
+INSERT INTO `t_user` VALUES ('10', 'manager', '$2a$10$ODfMqCWyr0TOnvmeePdwFOfu3.0PfjHOxjDGrwRfqvw4Y1CULVa76', '574290057@qq.com', '总经理', null, '1', '655833600710', '1558447124559', '1');
 
 -- ----------------------------
 -- Table structure for t_user_role_link
@@ -986,12 +857,30 @@ CREATE TABLE `t_user_role_link` (
 -- ----------------------------
 -- Records of t_user_role_link
 -- ----------------------------
-INSERT INTO `t_user_role_link` VALUES ('9', '1');
-INSERT INTO `t_user_role_link` VALUES ('9', '6');
-INSERT INTO `t_user_role_link` VALUES ('10', '6');
-INSERT INTO `t_user_role_link` VALUES ('11', '8');
-INSERT INTO `t_user_role_link` VALUES ('12', '8');
-INSERT INTO `t_user_role_link` VALUES ('13', '8');
+INSERT INTO `t_user_role_link` VALUES ('9', '8');
+INSERT INTO `t_user_role_link` VALUES ('10', '8');
+INSERT INTO `t_user_role_link` VALUES ('9', '9');
+INSERT INTO `t_user_role_link` VALUES ('10', '9');
+INSERT INTO `t_user_role_link` VALUES ('9', '10');
+INSERT INTO `t_user_role_link` VALUES ('10', '10');
+INSERT INTO `t_user_role_link` VALUES ('9', '11');
+INSERT INTO `t_user_role_link` VALUES ('10', '11');
+INSERT INTO `t_user_role_link` VALUES ('9', '12');
+INSERT INTO `t_user_role_link` VALUES ('10', '12');
+INSERT INTO `t_user_role_link` VALUES ('9', '13');
+INSERT INTO `t_user_role_link` VALUES ('10', '13');
+INSERT INTO `t_user_role_link` VALUES ('9', '14');
+INSERT INTO `t_user_role_link` VALUES ('10', '14');
+INSERT INTO `t_user_role_link` VALUES ('9', '15');
+INSERT INTO `t_user_role_link` VALUES ('10', '15');
+INSERT INTO `t_user_role_link` VALUES ('9', '16');
+INSERT INTO `t_user_role_link` VALUES ('10', '16');
+INSERT INTO `t_user_role_link` VALUES ('9', '17');
+INSERT INTO `t_user_role_link` VALUES ('10', '17');
+INSERT INTO `t_user_role_link` VALUES ('9', '18');
+INSERT INTO `t_user_role_link` VALUES ('10', '18');
+INSERT INTO `t_user_role_link` VALUES ('9', '19');
+INSERT INTO `t_user_role_link` VALUES ('10', '19');
 
 -- ----------------------------
 -- View structure for t_mail_to_users

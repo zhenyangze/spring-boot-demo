@@ -10,6 +10,8 @@ import java.util.List;
 
 public interface IBaseMapper<T extends BaseModel> extends BaseMapper<T> {
 
+    List<T> customSelectList(@Param("params") Params<T> params);
+
     List<T> customSelectPage(Page<T> page, @Param("params") Params<T> params);
 
     T customSelectById(Integer id);

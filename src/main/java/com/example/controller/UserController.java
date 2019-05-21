@@ -1,7 +1,5 @@
 package com.example.controller;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.group.UserInsert;
@@ -11,6 +9,7 @@ import com.example.model.po.Resource;
 import com.example.model.po.Role;
 import com.example.model.po.User;
 import com.example.model.vo.*;
+import com.example.params.Params;
 import com.example.service.IUserService;
 import com.example.util.ModelUtil;
 import io.swagger.annotations.Api;
@@ -39,15 +38,27 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @GetMapping("/all")
+    @ApiOperation(value = "查询所有用户")
+    public ResultVO all() {
+        List<User> list = userService.all();
+        List all = (List) ModelUtil.copy(list,
+                new ModelUtil.Mapping(User.class, UserVO.class, "password"),
+                new ModelUtil.Mapping(Dept.class, DeptVO.class));
+        return new ResultVO<>(SUCCESS, "", all);
+    }
+
     @GetMapping("/{current}/{size}")
     @ApiOperation(value = "查询用户列表")
     public ResultVO findPage(@PathVariable @NotNull(message = "当前页不能为空") @ApiParam(value = "当前页", defaultValue = "1", required = true) long current,
                          @PathVariable @NotNull(message = "每页显示条数不能为空") @ApiParam(value = "每页显示条数", defaultValue = "10", required = true) long size,
                          UserVO userVO) {
         Page<User> page = new Page<>(current, size);
-        Wrapper<User> wrapper = new QueryWrapper<>(userVO);
-        IPage<User> iPage = userService.page(page, wrapper);
-        IPage users = (IPage) ModelUtil.copy(iPage, new ModelUtil.Mapping(User.class, UserVO.class, "password"));
+        Params<User> params = new Params<>(userVO);
+        IPage<User> iPage = userService.customPage(page, params);
+        IPage users = (IPage) ModelUtil.copy(iPage,
+                new ModelUtil.Mapping(User.class, UserVO.class, "password"),
+                new ModelUtil.Mapping(Dept.class, DeptVO.class));
         return new ResultVO<>(SUCCESS, "", users);
     }
 

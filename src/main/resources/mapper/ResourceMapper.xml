@@ -19,7 +19,7 @@
         <result column="t_resource_resource_desc" property="resourceDesc" />
     </resultMap>
 
-    <select id="customSelectPage" parameterType="com.example.params.Params" resultMap="baseResultMap">
+    <select id="customSelectPage" resultMap="baseResultMap">
         select <include refid="baseCol" />
         from t_resource t_resource
         <where>

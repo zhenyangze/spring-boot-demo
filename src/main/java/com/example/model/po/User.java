@@ -42,6 +42,14 @@ public class User extends BaseModel {
     @NotNull(groups = {UserInsert.class, UserUpdate.class, UserInfoUpdate.class}, message = "昵称不能为空")
     @Null(groups = {UserInfoInsert.class}, message = "昵称必须为空")
     private String nickname;
+    @ApiModelProperty(value = "头像")
+    @NotNull(groups = {UserInfoUpdate.class}, message = "头像不能为空")
+    @Null(groups = {UserInfoInsert.class}, message = "头像必须为空")
+    private String headImg;
+    @ApiModelProperty(value = "性别", allowableValues = "1,0")
+    @NotNull(groups = {UserInsert.class, UserUpdate.class, UserInfoUpdate.class}, message = "性别不能为空")
+    @Null(groups = {UserInfoInsert.class}, message = "性别必须为空")
+    private Integer sex;
     @JSONField(format = "yyyy-MM-dd")
     @ApiModelProperty(value = "生日")
     @NotNull(groups = {UserInsert.class, UserUpdate.class, UserInfoUpdate.class}, message = "生日不能为空")

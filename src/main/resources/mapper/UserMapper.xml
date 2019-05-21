@@ -4,8 +4,9 @@
 
     <sql id="baseCol">
         t_user.id t_user_id, t_user.username t_user_username, t_user.password t_user_password,
-        t_user.email t_user_email, t_user.nickname t_user_nickname, t_user.birth t_user_birth,
-        t_user.logintime t_user_logintime, t_user.dept_id t_user_dept_id
+        t_user.email t_user_email, t_user.nickname t_user_nickname, t_user.sex t_user_sex,
+        t_user.head_img t_user_head_img, t_user.birth t_user_birth, t_user.logintime t_user_logintime,
+        t_user.dept_id t_user_dept_id
     </sql>
 
     <resultMap id="baseResultMap" type="com.example.model.po.User">
@@ -14,6 +15,8 @@
         <result column="t_user_password" property="password" />
         <result column="t_user_email" property="email" />
         <result column="t_user_nickname" property="nickname" />
+        <result column="t_user_head_img" property="headImg" />
+        <result column="t_user_sex" property="sex" />
         <result column="t_user_birth" property="birth" />
         <result column="t_user_logintime" property="logintime" />
         <result column="t_user_dept_id" property="deptId" />
@@ -23,6 +26,56 @@
         <association column="t_user_dept_id" property="dept" resultMap="com.example.mapper.DeptMapper.baseResultMap" />
         <collection column="t_user_id" property="roles" resultMap="com.example.mapper.RoleMapper.resultMap" />
     </resultMap>
+
+    <select id="customSelectList" parameterType="com.example.params.Params" resultMap="resultMap">
+        select <include refid="baseCol" />,
+        <include refid="com.example.mapper.DeptMapper.baseCol" />
+        from t_user t_user
+        left join t_dept t_dept on t_dept.id = t_user.dept_id
+        <where>
+            <if test=" params.entity.username != null and params.entity.username != ''.toString() ">
+                and instr(t_user.username, #{params.entity.username}) > 0
+            </if>
+            <if test=" params.entity.email != null and params.entity.email != ''.toString() ">
+                and instr(t_user.email, #{params.entity.email}) > 0
+            </if>
+            <if test=" params.entity.nickname != null and params.entity.nickname != ''.toString() ">
+                and instr(t_user.nickname, #{params.entity.nickname}) > 0
+            </if>
+            <if test=" params.entity.sex != null ">
+                and t_user.sex = #{params.entity.sex}
+            </if>
+            <if test=" params.entity.deptId != null ">
+                and t_user.dept_id = #{params.entity.deptId}
+            </if>
+        </where>
+        order by t_dept.seq
+    </select>
+
+    <select id="customSelectPage" resultMap="resultMap">
+        select <include refid="baseCol" />,
+               <include refid="com.example.mapper.DeptMapper.baseCol" />
+        from t_user t_user
+        left join t_dept t_dept on t_dept.id = t_user.dept_id
+        <where>
+            <if test=" params.entity.username != null and params.entity.username != ''.toString() ">
+                and instr(t_user.username, #{params.entity.username}) > 0
+            </if>
+            <if test=" params.entity.email != null and params.entity.email != ''.toString() ">
+                and instr(t_user.email, #{params.entity.email}) > 0
+            </if>
+            <if test=" params.entity.nickname != null and params.entity.nickname != ''.toString() ">
+                and instr(t_user.nickname, #{params.entity.nickname}) > 0
+            </if>
+            <if test=" params.entity.sex != null ">
+                and t_user.sex = #{params.entity.sex}
+            </if>
+            <if test=" params.entity.deptId != null ">
+                and t_user.dept_id = #{params.entity.deptId}
+            </if>
+        </where>
+        order by t_dept.seq
+    </select>
 
     <select id="customSelectById" parameterType="int" resultMap="resultMap">
         select <include refid="baseCol" />,

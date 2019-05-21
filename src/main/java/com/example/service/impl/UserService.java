@@ -1,6 +1,8 @@
 package com.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.exception.LogicException;
 import com.example.mapper.UserMapper;
 import com.example.model.po.*;
@@ -42,6 +44,16 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
     private IMailService mailService;
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
+
+    @Override
+    public List<User> all() {
+        return baseMapper.customSelectList(null);
+    }
+
+    @Override
+    public IPage<User> customPage(Page<User> page, Params<User> params) {
+        return page.setRecords(baseMapper.customSelectPage(page, params));
+    }
 
     @Override
     public User customGetById(Integer id) {

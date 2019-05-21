@@ -16,7 +16,7 @@
         <result column="t_dept_full_name" property="fullName" />
     </resultMap>
 
-    <select id="customSelectPage" parameterType="com.example.params.Params" resultMap="baseResultMap">
+    <select id="customSelectPage" resultMap="baseResultMap">
         select <include refid="baseCol" />
         from t_dept t_dept
         <where>

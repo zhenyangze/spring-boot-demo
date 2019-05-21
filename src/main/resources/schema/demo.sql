@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2019-05-20 19:06:17
+Date: 2019-05-21 18:59:47
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -166,7 +166,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011558346084797', '1558350372393', '10000');
+INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011558409991129', '1558436384882', '10000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -277,13 +277,13 @@ CREATE TABLE `t_attachment` (
 DROP TABLE IF EXISTS `t_broadcast_message`;
 CREATE TABLE `t_broadcast_message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `send_time` timestamp NULL DEFAULT NULL COMMENT '发送时间',
+  `send_time` bigint(20) DEFAULT NULL COMMENT '发送时间',
   `content` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '消息内容',
   `send_user_id` int(11) DEFAULT NULL COMMENT '发送用户id',
   PRIMARY KEY (`id`),
   KEY `t_broadcast_message_fk_send_user_id` (`send_user_id`),
   CONSTRAINT `t_broadcast_message_fk_send_user_id` FOREIGN KEY (`send_user_id`) REFERENCES `t_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_broadcast_message
@@ -295,7 +295,7 @@ CREATE TABLE `t_broadcast_message` (
 DROP TABLE IF EXISTS `t_chat_message`;
 CREATE TABLE `t_chat_message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `send_time` timestamp NULL DEFAULT NULL COMMENT '发送时间',
+  `send_time` bigint(20) DEFAULT NULL COMMENT '发送时间',
   `content` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '消息内容',
   `send_user_id` int(11) DEFAULT NULL COMMENT '发送用户id',
   `to_user_id` int(11) DEFAULT NULL COMMENT '接收用户id',
@@ -353,8 +353,8 @@ DROP TABLE IF EXISTS `t_job`;
 CREATE TABLE `t_job` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `job_desc` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '任务描述',
-  `start_time` timestamp NULL DEFAULT NULL COMMENT '开始时间',
-  `end_time` timestamp NULL DEFAULT NULL COMMENT '结束时间',
+  `start_time` bigint(20) DEFAULT NULL COMMENT '开始时间',
+  `end_time` bigint(20) DEFAULT NULL COMMENT '结束时间',
   `cron_expression` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'cron表达式',
   `job_template_id` int(11) DEFAULT NULL COMMENT '任务模板id',
   `sched_name` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '调度器名称',
@@ -439,8 +439,8 @@ CREATE TABLE `t_mail` (
   `mail_subject` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '邮件标题',
   `mail_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '邮件类型',
   `mail_status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '邮件状态',
-  `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
-  `send_time` timestamp NULL DEFAULT NULL COMMENT '发送时间',
+  `create_time` bigint(20) DEFAULT NULL COMMENT '创建时间',
+  `send_time` bigint(20) DEFAULT NULL COMMENT '发送时间',
   `send_user_id` int(11) DEFAULT NULL COMMENT '发送用户id',
   PRIMARY KEY (`id`),
   KEY `t_mail_fk_send_user_id` (`send_user_id`),
@@ -450,44 +450,44 @@ CREATE TABLE `t_mail` (
 -- ----------------------------
 -- Records of t_mail
 -- ----------------------------
-INSERT INTO `t_mail` VALUES ('4', 'REACT中后台找回密码', 'info', 'sent', '2019-05-14 18:51:30', '2019-05-14 18:52:05', null);
-INSERT INTO `t_mail` VALUES ('5', 'REACT中后台找回密码', 'info', 'sent', '2019-05-14 19:03:58', '2019-05-14 19:04:26', null);
-INSERT INTO `t_mail` VALUES ('7', 'REACT中后台找回密码', 'info', 'sent', '2019-05-14 22:05:49', '2019-05-14 22:05:51', null);
-INSERT INTO `t_mail` VALUES ('9', 'REACT中后台找回密码', 'info', 'sent', '2019-05-14 22:17:12', '2019-05-14 22:17:15', null);
-INSERT INTO `t_mail` VALUES ('10', 'REACT中后台找回密码', 'info', 'sent', '2019-05-14 22:40:11', '2019-05-14 22:40:14', null);
-INSERT INTO `t_mail` VALUES ('13', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 00:47:55', '2019-05-15 00:47:57', null);
-INSERT INTO `t_mail` VALUES ('14', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 00:49:38', '2019-05-15 00:49:39', null);
-INSERT INTO `t_mail` VALUES ('15', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 00:49:48', '2019-05-15 00:49:48', null);
-INSERT INTO `t_mail` VALUES ('16', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 00:55:28', '2019-05-15 00:55:41', null);
-INSERT INTO `t_mail` VALUES ('17', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 00:55:56', '2019-05-15 00:56:44', null);
-INSERT INTO `t_mail` VALUES ('20', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 01:02:50', '2019-05-15 01:03:07', null);
-INSERT INTO `t_mail` VALUES ('22', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 01:05:23', '2019-05-15 01:05:24', null);
-INSERT INTO `t_mail` VALUES ('23', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 01:05:35', '2019-05-15 01:05:41', null);
-INSERT INTO `t_mail` VALUES ('24', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 01:05:51', '2019-05-15 01:05:51', null);
-INSERT INTO `t_mail` VALUES ('26', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 01:07:58', '2019-05-15 01:08:00', null);
-INSERT INTO `t_mail` VALUES ('27', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 01:10:45', '2019-05-15 01:10:46', null);
-INSERT INTO `t_mail` VALUES ('28', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 09:29:17', '2019-05-15 09:29:18', null);
-INSERT INTO `t_mail` VALUES ('30', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 09:44:00', '2019-05-15 09:44:07', null);
-INSERT INTO `t_mail` VALUES ('31', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 09:44:07', '2019-05-15 09:44:12', null);
-INSERT INTO `t_mail` VALUES ('32', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 09:44:13', '2019-05-15 09:44:18', null);
-INSERT INTO `t_mail` VALUES ('33', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 09:44:19', '2019-05-15 09:44:26', null);
-INSERT INTO `t_mail` VALUES ('34', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 10:37:28', '2019-05-15 10:37:50', null);
-INSERT INTO `t_mail` VALUES ('35', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 10:39:14', '2019-05-15 10:39:24', null);
-INSERT INTO `t_mail` VALUES ('36', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 10:42:33', '2019-05-15 10:42:38', null);
-INSERT INTO `t_mail` VALUES ('37', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 10:48:12', '2019-05-15 10:48:21', null);
-INSERT INTO `t_mail` VALUES ('39', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 10:57:33', '2019-05-15 10:57:45', null);
-INSERT INTO `t_mail` VALUES ('40', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 13:38:29', '2019-05-15 13:39:02', null);
-INSERT INTO `t_mail` VALUES ('41', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 13:40:22', '2019-05-15 13:40:29', null);
-INSERT INTO `t_mail` VALUES ('42', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 13:42:24', '2019-05-15 13:42:24', null);
-INSERT INTO `t_mail` VALUES ('43', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 13:46:04', '2019-05-15 13:46:22', null);
-INSERT INTO `t_mail` VALUES ('44', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 14:01:15', '2019-05-15 14:01:17', null);
-INSERT INTO `t_mail` VALUES ('45', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 14:03:36', '2019-05-15 14:03:37', null);
-INSERT INTO `t_mail` VALUES ('46', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 14:08:04', '2019-05-15 14:08:20', null);
-INSERT INTO `t_mail` VALUES ('47', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 14:09:08', '2019-05-15 14:09:16', null);
-INSERT INTO `t_mail` VALUES ('48', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 14:09:57', '2019-05-15 14:10:13', null);
-INSERT INTO `t_mail` VALUES ('49', 'REACT中后台找回密码', 'info', 'sent', '2019-05-15 14:31:20', '2019-05-15 14:31:20', null);
-INSERT INTO `t_mail` VALUES ('50', 'REACT中后台找回密码', 'info', 'sent', '2019-05-20 11:21:39', '2019-05-20 11:21:40', null);
-INSERT INTO `t_mail` VALUES ('51', 'REACT中后台找回密码', 'info', 'sent', '2019-05-20 11:31:20', '2019-05-20 11:31:30', null);
+INSERT INTO `t_mail` VALUES ('4', 'REACT中后台找回密码', 'info', 'sent', '20190514185130', '20190514185205', null);
+INSERT INTO `t_mail` VALUES ('5', 'REACT中后台找回密码', 'info', 'sent', '20190514190358', '20190514190426', null);
+INSERT INTO `t_mail` VALUES ('7', 'REACT中后台找回密码', 'info', 'sent', '20190514220549', '20190514220551', null);
+INSERT INTO `t_mail` VALUES ('9', 'REACT中后台找回密码', 'info', 'sent', '20190514221712', '20190514221715', null);
+INSERT INTO `t_mail` VALUES ('10', 'REACT中后台找回密码', 'info', 'sent', '20190514224011', '20190514224014', null);
+INSERT INTO `t_mail` VALUES ('13', 'REACT中后台找回密码', 'info', 'sent', '20190515004755', '20190515004757', null);
+INSERT INTO `t_mail` VALUES ('14', 'REACT中后台找回密码', 'info', 'sent', '20190515004938', '20190515004939', null);
+INSERT INTO `t_mail` VALUES ('15', 'REACT中后台找回密码', 'info', 'sent', '20190515004948', '20190515004948', null);
+INSERT INTO `t_mail` VALUES ('16', 'REACT中后台找回密码', 'info', 'sent', '20190515005528', '20190515005541', null);
+INSERT INTO `t_mail` VALUES ('17', 'REACT中后台找回密码', 'info', 'sent', '20190515005556', '20190515005644', null);
+INSERT INTO `t_mail` VALUES ('20', 'REACT中后台找回密码', 'info', 'sent', '20190515010250', '20190515010307', null);
+INSERT INTO `t_mail` VALUES ('22', 'REACT中后台找回密码', 'info', 'sent', '20190515010523', '20190515010524', null);
+INSERT INTO `t_mail` VALUES ('23', 'REACT中后台找回密码', 'info', 'sent', '20190515010535', '20190515010541', null);
+INSERT INTO `t_mail` VALUES ('24', 'REACT中后台找回密码', 'info', 'sent', '20190515010551', '20190515010551', null);
+INSERT INTO `t_mail` VALUES ('26', 'REACT中后台找回密码', 'info', 'sent', '20190515010758', '20190515010800', null);
+INSERT INTO `t_mail` VALUES ('27', 'REACT中后台找回密码', 'info', 'sent', '20190515011045', '20190515011046', null);
+INSERT INTO `t_mail` VALUES ('28', 'REACT中后台找回密码', 'info', 'sent', '20190515092917', '20190515092918', null);
+INSERT INTO `t_mail` VALUES ('30', 'REACT中后台找回密码', 'info', 'sent', '20190515094400', '20190515094407', null);
+INSERT INTO `t_mail` VALUES ('31', 'REACT中后台找回密码', 'info', 'sent', '20190515094407', '20190515094412', null);
+INSERT INTO `t_mail` VALUES ('32', 'REACT中后台找回密码', 'info', 'sent', '20190515094413', '20190515094418', null);
+INSERT INTO `t_mail` VALUES ('33', 'REACT中后台找回密码', 'info', 'sent', '20190515094419', '20190515094426', null);
+INSERT INTO `t_mail` VALUES ('34', 'REACT中后台找回密码', 'info', 'sent', '20190515103728', '20190515103750', null);
+INSERT INTO `t_mail` VALUES ('35', 'REACT中后台找回密码', 'info', 'sent', '20190515103914', '20190515103924', null);
+INSERT INTO `t_mail` VALUES ('36', 'REACT中后台找回密码', 'info', 'sent', '20190515104233', '20190515104238', null);
+INSERT INTO `t_mail` VALUES ('37', 'REACT中后台找回密码', 'info', 'sent', '20190515104812', '20190515104821', null);
+INSERT INTO `t_mail` VALUES ('39', 'REACT中后台找回密码', 'info', 'sent', '20190515105733', '20190515105745', null);
+INSERT INTO `t_mail` VALUES ('40', 'REACT中后台找回密码', 'info', 'sent', '20190515133829', '20190515133902', null);
+INSERT INTO `t_mail` VALUES ('41', 'REACT中后台找回密码', 'info', 'sent', '20190515134022', '20190515134029', null);
+INSERT INTO `t_mail` VALUES ('42', 'REACT中后台找回密码', 'info', 'sent', '20190515134224', '20190515134224', null);
+INSERT INTO `t_mail` VALUES ('43', 'REACT中后台找回密码', 'info', 'sent', '20190515134604', '20190515134622', null);
+INSERT INTO `t_mail` VALUES ('44', 'REACT中后台找回密码', 'info', 'sent', '20190515140115', '20190515140117', null);
+INSERT INTO `t_mail` VALUES ('45', 'REACT中后台找回密码', 'info', 'sent', '20190515140336', '20190515140337', null);
+INSERT INTO `t_mail` VALUES ('46', 'REACT中后台找回密码', 'info', 'sent', '20190515140804', '20190515140820', null);
+INSERT INTO `t_mail` VALUES ('47', 'REACT中后台找回密码', 'info', 'sent', '20190515140908', '20190515140916', null);
+INSERT INTO `t_mail` VALUES ('48', 'REACT中后台找回密码', 'info', 'sent', '20190515140957', '20190515141013', null);
+INSERT INTO `t_mail` VALUES ('49', 'REACT中后台找回密码', 'info', 'sent', '20190515143120', '20190515143120', null);
+INSERT INTO `t_mail` VALUES ('50', 'REACT中后台找回密码', 'info', 'sent', '20190520112139', '20190520112140', null);
+INSERT INTO `t_mail` VALUES ('51', 'REACT中后台找回密码', 'info', 'sent', '20190520113120', '20190520113130', null);
 
 -- ----------------------------
 -- Table structure for t_mail_attachment_link
@@ -629,7 +629,7 @@ CREATE TABLE `t_resource` (
   `resource_method` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '请求方法',
   `resource_desc` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '资源描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_resource
@@ -696,6 +696,7 @@ INSERT INTO `t_resource` VALUES ('63', 'http', '个人信息', '100', '/userinfo
 INSERT INTO `t_resource` VALUES ('65', 'http', '权限', '2550', '/resource/categorys', 'GET', '查询所有资源类别');
 INSERT INTO `t_resource` VALUES ('66', 'http', '权限', '2570', '/resource/all', 'GET', '查询所有资源');
 INSERT INTO `t_resource` VALUES ('67', 'http', '角色', '2050', '/role/all', 'GET', '查询所有角色');
+INSERT INTO `t_resource` VALUES ('68', 'http', '用户', '1550', '/user/all', 'GET', '查询所有用户');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -708,7 +709,7 @@ CREATE TABLE `t_role` (
   `role_seq` int(5) DEFAULT NULL COMMENT '角色顺序',
   PRIMARY KEY (`id`),
   UNIQUE KEY `t_role_idx_role_name` (`role_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_role
@@ -720,6 +721,18 @@ INSERT INTO `t_role` VALUES ('4', 'ROLE_HR', '人资', '400');
 INSERT INTO `t_role` VALUES ('5', 'ROLE_STAFF', '员工', '500');
 INSERT INTO `t_role` VALUES ('6', 'ROLE_LOGIN', '登录用户', '600');
 INSERT INTO `t_role` VALUES ('7', 'ROLE_GUEST', '游客', '700');
+INSERT INTO `t_role` VALUES ('8', 'ROLE_PERSONAL', '个人信息管理', '800');
+INSERT INTO `t_role` VALUES ('9', 'ROLE_BASE', '基础数据查询', '900');
+INSERT INTO `t_role` VALUES ('10', 'ROLE_DEPT', '部门管理', '1000');
+INSERT INTO `t_role` VALUES ('11', 'ROLE_ATTACHMENT', '附件管理', '1100');
+INSERT INTO `t_role` VALUES ('12', 'ROLE_USER', '用户管理', '1200');
+INSERT INTO `t_role` VALUES ('13', 'ROLE_ROLE', '角色管理', '1300');
+INSERT INTO `t_role` VALUES ('14', 'ROLE_RESOURCE', '权限管理', '1400');
+INSERT INTO `t_role` VALUES ('15', 'ROLE_CHAT', 'websocket点对点聊天', '1500');
+INSERT INTO `t_role` VALUES ('16', 'ROLE_SUBSCRIBE', '订阅广播消息', '1600');
+INSERT INTO `t_role` VALUES ('17', 'ROLE_BROADCAST', '发送广播消息', '1700');
+INSERT INTO `t_role` VALUES ('18', 'ROLE_SCHEDULER', '定时任务管理', '1800');
+INSERT INTO `t_role` VALUES ('19', 'ROLE_MAIL', '邮件管理', '1900');
 
 -- ----------------------------
 -- Table structure for t_role_resource_link
@@ -740,124 +753,191 @@ CREATE TABLE `t_role_resource_link` (
 INSERT INTO `t_role_resource_link` VALUES ('1', '1');
 INSERT INTO `t_role_resource_link` VALUES ('5', '1');
 INSERT INTO `t_role_resource_link` VALUES ('6', '1');
+INSERT INTO `t_role_resource_link` VALUES ('11', '1');
 INSERT INTO `t_role_resource_link` VALUES ('1', '2');
 INSERT INTO `t_role_resource_link` VALUES ('5', '2');
 INSERT INTO `t_role_resource_link` VALUES ('6', '2');
+INSERT INTO `t_role_resource_link` VALUES ('11', '2');
 INSERT INTO `t_role_resource_link` VALUES ('1', '3');
+INSERT INTO `t_role_resource_link` VALUES ('11', '3');
 INSERT INTO `t_role_resource_link` VALUES ('1', '4');
 INSERT INTO `t_role_resource_link` VALUES ('2', '4');
 INSERT INTO `t_role_resource_link` VALUES ('4', '4');
 INSERT INTO `t_role_resource_link` VALUES ('5', '4');
 INSERT INTO `t_role_resource_link` VALUES ('6', '4');
-INSERT INTO `t_role_resource_link` VALUES ('7', '4');
+INSERT INTO `t_role_resource_link` VALUES ('10', '4');
 INSERT INTO `t_role_resource_link` VALUES ('1', '5');
 INSERT INTO `t_role_resource_link` VALUES ('2', '5');
 INSERT INTO `t_role_resource_link` VALUES ('4', '5');
 INSERT INTO `t_role_resource_link` VALUES ('5', '5');
 INSERT INTO `t_role_resource_link` VALUES ('6', '5');
+INSERT INTO `t_role_resource_link` VALUES ('10', '5');
 INSERT INTO `t_role_resource_link` VALUES ('1', '6');
 INSERT INTO `t_role_resource_link` VALUES ('2', '6');
 INSERT INTO `t_role_resource_link` VALUES ('4', '6');
+INSERT INTO `t_role_resource_link` VALUES ('10', '6');
 INSERT INTO `t_role_resource_link` VALUES ('1', '7');
 INSERT INTO `t_role_resource_link` VALUES ('2', '7');
 INSERT INTO `t_role_resource_link` VALUES ('4', '7');
+INSERT INTO `t_role_resource_link` VALUES ('10', '7');
 INSERT INTO `t_role_resource_link` VALUES ('1', '8');
 INSERT INTO `t_role_resource_link` VALUES ('2', '8');
 INSERT INTO `t_role_resource_link` VALUES ('4', '8');
+INSERT INTO `t_role_resource_link` VALUES ('10', '8');
 INSERT INTO `t_role_resource_link` VALUES ('1', '9');
 INSERT INTO `t_role_resource_link` VALUES ('3', '9');
 INSERT INTO `t_role_resource_link` VALUES ('5', '9');
+INSERT INTO `t_role_resource_link` VALUES ('11', '9');
 INSERT INTO `t_role_resource_link` VALUES ('1', '10');
 INSERT INTO `t_role_resource_link` VALUES ('2', '10');
 INSERT INTO `t_role_resource_link` VALUES ('4', '10');
 INSERT INTO `t_role_resource_link` VALUES ('5', '10');
+INSERT INTO `t_role_resource_link` VALUES ('14', '10');
 INSERT INTO `t_role_resource_link` VALUES ('1', '11');
 INSERT INTO `t_role_resource_link` VALUES ('2', '11');
 INSERT INTO `t_role_resource_link` VALUES ('4', '11');
 INSERT INTO `t_role_resource_link` VALUES ('5', '11');
+INSERT INTO `t_role_resource_link` VALUES ('14', '11');
 INSERT INTO `t_role_resource_link` VALUES ('1', '12');
 INSERT INTO `t_role_resource_link` VALUES ('2', '12');
 INSERT INTO `t_role_resource_link` VALUES ('4', '12');
+INSERT INTO `t_role_resource_link` VALUES ('14', '12');
 INSERT INTO `t_role_resource_link` VALUES ('1', '13');
 INSERT INTO `t_role_resource_link` VALUES ('2', '13');
 INSERT INTO `t_role_resource_link` VALUES ('4', '13');
+INSERT INTO `t_role_resource_link` VALUES ('14', '13');
 INSERT INTO `t_role_resource_link` VALUES ('1', '14');
 INSERT INTO `t_role_resource_link` VALUES ('2', '14');
 INSERT INTO `t_role_resource_link` VALUES ('4', '14');
+INSERT INTO `t_role_resource_link` VALUES ('14', '14');
 INSERT INTO `t_role_resource_link` VALUES ('1', '15');
 INSERT INTO `t_role_resource_link` VALUES ('2', '15');
 INSERT INTO `t_role_resource_link` VALUES ('4', '15');
 INSERT INTO `t_role_resource_link` VALUES ('5', '15');
+INSERT INTO `t_role_resource_link` VALUES ('13', '15');
 INSERT INTO `t_role_resource_link` VALUES ('1', '16');
 INSERT INTO `t_role_resource_link` VALUES ('2', '16');
 INSERT INTO `t_role_resource_link` VALUES ('4', '16');
 INSERT INTO `t_role_resource_link` VALUES ('5', '16');
+INSERT INTO `t_role_resource_link` VALUES ('13', '16');
 INSERT INTO `t_role_resource_link` VALUES ('1', '17');
 INSERT INTO `t_role_resource_link` VALUES ('2', '17');
 INSERT INTO `t_role_resource_link` VALUES ('4', '17');
+INSERT INTO `t_role_resource_link` VALUES ('13', '17');
 INSERT INTO `t_role_resource_link` VALUES ('1', '18');
 INSERT INTO `t_role_resource_link` VALUES ('2', '18');
 INSERT INTO `t_role_resource_link` VALUES ('4', '18');
+INSERT INTO `t_role_resource_link` VALUES ('13', '18');
 INSERT INTO `t_role_resource_link` VALUES ('1', '19');
 INSERT INTO `t_role_resource_link` VALUES ('2', '19');
 INSERT INTO `t_role_resource_link` VALUES ('4', '19');
+INSERT INTO `t_role_resource_link` VALUES ('13', '19');
 INSERT INTO `t_role_resource_link` VALUES ('1', '20');
 INSERT INTO `t_role_resource_link` VALUES ('2', '20');
 INSERT INTO `t_role_resource_link` VALUES ('3', '20');
 INSERT INTO `t_role_resource_link` VALUES ('4', '20');
 INSERT INTO `t_role_resource_link` VALUES ('5', '20');
+INSERT INTO `t_role_resource_link` VALUES ('12', '20');
 INSERT INTO `t_role_resource_link` VALUES ('1', '21');
 INSERT INTO `t_role_resource_link` VALUES ('2', '21');
 INSERT INTO `t_role_resource_link` VALUES ('3', '21');
 INSERT INTO `t_role_resource_link` VALUES ('4', '21');
 INSERT INTO `t_role_resource_link` VALUES ('5', '21');
+INSERT INTO `t_role_resource_link` VALUES ('12', '21');
 INSERT INTO `t_role_resource_link` VALUES ('1', '22');
 INSERT INTO `t_role_resource_link` VALUES ('2', '22');
 INSERT INTO `t_role_resource_link` VALUES ('4', '22');
+INSERT INTO `t_role_resource_link` VALUES ('12', '22');
 INSERT INTO `t_role_resource_link` VALUES ('1', '23');
 INSERT INTO `t_role_resource_link` VALUES ('2', '23');
 INSERT INTO `t_role_resource_link` VALUES ('4', '23');
 INSERT INTO `t_role_resource_link` VALUES ('6', '23');
+INSERT INTO `t_role_resource_link` VALUES ('12', '23');
 INSERT INTO `t_role_resource_link` VALUES ('1', '24');
 INSERT INTO `t_role_resource_link` VALUES ('2', '24');
 INSERT INTO `t_role_resource_link` VALUES ('4', '24');
+INSERT INTO `t_role_resource_link` VALUES ('12', '24');
 INSERT INTO `t_role_resource_link` VALUES ('1', '25');
+INSERT INTO `t_role_resource_link` VALUES ('15', '25');
+INSERT INTO `t_role_resource_link` VALUES ('16', '25');
+INSERT INTO `t_role_resource_link` VALUES ('17', '25');
 INSERT INTO `t_role_resource_link` VALUES ('1', '26');
+INSERT INTO `t_role_resource_link` VALUES ('16', '26');
+INSERT INTO `t_role_resource_link` VALUES ('17', '26');
 INSERT INTO `t_role_resource_link` VALUES ('1', '28');
+INSERT INTO `t_role_resource_link` VALUES ('17', '28');
 INSERT INTO `t_role_resource_link` VALUES ('1', '29');
+INSERT INTO `t_role_resource_link` VALUES ('16', '29');
+INSERT INTO `t_role_resource_link` VALUES ('17', '29');
 INSERT INTO `t_role_resource_link` VALUES ('1', '30');
+INSERT INTO `t_role_resource_link` VALUES ('16', '30');
+INSERT INTO `t_role_resource_link` VALUES ('17', '30');
 INSERT INTO `t_role_resource_link` VALUES ('1', '31');
+INSERT INTO `t_role_resource_link` VALUES ('15', '31');
 INSERT INTO `t_role_resource_link` VALUES ('1', '32');
+INSERT INTO `t_role_resource_link` VALUES ('15', '32');
 INSERT INTO `t_role_resource_link` VALUES ('1', '33');
+INSERT INTO `t_role_resource_link` VALUES ('15', '33');
 INSERT INTO `t_role_resource_link` VALUES ('1', '34');
+INSERT INTO `t_role_resource_link` VALUES ('15', '34');
 INSERT INTO `t_role_resource_link` VALUES ('1', '35');
+INSERT INTO `t_role_resource_link` VALUES ('15', '35');
 INSERT INTO `t_role_resource_link` VALUES ('1', '36');
+INSERT INTO `t_role_resource_link` VALUES ('15', '36');
 INSERT INTO `t_role_resource_link` VALUES ('1', '39');
+INSERT INTO `t_role_resource_link` VALUES ('18', '39');
 INSERT INTO `t_role_resource_link` VALUES ('1', '40');
+INSERT INTO `t_role_resource_link` VALUES ('18', '40');
 INSERT INTO `t_role_resource_link` VALUES ('1', '41');
+INSERT INTO `t_role_resource_link` VALUES ('18', '41');
 INSERT INTO `t_role_resource_link` VALUES ('1', '42');
+INSERT INTO `t_role_resource_link` VALUES ('18', '42');
 INSERT INTO `t_role_resource_link` VALUES ('1', '43');
+INSERT INTO `t_role_resource_link` VALUES ('18', '43');
 INSERT INTO `t_role_resource_link` VALUES ('1', '44');
+INSERT INTO `t_role_resource_link` VALUES ('18', '44');
 INSERT INTO `t_role_resource_link` VALUES ('1', '45');
+INSERT INTO `t_role_resource_link` VALUES ('18', '45');
 INSERT INTO `t_role_resource_link` VALUES ('1', '46');
+INSERT INTO `t_role_resource_link` VALUES ('18', '46');
 INSERT INTO `t_role_resource_link` VALUES ('1', '47');
+INSERT INTO `t_role_resource_link` VALUES ('18', '47');
 INSERT INTO `t_role_resource_link` VALUES ('1', '48');
+INSERT INTO `t_role_resource_link` VALUES ('18', '48');
 INSERT INTO `t_role_resource_link` VALUES ('1', '49');
+INSERT INTO `t_role_resource_link` VALUES ('18', '49');
 INSERT INTO `t_role_resource_link` VALUES ('1', '50');
+INSERT INTO `t_role_resource_link` VALUES ('18', '50');
 INSERT INTO `t_role_resource_link` VALUES ('1', '51');
+INSERT INTO `t_role_resource_link` VALUES ('19', '51');
 INSERT INTO `t_role_resource_link` VALUES ('1', '52');
+INSERT INTO `t_role_resource_link` VALUES ('19', '52');
 INSERT INTO `t_role_resource_link` VALUES ('1', '53');
+INSERT INTO `t_role_resource_link` VALUES ('19', '53');
 INSERT INTO `t_role_resource_link` VALUES ('1', '54');
+INSERT INTO `t_role_resource_link` VALUES ('19', '54');
 INSERT INTO `t_role_resource_link` VALUES ('1', '55');
+INSERT INTO `t_role_resource_link` VALUES ('19', '55');
 INSERT INTO `t_role_resource_link` VALUES ('1', '56');
+INSERT INTO `t_role_resource_link` VALUES ('19', '56');
 INSERT INTO `t_role_resource_link` VALUES ('6', '57');
+INSERT INTO `t_role_resource_link` VALUES ('8', '57');
 INSERT INTO `t_role_resource_link` VALUES ('6', '59');
+INSERT INTO `t_role_resource_link` VALUES ('8', '59');
 INSERT INTO `t_role_resource_link` VALUES ('7', '60');
 INSERT INTO `t_role_resource_link` VALUES ('7', '61');
+INSERT INTO `t_role_resource_link` VALUES ('1', '62');
 INSERT INTO `t_role_resource_link` VALUES ('6', '62');
+INSERT INTO `t_role_resource_link` VALUES ('9', '62');
+INSERT INTO `t_role_resource_link` VALUES ('7', '63');
 INSERT INTO `t_role_resource_link` VALUES ('1', '65');
+INSERT INTO `t_role_resource_link` VALUES ('9', '65');
 INSERT INTO `t_role_resource_link` VALUES ('1', '66');
+INSERT INTO `t_role_resource_link` VALUES ('9', '66');
 INSERT INTO `t_role_resource_link` VALUES ('1', '67');
+INSERT INTO `t_role_resource_link` VALUES ('9', '67');
+INSERT INTO `t_role_resource_link` VALUES ('1', '68');
+INSERT INTO `t_role_resource_link` VALUES ('9', '68');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -869,21 +949,26 @@ CREATE TABLE `t_user` (
   `password` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '密码',
   `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '邮箱',
   `nickname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '昵称',
-  `birth` date DEFAULT NULL COMMENT '生日',
-  `logintime` timestamp NULL DEFAULT NULL COMMENT '登陆时间',
+  `head_img` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '头像图片',
+  `sex` tinyint(1) DEFAULT NULL COMMENT '性别',
+  `birth` bigint(20) DEFAULT NULL COMMENT '生日',
+  `logintime` bigint(20) DEFAULT NULL COMMENT '登陆时间',
   `dept_id` int(11) DEFAULT NULL COMMENT '部门id',
   PRIMARY KEY (`id`),
   UNIQUE KEY `t_user_idx_username` (`username`),
   UNIQUE KEY `t_user_uk_email` (`email`),
   KEY `t_user_fk_dept_id` (`dept_id`),
   CONSTRAINT `t_user_fk_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `t_dept` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$LDF6/2iT/I/giJfRFW97deoMJ8lyGnCTFJ8TtAktnoTL/.8bWh7b2', 'xuelingkang@163.com', '薛凌康', '1990-08-16', '2019-05-20 17:51:28', '1');
-INSERT INTO `t_user` VALUES ('10', 'manager', '$2a$10$SdJnQ0gss13ZiaJAZvnxgeouf4RrbnN4YjoJiidTNzOGPKiHcwl4a', '574290057@qq.com', '总经理', '1990-08-16', '2019-05-19 04:17:11', '1');
+INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$LDF6/2iT/I/giJfRFW97deoMJ8lyGnCTFJ8TtAktnoTL/.8bWh7b2', 'xuelingkang@163.com', '薛凌康', null, '1', '19900816000000', '20190521171702', '1');
+INSERT INTO `t_user` VALUES ('10', 'manager', '$2a$10$SdJnQ0gss13ZiaJAZvnxgeouf4RrbnN4YjoJiidTNzOGPKiHcwl4a', '574290057@qq.com', '总经理', null, '1', '19900816000000', '20190519041711', '1');
+INSERT INTO `t_user` VALUES ('11', 'ceshi', '$2a$10$25zbIW3VAhDL8FaAKBJAoeBSSWE.q0O6z7tWrGvPUnHsFEo20o6cO', 'ceshi@123.com', '测试', null, '1', '20190521000000', null, '1');
+INSERT INTO `t_user` VALUES ('12', 'ceshi2', '$2a$10$229dz7K46KBQHmFEPjNrbuvB9BZLw9zJuO3IqGqTHWon3GPjbbjZi', 'ceshi2@163.com', '测试', null, '0', '20190521000000', null, '1');
+INSERT INTO `t_user` VALUES ('13', 'ceshi3', '$2a$10$y17Jw/f0azju254jn.wJiOig.6uNB.6G2Nq8Nys.OJNLzZNNoujIG', 'ceshi@1233.com', 'ceshi', null, '1', '19900816172841', null, '1');
 
 -- ----------------------------
 -- Table structure for t_user_role_link
@@ -904,6 +989,9 @@ CREATE TABLE `t_user_role_link` (
 INSERT INTO `t_user_role_link` VALUES ('9', '1');
 INSERT INTO `t_user_role_link` VALUES ('9', '6');
 INSERT INTO `t_user_role_link` VALUES ('10', '6');
+INSERT INTO `t_user_role_link` VALUES ('11', '8');
+INSERT INTO `t_user_role_link` VALUES ('12', '8');
+INSERT INTO `t_user_role_link` VALUES ('13', '8');
 
 -- ----------------------------
 -- View structure for t_mail_to_users

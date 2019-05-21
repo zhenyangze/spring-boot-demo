@@ -4,12 +4,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.group.Insert;
 import com.example.group.Update;
-import com.example.params.Params;
 import com.example.model.po.ChatMessage;
 import com.example.model.po.User;
 import com.example.model.vo.ChatMessageVO;
 import com.example.model.vo.ResultVO;
 import com.example.model.vo.UserVO;
+import com.example.params.Params;
 import com.example.service.IChatMessageService;
 import com.example.util.MessageHeadersBuilder;
 import com.example.util.ModelUtil;
@@ -24,7 +24,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
 import java.util.Set;
 
 import static com.example.model.vo.ResultVO.SUCCESS;
@@ -90,7 +89,7 @@ public class ChatMessageController {
     @ApiOperation(value = "发送消息")
     public ResultVO save(@Validated({Insert.class}) ChatMessageVO chatMessageVO) {
         ChatMessage chatMessage = (ChatMessage) ModelUtil.copy(chatMessageVO, new ModelUtil.Mapping(ChatMessageVO.class, ChatMessage.class));
-        Timestamp now = new Timestamp(System.currentTimeMillis());
+        long now = System.currentTimeMillis();
         chatMessage.setSendTime(now);
         User currentUser = chatMessageService.currentUser();
         chatMessage.setSendUser(currentUser);

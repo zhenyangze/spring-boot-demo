@@ -131,15 +131,16 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
         // 查询redis中是否已存在验证码
         String key = RETRIEVE_PASSWORD_VERIFICATION_PREFIX+user.getUsername();
         Verification verification = (Verification) redisTemplate.opsForValue().get(key);
+        long now = System.currentTimeMillis();
         if (verification!=null) {
             // 检查是否到时间
-            Date nextCanSendTime = verification.getNextCanSendTime();
-            if (nextCanSendTime.after(new Date())) {
+            long nextCanSendTime = verification.getNextCanSendTime();
+            if (nextCanSendTime > now) {
                 throw new LogicException("发送过快，请稍后再试！");
             }
         }
         String code = RandomStringUtils.randomAlphanumeric(6);
-        Date nextCanSendTime = new Date(System.currentTimeMillis()+minWait*1000);
+        long nextCanSendTime = now + minWait*1000;
         Verification verification_ = new Verification();
         verification_.setCode(code);
         verification_.setNextCanSendTime(nextCanSendTime);

@@ -18,7 +18,6 @@ import org.springframework.web.socket.handler.ConcurrentWebSocketSessionDecorato
 import org.springframework.web.socket.messaging.StompSubProtocolHandler;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 
@@ -105,7 +104,7 @@ public class AccessDecisionFromClientInterceptor implements FromClientIntercepto
     // 通知用户
     private void notifyUser(WebSocketSession session, String message) {
         ChatMessageVO chatMessageVO = new ChatMessageVO();
-        chatMessageVO.setSendTime(new Timestamp(System.currentTimeMillis()));
+        chatMessageVO.setSendTime(System.currentTimeMillis());
         chatMessageVO.setContent(message);
         ConcurrentWebSocketSessionDecorator decorator = new ConcurrentWebSocketSessionDecorator(session, -1, -1);
         try {

@@ -13,7 +13,6 @@ import lombok.Data;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
-import java.sql.Timestamp;
 import java.util.List;
 
 // 只实现cron触发器
@@ -31,9 +30,9 @@ public class Job extends BaseModel {
     private String jobDesc;
     @ApiModelProperty(value = "开始时间")
     @NotNull(groups = {JobInsert.class, JobUpdate.class}, message = "开始时间不能为空")
-    private Timestamp startTime;
+    private Long startTime;
     @ApiModelProperty(value = "结束时间")
-    private Timestamp endTime;
+    private Long endTime;
     @ApiModelProperty(value = "cron表达式")
     @NotNull(groups = {JobInsert.class, JobUpdate.class}, message = "cron表达式不能为空")
     private String cronExpression;
@@ -68,11 +67,11 @@ public class Job extends BaseModel {
     @TableField(exist = false)
     @ApiModelProperty(value = "下次触发时间")
     @IgnoreSwaggerParameter
-    private Timestamp nextTime;
+    private Long nextTime;
     @TableField(exist = false)
     @ApiModelProperty(value = "上次触发时间")
     @IgnoreSwaggerParameter
-    private Timestamp prevTime;
+    private Long prevTime;
     @TableField(exist = false)
     @ApiModelProperty(value = "任务模板")
     @IgnoreSwaggerParameter

@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Timestamp;
 
 import static com.example.model.vo.ResultVO.SUCCESS;
 
@@ -39,7 +38,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
         ResponseUtil.println(response, resultVO);
         // 设置登录时间
         User user = userDetails.getUser();
-        user.setLogintime(new Timestamp(System.currentTimeMillis()));
+        user.setLogintime(System.currentTimeMillis());
         userService.updateById(user);
     }
 

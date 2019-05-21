@@ -29,8 +29,8 @@
         <result column="t_job_trigger_name" property="triggerName" />
         <result column="t_job_trigger_group" property="triggerGroup" />
         <result column="qrtz_triggers_trigger_state" property="triggerState" />
-        <result column="qrtz_triggers_next_fire_time" property="nextTime" typeHandler="com.example.typehandler.BigInt2TimestampTypeHandler" />
-        <result column="qrtz_triggers_prev_fire_time" property="prevTime" typeHandler="com.example.typehandler.BigInt2TimestampTypeHandler" />
+        <result column="qrtz_triggers_next_fire_time" property="nextTime" />
+        <result column="qrtz_triggers_prev_fire_time" property="prevTime" />
     </resultMap>
 
     <resultMap id="resultMap" type="com.example.model.po.Job" extends="baseResultMap">

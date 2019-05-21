@@ -18,8 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -132,9 +132,9 @@ public class JobService extends BaseService<JobMapper, Job> implements IJobServi
         // 触发器分组
         String triggerGroup = TRIGGER_PREFIX + group;
         // 开始时间
-        Timestamp startTime = job.getStartTime();
+        Long startTime = job.getStartTime();
         // 结束时间
-        Timestamp endTime = job.getEndTime();
+        Long endTime = job.getEndTime();
         // cron
         CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
         // 创建任务
@@ -161,8 +161,8 @@ public class JobService extends BaseService<JobMapper, Job> implements IJobServi
         Trigger trigger = TriggerBuilder
                 .newTrigger()
                 .withIdentity(triggerName, triggerGroup)
-                .startAt(startTime)
-                .endAt(endTime)
+                .startAt(new Date(startTime))
+                .endAt(new Date(endTime))
                 .withSchedule(scheduleBuilder)
                 .build();
         try {

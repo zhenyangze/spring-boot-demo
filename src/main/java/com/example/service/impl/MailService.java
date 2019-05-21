@@ -24,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +59,7 @@ public class MailService extends BaseService<MailMapper, Mail> implements IMailS
     @Transactional
     public void customSave(Mail mail) {
         // 保存邮件
-        Timestamp now = new Timestamp(System.currentTimeMillis());
+        long now = System.currentTimeMillis();
         mail.setCreateTime(now);
         mail.setMailStatus(DRAFT_STATUS);
         baseMapper.insert(mail);
@@ -159,7 +158,7 @@ public class MailService extends BaseService<MailMapper, Mail> implements IMailS
         } catch (MessagingException e) {
             throw new ProjectException("发送邮件失败！", e);
         }
-        Timestamp now = new Timestamp(System.currentTimeMillis());
+        long now = System.currentTimeMillis();
         mail.setSendTime(now);
         mail.setMailStatus(SENT_STATUS);
         baseMapper.updateById(mail);

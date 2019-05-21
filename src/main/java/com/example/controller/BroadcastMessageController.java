@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
 import java.util.List;
 
 import static com.example.model.vo.ResultVO.SUCCESS;
@@ -84,7 +83,7 @@ public class BroadcastMessageController {
         BroadcastMessage broadcastMessage = (BroadcastMessage) ModelUtil.copy(broadcastMessageVO,
                 new ModelUtil.Mapping(BroadcastMessageVO.class, BroadcastMessage.class));
 
-        Timestamp now = new Timestamp(System.currentTimeMillis());
+        long now = System.currentTimeMillis();
         broadcastMessage.setSendTime(now);
         User currentUser = broadcastMessageService.currentUser();
         broadcastMessage.setSendUser(currentUser);

@@ -12,7 +12,6 @@ import lombok.Data;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
-import java.sql.Timestamp;
 import java.util.List;
 
 @Data
@@ -35,10 +34,10 @@ public class Mail extends BaseModel {
     private String mailStatus;
     @ApiModelProperty(value = "创建时间")
     @Null(groups = {MailInsert.class, MailUpdate.class}, message = "创建时间必须为空")
-    private Timestamp createTime;
+    private Long createTime;
     @ApiModelProperty(value = "发送时间")
     @Null(groups = {MailInsert.class, MailUpdate.class}, message = "发送时间必须为空")
-    private Timestamp sendTime;
+    private Long sendTime;
     @ApiModelProperty(value = "发送用户id")
     @NotNull(groups = {MailInsert.class, MailUpdate.class}, message = "发送用户id不能为空")
     private Integer sendUserId;

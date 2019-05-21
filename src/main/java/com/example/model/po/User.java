@@ -14,7 +14,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -50,12 +49,12 @@ public class User extends BaseModel {
     @NotNull(groups = {UserInsert.class, UserUpdate.class, UserInfoUpdate.class}, message = "性别不能为空")
     @Null(groups = {UserInfoInsert.class}, message = "性别必须为空")
     private Integer sex;
-    @JSONField(format = "yyyy-MM-dd")
+    @JSONField(format = "yyyy-MM-dd'T'HH:mm:ss.SSS Z")
     @ApiModelProperty(value = "生日")
     @NotNull(groups = {UserInsert.class, UserUpdate.class, UserInfoUpdate.class}, message = "生日不能为空")
     @Null(groups = {UserInfoInsert.class}, message = "生日必须为空")
-    private Date birth;
-    @JSONField(format = "yyyy-MM-dd HH:mm")
+    private Timestamp birth;
+    @JSONField(format = "yyyy-MM-dd'T'HH:mm:ss.SSS Z")
     @ApiModelProperty(value="登录时间")
     @Null(groups = {UserInsert.class, UserUpdate.class, UserInfoInsert.class, UserInfoUpdate.class}, message = "登录时间必须为空")
     private Timestamp logintime;

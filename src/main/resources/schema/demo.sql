@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2019-05-21 23:09:24
+Date: 2019-05-22 16:55:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -166,7 +166,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011558445805369', '1558451357456', '10000');
+INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011558507187474', '1558515335987', '10000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -629,7 +629,7 @@ CREATE TABLE `t_resource` (
   `resource_method` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '请求方法',
   `resource_desc` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '资源描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_resource
@@ -643,11 +643,11 @@ INSERT INTO `t_resource` VALUES ('6', 'http', '部门', '900', '/dept', 'POST', 
 INSERT INTO `t_resource` VALUES ('7', 'http', '部门', '1000', '/dept', 'PUT', '更新部门');
 INSERT INTO `t_resource` VALUES ('8', 'http', '部门', '1100', '/dept/*', 'DELETE', '删除部门');
 INSERT INTO `t_resource` VALUES ('9', 'http', '附件', '1200', '/file/*/*', 'POST', '上传文件');
-INSERT INTO `t_resource` VALUES ('10', 'http', '权限', '2600', '/resource/*/*', 'GET', '资源列表');
-INSERT INTO `t_resource` VALUES ('11', 'http', '权限', '2700', '/resource/*', 'GET', '资源详情');
-INSERT INTO `t_resource` VALUES ('12', 'http', '权限', '2800', '/resource', 'POST', '保存资源');
-INSERT INTO `t_resource` VALUES ('13', 'http', '权限', '2900', '/resource', 'PUT', '更新资源');
-INSERT INTO `t_resource` VALUES ('14', 'http', '权限', '3000', '/resource/*', 'DELETE', '删除资源');
+INSERT INTO `t_resource` VALUES ('10', 'http', '权限', '2600', '/resource/*/*', 'GET', '权限列表');
+INSERT INTO `t_resource` VALUES ('11', 'http', '权限', '2700', '/resource/*', 'GET', '权限详情');
+INSERT INTO `t_resource` VALUES ('12', 'http', '权限', '2800', '/resource', 'POST', '保存权限');
+INSERT INTO `t_resource` VALUES ('13', 'http', '权限', '2900', '/resource', 'PUT', '更新权限');
+INSERT INTO `t_resource` VALUES ('14', 'http', '权限', '3000', '/resource/*', 'DELETE', '删除权限');
 INSERT INTO `t_resource` VALUES ('15', 'http', '角色', '2100', '/role/*/*', 'GET', '角色列表');
 INSERT INTO `t_resource` VALUES ('16', 'http', '角色', '2200', '/role/*', 'GET', '角色详情');
 INSERT INTO `t_resource` VALUES ('17', 'http', '角色', '2300', '/role', 'POST', '保存角色');
@@ -693,10 +693,11 @@ INSERT INTO `t_resource` VALUES ('60', 'http', '个人信息', '400', '/userinfo
 INSERT INTO `t_resource` VALUES ('61', 'http', '个人信息', '500', '/userinfo/retrieve_password', 'POST', '找回密码');
 INSERT INTO `t_resource` VALUES ('62', 'http', '部门', '600', '/dept/all', 'GET', '查询所有部门');
 INSERT INTO `t_resource` VALUES ('63', 'http', '个人信息', '100', '/userinfo', 'POST', '注册个人信息');
-INSERT INTO `t_resource` VALUES ('65', 'http', '权限', '2550', '/resource/categorys', 'GET', '查询所有资源类别');
-INSERT INTO `t_resource` VALUES ('66', 'http', '权限', '2570', '/resource/all', 'GET', '查询所有资源');
+INSERT INTO `t_resource` VALUES ('65', 'http', '权限', '2550', '/resource/categorys', 'GET', '查询所有权限类别');
+INSERT INTO `t_resource` VALUES ('66', 'http', '权限', '2570', '/resource/all', 'GET', '查询所有权限');
 INSERT INTO `t_resource` VALUES ('67', 'http', '角色', '2050', '/role/all', 'GET', '查询所有角色');
 INSERT INTO `t_resource` VALUES ('68', 'http', '用户', '1550', '/user/all', 'GET', '查询所有用户');
+INSERT INTO `t_resource` VALUES ('69', 'http', '个人信息', '250', '/userinfo', 'PATCH', '修改密码');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -707,26 +708,24 @@ CREATE TABLE `t_role` (
   `role_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '角色名称',
   `role_desc` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '角色描述',
   `role_seq` int(5) DEFAULT NULL COMMENT '角色顺序',
+  `is_default` tinyint(1) DEFAULT NULL COMMENT '是否新用户默认角色',
   PRIMARY KEY (`id`),
   UNIQUE KEY `t_role_idx_role_name` (`role_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_role
 -- ----------------------------
-INSERT INTO `t_role` VALUES ('7', 'ROLE_GUEST', '游客', '100');
-INSERT INTO `t_role` VALUES ('8', 'ROLE_PERSONAL', '个人信息管理', '200');
-INSERT INTO `t_role` VALUES ('9', 'ROLE_BASE', '基础数据查询', '300');
-INSERT INTO `t_role` VALUES ('10', 'ROLE_DEPT', '部门管理', '600');
-INSERT INTO `t_role` VALUES ('11', 'ROLE_ATTACHMENT', '附件管理', '700');
-INSERT INTO `t_role` VALUES ('12', 'ROLE_USER', '用户管理', '800');
-INSERT INTO `t_role` VALUES ('13', 'ROLE_ROLE', '角色管理', '900');
-INSERT INTO `t_role` VALUES ('14', 'ROLE_RESOURCE', '权限管理', '1000');
-INSERT INTO `t_role` VALUES ('15', 'ROLE_CHAT', 'websocket点对点聊天', '400');
-INSERT INTO `t_role` VALUES ('16', 'ROLE_SUBSCRIBE', '订阅广播消息', '500');
-INSERT INTO `t_role` VALUES ('17', 'ROLE_BROADCAST', '发送广播消息', '1100');
-INSERT INTO `t_role` VALUES ('18', 'ROLE_SCHEDULER', '定时任务管理', '1200');
-INSERT INTO `t_role` VALUES ('19', 'ROLE_MAIL', '邮件管理', '1300');
+INSERT INTO `t_role` VALUES ('7', 'ROLE_GUEST', '游客', '100', '0');
+INSERT INTO `t_role` VALUES ('8', 'ROLE_PERSONAL', '个人信息管理', '200', '1');
+INSERT INTO `t_role` VALUES ('9', 'ROLE_BASE', '基础数据查询', '300', '1');
+INSERT INTO `t_role` VALUES ('10', 'ROLE_SYSTEM', '系统管理', '600', '0');
+INSERT INTO `t_role` VALUES ('11', 'ROLE_ATTACHMENT', '附件管理', '800', '0');
+INSERT INTO `t_role` VALUES ('15', 'ROLE_CHAT', 'websocket点对点聊天', '500', '1');
+INSERT INTO `t_role` VALUES ('16', 'ROLE_SUBSCRIBE_BROADCAST', '订阅广播消息', '400', '1');
+INSERT INTO `t_role` VALUES ('17', 'ROLE_BROADCAST', '发送广播消息', '700', '0');
+INSERT INTO `t_role` VALUES ('18', 'ROLE_SCHEDULER', '定时任务管理', '900', '0');
+INSERT INTO `t_role` VALUES ('19', 'ROLE_MAIL', '邮件管理', '1000', '0');
 
 -- ----------------------------
 -- Table structure for t_role_resource_link
@@ -752,22 +751,23 @@ INSERT INTO `t_role_resource_link` VALUES ('10', '5');
 INSERT INTO `t_role_resource_link` VALUES ('10', '6');
 INSERT INTO `t_role_resource_link` VALUES ('10', '7');
 INSERT INTO `t_role_resource_link` VALUES ('10', '8');
+INSERT INTO `t_role_resource_link` VALUES ('8', '9');
 INSERT INTO `t_role_resource_link` VALUES ('11', '9');
-INSERT INTO `t_role_resource_link` VALUES ('14', '10');
-INSERT INTO `t_role_resource_link` VALUES ('14', '11');
-INSERT INTO `t_role_resource_link` VALUES ('14', '12');
-INSERT INTO `t_role_resource_link` VALUES ('14', '13');
-INSERT INTO `t_role_resource_link` VALUES ('14', '14');
-INSERT INTO `t_role_resource_link` VALUES ('13', '15');
-INSERT INTO `t_role_resource_link` VALUES ('13', '16');
-INSERT INTO `t_role_resource_link` VALUES ('13', '17');
-INSERT INTO `t_role_resource_link` VALUES ('13', '18');
-INSERT INTO `t_role_resource_link` VALUES ('13', '19');
-INSERT INTO `t_role_resource_link` VALUES ('12', '20');
-INSERT INTO `t_role_resource_link` VALUES ('12', '21');
-INSERT INTO `t_role_resource_link` VALUES ('12', '22');
-INSERT INTO `t_role_resource_link` VALUES ('12', '23');
-INSERT INTO `t_role_resource_link` VALUES ('12', '24');
+INSERT INTO `t_role_resource_link` VALUES ('10', '10');
+INSERT INTO `t_role_resource_link` VALUES ('10', '11');
+INSERT INTO `t_role_resource_link` VALUES ('10', '12');
+INSERT INTO `t_role_resource_link` VALUES ('10', '13');
+INSERT INTO `t_role_resource_link` VALUES ('10', '14');
+INSERT INTO `t_role_resource_link` VALUES ('10', '15');
+INSERT INTO `t_role_resource_link` VALUES ('10', '16');
+INSERT INTO `t_role_resource_link` VALUES ('10', '17');
+INSERT INTO `t_role_resource_link` VALUES ('10', '18');
+INSERT INTO `t_role_resource_link` VALUES ('10', '19');
+INSERT INTO `t_role_resource_link` VALUES ('10', '20');
+INSERT INTO `t_role_resource_link` VALUES ('10', '21');
+INSERT INTO `t_role_resource_link` VALUES ('10', '22');
+INSERT INTO `t_role_resource_link` VALUES ('10', '23');
+INSERT INTO `t_role_resource_link` VALUES ('10', '24');
 INSERT INTO `t_role_resource_link` VALUES ('15', '25');
 INSERT INTO `t_role_resource_link` VALUES ('16', '25');
 INSERT INTO `t_role_resource_link` VALUES ('17', '25');
@@ -807,11 +807,17 @@ INSERT INTO `t_role_resource_link` VALUES ('8', '59');
 INSERT INTO `t_role_resource_link` VALUES ('7', '60');
 INSERT INTO `t_role_resource_link` VALUES ('7', '61');
 INSERT INTO `t_role_resource_link` VALUES ('9', '62');
+INSERT INTO `t_role_resource_link` VALUES ('10', '62');
 INSERT INTO `t_role_resource_link` VALUES ('7', '63');
 INSERT INTO `t_role_resource_link` VALUES ('9', '65');
+INSERT INTO `t_role_resource_link` VALUES ('10', '65');
 INSERT INTO `t_role_resource_link` VALUES ('9', '66');
+INSERT INTO `t_role_resource_link` VALUES ('10', '66');
 INSERT INTO `t_role_resource_link` VALUES ('9', '67');
+INSERT INTO `t_role_resource_link` VALUES ('10', '67');
 INSERT INTO `t_role_resource_link` VALUES ('9', '68');
+INSERT INTO `t_role_resource_link` VALUES ('10', '68');
+INSERT INTO `t_role_resource_link` VALUES ('8', '69');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -833,12 +839,12 @@ CREATE TABLE `t_user` (
   UNIQUE KEY `t_user_uk_email` (`email`),
   KEY `t_user_fk_dept_id` (`dept_id`),
   CONSTRAINT `t_user_fk_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `t_dept` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$cLtKQQcuCeoYYdu..2/.Ju01TC4goaFmc5zVf5sGrzAxLsKaCKLv.', 'xuelingkang@163.com', '薛凌康', null, '1', '650736000736', '1558447140699', '1');
+INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$WsiTJJmS8Y1HTm7NjjD9EO76vs69KnQM/sC4Sl0Qk9n7pGN.x.wXi', 'xuelingkang@163.com', '薛凌康', null, '1', '650736000736', '1558499954048', '1');
 INSERT INTO `t_user` VALUES ('10', 'manager', '$2a$10$ODfMqCWyr0TOnvmeePdwFOfu3.0PfjHOxjDGrwRfqvw4Y1CULVa76', '574290057@qq.com', '总经理', null, '1', '655833600710', '1558447124559', '1');
 
 -- ----------------------------
@@ -865,12 +871,6 @@ INSERT INTO `t_user_role_link` VALUES ('9', '10');
 INSERT INTO `t_user_role_link` VALUES ('10', '10');
 INSERT INTO `t_user_role_link` VALUES ('9', '11');
 INSERT INTO `t_user_role_link` VALUES ('10', '11');
-INSERT INTO `t_user_role_link` VALUES ('9', '12');
-INSERT INTO `t_user_role_link` VALUES ('10', '12');
-INSERT INTO `t_user_role_link` VALUES ('9', '13');
-INSERT INTO `t_user_role_link` VALUES ('10', '13');
-INSERT INTO `t_user_role_link` VALUES ('9', '14');
-INSERT INTO `t_user_role_link` VALUES ('10', '14');
 INSERT INTO `t_user_role_link` VALUES ('9', '15');
 INSERT INTO `t_user_role_link` VALUES ('10', '15');
 INSERT INTO `t_user_role_link` VALUES ('9', '16');

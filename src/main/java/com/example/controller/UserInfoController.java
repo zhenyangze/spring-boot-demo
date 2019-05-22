@@ -1,9 +1,7 @@
 package com.example.controller;
 
-import com.example.group.RetrievePassword;
-import com.example.group.RetrievePasswordMail;
-import com.example.group.UserInfoInsert;
-import com.example.group.UserInfoUpdate;
+import com.example.exception.LogicException;
+import com.example.group.*;
 import com.example.model.po.*;
 import com.example.model.vo.*;
 import com.example.params.Params;
@@ -76,6 +74,24 @@ public class UserInfoController {
         }
         userService.updateById(user.setId(userService.currentUser().getId()));
         return new ResultVO<>(SUCCESS, "更新个人信息成功！", null);
+    }
+
+    @PatchMapping
+    @ApiOperation(value = "修改密码")
+    public ResultVO modpwd(@Validated({UserInfoModPwd.class}) UserVO userVO) {
+        // 当前用户id
+        Integer id = userService.currentUser().getId();
+        // 查询当前用户
+        User user = userService.getById(id);
+        // 比较密码
+        if (!passwordEncoder.matches(userVO.getPassword(), user.getPassword())) {
+            throw new LogicException("原密码错误");
+        }
+        // 修改密码
+        String newpassword = passwordEncoder.encode(userVO.getNewpassword());
+        user.setPassword(newpassword);
+        userService.updateById(user);
+        return new ResultVO<>(SUCCESS, "修改密码成功！", null);
     }
 
     @PostMapping("/retrieve_password_mail")

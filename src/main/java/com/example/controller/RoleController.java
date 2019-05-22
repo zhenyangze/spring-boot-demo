@@ -37,7 +37,7 @@ public class RoleController {
     @GetMapping("all")
     @ApiOperation(value = "查询所有角色")
     public ResultVO all() {
-        List<Role> list = roleService.all();
+        List<Role> list = roleService.customList(new Params<>(new Role()));
         List all = (List) ModelUtil.copy(list, new ModelUtil.Mapping(Role.class, RoleVO.class));
         return new ResultVO<>(SUCCESS, "", all);
     }

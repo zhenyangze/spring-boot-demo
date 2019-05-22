@@ -85,6 +85,7 @@ public class TokenService implements ITokenService {
     public Set<String> getAuthorityString(UserDetailsImpl userDetails) {
         Set<String> authorities = new HashSet<>();
         userDetails.getUser().getRoles().forEach(role -> {
+            role = roleService.customGetById(role.getId());
             role.getResources().forEach(resource -> {
                 authorities.add(
                         resource.getResourceType() +

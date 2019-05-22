@@ -16,6 +16,10 @@ public interface IBaseService<T extends BaseModel> extends IService<T> {
 
     User currentUser();
 
+    default List<T> customList(Params<T> params) {
+        throw new ProjectException("方法未实现！");
+    }
+
     default IPage<T> customPage(Page<T> page, Params<T> params) {
         throw new ProjectException("方法未实现！");
     }

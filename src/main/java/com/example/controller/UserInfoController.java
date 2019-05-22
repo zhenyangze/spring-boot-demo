@@ -21,7 +21,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.model.vo.ResultVO.SUCCESS;
@@ -60,8 +59,7 @@ public class UserInfoController {
         if (!StringUtils.isEmpty(password)) {
             user.setPassword(passwordEncoder.encode(password));
         }
-        List<Role> defaultRoles = new ArrayList<>();
-        defaultRoles.add(roleService.customGetOne(new Params<>(new Role().setRoleName(IRoleService.DEFAULT_ROLE_NAME))));
+        List<Role> defaultRoles = roleService.customList(new Params<>(new Role().setIsDefault(1)));
         userService.customSave(user.setRoles(defaultRoles));
         // 自动登录
         TokenVO tokenVO = tokenService.saveToken(new UserDetailsImpl(user));

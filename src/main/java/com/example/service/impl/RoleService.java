@@ -25,8 +25,8 @@ public class RoleService extends BaseService<RoleMapper, Role> implements IRoleS
     private IRoleResourceLinkService roleResourceLinkService;
 
     @Override
-    public List<Role> all() {
-        return baseMapper.selectList(new QueryWrapper<Role>().orderByAsc("role_seq"));
+    public List<Role> customList(Params<Role> params) {
+        return baseMapper.customSelectList(params);
     }
 
     @Override

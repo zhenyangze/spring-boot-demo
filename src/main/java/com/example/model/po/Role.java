@@ -35,6 +35,9 @@ public class Role extends BaseModel {
     @ApiModelProperty(value = "角色顺序")
     @NotNull(groups = {RoleInsert.class, RoleUpdate.class}, message = "角色顺序不能为空")
     private Integer roleSeq;
+    @ApiModelProperty(value = "是否新用户默认角色", allowableValues = "1,0")
+    @NotNull(groups = {RoleInsert.class, RoleUpdate.class}, message = "是否新用户默认角色不能为空")
+    private Integer isDefault;
 
     @TableField(exist = false)
     @ApiModelProperty(value = "资源信息")

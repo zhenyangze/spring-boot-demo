@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2019-05-22 16:55:41
+Date: 2019-05-22 18:32:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -166,7 +166,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011558507187474', '1558515335987', '10000');
+INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011558507187474', '1558521137771', '10000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -844,7 +844,7 @@ CREATE TABLE `t_user` (
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$WsiTJJmS8Y1HTm7NjjD9EO76vs69KnQM/sC4Sl0Qk9n7pGN.x.wXi', 'xuelingkang@163.com', '薛凌康', null, '1', '650736000736', '1558499954048', '1');
+INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$WsiTJJmS8Y1HTm7NjjD9EO76vs69KnQM/sC4Sl0Qk9n7pGN.x.wXi', 'xuelingkang@163.com', '薛凌康', null, '1', '650736000736', '1558515744397', '1');
 INSERT INTO `t_user` VALUES ('10', 'manager', '$2a$10$ODfMqCWyr0TOnvmeePdwFOfu3.0PfjHOxjDGrwRfqvw4Y1CULVa76', '574290057@qq.com', '总经理', null, '1', '655833600710', '1558447124559', '1');
 
 -- ----------------------------

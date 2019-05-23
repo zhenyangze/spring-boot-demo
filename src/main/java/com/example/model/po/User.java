@@ -1,6 +1,5 @@
 package com.example.model.po;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.example.annotation.IgnoreSwaggerParameter;
 import com.example.group.*;
@@ -44,12 +43,10 @@ public class User extends BaseModel {
     @NotNull(groups = {UserInsert.class, UserUpdate.class, UserInfoUpdate.class}, message = "性别不能为空")
     @Null(groups = {UserInfoInsert.class}, message = "性别必须为空")
     private Integer sex;
-    @JSONField(format = "yyyy-MM-dd'T'HH:mm:ss.SSS Z")
     @ApiModelProperty(value = "生日")
     @NotNull(groups = {UserInsert.class, UserUpdate.class, UserInfoUpdate.class}, message = "生日不能为空")
     @Null(groups = {UserInfoInsert.class}, message = "生日必须为空")
     private Long birth;
-    @JSONField(format = "yyyy-MM-dd'T'HH:mm:ss.SSS Z")
     @ApiModelProperty(value="登录时间")
     @Null(groups = {UserInsert.class, UserUpdate.class, UserInfoInsert.class, UserInfoUpdate.class}, message = "登录时间必须为空")
     private Long logintime;

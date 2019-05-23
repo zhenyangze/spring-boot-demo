@@ -5,8 +5,8 @@
     <sql id="baseCol">
         t_user.id t_user_id, t_user.username t_user_username, t_user.password t_user_password,
         t_user.email t_user_email, t_user.nickname t_user_nickname, t_user.sex t_user_sex,
-        t_user.head_img t_user_head_img, t_user.birth t_user_birth, t_user.logintime t_user_logintime,
-        t_user.dept_id t_user_dept_id
+        t_user.birth t_user_birth, t_user.logintime t_user_logintime,
+        t_user.dept_id t_user_dept_id, t_user.head_img_id t_user_head_img_id
     </sql>
 
     <resultMap id="baseResultMap" type="com.example.model.po.User">
@@ -15,23 +15,26 @@
         <result column="t_user_password" property="password" />
         <result column="t_user_email" property="email" />
         <result column="t_user_nickname" property="nickname" />
-        <result column="t_user_head_img" property="headImg" />
         <result column="t_user_sex" property="sex" />
         <result column="t_user_birth" property="birth" />
         <result column="t_user_logintime" property="logintime" />
         <result column="t_user_dept_id" property="deptId" />
+        <result column="t_user_head_img_id" property="headImgId" />
     </resultMap>
 
     <resultMap id="resultMap" type="com.example.model.po.User" extends="baseResultMap">
         <association column="t_user_dept_id" property="dept" resultMap="com.example.mapper.DeptMapper.baseResultMap" />
+        <association column="t_user_head_img_id" property="headImg" resultMap="com.example.mapper.AttachmentMapper.baseResultMap" />
         <collection column="t_user_id" property="roles" resultMap="com.example.mapper.RoleMapper.resultMap" />
     </resultMap>
 
     <select id="customSelectList" parameterType="com.example.params.Params" resultMap="resultMap">
         select <include refid="baseCol" />,
-        <include refid="com.example.mapper.DeptMapper.baseCol" />
+               <include refid="com.example.mapper.DeptMapper.baseCol" />,
+               <include refid="com.example.mapper.AttachmentMapper.baseCol" />
         from t_user t_user
         left join t_dept t_dept on t_dept.id = t_user.dept_id
+        left join t_attachment t_attachment on t_attachment.id = t_user.head_img_id
         <where>
             <if test=" params.entity.username != null and params.entity.username != ''.toString() ">
                 and instr(t_user.username, #{params.entity.username}) > 0
@@ -54,9 +57,11 @@
 
     <select id="customSelectPage" resultMap="resultMap">
         select <include refid="baseCol" />,
-               <include refid="com.example.mapper.DeptMapper.baseCol" />
+               <include refid="com.example.mapper.DeptMapper.baseCol" />,
+               <include refid="com.example.mapper.AttachmentMapper.baseCol" />
         from t_user t_user
         left join t_dept t_dept on t_dept.id = t_user.dept_id
+        left join t_attachment t_attachment on t_attachment.id = t_user.head_img_id
         <where>
             <if test=" params.entity.username != null and params.entity.username != ''.toString() ">
                 and instr(t_user.username, #{params.entity.username}) > 0
@@ -80,10 +85,12 @@
     <select id="customSelectById" parameterType="int" resultMap="resultMap">
         select <include refid="baseCol" />,
                <include refid="com.example.mapper.DeptMapper.baseCol" />,
+               <include refid="com.example.mapper.AttachmentMapper.baseCol" />,
                <include refid="com.example.mapper.RoleMapper.baseCol" />,
                <include refid="com.example.mapper.ResourceMapper.baseCol" />
         from t_user t_user
         left join t_dept t_dept on t_dept.id = t_user.dept_id
+        left join t_attachment t_attachment on t_attachment.id = t_user.head_img_id
         left join t_user_role_link t_user_role_link on t_user_role_link.user_id = t_user.id
         left join t_role t_role on t_role.id = t_user_role_link.role_id
         left join t_role_resource_link t_role_resource_link on t_role.id = t_role_resource_link.role_id
@@ -95,10 +102,12 @@
     <select id="customSelectOne" parameterType="com.example.params.Params" resultMap="resultMap">
         select <include refid="baseCol" />,
                <include refid="com.example.mapper.DeptMapper.baseCol" />,
+               <include refid="com.example.mapper.AttachmentMapper.baseCol" />,
                <include refid="com.example.mapper.RoleMapper.baseCol" />,
                <include refid="com.example.mapper.ResourceMapper.baseCol" />
         from t_user t_user
         left join t_dept t_dept on t_dept.id = t_user.dept_id
+        left join t_attachment t_attachment on t_attachment.id = t_user.head_img_id
         left join t_user_role_link t_user_role_link on t_user_role_link.user_id = t_user.id
         left join t_role t_role on t_role.id = t_user_role_link.role_id
         left join t_role_resource_link t_role_resource_link on t_role.id = t_role_resource_link.role_id

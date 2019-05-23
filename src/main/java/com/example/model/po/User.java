@@ -40,10 +40,6 @@ public class User extends BaseModel {
     @NotNull(groups = {UserInsert.class, UserUpdate.class, UserInfoUpdate.class}, message = "昵称不能为空")
     @Null(groups = {UserInfoInsert.class}, message = "昵称必须为空")
     private String nickname;
-    @ApiModelProperty(value = "头像")
-    @NotNull(groups = {UserInfoUpdate.class}, message = "头像不能为空")
-    @Null(groups = {UserInfoInsert.class}, message = "头像必须为空")
-    private String headImg;
     @ApiModelProperty(value = "性别", allowableValues = "1,0")
     @NotNull(groups = {UserInsert.class, UserUpdate.class, UserInfoUpdate.class}, message = "性别不能为空")
     @Null(groups = {UserInfoInsert.class}, message = "性别必须为空")
@@ -61,11 +57,19 @@ public class User extends BaseModel {
     @NotNull(groups = {UserInsert.class, UserUpdate.class}, message = "部门id不能为空")
     @Null(groups = {UserInfoInsert.class, UserInfoUpdate.class}, message = "部门id必须为空")
     private Integer deptId;
+    @ApiModelProperty(value = "头像id")
+    @NotNull(groups = {UserInfoUpdate.class}, message = "头像id不能为空")
+    @Null(groups = {UserInfoInsert.class}, message = "头像id必须为空")
+    private Integer headImgId;
 
     @TableField(exist = false)
     @ApiModelProperty(value = "部门信息")
     @IgnoreSwaggerParameter
     private Dept dept;
+    @TableField(exist = false)
+    @ApiModelProperty(value = "头像")
+    @IgnoreSwaggerParameter
+    private Attachment headImg;
     @TableField(exist = false)
     @ApiModelProperty(value = "角色信息")
     @IgnoreSwaggerParameter

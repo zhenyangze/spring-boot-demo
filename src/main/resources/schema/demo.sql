@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2019-05-22 18:32:22
+Date: 2019-05-23 19:06:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -166,7 +166,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011558507187474', '1558521137771', '10000');
+INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011558598237500', '1558609576555', '10000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -265,11 +265,45 @@ CREATE TABLE `t_attachment` (
   `attachment_address` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '访问地址',
   `attachment_path` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '本地路径',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_attachment
 -- ----------------------------
+INSERT INTO `t_attachment` VALUES ('1', '1024x768.jpg', '/demofile/head/2019/5/1558592894759.jpg', '/home/demofile/head/2019/5/1558592894759.jpg');
+INSERT INTO `t_attachment` VALUES ('2', '1920.jpg', '/demofile/head/2019/5/1558594752112.jpg', '/home/demofile/head/2019/5/1558594752112.jpg');
+INSERT INTO `t_attachment` VALUES ('3', '1920.jpg', '/demofile/head/2019/5/1558594771808.jpg', '/home/demofile/head/2019/5/1558594771808.jpg');
+INSERT INTO `t_attachment` VALUES ('4', '1440x900.jpg', '/demofile/head/2019/5/1558594803113.jpg', '/home/demofile/head/2019/5/1558594803113.jpg');
+INSERT INTO `t_attachment` VALUES ('8', '1024x768.jpg', '/demofile/head/2019/5/1558604442885.jpg', '/home/demofile/head/2019/5/1558604442885.jpg');
+INSERT INTO `t_attachment` VALUES ('9', '1920.jpg', '/demofile/head/2019/5/1558604517359.jpg', '/home/demofile/head/2019/5/1558604517359.jpg');
+INSERT INTO `t_attachment` VALUES ('10', '1920.jpg', '/demofile/head/2019/5/1558604654757.jpg', '/home/demofile/head/2019/5/1558604654757.jpg');
+INSERT INTO `t_attachment` VALUES ('11', '1920.jpg', '/demofile/head/2019/5/1558605150612.jpg', '/home/demofile/head/2019/5/1558605150612.jpg');
+INSERT INTO `t_attachment` VALUES ('12', '1920.jpg', '/demofile/head/2019/5/1558605400218.jpg', '/home/demofile/head/2019/5/1558605400218.jpg');
+INSERT INTO `t_attachment` VALUES ('13', '1440x900.jpg', '/demofile/head/2019/5/1558605607651.jpg', '/home/demofile/head/2019/5/1558605607651.jpg');
+INSERT INTO `t_attachment` VALUES ('14', '1920.jpg', '/demofile/head/2019/5/1558605782432.jpg', '/home/demofile/head/2019/5/1558605782432.jpg');
+INSERT INTO `t_attachment` VALUES ('15', '1280x1024.jpg', '/demofile/head/2019/5/1558605856221.jpg', '/home/demofile/head/2019/5/1558605856221.jpg');
+INSERT INTO `t_attachment` VALUES ('16', '1024x768.jpg', '/demofile/head/2019/5/1558606483239.jpg', '/home/demofile/head/2019/5/1558606483239.jpg');
+INSERT INTO `t_attachment` VALUES ('17', '1024x768.jpg', '/demofile/head/2019/5/1558607031760.jpg', '/home/demofile/head/2019/5/1558607031760.jpg');
+INSERT INTO `t_attachment` VALUES ('18', '1024x768.jpg', '/demofile/head/2019/5/1558607518800.jpg', '/home/demofile/head/2019/5/1558607518800.jpg');
+INSERT INTO `t_attachment` VALUES ('19', '1440x900.jpg', '/demofile/head/2019/5/1558607525299.jpg', '/home/demofile/head/2019/5/1558607525299.jpg');
+INSERT INTO `t_attachment` VALUES ('20', '1024x768.jpg', '/demofile/head/2019/5/1558607636678.jpg', '/home/demofile/head/2019/5/1558607636678.jpg');
+INSERT INTO `t_attachment` VALUES ('21', '1920.jpg', '/demofile/head/2019/5/1558607659510.jpg', '/home/demofile/head/2019/5/1558607659510.jpg');
+INSERT INTO `t_attachment` VALUES ('22', '1024x768.jpg', '/demofile/head/2019/5/1558607761017.jpg', '/home/demofile/head/2019/5/1558607761017.jpg');
+INSERT INTO `t_attachment` VALUES ('23', '1920.jpg', '/demofile/head/2019/5/1558607861553.jpg', '/home/demofile/head/2019/5/1558607861553.jpg');
+INSERT INTO `t_attachment` VALUES ('24', '1024x768.jpg', '/demofile/head/2019/5/1558607943660.jpg', '/home/demofile/head/2019/5/1558607943660.jpg');
+INSERT INTO `t_attachment` VALUES ('25', '1920.jpg', '/demofile/head/2019/5/1558607951714.jpg', '/home/demofile/head/2019/5/1558607951714.jpg');
+INSERT INTO `t_attachment` VALUES ('26', '1920.jpg', '/demofile/head/2019/5/1558608009252.jpg', '/home/demofile/head/2019/5/1558608009252.jpg');
+INSERT INTO `t_attachment` VALUES ('27', '1024x768.jpg', '/demofile/head/2019/5/1558608322061.jpg', '/home/demofile/head/2019/5/1558608322061.jpg');
+INSERT INTO `t_attachment` VALUES ('28', '1920.jpg', '/demofile/head/2019/5/1558608424839.jpg', '/home/demofile/head/2019/5/1558608424839.jpg');
+INSERT INTO `t_attachment` VALUES ('29', '1024x768.jpg', '/demofile/head/2019/5/1558608508890.jpg', '/home/demofile/head/2019/5/1558608508890.jpg');
+INSERT INTO `t_attachment` VALUES ('30', '1440x900.jpg', '/demofile/head/2019/5/1558608512246.jpg', '/home/demofile/head/2019/5/1558608512246.jpg');
+INSERT INTO `t_attachment` VALUES ('31', '1920.jpg', '/demofile/head/2019/5/1558608552197.jpg', '/home/demofile/head/2019/5/1558608552197.jpg');
+INSERT INTO `t_attachment` VALUES ('32', '1024x768.jpg', '/demofile/head/2019/5/1558608801937.jpg', '/home/demofile/head/2019/5/1558608801937.jpg');
+INSERT INTO `t_attachment` VALUES ('33', '1920.jpg', '/demofile/head/2019/5/1558608804436.jpg', '/home/demofile/head/2019/5/1558608804436.jpg');
+INSERT INTO `t_attachment` VALUES ('34', '1440x900.jpg', '/demofile/head/2019/5/1558608807078.jpg', '/home/demofile/head/2019/5/1558608807078.jpg');
+INSERT INTO `t_attachment` VALUES ('35', '1280x1024.jpg', '/demofile/head/2019/5/1558608810016.jpg', '/home/demofile/head/2019/5/1558608810016.jpg');
+INSERT INTO `t_attachment` VALUES ('36', '1920.jpg', '/demofile/head/2019/5/1558608852590.jpg', '/home/demofile/head/2019/5/1558608852590.jpg');
+INSERT INTO `t_attachment` VALUES ('37', '1920.jpg', '/demofile/head/2019/5/1558608983064.jpg', '/home/demofile/head/2019/5/1558608983064.jpg');
 
 -- ----------------------------
 -- Table structure for t_broadcast_message
@@ -283,7 +317,7 @@ CREATE TABLE `t_broadcast_message` (
   PRIMARY KEY (`id`),
   KEY `t_broadcast_message_fk_send_user_id` (`send_user_id`),
   CONSTRAINT `t_broadcast_message_fk_send_user_id` FOREIGN KEY (`send_user_id`) REFERENCES `t_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_broadcast_message
@@ -711,7 +745,7 @@ CREATE TABLE `t_role` (
   `is_default` tinyint(1) DEFAULT NULL COMMENT '是否新用户默认角色',
   PRIMARY KEY (`id`),
   UNIQUE KEY `t_role_idx_role_name` (`role_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_role
@@ -829,7 +863,7 @@ CREATE TABLE `t_user` (
   `password` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '密码',
   `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '邮箱',
   `nickname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '昵称',
-  `head_img` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '头像图片',
+  `head_img_id` int(11) DEFAULT NULL COMMENT '头像图片id',
   `sex` tinyint(1) DEFAULT NULL COMMENT '性别',
   `birth` bigint(20) DEFAULT NULL COMMENT '生日',
   `logintime` bigint(20) DEFAULT NULL COMMENT '登陆时间',
@@ -838,14 +872,16 @@ CREATE TABLE `t_user` (
   UNIQUE KEY `t_user_idx_username` (`username`),
   UNIQUE KEY `t_user_uk_email` (`email`),
   KEY `t_user_fk_dept_id` (`dept_id`),
-  CONSTRAINT `t_user_fk_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `t_dept` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
+  KEY `t_user_fk_head_img_id` (`head_img_id`),
+  CONSTRAINT `t_user_fk_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `t_dept` (`id`),
+  CONSTRAINT `t_user_fk_head_img_id` FOREIGN KEY (`head_img_id`) REFERENCES `t_attachment` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$WsiTJJmS8Y1HTm7NjjD9EO76vs69KnQM/sC4Sl0Qk9n7pGN.x.wXi', 'xuelingkang@163.com', '薛凌康', null, '1', '650736000736', '1558515744397', '1');
-INSERT INTO `t_user` VALUES ('10', 'manager', '$2a$10$ODfMqCWyr0TOnvmeePdwFOfu3.0PfjHOxjDGrwRfqvw4Y1CULVa76', '574290057@qq.com', '总经理', null, '1', '655833600710', '1558447124559', '1');
+INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$bR0way2ADFQDIt.UYSX3lekMwhHVOSwGUDLq.lBy6G0NQR/.AKXm2', 'xuelingkang@163.com', '薛凌康', '1', '1', '650736000736', '1558607985487', '1');
+INSERT INTO `t_user` VALUES ('10', 'manager', '$2a$10$ODfMqCWyr0TOnvmeePdwFOfu3.0PfjHOxjDGrwRfqvw4Y1CULVa76', '574290057@qq.com', '总经理', '2', '1', '655833600710', '1558447124559', '1');
 
 -- ----------------------------
 -- Table structure for t_user_role_link

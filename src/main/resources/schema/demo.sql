@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2019-05-23 19:06:14
+Date: 2019-05-24 19:35:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -166,7 +166,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011558598237500', '1558609576555', '10000');
+INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011558680019440', '1558697742227', '10000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -265,45 +265,15 @@ CREATE TABLE `t_attachment` (
   `attachment_address` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '访问地址',
   `attachment_path` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '本地路径',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_attachment
 -- ----------------------------
-INSERT INTO `t_attachment` VALUES ('1', '1024x768.jpg', '/demofile/head/2019/5/1558592894759.jpg', '/home/demofile/head/2019/5/1558592894759.jpg');
-INSERT INTO `t_attachment` VALUES ('2', '1920.jpg', '/demofile/head/2019/5/1558594752112.jpg', '/home/demofile/head/2019/5/1558594752112.jpg');
-INSERT INTO `t_attachment` VALUES ('3', '1920.jpg', '/demofile/head/2019/5/1558594771808.jpg', '/home/demofile/head/2019/5/1558594771808.jpg');
-INSERT INTO `t_attachment` VALUES ('4', '1440x900.jpg', '/demofile/head/2019/5/1558594803113.jpg', '/home/demofile/head/2019/5/1558594803113.jpg');
-INSERT INTO `t_attachment` VALUES ('8', '1024x768.jpg', '/demofile/head/2019/5/1558604442885.jpg', '/home/demofile/head/2019/5/1558604442885.jpg');
-INSERT INTO `t_attachment` VALUES ('9', '1920.jpg', '/demofile/head/2019/5/1558604517359.jpg', '/home/demofile/head/2019/5/1558604517359.jpg');
-INSERT INTO `t_attachment` VALUES ('10', '1920.jpg', '/demofile/head/2019/5/1558604654757.jpg', '/home/demofile/head/2019/5/1558604654757.jpg');
-INSERT INTO `t_attachment` VALUES ('11', '1920.jpg', '/demofile/head/2019/5/1558605150612.jpg', '/home/demofile/head/2019/5/1558605150612.jpg');
-INSERT INTO `t_attachment` VALUES ('12', '1920.jpg', '/demofile/head/2019/5/1558605400218.jpg', '/home/demofile/head/2019/5/1558605400218.jpg');
-INSERT INTO `t_attachment` VALUES ('13', '1440x900.jpg', '/demofile/head/2019/5/1558605607651.jpg', '/home/demofile/head/2019/5/1558605607651.jpg');
-INSERT INTO `t_attachment` VALUES ('14', '1920.jpg', '/demofile/head/2019/5/1558605782432.jpg', '/home/demofile/head/2019/5/1558605782432.jpg');
-INSERT INTO `t_attachment` VALUES ('15', '1280x1024.jpg', '/demofile/head/2019/5/1558605856221.jpg', '/home/demofile/head/2019/5/1558605856221.jpg');
-INSERT INTO `t_attachment` VALUES ('16', '1024x768.jpg', '/demofile/head/2019/5/1558606483239.jpg', '/home/demofile/head/2019/5/1558606483239.jpg');
-INSERT INTO `t_attachment` VALUES ('17', '1024x768.jpg', '/demofile/head/2019/5/1558607031760.jpg', '/home/demofile/head/2019/5/1558607031760.jpg');
-INSERT INTO `t_attachment` VALUES ('18', '1024x768.jpg', '/demofile/head/2019/5/1558607518800.jpg', '/home/demofile/head/2019/5/1558607518800.jpg');
-INSERT INTO `t_attachment` VALUES ('19', '1440x900.jpg', '/demofile/head/2019/5/1558607525299.jpg', '/home/demofile/head/2019/5/1558607525299.jpg');
-INSERT INTO `t_attachment` VALUES ('20', '1024x768.jpg', '/demofile/head/2019/5/1558607636678.jpg', '/home/demofile/head/2019/5/1558607636678.jpg');
-INSERT INTO `t_attachment` VALUES ('21', '1920.jpg', '/demofile/head/2019/5/1558607659510.jpg', '/home/demofile/head/2019/5/1558607659510.jpg');
-INSERT INTO `t_attachment` VALUES ('22', '1024x768.jpg', '/demofile/head/2019/5/1558607761017.jpg', '/home/demofile/head/2019/5/1558607761017.jpg');
-INSERT INTO `t_attachment` VALUES ('23', '1920.jpg', '/demofile/head/2019/5/1558607861553.jpg', '/home/demofile/head/2019/5/1558607861553.jpg');
-INSERT INTO `t_attachment` VALUES ('24', '1024x768.jpg', '/demofile/head/2019/5/1558607943660.jpg', '/home/demofile/head/2019/5/1558607943660.jpg');
-INSERT INTO `t_attachment` VALUES ('25', '1920.jpg', '/demofile/head/2019/5/1558607951714.jpg', '/home/demofile/head/2019/5/1558607951714.jpg');
-INSERT INTO `t_attachment` VALUES ('26', '1920.jpg', '/demofile/head/2019/5/1558608009252.jpg', '/home/demofile/head/2019/5/1558608009252.jpg');
-INSERT INTO `t_attachment` VALUES ('27', '1024x768.jpg', '/demofile/head/2019/5/1558608322061.jpg', '/home/demofile/head/2019/5/1558608322061.jpg');
-INSERT INTO `t_attachment` VALUES ('28', '1920.jpg', '/demofile/head/2019/5/1558608424839.jpg', '/home/demofile/head/2019/5/1558608424839.jpg');
-INSERT INTO `t_attachment` VALUES ('29', '1024x768.jpg', '/demofile/head/2019/5/1558608508890.jpg', '/home/demofile/head/2019/5/1558608508890.jpg');
-INSERT INTO `t_attachment` VALUES ('30', '1440x900.jpg', '/demofile/head/2019/5/1558608512246.jpg', '/home/demofile/head/2019/5/1558608512246.jpg');
-INSERT INTO `t_attachment` VALUES ('31', '1920.jpg', '/demofile/head/2019/5/1558608552197.jpg', '/home/demofile/head/2019/5/1558608552197.jpg');
-INSERT INTO `t_attachment` VALUES ('32', '1024x768.jpg', '/demofile/head/2019/5/1558608801937.jpg', '/home/demofile/head/2019/5/1558608801937.jpg');
-INSERT INTO `t_attachment` VALUES ('33', '1920.jpg', '/demofile/head/2019/5/1558608804436.jpg', '/home/demofile/head/2019/5/1558608804436.jpg');
-INSERT INTO `t_attachment` VALUES ('34', '1440x900.jpg', '/demofile/head/2019/5/1558608807078.jpg', '/home/demofile/head/2019/5/1558608807078.jpg');
-INSERT INTO `t_attachment` VALUES ('35', '1280x1024.jpg', '/demofile/head/2019/5/1558608810016.jpg', '/home/demofile/head/2019/5/1558608810016.jpg');
-INSERT INTO `t_attachment` VALUES ('36', '1920.jpg', '/demofile/head/2019/5/1558608852590.jpg', '/home/demofile/head/2019/5/1558608852590.jpg');
-INSERT INTO `t_attachment` VALUES ('37', '1920.jpg', '/demofile/head/2019/5/1558608983064.jpg', '/home/demofile/head/2019/5/1558608983064.jpg');
+INSERT INTO `t_attachment` VALUES ('112', '薛凌康.png', '/demofile/head/2019/5/1558667726877.png', '/home/demofile/head/2019/5/1558667726877.png');
+INSERT INTO `t_attachment` VALUES ('113', '营业执照副本.jpg', '/demofile/head/2019/5/1558677716149.jpg', '/home/demofile/head/2019/5/1558677716149.jpg');
+INSERT INTO `t_attachment` VALUES ('114', '组织机构代码证副本.jpg', '/demofile/head/2019/5/1558680270193.jpg', '/home/demofile/head/2019/5/1558680270193.jpg');
+INSERT INTO `t_attachment` VALUES ('115', '薛凌康.png', '/demofile/head/2019/5/1558680290646.png', '/home/demofile/head/2019/5/1558680290646.png');
 
 -- ----------------------------
 -- Table structure for t_broadcast_message
@@ -663,7 +633,7 @@ CREATE TABLE `t_resource` (
   `resource_method` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '请求方法',
   `resource_desc` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '资源描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_resource
@@ -732,6 +702,7 @@ INSERT INTO `t_resource` VALUES ('66', 'http', '权限', '2570', '/resource/all'
 INSERT INTO `t_resource` VALUES ('67', 'http', '角色', '2050', '/role/all', 'GET', '查询所有角色');
 INSERT INTO `t_resource` VALUES ('68', 'http', '用户', '1550', '/user/all', 'GET', '查询所有用户');
 INSERT INTO `t_resource` VALUES ('69', 'http', '个人信息', '250', '/userinfo', 'PATCH', '修改密码');
+INSERT INTO `t_resource` VALUES ('70', 'http', '部门', '550', '/dept/structure', 'GET', '查询组织架构');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -754,12 +725,11 @@ INSERT INTO `t_role` VALUES ('7', 'ROLE_GUEST', '游客', '100', '0');
 INSERT INTO `t_role` VALUES ('8', 'ROLE_PERSONAL', '个人信息管理', '200', '1');
 INSERT INTO `t_role` VALUES ('9', 'ROLE_BASE', '基础数据查询', '300', '1');
 INSERT INTO `t_role` VALUES ('10', 'ROLE_SYSTEM', '系统管理', '600', '0');
-INSERT INTO `t_role` VALUES ('11', 'ROLE_ATTACHMENT', '附件管理', '800', '0');
 INSERT INTO `t_role` VALUES ('15', 'ROLE_CHAT', 'websocket点对点聊天', '500', '1');
 INSERT INTO `t_role` VALUES ('16', 'ROLE_SUBSCRIBE_BROADCAST', '订阅广播消息', '400', '1');
 INSERT INTO `t_role` VALUES ('17', 'ROLE_BROADCAST', '发送广播消息', '700', '0');
-INSERT INTO `t_role` VALUES ('18', 'ROLE_SCHEDULER', '定时任务管理', '900', '0');
-INSERT INTO `t_role` VALUES ('19', 'ROLE_MAIL', '邮件管理', '1000', '0');
+INSERT INTO `t_role` VALUES ('18', 'ROLE_SCHEDULER', '定时任务管理', '800', '0');
+INSERT INTO `t_role` VALUES ('19', 'ROLE_MAIL', '邮件管理', '900', '0');
 
 -- ----------------------------
 -- Table structure for t_role_resource_link
@@ -777,16 +747,16 @@ CREATE TABLE `t_role_resource_link` (
 -- ----------------------------
 -- Records of t_role_resource_link
 -- ----------------------------
-INSERT INTO `t_role_resource_link` VALUES ('11', '1');
-INSERT INTO `t_role_resource_link` VALUES ('11', '2');
-INSERT INTO `t_role_resource_link` VALUES ('11', '3');
+INSERT INTO `t_role_resource_link` VALUES ('10', '1');
+INSERT INTO `t_role_resource_link` VALUES ('10', '2');
+INSERT INTO `t_role_resource_link` VALUES ('10', '3');
 INSERT INTO `t_role_resource_link` VALUES ('10', '4');
 INSERT INTO `t_role_resource_link` VALUES ('10', '5');
 INSERT INTO `t_role_resource_link` VALUES ('10', '6');
 INSERT INTO `t_role_resource_link` VALUES ('10', '7');
 INSERT INTO `t_role_resource_link` VALUES ('10', '8');
 INSERT INTO `t_role_resource_link` VALUES ('8', '9');
-INSERT INTO `t_role_resource_link` VALUES ('11', '9');
+INSERT INTO `t_role_resource_link` VALUES ('10', '9');
 INSERT INTO `t_role_resource_link` VALUES ('10', '10');
 INSERT INTO `t_role_resource_link` VALUES ('10', '11');
 INSERT INTO `t_role_resource_link` VALUES ('10', '12');
@@ -852,6 +822,7 @@ INSERT INTO `t_role_resource_link` VALUES ('10', '67');
 INSERT INTO `t_role_resource_link` VALUES ('9', '68');
 INSERT INTO `t_role_resource_link` VALUES ('10', '68');
 INSERT INTO `t_role_resource_link` VALUES ('8', '69');
+INSERT INTO `t_role_resource_link` VALUES ('9', '70');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -880,8 +851,8 @@ CREATE TABLE `t_user` (
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$bR0way2ADFQDIt.UYSX3lekMwhHVOSwGUDLq.lBy6G0NQR/.AKXm2', 'xuelingkang@163.com', '薛凌康', '1', '1', '650736000736', '1558607985487', '1');
-INSERT INTO `t_user` VALUES ('10', 'manager', '$2a$10$ODfMqCWyr0TOnvmeePdwFOfu3.0PfjHOxjDGrwRfqvw4Y1CULVa76', '574290057@qq.com', '总经理', '2', '1', '655833600710', '1558447124559', '1');
+INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$bR0way2ADFQDIt.UYSX3lekMwhHVOSwGUDLq.lBy6G0NQR/.AKXm2', 'xuelingkang@163.com', '薛凌康', '115', '1', '650736000736', '1558679636598', '1');
+INSERT INTO `t_user` VALUES ('10', 'manager', '$2a$10$ODfMqCWyr0TOnvmeePdwFOfu3.0PfjHOxjDGrwRfqvw4Y1CULVa76', '574290057@qq.com', '总经理', null, '1', '655833600710', '1558667981654', '1');
 
 -- ----------------------------
 -- Table structure for t_user_role_link
@@ -905,8 +876,6 @@ INSERT INTO `t_user_role_link` VALUES ('9', '9');
 INSERT INTO `t_user_role_link` VALUES ('10', '9');
 INSERT INTO `t_user_role_link` VALUES ('9', '10');
 INSERT INTO `t_user_role_link` VALUES ('10', '10');
-INSERT INTO `t_user_role_link` VALUES ('9', '11');
-INSERT INTO `t_user_role_link` VALUES ('10', '11');
 INSERT INTO `t_user_role_link` VALUES ('9', '15');
 INSERT INTO `t_user_role_link` VALUES ('10', '15');
 INSERT INTO `t_user_role_link` VALUES ('9', '16');

@@ -42,5 +42,9 @@ public class Dept extends BaseModel implements Tree<Dept> {
     @ApiModelProperty(value = "子部门")
     @IgnoreSwaggerParameter
     private List<Dept> subs;
+    @TableField(exist = false)
+    @ApiModelProperty(value = "部门下用户")
+    @IgnoreSwaggerParameter
+    private List<User> users;
 
 }

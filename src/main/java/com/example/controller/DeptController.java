@@ -5,11 +5,16 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.group.Insert;
 import com.example.group.Update;
 import com.example.model.po.Dept;
+import com.example.model.po.User;
 import com.example.model.vo.DeptVO;
 import com.example.model.vo.ResultVO;
 import com.example.params.Params;
 import com.example.service.IDeptService;
+import com.example.service.IUserService;
 import com.example.util.ModelUtil;
+import com.example.util.TreeUtil;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -20,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Map;
 
 import static com.example.model.vo.ResultVO.SUCCESS;
 
@@ -30,7 +36,31 @@ import static com.example.model.vo.ResultVO.SUCCESS;
 public class DeptController {
 
     @Autowired
+    private IUserService userService;
+    @Autowired
     private IDeptService deptService;
+
+    @GetMapping("/structure")
+    @ApiOperation(value = "查询组织架构")
+    public ResultVO structure() {
+        List<Dept> depts = deptService.customList(new Params<>(new Dept()));
+        Map<Integer, Dept> deptMap = Maps.newHashMap();
+        depts.forEach(dept -> deptMap.put(dept.getId(), dept));
+        List<User> users = userService.customList(new Params<>(new User()));
+        users.forEach(user -> {
+            if (user.getDeptId()==null) {
+                return;
+            }
+            Dept dept = deptMap.get(user.getDeptId());
+            List<User> deptUsers = dept.getUsers();
+            if (deptUsers==null) {
+                deptUsers = Lists.newArrayList();
+                dept.setUsers(deptUsers);
+            }
+            deptUsers.add(user);
+        });
+        return new ResultVO<>(SUCCESS, "", TreeUtil.toTree(depts));
+    }
 
     @GetMapping("/tree")
     @ApiOperation(value = "部门树形结构")
@@ -43,7 +73,7 @@ public class DeptController {
     @GetMapping("/all")
     @ApiOperation(value = "查询所有部门")
     public ResultVO all() {
-        List<Dept> list = deptService.all();
+        List<Dept> list = deptService.customList(new Params<>(new Dept()));
         List all = (List) ModelUtil.copy(list, new ModelUtil.Mapping(Dept.class, DeptVO.class));
         return new ResultVO<>(SUCCESS, "", all);
     }

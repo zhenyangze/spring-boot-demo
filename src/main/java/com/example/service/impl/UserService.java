@@ -46,8 +46,8 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
     private RedisTemplate<String, Object> redisTemplate;
 
     @Override
-    public List<User> all() {
-        return baseMapper.customSelectList(null);
+    public List<User> customList(Params<User> params) {
+        return baseMapper.customSelectList(params);
     }
 
     @Override

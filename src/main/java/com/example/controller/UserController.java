@@ -41,7 +41,7 @@ public class UserController {
     @GetMapping("/all")
     @ApiOperation(value = "查询所有用户")
     public ResultVO all() {
-        List<User> list = userService.all();
+        List<User> list = userService.customList(new Params<>(new User()));
         List all = (List) ModelUtil.copy(list,
                 new ModelUtil.Mapping(User.class, UserVO.class, "password"),
                 new ModelUtil.Mapping(Dept.class, DeptVO.class));

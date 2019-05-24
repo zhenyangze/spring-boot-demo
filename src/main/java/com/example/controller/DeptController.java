@@ -4,10 +4,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.group.Insert;
 import com.example.group.Update;
+import com.example.model.po.Attachment;
 import com.example.model.po.Dept;
 import com.example.model.po.User;
+import com.example.model.vo.AttachmentVO;
 import com.example.model.vo.DeptVO;
 import com.example.model.vo.ResultVO;
+import com.example.model.vo.UserVO;
 import com.example.params.Params;
 import com.example.service.IDeptService;
 import com.example.service.IUserService;
@@ -59,7 +62,12 @@ public class DeptController {
             }
             deptUsers.add(user);
         });
-        return new ResultVO<>(SUCCESS, "", TreeUtil.toTree(depts));
+        List<Dept> tree = TreeUtil.toTree(depts);
+        List data = (List) ModelUtil.copy(tree,
+                new ModelUtil.Mapping(Dept.class, DeptVO.class),
+                new ModelUtil.Mapping(User.class, UserVO.class, "password"),
+                new ModelUtil.Mapping(Attachment.class, AttachmentVO.class, "attachmentPath"));
+        return new ResultVO<>(SUCCESS, "", data);
     }
 
     @GetMapping("/tree")

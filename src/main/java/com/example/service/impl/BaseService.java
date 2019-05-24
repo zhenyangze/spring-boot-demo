@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.exception.LogicException;
 import com.example.filter.TokenFilter;
 import com.example.mapper.IBaseMapper;
+import com.example.mapper.UserMapper;
 import com.example.model.BaseModel;
 import com.example.model.po.User;
 import com.example.model.vo.UserDetailsImpl;
@@ -28,12 +29,25 @@ public class BaseService<M extends IBaseMapper<T>, T extends BaseModel> extends 
     private HttpServletRequest request;
     @Autowired
     private ITokenService tokenService;
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public User currentUser() {
         String token = TokenFilter.getToken(request);
         UserDetailsImpl userDetails = tokenService.getUserDetalis(token);
-        return userDetails==null? null: userDetails.getUser();
+        if (userDetails==null) {
+            return null;
+        }
+        User user = userDetails.getUser();
+        if (user==null) {
+            return null;
+        }
+        Integer userId = user.getId();
+        if (userId==null) {
+            return null;
+        }
+        return userMapper.customSelectById(userId);
     }
 
     @Override

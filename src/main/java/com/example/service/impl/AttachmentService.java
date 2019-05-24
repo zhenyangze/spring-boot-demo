@@ -2,10 +2,12 @@ package com.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.example.exception.ProjectException;
 import com.example.ftp.SftpHelper;
 import com.example.mapper.AttachmentMapper;
 import com.example.model.po.Attachment;
 import com.example.service.IAttachmentService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class AttachmentService extends BaseService<AttachmentMapper, Attachment> implements IAttachmentService {
 
     @Value("${attachment.file-separator}")
@@ -63,7 +66,11 @@ public class AttachmentService extends BaseService<AttachmentMapper, Attachment>
             toDelete.add(new String[]{dir, name});
         }
         for (String[] arr: toDelete) {
-            sftpHelper.delete(arr[0], arr[1]);
+            try {
+                sftpHelper.delete(arr[0], arr[1]);
+            } catch (ProjectException e) {
+                log.error(e.getMessage(), e);
+            }
         }
     }
 

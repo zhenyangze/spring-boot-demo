@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2019-05-24 19:35:35
+Date: 2019-05-25 02:21:12
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -166,7 +166,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011558680019440', '1558697742227', '10000');
+INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011558717086060', '1558722064602', '10000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -265,7 +265,7 @@ CREATE TABLE `t_attachment` (
   `attachment_address` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '访问地址',
   `attachment_path` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '本地路径',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_attachment
@@ -274,6 +274,7 @@ INSERT INTO `t_attachment` VALUES ('112', '薛凌康.png', '/demofile/head/2019/
 INSERT INTO `t_attachment` VALUES ('113', '营业执照副本.jpg', '/demofile/head/2019/5/1558677716149.jpg', '/home/demofile/head/2019/5/1558677716149.jpg');
 INSERT INTO `t_attachment` VALUES ('114', '组织机构代码证副本.jpg', '/demofile/head/2019/5/1558680270193.jpg', '/home/demofile/head/2019/5/1558680270193.jpg');
 INSERT INTO `t_attachment` VALUES ('115', '薛凌康.png', '/demofile/head/2019/5/1558680290646.png', '/home/demofile/head/2019/5/1558680290646.png');
+INSERT INTO `t_attachment` VALUES ('116', 'DWIW5615.jpg', '/demofile/head/2019/5/1558712962539.jpg', '/home/demofile/head/2019/5/1558712962539.jpg');
 
 -- ----------------------------
 -- Table structure for t_broadcast_message
@@ -339,7 +340,7 @@ INSERT INTO `t_dept` VALUES ('1', '公司', '1', null, '100', '公司');
 INSERT INTO `t_dept` VALUES ('2', '人资行政部', '2', '1', '100', '公司-人资行政部');
 INSERT INTO `t_dept` VALUES ('3', '财务部', '2', '1', '200', '公司-财务部');
 INSERT INTO `t_dept` VALUES ('4', '市场部', '2', '1', '300', '公司-市场部');
-INSERT INTO `t_dept` VALUES ('5', '技术部', '2', '1', '400', '公司-技术部');
+INSERT INTO `t_dept` VALUES ('5', '技术部', '2', '1', '500', '公司-技术部');
 INSERT INTO `t_dept` VALUES ('6', '人事部', '3', '2', '100', '公司-人资行政部-人事部');
 INSERT INTO `t_dept` VALUES ('7', '行政部', '3', '2', '200', '公司-人资行政部-行政部');
 INSERT INTO `t_dept` VALUES ('8', '产品部', '3', '5', '100', '公司-技术部-产品部');
@@ -348,7 +349,7 @@ INSERT INTO `t_dept` VALUES ('10', '运维部', '3', '5', '300', '公司-技术�
 INSERT INTO `t_dept` VALUES ('11', '测试部', '3', '5', '400', '公司-技术部-测试部');
 INSERT INTO `t_dept` VALUES ('12', '销售部', '3', '4', '100', '公司-市场部-销售部');
 INSERT INTO `t_dept` VALUES ('13', '售后部', '3', '4', '200', '公司-市场部-售后部');
-INSERT INTO `t_dept` VALUES ('14', '客服部', '3', '4', '300', '公司-市场部-客服部');
+INSERT INTO `t_dept` VALUES ('14', '客服部', '2', '1', '400', '公司-客服部');
 
 -- ----------------------------
 -- Table structure for t_job
@@ -846,13 +847,27 @@ CREATE TABLE `t_user` (
   KEY `t_user_fk_head_img_id` (`head_img_id`),
   CONSTRAINT `t_user_fk_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `t_dept` (`id`),
   CONSTRAINT `t_user_fk_head_img_id` FOREIGN KEY (`head_img_id`) REFERENCES `t_attachment` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$bR0way2ADFQDIt.UYSX3lekMwhHVOSwGUDLq.lBy6G0NQR/.AKXm2', 'xuelingkang@163.com', '薛凌康', '115', '1', '650736000736', '1558679636598', '1');
-INSERT INTO `t_user` VALUES ('10', 'manager', '$2a$10$ODfMqCWyr0TOnvmeePdwFOfu3.0PfjHOxjDGrwRfqvw4Y1CULVa76', '574290057@qq.com', '总经理', null, '1', '655833600710', '1558667981654', '1');
+INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$bR0way2ADFQDIt.UYSX3lekMwhHVOSwGUDLq.lBy6G0NQR/.AKXm2', 'xuelingkang@163.com', '薛凌康', '116', '1', '650736000736', '1558721838110', '1');
+INSERT INTO `t_user` VALUES ('10', 'chongqingkai', '$2a$10$Blxb8W82p94mzFT1N4Unl.2RYu0g53HWzmvCoHH1mu99UzlQZA0O.', '574290057@qq.com', '种庆凯', null, '1', '655833600710', '1558718739973', '5');
+INSERT INTO `t_user` VALUES ('11', 'guoxiaogang', '$2a$10$AXiiXAG7zEAfzaXT2h8CDeBKCKuSMbM2uHo6EH8VQhxjRWz2V5Pea', 'guoxiaogang@163.com', '郭小纲', null, '1', '96134400243', '1558718666696', '2');
+INSERT INTO `t_user` VALUES ('12', 'yuxiaoqian', '$2a$10$MGBsCWjabTTI9o.6mwd9/OxhESr0PtjHNRBBq7JWyV6.5R8emRLry', 'yuxiaoqian@163.com', '于小谦', null, '1', '-29577599471', '1558718672143', '3');
+INSERT INTO `t_user` VALUES ('13', 'yuexiaopeng', '$2a$10$XJ25TolfSjyIxCClZK1ANuqw.Oq/GqxGYo8j3rr2eqUMWeZ/0VxI.', 'yuexiaopeng@163.com', '岳小鹏', null, '1', '482342400369', '1558718654519', '6');
+INSERT INTO `t_user` VALUES ('14', 'sunxiaoyue', '$2a$10$SU5EqinymbFShb8doa3pse/0JTnCJZt9qKXPLak6JExvNO96LlowG', 'sunxiaoyue@163.com', '孙小越', null, '1', '308592000475', '1558718660769', '7');
+INSERT INTO `t_user` VALUES ('15', 'maxiaoyun', '$2a$10$KM4dSfMQvI8KSGkuBVjEHON4kFYjkcJe/6rbP18EWiy8fiDz7tFhq', 'maxiaoyun@163.com', '马小云', null, '1', '-167558399126', '1558721433623', '3');
+INSERT INTO `t_user` VALUES ('16', 'maxiaoteng', '$2a$10$KEazUyrdlf.MSDjv/k9/fuuJc8qnyKeRUgUSeC/F9igqrJHZXxHt.', 'maxiaoteng@163.com', '马小腾', null, '0', '57513600026', '1558721441882', '3');
+INSERT INTO `t_user` VALUES ('17', 'liuxiaohua', '$2a$10$sggjHj5hHVouQtpR0VjdV.vxzjgbWbycMHRUUJ10mXYJTFyx.3.2y', 'liuxiaohua@163.com', '刘小华', null, '0', '-260783999845', '1558721578405', '14');
+INSERT INTO `t_user` VALUES ('18', 'zhouxiaochi', '$2a$10$3vXxoERIR2A27Rh20AcWHuOo0tHKyPMy6Rlw6Ro5niaA0/gRU/p9K', 'zhouxiaochi@163.com', '周小驰', null, '1', '-237628799753', '1558721584458', '4');
+INSERT INTO `t_user` VALUES ('19', 'guoxiaojing', '$2a$10$h2MV6IOLgfTqE0RiFoEgVOQlJOhLfYaNyPWEqLOpedKU2VvZQaO0C', 'guoxiaojing@163.com', '郭小靖', null, '1', '946662834347', '1558721596408', '12');
+INSERT INTO `t_user` VALUES ('20', 'huangxiaorong', '$2a$10$U8A42wYTUKFFHs80KGjqQ.wIItDQW3MbesmyJiR.keIZrCym4jimi', 'huangxiaorong@163.com', '黄小蓉', null, '0', '981043200658', '1558721603054', '13');
+INSERT INTO `t_user` VALUES ('21', 'hongxiaogong', '$2a$10$NMAFlE6sED9U5ZOjq2cbA.sIq2hCFO.Q4UHwDRGmo3t.twMxknSpq', 'hongxiaogong@163.com', '洪小公', null, '1', '580147200571', '1558721613340', '8');
+INSERT INTO `t_user` VALUES ('22', 'xiaowantong', '$2a$10$pbspXqozbuX6MDdItR8zjuG5TicW9VVb7jasPjXtZiQWrl5Ti.VJK', 'xiaowantong@163.com', '小顽童', null, '1', '932227200934', '1558721620315', '9');
+INSERT INTO `t_user` VALUES ('23', 'yangxiaoguo', '$2a$10$vXSKsoAI3ocq66L7F75wUO4fswUh9t/KZgjgOZvaZRXNP4S9KyeA2', 'yangxiaoguo@163.com', '杨小过', null, '1', '795283200069', '1558721631988', '10');
+INSERT INTO `t_user` VALUES ('24', 'baozupo', '$2a$10$TeH8lU5d/wrXf.LMv2MNUukIHZrOpPLCSh.J4rYzZT5YIGT03Lyni', 'baozupo@163.com', '包租婆', null, '0', '90086400957', '1558721639088', '11');
 
 -- ----------------------------
 -- Table structure for t_user_role_link
@@ -872,20 +887,132 @@ CREATE TABLE `t_user_role_link` (
 -- ----------------------------
 INSERT INTO `t_user_role_link` VALUES ('9', '8');
 INSERT INTO `t_user_role_link` VALUES ('10', '8');
+INSERT INTO `t_user_role_link` VALUES ('11', '8');
+INSERT INTO `t_user_role_link` VALUES ('12', '8');
+INSERT INTO `t_user_role_link` VALUES ('13', '8');
+INSERT INTO `t_user_role_link` VALUES ('14', '8');
+INSERT INTO `t_user_role_link` VALUES ('15', '8');
+INSERT INTO `t_user_role_link` VALUES ('16', '8');
+INSERT INTO `t_user_role_link` VALUES ('17', '8');
+INSERT INTO `t_user_role_link` VALUES ('18', '8');
+INSERT INTO `t_user_role_link` VALUES ('19', '8');
+INSERT INTO `t_user_role_link` VALUES ('20', '8');
+INSERT INTO `t_user_role_link` VALUES ('21', '8');
+INSERT INTO `t_user_role_link` VALUES ('22', '8');
+INSERT INTO `t_user_role_link` VALUES ('23', '8');
+INSERT INTO `t_user_role_link` VALUES ('24', '8');
 INSERT INTO `t_user_role_link` VALUES ('9', '9');
 INSERT INTO `t_user_role_link` VALUES ('10', '9');
+INSERT INTO `t_user_role_link` VALUES ('11', '9');
+INSERT INTO `t_user_role_link` VALUES ('12', '9');
+INSERT INTO `t_user_role_link` VALUES ('13', '9');
+INSERT INTO `t_user_role_link` VALUES ('14', '9');
+INSERT INTO `t_user_role_link` VALUES ('15', '9');
+INSERT INTO `t_user_role_link` VALUES ('16', '9');
+INSERT INTO `t_user_role_link` VALUES ('17', '9');
+INSERT INTO `t_user_role_link` VALUES ('18', '9');
+INSERT INTO `t_user_role_link` VALUES ('19', '9');
+INSERT INTO `t_user_role_link` VALUES ('20', '9');
+INSERT INTO `t_user_role_link` VALUES ('21', '9');
+INSERT INTO `t_user_role_link` VALUES ('22', '9');
+INSERT INTO `t_user_role_link` VALUES ('23', '9');
+INSERT INTO `t_user_role_link` VALUES ('24', '9');
 INSERT INTO `t_user_role_link` VALUES ('9', '10');
 INSERT INTO `t_user_role_link` VALUES ('10', '10');
+INSERT INTO `t_user_role_link` VALUES ('11', '10');
+INSERT INTO `t_user_role_link` VALUES ('12', '10');
+INSERT INTO `t_user_role_link` VALUES ('13', '10');
+INSERT INTO `t_user_role_link` VALUES ('14', '10');
+INSERT INTO `t_user_role_link` VALUES ('15', '10');
+INSERT INTO `t_user_role_link` VALUES ('16', '10');
+INSERT INTO `t_user_role_link` VALUES ('17', '10');
+INSERT INTO `t_user_role_link` VALUES ('18', '10');
+INSERT INTO `t_user_role_link` VALUES ('19', '10');
+INSERT INTO `t_user_role_link` VALUES ('20', '10');
+INSERT INTO `t_user_role_link` VALUES ('21', '10');
+INSERT INTO `t_user_role_link` VALUES ('22', '10');
+INSERT INTO `t_user_role_link` VALUES ('23', '10');
+INSERT INTO `t_user_role_link` VALUES ('24', '10');
 INSERT INTO `t_user_role_link` VALUES ('9', '15');
 INSERT INTO `t_user_role_link` VALUES ('10', '15');
+INSERT INTO `t_user_role_link` VALUES ('11', '15');
+INSERT INTO `t_user_role_link` VALUES ('12', '15');
+INSERT INTO `t_user_role_link` VALUES ('13', '15');
+INSERT INTO `t_user_role_link` VALUES ('14', '15');
+INSERT INTO `t_user_role_link` VALUES ('15', '15');
+INSERT INTO `t_user_role_link` VALUES ('16', '15');
+INSERT INTO `t_user_role_link` VALUES ('17', '15');
+INSERT INTO `t_user_role_link` VALUES ('18', '15');
+INSERT INTO `t_user_role_link` VALUES ('19', '15');
+INSERT INTO `t_user_role_link` VALUES ('20', '15');
+INSERT INTO `t_user_role_link` VALUES ('21', '15');
+INSERT INTO `t_user_role_link` VALUES ('22', '15');
+INSERT INTO `t_user_role_link` VALUES ('23', '15');
+INSERT INTO `t_user_role_link` VALUES ('24', '15');
 INSERT INTO `t_user_role_link` VALUES ('9', '16');
 INSERT INTO `t_user_role_link` VALUES ('10', '16');
+INSERT INTO `t_user_role_link` VALUES ('11', '16');
+INSERT INTO `t_user_role_link` VALUES ('12', '16');
+INSERT INTO `t_user_role_link` VALUES ('13', '16');
+INSERT INTO `t_user_role_link` VALUES ('14', '16');
+INSERT INTO `t_user_role_link` VALUES ('15', '16');
+INSERT INTO `t_user_role_link` VALUES ('16', '16');
+INSERT INTO `t_user_role_link` VALUES ('17', '16');
+INSERT INTO `t_user_role_link` VALUES ('18', '16');
+INSERT INTO `t_user_role_link` VALUES ('19', '16');
+INSERT INTO `t_user_role_link` VALUES ('20', '16');
+INSERT INTO `t_user_role_link` VALUES ('21', '16');
+INSERT INTO `t_user_role_link` VALUES ('22', '16');
+INSERT INTO `t_user_role_link` VALUES ('23', '16');
+INSERT INTO `t_user_role_link` VALUES ('24', '16');
 INSERT INTO `t_user_role_link` VALUES ('9', '17');
 INSERT INTO `t_user_role_link` VALUES ('10', '17');
+INSERT INTO `t_user_role_link` VALUES ('11', '17');
+INSERT INTO `t_user_role_link` VALUES ('12', '17');
+INSERT INTO `t_user_role_link` VALUES ('13', '17');
+INSERT INTO `t_user_role_link` VALUES ('14', '17');
+INSERT INTO `t_user_role_link` VALUES ('15', '17');
+INSERT INTO `t_user_role_link` VALUES ('16', '17');
+INSERT INTO `t_user_role_link` VALUES ('17', '17');
+INSERT INTO `t_user_role_link` VALUES ('18', '17');
+INSERT INTO `t_user_role_link` VALUES ('19', '17');
+INSERT INTO `t_user_role_link` VALUES ('20', '17');
+INSERT INTO `t_user_role_link` VALUES ('21', '17');
+INSERT INTO `t_user_role_link` VALUES ('22', '17');
+INSERT INTO `t_user_role_link` VALUES ('23', '17');
+INSERT INTO `t_user_role_link` VALUES ('24', '17');
 INSERT INTO `t_user_role_link` VALUES ('9', '18');
 INSERT INTO `t_user_role_link` VALUES ('10', '18');
+INSERT INTO `t_user_role_link` VALUES ('11', '18');
+INSERT INTO `t_user_role_link` VALUES ('12', '18');
+INSERT INTO `t_user_role_link` VALUES ('13', '18');
+INSERT INTO `t_user_role_link` VALUES ('14', '18');
+INSERT INTO `t_user_role_link` VALUES ('15', '18');
+INSERT INTO `t_user_role_link` VALUES ('16', '18');
+INSERT INTO `t_user_role_link` VALUES ('17', '18');
+INSERT INTO `t_user_role_link` VALUES ('18', '18');
+INSERT INTO `t_user_role_link` VALUES ('19', '18');
+INSERT INTO `t_user_role_link` VALUES ('20', '18');
+INSERT INTO `t_user_role_link` VALUES ('21', '18');
+INSERT INTO `t_user_role_link` VALUES ('22', '18');
+INSERT INTO `t_user_role_link` VALUES ('23', '18');
+INSERT INTO `t_user_role_link` VALUES ('24', '18');
 INSERT INTO `t_user_role_link` VALUES ('9', '19');
 INSERT INTO `t_user_role_link` VALUES ('10', '19');
+INSERT INTO `t_user_role_link` VALUES ('11', '19');
+INSERT INTO `t_user_role_link` VALUES ('12', '19');
+INSERT INTO `t_user_role_link` VALUES ('13', '19');
+INSERT INTO `t_user_role_link` VALUES ('14', '19');
+INSERT INTO `t_user_role_link` VALUES ('15', '19');
+INSERT INTO `t_user_role_link` VALUES ('16', '19');
+INSERT INTO `t_user_role_link` VALUES ('17', '19');
+INSERT INTO `t_user_role_link` VALUES ('18', '19');
+INSERT INTO `t_user_role_link` VALUES ('19', '19');
+INSERT INTO `t_user_role_link` VALUES ('20', '19');
+INSERT INTO `t_user_role_link` VALUES ('21', '19');
+INSERT INTO `t_user_role_link` VALUES ('22', '19');
+INSERT INTO `t_user_role_link` VALUES ('23', '19');
+INSERT INTO `t_user_role_link` VALUES ('24', '19');
 
 -- ----------------------------
 -- View structure for t_mail_to_users

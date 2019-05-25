@@ -158,6 +158,10 @@ public class MailService extends BaseService<MailMapper, Mail> implements IMailS
         } catch (MessagingException e) {
             throw new ProjectException("发送邮件失败！", e);
         }
+        User currentUser = currentUser();
+        if (currentUser!=null) {
+            mail.setSendUserId(currentUser.getId());
+        }
         long now = System.currentTimeMillis();
         mail.setSendTime(now);
         mail.setMailStatus(SENT_STATUS);

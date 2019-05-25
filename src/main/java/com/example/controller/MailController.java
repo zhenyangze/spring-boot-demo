@@ -73,15 +73,18 @@ public class MailController {
     public ResultVO send(
             @PathVariable
             @NotNull(message = "邮件id不能为空")
-            @NotEmpty(message = "邮件id不能为空")
-            @ApiParam(value = "邮件id，多个用逗号分隔", required = true) Integer id) {
+            @ApiParam(value = "邮件id", required = true) Integer id) {
         mailService.send(id);
         return new ResultVO<>(SUCCESS, "发送邮件成功！", null);
     }
 
     @DeleteMapping("/{ids}")
     @ApiOperation(value = "删除邮件")
-    public ResultVO delete(@PathVariable @NotNull(message = "邮件id不能为空") @ApiParam(value = "邮件id", required = true) List<Integer> ids) {
+    public ResultVO delete(
+            @PathVariable
+            @NotNull(message = "邮件id不能为空")
+            @NotEmpty(message = "邮件id不能为空")
+            @ApiParam(value = "邮件id，多个用逗号分隔", required = true) List<Integer> ids) {
         mailService.removeByIds(ids);
         return new ResultVO<>(SUCCESS, "删除邮件成功！", null);
     }

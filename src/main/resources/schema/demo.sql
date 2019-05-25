@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2019-05-25 02:21:12
+Date: 2019-05-25 18:46:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -166,7 +166,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011558717086060', '1558722064602', '10000');
+INSERT INTO `qrtz_scheduler_state` VALUES ('clusteredScheduler', 'server011558770790806', '1558781194921', '10000');
 
 -- ----------------------------
 -- Table structure for qrtz_simple_triggers
@@ -264,17 +264,14 @@ CREATE TABLE `t_attachment` (
   `attachment_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '附件名称',
   `attachment_address` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '访问地址',
   `attachment_path` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '本地路径',
+  `create_time` bigint(20) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_attachment
 -- ----------------------------
-INSERT INTO `t_attachment` VALUES ('112', '薛凌康.png', '/demofile/head/2019/5/1558667726877.png', '/home/demofile/head/2019/5/1558667726877.png');
-INSERT INTO `t_attachment` VALUES ('113', '营业执照副本.jpg', '/demofile/head/2019/5/1558677716149.jpg', '/home/demofile/head/2019/5/1558677716149.jpg');
-INSERT INTO `t_attachment` VALUES ('114', '组织机构代码证副本.jpg', '/demofile/head/2019/5/1558680270193.jpg', '/home/demofile/head/2019/5/1558680270193.jpg');
-INSERT INTO `t_attachment` VALUES ('115', '薛凌康.png', '/demofile/head/2019/5/1558680290646.png', '/home/demofile/head/2019/5/1558680290646.png');
-INSERT INTO `t_attachment` VALUES ('116', 'DWIW5615.jpg', '/demofile/head/2019/5/1558712962539.jpg', '/home/demofile/head/2019/5/1558712962539.jpg');
+INSERT INTO `t_attachment` VALUES ('117', 'DWIW5615.jpg', '/demofile/head/2019/5/1558775393966.jpg', '/home/demofile/head/2019/5/1558775393966.jpg', '1558775394451');
 
 -- ----------------------------
 -- Table structure for t_broadcast_message
@@ -852,7 +849,7 @@ CREATE TABLE `t_user` (
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$bR0way2ADFQDIt.UYSX3lekMwhHVOSwGUDLq.lBy6G0NQR/.AKXm2', 'xuelingkang@163.com', '薛凌康', '116', '1', '650736000736', '1558721838110', '1');
+INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$bR0way2ADFQDIt.UYSX3lekMwhHVOSwGUDLq.lBy6G0NQR/.AKXm2', 'xuelingkang@163.com', '薛凌康', '117', '1', '650736000736', '1558779432161', '1');
 INSERT INTO `t_user` VALUES ('10', 'chongqingkai', '$2a$10$Blxb8W82p94mzFT1N4Unl.2RYu0g53HWzmvCoHH1mu99UzlQZA0O.', '574290057@qq.com', '种庆凯', null, '1', '655833600710', '1558718739973', '5');
 INSERT INTO `t_user` VALUES ('11', 'guoxiaogang', '$2a$10$AXiiXAG7zEAfzaXT2h8CDeBKCKuSMbM2uHo6EH8VQhxjRWz2V5Pea', 'guoxiaogang@163.com', '郭小纲', null, '1', '96134400243', '1558718666696', '2');
 INSERT INTO `t_user` VALUES ('12', 'yuxiaoqian', '$2a$10$MGBsCWjabTTI9o.6mwd9/OxhESr0PtjHNRBBq7JWyV6.5R8emRLry', 'yuxiaoqian@163.com', '于小谦', null, '1', '-29577599471', '1558718672143', '3');
@@ -1013,6 +1010,12 @@ INSERT INTO `t_user_role_link` VALUES ('21', '19');
 INSERT INTO `t_user_role_link` VALUES ('22', '19');
 INSERT INTO `t_user_role_link` VALUES ('23', '19');
 INSERT INTO `t_user_role_link` VALUES ('24', '19');
+
+-- ----------------------------
+-- View structure for t_attachment_view
+-- ----------------------------
+DROP VIEW IF EXISTS `t_attachment_view`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`skip-grants user`@`skip-grants host` SQL SECURITY DEFINER VIEW `t_attachment_view` AS select `t_attachment`.`id` AS `id`,`t_attachment`.`attachment_name` AS `attachment_name`,`t_attachment`.`attachment_address` AS `attachment_address`,`t_attachment`.`attachment_path` AS `attachment_path`,`t_attachment`.`create_time` AS `create_time`,(case when (`t_user`.`head_img_id` is not null) then 't_user.head_img_id' when (`tmal`.`attachment_id` is not null) then 't_mail_attachment_link.attachment_id' else NULL end) AS `link_info` from ((`t_attachment` left join `t_user` on((`t_attachment`.`id` = `t_user`.`head_img_id`))) left join `t_mail_attachment_link` `tmal` on((`t_attachment`.`id` = `tmal`.`attachment_id`))) ;
 
 -- ----------------------------
 -- View structure for t_mail_to_users

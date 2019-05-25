@@ -67,10 +67,12 @@ public class FileController {
         }
         // 访问路径
         String address = addressPrefix+(addressPrefix.endsWith(fileSeparator)? "": fileSeparator)+relativeDir+fileSeparator+name;
+        long now = System.currentTimeMillis();
         Attachment attachment = new Attachment();
         attachment.setAttachmentName(file.getOriginalFilename());
         attachment.setAttachmentPath(absoluteDir+fileSeparator+name);
         attachment.setAttachmentAddress(address);
+        attachment.setCreateTime(now);
         attachmentService.save(attachment);
         AttachmentVO attachmentVO = (AttachmentVO) ModelUtil.copy(attachment, new ModelUtil.Mapping(Attachment.class, AttachmentVO.class, "attachmentPath"));
         return new ResultVO<>(SUCCESS, "", attachmentVO);

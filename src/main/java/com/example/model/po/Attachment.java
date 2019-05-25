@@ -1,5 +1,6 @@
 package com.example.model.po;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.example.group.MailInsert;
 import com.example.group.MailUpdate;
 import com.example.model.BaseModel;
@@ -23,5 +24,11 @@ public class Attachment extends BaseModel {
     private String attachmentAddress;
     @ApiModelProperty(value = "本地路径")
     private String attachmentPath;
+    @ApiModelProperty(value = "创建时间")
+    private Long createTime;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value = "引用信息")
+    private String linkInfo;
 
 }

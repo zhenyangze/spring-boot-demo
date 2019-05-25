@@ -1,12 +1,11 @@
 package com.example.controller;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.model.po.Attachment;
 import com.example.model.vo.AttachmentVO;
 import com.example.model.vo.ResultVO;
+import com.example.params.Params;
 import com.example.service.IAttachmentService;
 import com.example.util.ModelUtil;
 import io.swagger.annotations.Api;
@@ -37,8 +36,8 @@ public class AttachmentController {
                          @PathVariable @NotNull(message = "每页显示条数不能为空") @ApiParam(value = "每页显示条数", defaultValue = "10", required = true) long size,
                          AttachmentVO attachmentVO) {
         Page<Attachment> page = new Page<>(current, size);
-        Wrapper<Attachment> wrapper = new QueryWrapper<>(attachmentVO);
-        IPage<Attachment> iPage = attachmentService.page(page, wrapper);
+        Params<Attachment> params = new Params<>(attachmentVO);
+        IPage<Attachment> iPage = attachmentService.customPage(page, params);
         IPage attachments = (IPage) ModelUtil.copy(iPage, new ModelUtil.Mapping(Attachment.class, AttachmentVO.class));
         return new ResultVO<>(SUCCESS, "", attachments);
     }
@@ -46,7 +45,7 @@ public class AttachmentController {
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查询附件")
     public ResultVO<AttachmentVO> findById(@PathVariable @NotNull(message = "附件id不能为空") @ApiParam(value = "附件id", required = true) Integer id) {
-        Attachment attachment = attachmentService.getById(id);
+        Attachment attachment = attachmentService.customGetById(id);
         AttachmentVO attachmentVO = (AttachmentVO) ModelUtil.copy(attachment, new ModelUtil.Mapping(Attachment.class, AttachmentVO.class));
         return new ResultVO<>(SUCCESS, "", attachmentVO);
     }

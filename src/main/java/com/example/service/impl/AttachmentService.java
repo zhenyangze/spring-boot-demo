@@ -1,11 +1,12 @@
 package com.example.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.exception.ProjectException;
 import com.example.ftp.SftpHelper;
 import com.example.mapper.AttachmentMapper;
 import com.example.model.po.Attachment;
+import com.example.params.Params;
 import com.example.service.IAttachmentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,14 +31,20 @@ public class AttachmentService extends BaseService<AttachmentMapper, Attachment>
 
     @Override
     @Cacheable(cacheNames = "attachment:multiple", keyGenerator = "defaultPageKeyGenerator")
-    public IPage<Attachment> page(IPage<Attachment> page, Wrapper<Attachment> queryWrapper) {
-        return super.page(page, queryWrapper);
+    public IPage<Attachment> customPage(Page<Attachment> page, Params<Attachment> params) {
+        return page.setRecords(baseMapper.customSelectPage(page, params));
     }
 
     @Override
     @Cacheable(cacheNames = "attachment:single", key = "'attachment:'+#id", unless = "#result==null")
-    public Attachment getById(Serializable id) {
-        return super.getById(id);
+    public Attachment customGetById(Integer id) {
+        return baseMapper.customSelectById(id);
+    }
+
+    @Override
+    @CacheEvict(cacheNames = {"attachment:multiple"}, allEntries = true)
+    public boolean save(Attachment entity) {
+        return super.save(entity);
     }
 
     @Override
@@ -46,15 +52,9 @@ public class AttachmentService extends BaseService<AttachmentMapper, Attachment>
     @Caching(
             evict = {
                     @CacheEvict(cacheNames = {"attachment:multiple"}, allEntries = true),
-                    @CacheEvict(cacheNames = {"attachment:single"}, key = "'attachment:'+#id")
+                    @CacheEvict(cacheNames = {"attachment:single"}, allEntries = true)
             }
     )
-    public boolean removeById(Serializable id) {
-        return super.removeById(id);
-    }
-
-    @Override
-    @Transactional
     public void customRemoveByIds(List<Integer> ids) {
         List<String[]> toDelete = new ArrayList<>();
         for (Integer id: ids) {

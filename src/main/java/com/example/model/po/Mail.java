@@ -39,7 +39,7 @@ public class Mail extends BaseModel {
     @Null(groups = {MailInsert.class, MailUpdate.class}, message = "发送时间必须为空")
     private Long sendTime;
     @ApiModelProperty(value = "发送用户id")
-    @NotNull(groups = {MailInsert.class, MailUpdate.class}, message = "发送用户id不能为空")
+    @Null(groups = {MailInsert.class, MailUpdate.class}, message = "发送用户id必须为空")
     private Integer sendUserId;
 
     @TableField(exist = false)

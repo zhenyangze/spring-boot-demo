@@ -13,9 +13,9 @@ import com.example.model.vo.UserDetailsImpl;
 import com.example.service.IBaseService;
 import com.example.service.ITokenService;
 import io.jsonwebtoken.lang.Collections;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
@@ -35,6 +35,9 @@ public class BaseService<M extends IBaseMapper<T>, T extends BaseModel> extends 
     @Override
     public User currentUser() {
         String token = TokenFilter.getToken(request);
+        if (StringUtils.isEmpty(token) || "null".equals(token)) {
+            return null;
+        }
         UserDetailsImpl userDetails = tokenService.getUserDetalis(token);
         if (userDetails==null) {
             return null;

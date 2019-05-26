@@ -18,7 +18,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,8 +31,6 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class UserService extends BaseService<UserMapper, User> implements IUserService {
 
-    @Value("${retrieve-password.max-retry}")
-    private Integer maxRetry;
     @Value("${retrieve-password.min-wait}")
     private Integer minWait;
     @Value("${retrieve-password.expire}")
@@ -167,21 +164,6 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
         mail.setMailContent(new MailContent().setContent(content));
         mail.setToUsers(Lists.newArrayList(user));
         return mail;
-    }
-
-    @Override
-    @Transactional
-    @Async
-    public void sendRetrievePasswordMail(Integer mailId) {
-        for (int i=0; i<maxRetry; i++) {
-            try {
-                mailService.send(mailId);
-                log.info("发送验证码邮件["+mailId+"]成功");
-                return;
-            } catch (Exception e) {
-                log.info("发送验证码邮件["+mailId+"]失败，准备重试");
-            }
-        }
     }
 
     @Override

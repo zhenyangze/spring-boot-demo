@@ -10,6 +10,10 @@ public interface IMailService extends IBaseService<Mail> {
     // 已发送
     String SENT_STATUS = "sent";
 
-    void send(Integer id);
+    Mail send(Integer id);
+
+    void send(Mail mail, Integer maxRetry);
+
+    void send(Mail mail);
 
 }

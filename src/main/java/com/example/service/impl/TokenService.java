@@ -133,7 +133,7 @@ public class TokenService implements ITokenService {
 
     // 根据token解密，计算出uuid
     private String getUUIDFromJWT(String token) {
-        if (StringUtils.isEmpty(token)) {
+        if (StringUtils.isEmpty(token) || "null".equals(token)) {
             return null;
         }
         Map<String, Object> jwtClaims = Jwts.parser().setSigningKey(getKeyInstance()).parseClaimsJws(token).getBody();

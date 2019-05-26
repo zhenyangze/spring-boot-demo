@@ -14,6 +14,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +30,8 @@ import static com.example.model.vo.ResultVO.SUCCESS;
 @Validated
 public class MailController {
 
+    @Value("${mail.max-retry}")
+    private Integer maxRetry;
     @Autowired
     private IMailService mailService;
 
@@ -74,7 +77,8 @@ public class MailController {
             @PathVariable
             @NotNull(message = "邮件id不能为空")
             @ApiParam(value = "邮件id", required = true) Integer id) {
-        mailService.send(id);
+        Mail mail = mailService.send(id);
+        mailService.send(mail, maxRetry);
         return new ResultVO<>(SUCCESS, "发送邮件成功！", null);
     }
 

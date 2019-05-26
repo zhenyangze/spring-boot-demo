@@ -9,8 +9,6 @@ public interface IUserService extends IBaseService<User> {
 
     Mail retrievePasswordMail(User user);
 
-    void sendRetrievePasswordMail(Integer mailId);
-
     void retrievePassword(User user, String verification);
 
 }

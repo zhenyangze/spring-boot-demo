@@ -5,6 +5,7 @@ import com.example.group.*;
 import com.example.model.po.*;
 import com.example.model.vo.*;
 import com.example.params.Params;
+import com.example.service.IMailService;
 import com.example.service.IRoleService;
 import com.example.service.ITokenService;
 import com.example.service.IUserService;
@@ -15,6 +16,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +30,8 @@ import static com.example.model.vo.ResultVO.SUCCESS;
 @Api(tags="用户个人信息")
 public class UserInfoController {
 
+    @Value("${retrieve-password.max-retry}")
+    private Integer maxRetry;
     @Autowired
     private IUserService userService;
     @Autowired
@@ -36,6 +40,8 @@ public class UserInfoController {
     private IRoleService roleService;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private IMailService mailService;
 
     @GetMapping
     @ApiOperation(value = "查询个人信息")
@@ -68,10 +74,7 @@ public class UserInfoController {
     @ApiOperation(value = "更新个人信息")
     public ResultVO update(@Validated({UserInfoUpdate.class}) UserVO userVO) {
         User user = (User) ModelUtil.copy(userVO, new ModelUtil.Mapping(UserVO.class, User.class));
-        String password = user.getPassword();
-        if (!StringUtils.isEmpty(password)) {
-            user.setPassword(passwordEncoder.encode(password));
-        }
+        user.setPassword(null);
         userService.updateById(user.setId(userService.currentUser().getId()));
         return new ResultVO<>(SUCCESS, "更新个人信息成功！", null);
     }
@@ -99,7 +102,8 @@ public class UserInfoController {
     public ResultVO retrievePasswordMail(@Validated({RetrievePasswordMail.class}) UserVO userVO) {
         User user = (User) ModelUtil.copy(userVO, new ModelUtil.Mapping(UserVO.class, User.class));
         Mail mail = userService.retrievePasswordMail(user);
-        userService.sendRetrievePasswordMail(mail.getId());
+        mail = mailService.send(mail.getId());
+        mailService.send(mail, maxRetry);
         String emailAddr = mail.getToUsers().get(0).getEmail();
         String[] emailArr = emailAddr.split("@");
         String emailName = emailArr[0];

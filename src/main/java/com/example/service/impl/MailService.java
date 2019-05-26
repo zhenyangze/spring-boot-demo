@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.exception.LogicException;
-import com.example.exception.ProjectException;
 import com.example.ftp.SftpHelper;
 import com.example.mapper.MailMapper;
 import com.example.model.po.*;
@@ -14,11 +13,13 @@ import com.example.service.IMailContentService;
 import com.example.service.IMailService;
 import com.example.service.IMailToUserLinkService;
 import io.jsonwebtoken.lang.Collections;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,8 +29,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class MailService extends BaseService<MailMapper, Mail> implements IMailService {
 
+    @Value("${mail.max-retry}")
+    private Integer maxRetry;
     @Value("${spring.mail.username}")
     private String mailUsername;
     @Value("${attachment.file-separator}")
@@ -123,41 +127,8 @@ public class MailService extends BaseService<MailMapper, Mail> implements IMailS
 
     @Override
     @Transactional
-    public void send(Integer id) {
+    public Mail send(Integer id) {
         Mail mail = baseMapper.customSelectById(id);
-        try {
-            MimeMessage message = javaMailSender.createMimeMessage();
-            MimeMessageHelper messageHelper = new MimeMessageHelper(message, true);
-            // 发件人
-            messageHelper.setFrom(mailUsername);
-            // 收件人
-            List<User> toUsers = mail.getToUsers();
-            List<String> toMails = new ArrayList<>();
-            if (!Collections.isEmpty(toUsers)) {
-                for (User toUser : toUsers) {
-                    toMails.add(toUser.getEmail());
-                }
-            }
-            messageHelper.setTo(toMails.toArray(new String[0]));
-            // 标题
-            messageHelper.setSubject(mail.getMailSubject());
-            // 内容
-            messageHelper.setText(mail.getMailContent().getContent(), true);
-            // 附件
-            List<Attachment> attachments = mail.getAttachments();
-            if (!Collections.isEmpty(attachments)) {
-                for (Attachment attachment : attachments) {
-                    String path = attachment.getAttachmentPath();
-                    String dir = path.substring(0, path.lastIndexOf(fileSeparator));
-                    String name = path.substring(path.lastIndexOf(fileSeparator)+1);
-                    ByteArrayResource byteArrayResource = new ByteArrayResource(sftpHelper.download(dir, name));
-                    messageHelper.addAttachment(attachment.getAttachmentName(), byteArrayResource);
-                }
-            }
-            javaMailSender.send(message);
-        } catch (MessagingException e) {
-            throw new ProjectException("发送邮件失败！", e);
-        }
         User currentUser = currentUser();
         if (currentUser!=null) {
             mail.setSendUserId(currentUser.getId());
@@ -166,6 +137,57 @@ public class MailService extends BaseService<MailMapper, Mail> implements IMailS
         mail.setSendTime(now);
         mail.setMailStatus(SENT_STATUS);
         baseMapper.updateById(mail);
+        return mail;
     }
 
+    @Override
+    @Async
+    public void send(Mail mail, Integer maxRetry) {
+        for (int i=0; i<maxRetry; i++) {
+            try {
+                MimeMessage message = javaMailSender.createMimeMessage();
+                MimeMessageHelper messageHelper = new MimeMessageHelper(message, true);
+                // 发件人
+                messageHelper.setFrom(mailUsername);
+                // 收件人
+                List<User> toUsers = mail.getToUsers();
+                List<String> toMails = new ArrayList<>();
+                if (!Collections.isEmpty(toUsers)) {
+                    for (User toUser : toUsers) {
+                        toMails.add(toUser.getEmail());
+                    }
+                }
+                messageHelper.setTo(toMails.toArray(new String[0]));
+                // 标题
+                messageHelper.setSubject(mail.getMailSubject());
+                // 内容
+                messageHelper.setText(mail.getMailContent().getContent(), true);
+                // 附件
+                List<Attachment> attachments = mail.getAttachments();
+                if (!Collections.isEmpty(attachments)) {
+                    for (Attachment attachment : attachments) {
+                        String path = attachment.getAttachmentPath();
+                        String dir = path.substring(0, path.lastIndexOf(fileSeparator));
+                        String name = path.substring(path.lastIndexOf(fileSeparator)+1);
+                        ByteArrayResource byteArrayResource = new ByteArrayResource(sftpHelper.download(dir, name));
+                        messageHelper.addAttachment(attachment.getAttachmentName(), byteArrayResource);
+                    }
+                }
+                javaMailSender.send(message);
+                return;
+            } catch (MessagingException e) {
+                if (i==maxRetry-1) {
+                    log.error("发送邮件["+mail.getId()+"]失败");
+                } else {
+                    log.info("发送邮件["+mail.getId()+"]失败，准备重试");
+                }
+            }
+        }
+    }
+
+    @Override
+    @Async
+    public void send(Mail mail) {
+        send(mail, maxRetry);
+    }
 }

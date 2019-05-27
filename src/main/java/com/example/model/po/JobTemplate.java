@@ -32,6 +32,9 @@ public class JobTemplate extends BaseModel {
     @ApiModelProperty(value = "任务描述")
     @NotNull(groups = {JobTemplateInsert.class, JobTemplateUpdate.class}, message = "任务描述不能为空")
     private String jobDesc;
+    @ApiModelProperty(value = "创建时间")
+    @Null(groups = {JobTemplateInsert.class, JobTemplateUpdate.class}, message = "创建时间必须为空")
+    private Long createTime;
 
     @TableField(exist = false)
     @ApiModelProperty(value = "任务参数")

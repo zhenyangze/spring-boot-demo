@@ -1,7 +1,5 @@
 package com.example.controller;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.group.JobTemplateInsert;
@@ -9,6 +7,7 @@ import com.example.group.JobTemplateUpdate;
 import com.example.model.po.JobTemplate;
 import com.example.model.vo.JobTemplateVO;
 import com.example.model.vo.ResultVO;
+import com.example.params.Params;
 import com.example.service.IJobTemplateService;
 import com.example.util.ModelUtil;
 import io.swagger.annotations.Api;
@@ -33,14 +32,23 @@ public class JobTemplateController {
     @Autowired
     private IJobTemplateService jobTemplateService;
 
+    @GetMapping("/all")
+    @ApiOperation(value = "查询所有任务模板")
+    public ResultVO all() {
+        Params<JobTemplate> params = new Params<>(new JobTemplate());
+        List<JobTemplate> all = jobTemplateService.customList(params);
+        List list = (List) ModelUtil.copy(all, new ModelUtil.Mapping(JobTemplate.class, JobTemplateVO.class));
+        return new ResultVO<>(SUCCESS, "", list);
+    }
+
     @GetMapping("/{current}/{size}")
     @ApiOperation(value = "查询任务模板列表")
     public ResultVO findPage(@PathVariable @NotNull(message = "当前页不能为空") @ApiParam(value = "当前页", defaultValue = "1", required = true) long current,
                          @PathVariable @NotNull(message = "每页显示条数不能为空") @ApiParam(value = "每页显示条数", defaultValue = "10", required = true) long size,
                          JobTemplateVO jobTemplateVO) {
         Page<JobTemplate> page = new Page<>(current, size);
-        Wrapper<JobTemplate> wrapper = new QueryWrapper<>(jobTemplateVO);
-        IPage<JobTemplate> iPage = jobTemplateService.page(page, wrapper);
+        Params<JobTemplate> params = new Params<>(jobTemplateVO);
+        IPage<JobTemplate> iPage = jobTemplateService.customPage(page, params);
         IPage templates = (IPage) ModelUtil.copy(iPage, new ModelUtil.Mapping(JobTemplate.class, JobTemplateVO.class));
         return new ResultVO<>(SUCCESS, "", templates);
     }

@@ -1,9 +1,12 @@
 package com.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mapper.JobTemplateMapper;
 import com.example.model.po.JobTemplate;
 import com.example.model.po.JobTemplateParameter;
+import com.example.params.Params;
 import com.example.service.IJobTemplateParameterService;
 import com.example.service.IJobTemplateService;
 import io.jsonwebtoken.lang.Collections;
@@ -19,6 +22,16 @@ public class JobTemplateService extends BaseService<JobTemplateMapper, JobTempla
 
     @Autowired
     private IJobTemplateParameterService jobTemplateParameterService;
+
+    @Override
+    public List<JobTemplate> customList(Params<JobTemplate> params) {
+        return baseMapper.customSelectList(params);
+    }
+
+    @Override
+    public IPage<JobTemplate> customPage(Page<JobTemplate> page, Params<JobTemplate> params) {
+        return page.setRecords(baseMapper.customSelectPage(page, params));
+    }
 
     @Override
     public JobTemplate customGetById(Integer id) {

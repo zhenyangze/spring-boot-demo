@@ -129,6 +129,10 @@ public class MailService extends BaseService<MailMapper, Mail> implements IMailS
     @Transactional
     public Mail send(Integer id) {
         Mail mail = baseMapper.customSelectById(id);
+        String status = mail.getMailStatus();
+        if (!"draft".equals(status) && !"fail".equals(status)) {
+            throw new LogicException("不能重复发送邮件");
+        }
         User currentUser = currentUser();
         if (currentUser!=null) {
             mail.setSendUserId(currentUser.getId());

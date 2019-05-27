@@ -135,12 +135,13 @@ public class MailService extends BaseService<MailMapper, Mail> implements IMailS
         }
         long now = System.currentTimeMillis();
         mail.setSendTime(now);
-        mail.setMailStatus(SENT_STATUS);
+        mail.setMailStatus(SENDING_STATUS);
         baseMapper.updateById(mail);
         return mail;
     }
 
     @Override
+    @Transactional
     @Async
     public void send(Mail mail, Integer maxRetry) {
         for (int i=0; i<maxRetry; i++) {
@@ -174,18 +175,23 @@ public class MailService extends BaseService<MailMapper, Mail> implements IMailS
                     }
                 }
                 javaMailSender.send(message);
+                mail.setMailStatus(SENT_STATUS);
+                baseMapper.updateById(mail);
                 return;
             } catch (MessagingException e) {
                 if (i==maxRetry-1) {
+                    mail.setMailStatus(FAIL_STATUS);
+                    baseMapper.updateById(mail);
                     log.error("发送邮件["+mail.getId()+"]失败");
                 } else {
-                    log.info("发送邮件["+mail.getId()+"]失败，准备重试");
+                    log.error("发送邮件["+mail.getId()+"]失败，准备重试");
                 }
             }
         }
     }
 
     @Override
+    @Transactional
     @Async
     public void send(Mail mail) {
         send(mail, maxRetry);

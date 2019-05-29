@@ -41,6 +41,8 @@ public class JobTemplateService extends BaseService<JobTemplateMapper, JobTempla
     @Override
     @Transactional
     public void customSave(JobTemplate jobTemplate) {
+        long now = System.currentTimeMillis();
+        jobTemplate.setCreateTime(now);
         baseMapper.insert(jobTemplate);
         Integer jobTemplateId = jobTemplate.getId();
         List<JobTemplateParameter> parameters = jobTemplate.getParameters();

@@ -158,13 +158,12 @@ public class JobService extends BaseService<JobMapper, Job> implements IJobServi
             }
         }
         // 创建任务触发器
-        Trigger trigger = TriggerBuilder
-                .newTrigger()
-                .withIdentity(triggerName, triggerGroup)
-                .startAt(new Date(startTime))
-                .endAt(new Date(endTime))
-                .withSchedule(scheduleBuilder)
-                .build();
+        TriggerBuilder<Trigger> triggerBuilder = TriggerBuilder.newTrigger();
+        triggerBuilder.withIdentity(triggerName, triggerGroup).startAt(new Date(startTime));
+        if (endTime!=null) {
+            triggerBuilder.endAt(new Date(endTime));
+        }
+        Trigger trigger = triggerBuilder.withSchedule(scheduleBuilder).build();
         try {
             // 将触发器与任务绑定到调度器内
             scheduler.scheduleJob(jobDetail, trigger);

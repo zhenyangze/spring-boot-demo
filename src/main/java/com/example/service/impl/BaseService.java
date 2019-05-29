@@ -34,7 +34,12 @@ public class BaseService<M extends IBaseMapper<T>, T extends BaseModel> extends 
 
     @Override
     public User currentUser() {
-        String token = TokenFilter.getToken(request);
+        String token;
+        try {
+            token = TokenFilter.getToken(request);
+        } catch (Exception e) {
+            return null;
+        }
         if (StringUtils.isEmpty(token) || "null".equals(token)) {
             return null;
         }

@@ -24,6 +24,7 @@ public class SendMail extends QuartzJobBean {
 
     @Override
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+        log.info("----------SendMailJob开始了----------");
         JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
         String username = jobDataMap.getString("username");
         String subject = jobDataMap.getString("subject");
@@ -31,7 +32,7 @@ public class SendMail extends QuartzJobBean {
         Params<User> params = new Params<>(new User().setUsername(username));
         User user = userMapper.customSelectOne(params);
         if (user==null) {
-            log.error("SendMail，用户名["+username+"]不存在");
+            log.info("SendMailJob出错了: 用户名["+username+"]不存在");
             return;
         }
         Mail mail = new Mail();
@@ -42,7 +43,8 @@ public class SendMail extends QuartzJobBean {
         mailService.customSave(mail);
         mail = mailService.send(mail.getId());
         mailService.send(mail);
-        log.info("SendMail，发送邮件到["+username+"]成功");
+        log.info("SendMailJob成功: 发送邮件到["+username+"]成功; email地址: ["+user.getEmail()+"]");
+        log.info("----------SendMailJob结束了----------");
     }
 
 }

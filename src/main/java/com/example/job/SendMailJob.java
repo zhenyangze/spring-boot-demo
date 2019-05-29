@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 @Slf4j
-public class SendMail extends QuartzJobBean {
+public class SendMailJob extends QuartzJobBean {
 
     @Autowired
     private UserMapper userMapper;

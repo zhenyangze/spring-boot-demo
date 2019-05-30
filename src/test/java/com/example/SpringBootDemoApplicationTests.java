@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.model.HBaseRowMapper;
 import com.spring4all.spring.boot.starter.hbase.api.HbaseTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.hbase.client.Scan;
@@ -47,7 +48,7 @@ public class SpringBootDemoApplicationTests {
         String stopRow = "4";
         Scan scan = new Scan(Bytes.toBytes(startRow), Bytes.toBytes(stopRow));
         scan.setCaching(5000);
-        List<com.example.Test> dtos = this.hbaseTemplate.find("SYSTEM.TEST", scan, new TestRowMapper());
+        List<com.example.Test> dtos = this.hbaseTemplate.find("SYSTEM.TEST", scan, new HBaseRowMapper<com.example.Test>(com.example.Test.class));
         System.out.println(dtos);
     }
 

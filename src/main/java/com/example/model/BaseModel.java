@@ -54,7 +54,7 @@ public class BaseModel implements Cloneable, Serializable {
 
     @Override
     public BaseModel clone() {
-        return SerializeUtil.deseria(SerializeUtil.seria(this), BaseModel.class);
+        return SerializeUtil.deserialize(SerializeUtil.serialize(this));
     }
 
 }

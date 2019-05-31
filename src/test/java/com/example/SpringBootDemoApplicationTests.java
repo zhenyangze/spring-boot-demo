@@ -1,5 +1,7 @@
 package com.example;
 
+import com.example.model.po.User;
+import com.example.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +20,8 @@ public class SpringBootDemoApplicationTests {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private ApplicationContext context;
+    @Autowired
+    private IUserService userService;
 
     @Test
     public void testPassword() {
@@ -31,6 +35,14 @@ public class SpringBootDemoApplicationTests {
             Object bean = context.getBean(name);
             System.out.println(bean.getClass());
         }
+    }
+
+    @Test
+    public void testClone() {
+        User user = userService.customGetById(9);
+        System.out.println(user);
+        User user_ = (User) user.clone();
+        System.out.println(user_);
     }
 
 }

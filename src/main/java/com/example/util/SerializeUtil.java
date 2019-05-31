@@ -1,70 +1,44 @@
 package com.example.util;
 
 import com.example.exception.ProjectException;
-
-import java.io.*;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SerializeUtil {
 
-    /**
-     * 对象序列化
-     * @param obj 实现了Serializable接口的对象
-     * @return 序列化字节数组
-     */
-    public static <T extends Serializable> byte[] seria(T obj) {
-        ObjectOutputStream oos = null;
+    private static final byte[] EMPTY_ARRAY = new byte[0];
+
+    private static ObjectMapper objectMapper;
+
+    static {
+        objectMapper = new ObjectMapper();
+        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+    }
+
+    /** 序列化对象 */
+    public static byte[] serialize(Object obj) {
+        if (obj==null) {
+            return EMPTY_ARRAY;
+        }
         try {
-            // 序列化
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            oos = new ObjectOutputStream(baos);
-            oos.writeObject(obj);
-            return baos.toByteArray();
+            return objectMapper.writeValueAsBytes(obj);
         } catch (Exception e) {
             throw new ProjectException("序列化对象出错", e);
-        } finally {
-            if (oos!=null) {
-                try {
-                    oos.close();
-                } catch (IOException e) {
-                    throw new ProjectException("关闭对象输出流出错", e);
-                }
-            }
         }
     }
 
-    /**
-     * 字节数组反序列化为指定类型的对象
-     * @param bytes 字节数组
-     * @param cls 实现了Serializable的类型
-     * @return 指定类型的对象
-     */
+    /** 反序列化对象 */
     @SuppressWarnings("unchecked")
-    public static <T extends Serializable> T deseria(byte[] bytes, Class<T> cls) {
-        return (T) deseria(bytes);
-    }
-
-    /**
-     * 字节数组反序列化为Object
-     * @param bytes 字节数组
-     * @return Object对象
-     */
-    public static Object deseria(byte[] bytes) {
-        ObjectInputStream ois = null;
+    public static <T> T deserialize(byte[] bytes) {
+        if (bytes==null || bytes.length==0) {
+            return null;
+        }
         try {
-            // 反序列化
-            ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-            ois = new ObjectInputStream(bais);
-            return ois.readObject();
+            return (T) objectMapper.readValue(bytes, 0, bytes.length, Object.class);
         } catch (Exception e) {
             throw new ProjectException("反序列化对象出错", e);
-        } finally {
-            if (ois!=null) {
-                try {
-                    ois.close();
-                } catch (IOException e) {
-                    throw new ProjectException("关闭对象输入流出错", e);
-                }
-            }
         }
     }
 

@@ -25,11 +25,6 @@
         <spring-security-messaging.version>5.1.4.RELEASE</spring-security-messaging.version>
         <json-lib.version>2.4</json-lib.version>
         <sftp.version>0.1.55</sftp.version>
-        <hbase-starter.version>1.0.0.RELEASE</hbase-starter.version>
-        <hbase.version>1.2.0-cdh5.13.1</hbase.version>
-        <guava.version>20.0</guava.version>
-        <kryo.version>4.0.2</kryo.version>
-        <kryo-serializers.version>0.45</kryo-serializers.version>
     </properties>
 
     <repositories>
@@ -182,17 +177,6 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${swagger.version}</version>
-        </dependency>
-        <!-- kyro相关 -->
-        <dependency>
-            <groupId>com.esotericsoftware</groupId>
-            <artifactId>kryo</artifactId>
-            <version>${kryo.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>de.javakaffee</groupId>
-            <artifactId>kryo-serializers</artifactId>
-            <version>${kryo-serializers.version}</version>
         </dependency>
         <!-- devtools -->
         <dependency>

@@ -4,12 +4,24 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mapper.BroadcastMessageMapper;
 import com.example.model.po.BroadcastMessage;
+import com.example.model.po.BroadcastToUserLink;
+import com.example.model.po.User;
 import com.example.params.Params;
 import com.example.service.IBroadcastMessageService;
+import com.example.service.IBroadcastToUserLinkService;
+import io.jsonwebtoken.lang.Collections;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class BroadcastMessageService extends BaseService<BroadcastMessageMapper, BroadcastMessage> implements IBroadcastMessageService {
+
+    @Autowired
+    private IBroadcastToUserLinkService broadcastToUserLinkService;
 
     @Override
     public IPage<BroadcastMessage> customPage(Page<BroadcastMessage> page, Params<BroadcastMessage> params) {
@@ -19,6 +31,26 @@ public class BroadcastMessageService extends BaseService<BroadcastMessageMapper,
     @Override
     public BroadcastMessage customGetById(Integer id) {
         return baseMapper.customSelectById(id);
+    }
+
+    @Override
+    @Transactional
+    public void customSave(BroadcastMessage broadcastMessage) {
+        long now = System.currentTimeMillis();
+        broadcastMessage.setSendTime(now);
+        User currentUser = currentUser();
+        broadcastMessage.setSendUser(currentUser);
+        broadcastMessage.setSendUserId(currentUser.getId());
+        baseMapper.insert(broadcastMessage);
+        Integer broadcastId = broadcastMessage.getId();
+        List<User> toUsers = broadcastMessage.getToUsers();
+        List<BroadcastToUserLink> links = new ArrayList<>();
+        if (!Collections.isEmpty(toUsers)) {
+            for (User user: toUsers) {
+                links.add(new BroadcastToUserLink(broadcastId, user.getId(), UNREAD));
+            }
+            broadcastToUserLinkService.saveBatch(links);
+        }
     }
 
 }

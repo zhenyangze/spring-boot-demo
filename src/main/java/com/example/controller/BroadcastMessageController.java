@@ -4,12 +4,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.group.Insert;
 import com.example.model.po.BroadcastMessage;
+import com.example.model.po.BroadcastToUserLink;
 import com.example.model.po.User;
 import com.example.model.vo.BroadcastMessageVO;
 import com.example.model.vo.ResultVO;
 import com.example.model.vo.UserVO;
 import com.example.params.Params;
 import com.example.service.IBroadcastMessageService;
+import com.example.service.IBroadcastToUserLinkService;
 import com.example.util.GenericMessageBuilder;
 import com.example.util.ModelUtil;
 import io.swagger.annotations.Api;
@@ -38,6 +40,8 @@ public class BroadcastMessageController {
     private String broadcast;
     @Autowired
     private IBroadcastMessageService broadcastMessageService;
+    @Autowired
+    private IBroadcastToUserLinkService broadcastToUserLinkService;
     @Autowired
     private SimpMessagingTemplate template;
 
@@ -76,19 +80,13 @@ public class BroadcastMessageController {
         return new ResultVO<>(SUCCESS, "删除广播成功！", null);
     }
 
-
     @PostMapping
     @ApiOperation(value = "发送广播")
     public ResultVO save(@Validated({Insert.class}) BroadcastMessageVO broadcastMessageVO) {
         BroadcastMessage broadcastMessage = (BroadcastMessage) ModelUtil.copy(broadcastMessageVO,
                 new ModelUtil.Mapping(BroadcastMessageVO.class, BroadcastMessage.class));
 
-        long now = System.currentTimeMillis();
-        broadcastMessage.setSendTime(now);
-        User currentUser = broadcastMessageService.currentUser();
-        broadcastMessage.setSendUser(currentUser);
-        broadcastMessage.setSendUserId(currentUser.getId());
-        broadcastMessageService.save(broadcastMessage);
+        broadcastMessageService.customSave(broadcastMessage);
 
         GenericMessage message = new GenericMessageBuilder()
                 .payload(ModelUtil.copy(broadcastMessage,
@@ -99,6 +97,15 @@ public class BroadcastMessageController {
                 .build();
         template.send(message);
         return new ResultVO<>(SUCCESS, "广播成功！", null);
+    }
+
+    @PutMapping("/{id}")
+    @ApiOperation(value = "更新消息状态为已读")
+    public ResultVO read(@PathVariable @NotNull(message = "广播id不能为空") Integer id) {
+        User currentUser = broadcastMessageService.currentUser();
+        BroadcastToUserLink link = new BroadcastToUserLink(id, currentUser.getId(), IBroadcastMessageService.READ);
+        broadcastToUserLinkService.customUpdateById(link);
+        return new ResultVO<>(SUCCESS, "更新消息状态成功！", null);
     }
 
 }

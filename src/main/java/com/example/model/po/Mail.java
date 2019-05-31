@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.util.List;
@@ -59,6 +60,7 @@ public class Mail extends BaseModel {
     @TableField(exist = false)
     @ApiModelProperty(value = "接收用户")
     @NotNull(groups = {MailInsert.class, MailUpdate.class}, message = "接收用户不能为空")
+    @NotEmpty(groups = {MailInsert.class, MailUpdate.class}, message = "接收用户不能为空")
     @IgnoreSwaggerParameter
     private List<User> toUsers;
     @TableField(exist = false)

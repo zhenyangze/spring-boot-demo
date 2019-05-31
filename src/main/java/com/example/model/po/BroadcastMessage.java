@@ -8,8 +8,10 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import java.util.List;
 
 @Data
 @ApiModel(value = "广播消息")
@@ -32,5 +34,11 @@ public class BroadcastMessage extends BaseModel {
     @IgnoreSwaggerParameter
     @Null(groups = {Insert.class}, message = "发送用户必须为空")
     private User sendUser;
+    @TableField(exist = false)
+    @ApiModelProperty(value = "接收用户")
+    @NotNull(groups = {Insert.class}, message = "接收用户不能为空")
+    @NotEmpty(groups = {Insert.class}, message = "接收用户不能为空")
+    @IgnoreSwaggerParameter
+    private List<User> toUsers;
 
 }

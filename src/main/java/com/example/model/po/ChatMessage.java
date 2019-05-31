@@ -16,7 +16,7 @@ import javax.validation.constraints.Null;
 @ApiModel(value = "点对点消息")
 public class ChatMessage extends BaseModel {
 
-    private static final long serialVersionUID = 1;
+    private static final long serialVersionUID = 1L;
     @ApiModelProperty(value = "消息id")
     @Null(groups = {Insert.class}, message = "消息id必须为空")
     @NotNull(groups = {Update.class}, message = "消息id不能为空")

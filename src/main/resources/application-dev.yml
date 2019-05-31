@@ -50,12 +50,6 @@ spring:
     username: xxxxxx@163.com
     password: xxxxxx
 
-  data:
-    hbase:
-      quorum: spark003:2181,spark004:2181,spark005:2181
-      rootDir: hdfs://spark001:8020/hbase
-      nodeParent: /hbase
-
 server:
   port: 8080
   jetty:

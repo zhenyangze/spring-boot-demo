@@ -196,3 +196,9 @@ retrieve-password:
   max-retry: 3 # 发送找回密码验证码失败重试次数
   min-wait: 60 # 发送找回密码验证码最小等待时间，秒
   expire: 30 # 验证码有效期，分钟
+
+kafka:
+  consumer:
+    websocket:
+      properties:
+        groupId: spring-boot-demo-websocket-consumer-1

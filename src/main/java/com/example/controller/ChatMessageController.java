@@ -2,8 +2,8 @@ package com.example.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.exception.LogicException;
 import com.example.group.Insert;
-import com.example.group.Update;
 import com.example.model.po.ChatMessage;
 import com.example.model.po.User;
 import com.example.model.vo.ChatMessageVO;
@@ -94,7 +94,7 @@ public class ChatMessageController {
         User currentUser = chatMessageService.currentUser();
         chatMessage.setSendUser(currentUser);
         chatMessage.setSendUserId(currentUser.getId());
-        chatMessage.setReadStatus(0);
+        chatMessage.setReadStatus(IChatMessageService.UNREAD);
         chatMessageService.save(chatMessage);
 
         Set<String> sessionIds = sessionIdRegistry.getSessionIds(chatMessage.getToUserId());
@@ -111,12 +111,17 @@ public class ChatMessageController {
         return new ResultVO<>(SUCCESS, "发送消息成功！", null);
     }
 
-    @PutMapping
-    @ApiOperation(value = "更新消息")
-    public ResultVO update(@Validated({Update.class}) ChatMessageVO chatMessageVO) {
-        ChatMessage chatMessage = (ChatMessage) ModelUtil.copy(chatMessageVO, new ModelUtil.Mapping(ChatMessageVO.class, ChatMessage.class));
+    @PutMapping("/{id}")
+    @ApiOperation(value = "更新消息状态为已读")
+    public ResultVO update(@PathVariable @NotNull(message = "消息id不能为空") Integer id) {
+        ChatMessage chatMessage = chatMessageService.getById(id);
+        User currentUser = chatMessageService.currentUser();
+        if (!chatMessage.getToUserId().equals(currentUser.getId())) {
+            throw new LogicException("无法更新！");
+        }
+        chatMessage.setReadStatus(IChatMessageService.READ);
         chatMessageService.updateById(chatMessage);
-        return new ResultVO<>(SUCCESS, "更新消息成功！", null);
+        return new ResultVO<>(SUCCESS, "更新消息状态成功！", null);
     }
 
 }

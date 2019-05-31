@@ -2,11 +2,10 @@
 
 #### 介绍
 spring boot项目模板<br>
-环境：jdk-8u162 mysql-5.7.25 redis-5.0.4 zookeeper-3.4.13 kafka_2.11:2.0.1 hbase_1.2.0
+环境：jdk-8u162 mysql-5.7.25 redis-5.0.4 zookeeper-3.4.13 kafka_2.11:2.0.1
 
 #### TODO
-* 工作流
-* 前端
+* 将clone，redis，kafka的序列化方式改成kryo
 
 #### 基本功能
 * 基础框架：spring-boot-2.1.3.RELEASE

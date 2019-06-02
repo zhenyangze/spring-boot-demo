@@ -19,8 +19,12 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.support.GenericMessage;
+import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +32,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+import static com.example.config.KafkaConfig.BROADCAST_TOPIC;
 import static com.example.model.vo.ResultVO.SUCCESS;
 
 @RestController
@@ -44,6 +49,10 @@ public class BroadcastMessageController {
     private IBroadcastToUserLinkService broadcastToUserLinkService;
     @Autowired
     private SimpMessagingTemplate template;
+    @Autowired
+    private KafkaTemplate<String, Object> kafkaTemplate;
+    @Autowired
+    private ListenableFutureCallback<SendResult<String, Object>> defaultFutureCallback;
 
     @GetMapping("/{current}/{size}")
     @ApiOperation(value = "查询广播列表")
@@ -87,6 +96,9 @@ public class BroadcastMessageController {
                 new ModelUtil.Mapping(BroadcastMessageVO.class, BroadcastMessage.class));
 
         broadcastMessageService.customSave(broadcastMessage);
+
+        ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(BROADCAST_TOPIC, broadcastMessage);
+        future.addCallback(defaultFutureCallback);
 
         GenericMessage message = new GenericMessageBuilder()
                 .payload(ModelUtil.copy(broadcastMessage,

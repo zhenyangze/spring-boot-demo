@@ -19,13 +19,18 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
+import static com.example.config.KafkaConfig.CHAT_TOPIC;
 import static com.example.model.vo.ResultVO.SUCCESS;
 
 @RestController
@@ -42,6 +47,11 @@ public class ChatMessageController {
     private IChatMessageService chatMessageService;
     @Autowired
     private SimpMessagingTemplate template;
+    @Autowired
+    private KafkaTemplate<String, Object> kafkaTemplate;
+    @Autowired
+    private ListenableFutureCallback<SendResult<String, Object>> defaultFutureCallback;
+
 
     @GetMapping("/{current}/{size}")
     @ApiOperation(value = "查询消息列表")
@@ -96,6 +106,9 @@ public class ChatMessageController {
         chatMessage.setSendUserId(currentUser.getId());
         chatMessage.setReadStatus(IChatMessageService.UNREAD);
         chatMessageService.save(chatMessage);
+
+        ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(CHAT_TOPIC, chatMessage);
+        future.addCallback(defaultFutureCallback);
 
         Set<String> sessionIds = sessionIdRegistry.getSessionIds(chatMessage.getToUserId());
         sessionIds.forEach(sessionId -> template.convertAndSendToUser(

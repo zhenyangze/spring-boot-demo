@@ -1,5 +1,6 @@
 package com.example.config;
 
+import com.example.kafka.DefaultProducer;
 import com.example.kafka.WebsocketConsumer;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -14,8 +15,6 @@ import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
-import org.springframework.kafka.support.SendResult;
-import org.springframework.util.concurrent.ListenableFutureCallback;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +37,6 @@ public class KafkaConfig {
     public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Object>> websocketListenerContainerFactory() {
         Map<String, Object> properties = kafkaProperties.buildConsumerProperties();
         properties.putAll(websocketConsumerProperties.getProperties());
-        System.out.println(properties);
         ConsumerFactory<String, Object> consumerFactory = new DefaultKafkaConsumerFactory<>(properties);
         ConcurrentKafkaListenerContainerFactory<String, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory);
@@ -47,17 +45,8 @@ public class KafkaConfig {
     }
 
     @Bean
-    public ListenableFutureCallback<SendResult<String, Object>> defaultFutureCallback() {
-        return new ListenableFutureCallback<SendResult<String, Object>>() {
-            @Override
-            public void onSuccess(SendResult<String, Object> result) {
-                log.info("发送消息成功，result: "+result);
-            }
-            @Override
-            public void onFailure(Throwable ex) {
-                log.error("发送消息失败，ex: "+ex);
-            }
-        };
+    public DefaultProducer defaultProducer() {
+        return new DefaultProducer();
     }
 
     @Bean

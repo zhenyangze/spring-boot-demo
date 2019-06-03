@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.model.po.ChatMessage;
+import com.example.params.Params;
 
 public interface IChatMessageService extends IBaseService<ChatMessage> {
 
@@ -8,5 +9,7 @@ public interface IChatMessageService extends IBaseService<ChatMessage> {
     Integer READ = 1;
     /** 未读 */
     Integer UNREAD = 0;
+
+    ChatMessage getSelfById(Integer id, Params<ChatMessage> params);
 
 }

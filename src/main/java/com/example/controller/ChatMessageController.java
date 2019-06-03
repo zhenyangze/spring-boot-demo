@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.exception.LogicException;
 import com.example.group.Insert;
+import com.example.kafka.DefaultProducer;
 import com.example.model.po.ChatMessage;
 import com.example.model.po.User;
 import com.example.model.vo.ChatMessageVO;
@@ -11,24 +12,15 @@ import com.example.model.vo.ResultVO;
 import com.example.model.vo.UserVO;
 import com.example.params.Params;
 import com.example.service.IChatMessageService;
-import com.example.util.MessageHeadersBuilder;
 import com.example.util.ModelUtil;
-import com.example.websocket.SessionIdRegistry;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.SendResult;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.util.concurrent.ListenableFuture;
-import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
-import java.util.Set;
 
 import static com.example.config.KafkaConfig.CHAT_TOPIC;
 import static com.example.model.vo.ResultVO.SUCCESS;
@@ -39,19 +31,10 @@ import static com.example.model.vo.ResultVO.SUCCESS;
 @Validated
 public class ChatMessageController {
 
-    @Value("${websocket.destination.chat}")
-    private String chat;
-    @Autowired
-    private SessionIdRegistry sessionIdRegistry;
     @Autowired
     private IChatMessageService chatMessageService;
     @Autowired
-    private SimpMessagingTemplate template;
-    @Autowired
-    private KafkaTemplate<String, Object> kafkaTemplate;
-    @Autowired
-    private ListenableFutureCallback<SendResult<String, Object>> defaultFutureCallback;
-
+    private DefaultProducer defaultProducer;
 
     @GetMapping("/{current}/{size}")
     @ApiOperation(value = "查询消息列表")
@@ -67,17 +50,39 @@ public class ChatMessageController {
         return new ResultVO<>(SUCCESS, "", messages);
     }
 
-    @GetMapping("/{userId}/{anotherUserId}/{current}/{size}")
+    @GetMapping("/self/{current}/{size}")
+    @ApiOperation(value = "查询当前用户收到的消息列表")
+    public ResultVO findSelfPage(@PathVariable @NotNull(message = "当前页不能为空") @ApiParam(value = "当前页", defaultValue = "1", required = true) long current,
+                             @PathVariable @NotNull(message = "每页显示条数不能为空") @ApiParam(value = "每页显示条数", defaultValue = "10", required = true) long size,
+                             ChatMessageVO chatMessageVO) {
+        User currentUser = chatMessageService.currentUser();
+        if (currentUser==null) {
+            throw new LogicException("获取当前用户失败");
+        }
+        chatMessageVO.setToUserId(currentUser.getId());
+        Page<ChatMessage> page = new Page<>(current, size);
+        Params<ChatMessage> params = new Params<>(chatMessageVO);
+        IPage<ChatMessage> iPage = chatMessageService.customPage(page, params);
+        IPage messages = (IPage) ModelUtil.copy(iPage,
+                new ModelUtil.Mapping(ChatMessage.class, ChatMessageVO.class),
+                new ModelUtil.Mapping(User.class, UserVO.class, "password"));
+        return new ResultVO<>(SUCCESS, "", messages);
+    }
+
+    @GetMapping("/{userId}/{current}/{size}")
     @ApiOperation(value = "查询往来消息")
     public ResultVO contacts(@PathVariable @NotNull(message = "用户id不能为空") @ApiParam(value = "用户id", required = true) Integer userId,
-                             @PathVariable @NotNull(message = "另一个用户id不能为空") @ApiParam(value = "另一个用户id", required = true) Integer anotherUserId,
                              @PathVariable @NotNull(message = "当前页不能为空") @ApiParam(value = "当前页", defaultValue = "1", required = true) long current,
                              @PathVariable @NotNull(message = "每页显示条数不能为空") @ApiParam(value = "每页显示条数", defaultValue = "10", required = true) long size,
                              ChatMessageVO chatMessageVO) {
+        User currentUser = chatMessageService.currentUser();
+        if (currentUser==null) {
+            throw new LogicException("获取当前用户失败");
+        }
         Page<ChatMessage> page = new Page<>(current, size);
         Params<ChatMessage> params = new Params<>(chatMessageVO);
+        params.put("currentUserId", currentUser.getId());
         params.put("userId", userId);
-        params.put("anotherUserId", anotherUserId);
         IPage<ChatMessage> iPage = chatMessageService.customPage(page, params);
         IPage messages = (IPage) ModelUtil.copy(iPage,
                 new ModelUtil.Mapping(ChatMessage.class, ChatMessageVO.class),
@@ -95,40 +100,47 @@ public class ChatMessageController {
         return new ResultVO<>(SUCCESS, "", chatMessageVO);
     }
 
+    @GetMapping("/self/{id}")
+    @ApiOperation(value = "根据id查询当前用户收到的消息")
+    public ResultVO<ChatMessageVO> findSelfById(@PathVariable @NotNull(message = "消息id不能为空") @ApiParam(value = "消息id", required = true) Integer id) {
+        User currentUser = chatMessageService.currentUser();
+        if (currentUser==null) {
+            throw new LogicException("获取当前用户失败");
+        }
+        Params<ChatMessage> params = new Params<>(new ChatMessage().setToUserId(currentUser.getId()));
+        ChatMessage chatMessage = chatMessageService.getSelfById(id, params);
+        ChatMessageVO chatMessageVO = (ChatMessageVO) ModelUtil.copy(chatMessage,
+                new ModelUtil.Mapping(ChatMessage.class, ChatMessageVO.class),
+                new ModelUtil.Mapping(User.class, UserVO.class, "password"));
+        return new ResultVO<>(SUCCESS, "", chatMessageVO);
+    }
+
     @PostMapping
     @ApiOperation(value = "发送消息")
     public ResultVO save(@Validated({Insert.class}) ChatMessageVO chatMessageVO) {
+        User currentUser = chatMessageService.currentUser();
+        if (currentUser==null) {
+            throw new LogicException("获取当前用户失败");
+        }
         ChatMessage chatMessage = (ChatMessage) ModelUtil.copy(chatMessageVO, new ModelUtil.Mapping(ChatMessageVO.class, ChatMessage.class));
         long now = System.currentTimeMillis();
         chatMessage.setSendTime(now);
-        User currentUser = chatMessageService.currentUser();
         chatMessage.setSendUser(currentUser);
         chatMessage.setSendUserId(currentUser.getId());
         chatMessage.setReadStatus(IChatMessageService.UNREAD);
         chatMessageService.save(chatMessage);
-
-        ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(CHAT_TOPIC, chatMessage);
-        future.addCallback(defaultFutureCallback);
-
-        Set<String> sessionIds = sessionIdRegistry.getSessionIds(chatMessage.getToUserId());
-        sessionIds.forEach(sessionId -> template.convertAndSendToUser(
-                sessionId,
-                chat,
-                ModelUtil.copy(chatMessage,
-                        new ModelUtil.Mapping(ChatMessage.class, ChatMessageVO.class),
-                        new ModelUtil.Mapping(User.class, UserVO.class, "password", "roles")),
-                new MessageHeadersBuilder()
-                        .sessionId(sessionId)
-                        .leaveMutable(true)
-                        .build()));
+        defaultProducer.send(CHAT_TOPIC, chatMessage);
         return new ResultVO<>(SUCCESS, "发送消息成功！", null);
     }
 
     @PutMapping("/{id}")
     @ApiOperation(value = "更新消息状态为已读")
     public ResultVO update(@PathVariable @NotNull(message = "消息id不能为空") Integer id) {
-        ChatMessage chatMessage = chatMessageService.getById(id);
         User currentUser = chatMessageService.currentUser();
+        if (currentUser==null) {
+            throw new LogicException("获取当前用户失败");
+        }
+        ChatMessage chatMessage = chatMessageService.getById(id);
         if (!chatMessage.getToUserId().equals(currentUser.getId())) {
             throw new LogicException("无法更新！");
         }

@@ -21,4 +21,9 @@ public class ChatMessageService extends BaseService<ChatMessageMapper, ChatMessa
         return baseMapper.customSelectById(id);
     }
 
+    @Override
+    public ChatMessage getSelfById(Integer id, Params<ChatMessage> params) {
+        return baseMapper.selectSelfById(id, params);
+    }
+
 }

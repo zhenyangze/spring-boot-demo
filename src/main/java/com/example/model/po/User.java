@@ -21,8 +21,8 @@ public class User extends BaseModel {
 
     private static final long serialVersionUID = 1L;
     @ApiModelProperty(value = "用户id")
-    @NotNull(groups = {UserUpdate.class, MailInsert.class, MailUpdate.class}, message = "用户id不能为空")
-    @Null(groups = {UserInsert.class, UserInfoInsert.class, UserInfoUpdate.class}, message = "用户id必须为空")
+    @NotNull(groups = {UserUpdate.class, MailInsert.class, MailUpdate.class, BroadcastInsert.class}, message = "用户id不能为空")
+    @Null(groups = {UserInsert.class, UserInfoInsert.class, UserInfoUpdate.class, BroadcastInsert.class}, message = "用户id必须为空")
     private Integer id;
     @ApiModelProperty(value = "用户名")
     @Null(groups = {UserUpdate.class, UserInfoUpdate.class}, message = "用户名必须为空")

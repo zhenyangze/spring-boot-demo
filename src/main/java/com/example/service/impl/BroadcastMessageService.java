@@ -29,8 +29,18 @@ public class BroadcastMessageService extends BaseService<BroadcastMessageMapper,
     }
 
     @Override
+    public IPage<BroadcastMessage> selfPage(Page<BroadcastMessage> page, Params<BroadcastMessage> params) {
+        return page.setRecords(baseMapper.selectSelfPage(page, params));
+    }
+
+    @Override
     public BroadcastMessage customGetById(Integer id) {
         return baseMapper.customSelectById(id);
+    }
+
+    @Override
+    public BroadcastMessage getSelfById(Integer id, Params<BroadcastMessage> params) {
+        return baseMapper.selectSelfById(id, params);
     }
 
     @Override

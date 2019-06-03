@@ -67,13 +67,13 @@
             <if test=" params.entity.content != null and params.entity.content != ''.toString() ">
                 and instr(t_chat_message.content, #{params.entity.content}) > 0
             </if>
-            <if test=" params.map.userId != null and params.map.anotherUserId != null ">
+            <if test=" params.map.currentUserId != null and params.map.userId != null ">
                 and (
                     t_chat_message.send_user_id = #{params.map.userId}
                     and
-                    t_chat_message.to_user_id = #{params.map.anotherUserId}
+                    t_chat_message.to_user_id = #{params.map.currentUserId}
                     or
-                    t_chat_message.send_user_id = #{params.map.anotherUserId}
+                    t_chat_message.send_user_id = #{params.map.currentUserId}
                     and
                     t_chat_message.to_user_id = #{params.map.userId}
                 )
@@ -99,6 +99,17 @@
         left join t_user send_user on send_user.id = t_chat_message.send_user_id
         left join t_user to_user on to_user.id = t_chat_message.to_user_id
         where t_chat_message.id = #{id}
+    </select>
+
+    <select id="selectSelfById" parameterType="int" resultMap="resultMap">
+        select <include refid="baseCol" />,
+               <include refid="sendUserCol" />,
+               <include refid="toUserCol" />
+        from t_chat_message t_chat_message
+        left join t_user send_user on send_user.id = t_chat_message.send_user_id
+        left join t_user to_user on to_user.id = t_chat_message.to_user_id
+        where t_chat_message.id = #{id}
+        and t_chat_message.to_user_id = #{params.entity.toUserId}
     </select>
 
 </mapper>

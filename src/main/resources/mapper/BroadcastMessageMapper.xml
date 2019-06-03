@@ -18,8 +18,11 @@
         send_user.id send_user_id, send_user.username send_user_username, send_user.password send_user_password,
         send_user.email send_user_email, send_user.nickname send_user_nickname, send_user.birth send_user_birth,
         send_user.logintime send_user_logintime, send_user.dept_id send_user_dept_id,
-        send_user.head_img_id send_user_head_img_id, send_user_head.id send_user_head_id,
-        send_user_head.attachment_address send_user_head_attachment_address
+        send_user.head_img_id send_user_head_img_id
+    </sql>
+
+    <sql id="sendUserHeadCol">
+        send_user_head.id send_user_head_id, send_user_head.attachment_address send_user_head_attachment_address
     </sql>
 
     <resultMap id="sendUserResultMap" type="com.example.model.po.User">
@@ -62,9 +65,11 @@
 
     <select id="customSelectPage" resultMap="resultMap">
         select <include refid="baseCol" />,
-               <include refid="sendUserCol" />
+               <include refid="sendUserCol" />,
+               <include refid="sendUserHeadCol" />
         from t_broadcast_message t_broadcast_message
         left join t_user send_user on send_user.id = t_broadcast_message.send_user_id
+        left join t_attachment send_user_head on send_user_head.id = send_user.head_img_id
         <where>
             <if test=" params.entity.content != null and params.entity.content != ''.toString() ">
                 and instr(t_broadcast_message.content, #{params.entity.content}) > 0
@@ -78,9 +83,11 @@
 
     <select id="selectSelfPage" resultMap="resultMap">
         select <include refid="baseCol" />,
-               <include refid="sendUserCol" />
+               <include refid="sendUserCol" />,
+               <include refid="sendUserHeadCol" />
         from t_broadcast_message t_broadcast_message
         left join t_user send_user on send_user.id = t_broadcast_message.send_user_id
+        left join t_attachment send_user_head on send_user_head.id = send_user.head_img_id
         left join t_broadcast_to_user_link t_broadcast_to_user_link on t_broadcast_to_user_link.broadcast_id = t_broadcast_message.id
         <where>
             <if test=" params.entity.content != null and params.entity.content != ''.toString() ">
@@ -102,9 +109,11 @@
     <select id="customSelectById" parameterType="int" resultMap="resultMap">
         select <include refid="baseCol" />,
                <include refid="sendUserCol" />,
+               <include refid="sendUserHeadCol" />,
                <include refid="toUserCol" />
         from t_broadcast_message t_broadcast_message
         left join t_user send_user on send_user.id = t_broadcast_message.send_user_id
+        left join t_attachment send_user_head on send_user_head.id = send_user.head_img_id
         left join t_broadcast_to_user_link t_broadcast_to_user_link on t_broadcast_to_user_link.broadcast_id = t_broadcast_message.id
         left join t_user to_user on to_user.id = t_broadcast_to_user_link.to_user_id
         where t_broadcast_message.id = #{id}
@@ -112,9 +121,11 @@
 
     <select id="selectSelfById" parameterType="int" resultMap="resultMap">
         select <include refid="baseCol" />,
-               <include refid="sendUserCol" />
+               <include refid="sendUserCol" />,
+               <include refid="sendUserHeadCol" />
         from t_broadcast_message t_broadcast_message
         left join t_user send_user on send_user.id = t_broadcast_message.send_user_id
+        left join t_attachment send_user_head on send_user_head.id = send_user.head_img_id
         left join t_broadcast_to_user_link t_broadcast_to_user_link on t_broadcast_to_user_link.broadcast_id = t_broadcast_message.id
         where t_broadcast_message.id = #{id}
         and t_broadcast_to_user_link.to_user_id = #{params.map.currentUserId}

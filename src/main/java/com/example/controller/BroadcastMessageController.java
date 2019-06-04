@@ -28,6 +28,7 @@ import java.util.List;
 
 import static com.example.config.KafkaConfig.BROADCAST_TOPIC;
 import static com.example.model.vo.ResultVO.SUCCESS;
+import static com.example.service.IBroadcastMessageService.UNREAD;
 
 @RestController
 @RequestMapping(value = "/broadcast", produces = "application/json; charset=UTF-8")
@@ -70,6 +71,22 @@ public class BroadcastMessageController {
         params.put("currentUserId", currentUser.getId());
         IPage<BroadcastMessage> iPage = broadcastMessageService.selfPage(page, params);
         IPage messages = (IPage) ModelUtil.copy(iPage,
+                new ModelUtil.Mapping(BroadcastMessage.class, BroadcastMessageVO.class),
+                new ModelUtil.Mapping(User.class, UserVO.class, "password"));
+        return new ResultVO<>(SUCCESS, "", messages);
+    }
+
+    @GetMapping("/self/unread")
+    @ApiOperation(value = "查询当前用户的未读广播")
+    public ResultVO findSelfPage() {
+        User currentUser = broadcastMessageService.currentUser();
+        if (currentUser==null) {
+            throw new LogicException("获取当前用户失败");
+        }
+        Params<BroadcastMessage> params = new Params<>(new BroadcastMessageVO().setReadStatus(UNREAD));
+        params.put("currentUserId", currentUser.getId());
+        List<BroadcastMessage> list = broadcastMessageService.selfList(params);
+        List messages = (List) ModelUtil.copy(list,
                 new ModelUtil.Mapping(BroadcastMessage.class, BroadcastMessageVO.class),
                 new ModelUtil.Mapping(User.class, UserVO.class, "password"));
         return new ResultVO<>(SUCCESS, "", messages);

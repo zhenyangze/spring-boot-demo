@@ -8,8 +8,15 @@ import com.example.model.po.ChatMessage;
 import com.example.service.IChatMessageService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ChatMessageService extends BaseService<ChatMessageMapper, ChatMessage> implements IChatMessageService {
+
+    @Override
+    public List<ChatMessage> customList(Params<ChatMessage> params) {
+        return baseMapper.customSelectList(params);
+    }
 
     @Override
     public IPage<ChatMessage> customPage(Page<ChatMessage> page, Params<ChatMessage> params) {

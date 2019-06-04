@@ -114,6 +114,45 @@
         order by t_chat_message.send_time desc
     </select>
 
+    <select id="customSelectList" parameterType="com.example.params.Params" resultMap="resultMap">
+        select <include refid="baseCol" />,
+               <include refid="sendUserCol" />,
+               <include refid="sendUserHeadCol" />,
+               <include refid="toUserCol" />,
+               <include refid="toUserHeadCol" />
+        from t_chat_message t_chat_message
+        left join t_user send_user on send_user.id = t_chat_message.send_user_id
+        left join t_attachment send_user_head on send_user_head.id = send_user.head_img_id
+        left join t_user to_user on to_user.id = t_chat_message.to_user_id
+        left join t_attachment to_user_head on to_user_head.id = to_user.head_img_id
+        <where>
+            <if test=" params.entity.content != null and params.entity.content != ''.toString() ">
+                and instr(t_chat_message.content, #{params.entity.content}) > 0
+            </if>
+            <if test=" params.map.currentUserId != null and params.map.userId != null ">
+                and (
+                t_chat_message.send_user_id = #{params.map.userId}
+                and
+                t_chat_message.to_user_id = #{params.map.currentUserId}
+                or
+                t_chat_message.send_user_id = #{params.map.currentUserId}
+                and
+                t_chat_message.to_user_id = #{params.map.userId}
+                )
+            </if>
+            <if test=" params.entity.sendUserId != null">
+                and t_chat_message.send_user_id = #{params.entity.sendUserId}
+            </if>
+            <if test=" params.entity.toUserId != null ">
+                and t_chat_message.to_user_id = #{params.entity.toUserId}
+            </if>
+            <if test=" params.entity.readStatus != null ">
+                and t_chat_message.read_status = #{params.entity.readStatus}
+            </if>
+        </where>
+        order by t_chat_message.send_time desc
+    </select>
+
     <select id="customSelectById" parameterType="int" resultMap="resultMap">
         select <include refid="baseCol" />,
                <include refid="sendUserCol" />,

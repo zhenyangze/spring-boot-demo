@@ -21,9 +21,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 import static com.example.config.KafkaConfig.CHAT_TOPIC;
 import static com.example.model.vo.ResultVO.SUCCESS;
+import static com.example.service.IChatMessageService.UNREAD;
 
 @RestController
 @RequestMapping(value = "/chat", produces = "application/json; charset=UTF-8")
@@ -64,6 +66,21 @@ public class ChatMessageController {
         Params<ChatMessage> params = new Params<>(chatMessageVO);
         IPage<ChatMessage> iPage = chatMessageService.customPage(page, params);
         IPage messages = (IPage) ModelUtil.copy(iPage,
+                new ModelUtil.Mapping(ChatMessage.class, ChatMessageVO.class),
+                new ModelUtil.Mapping(User.class, UserVO.class, "password"));
+        return new ResultVO<>(SUCCESS, "", messages);
+    }
+
+    @GetMapping("/self/unread")
+    @ApiOperation(value = "查询当前用户的未读消息")
+    public ResultVO findSelfUnread() {
+        User currentUser = chatMessageService.currentUser();
+        if (currentUser==null) {
+            throw new LogicException("获取当前用户失败");
+        }
+        Params<ChatMessage> params = new Params<>(new ChatMessage().setToUserId(currentUser.getId()).setReadStatus(UNREAD));
+        List<ChatMessage> list = chatMessageService.customList(params);
+        List messages = (List) ModelUtil.copy(list,
                 new ModelUtil.Mapping(ChatMessage.class, ChatMessageVO.class),
                 new ModelUtil.Mapping(User.class, UserVO.class, "password"));
         return new ResultVO<>(SUCCESS, "", messages);
@@ -127,7 +144,7 @@ public class ChatMessageController {
         chatMessage.setSendTime(now);
         chatMessage.setSendUser(currentUser);
         chatMessage.setSendUserId(currentUser.getId());
-        chatMessage.setReadStatus(IChatMessageService.UNREAD);
+        chatMessage.setReadStatus(UNREAD);
         chatMessageService.save(chatMessage);
         defaultProducer.send(CHAT_TOPIC, chatMessage);
         return new ResultVO<>(SUCCESS, "发送消息成功！", null);

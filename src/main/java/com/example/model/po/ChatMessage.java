@@ -35,7 +35,7 @@ public class ChatMessage extends BaseModel {
     @NotNull(groups = {Insert.class}, message = "接收用户id不能为空")
     @Null(groups = {Update.class}, message = "接收用户id必须为空")
     private Integer toUserId;
-    @ApiModelProperty(value = "阅读状态")
+    @ApiModelProperty(value = "阅读状态", allowableValues = "1,0")
     @Null(groups = {Insert.class}, message = "阅读状态必须为空")
     private Integer readStatus;
 

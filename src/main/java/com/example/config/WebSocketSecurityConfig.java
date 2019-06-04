@@ -71,9 +71,13 @@ public class WebSocketSecurityConfig extends AbstractSecurityWebSocketMessageBro
         return new SessionIdUnRegistryInterceptor();
     }
 
+    /**
+     * 只设置{@link #sameOriginDisabled}不能解决同源策略，
+     * 必须在注册endpoint时设置setAllowedOrigins
+     */
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/endpoint").withSockJS();
+        registry.addEndpoint("/endpoint").setAllowedOrigins("*").withSockJS();
         registry.setErrorHandler(stompSubProtocolErrorHandler());
         // 配置拦截器
         ((CustomizeWebMvcStompEndpointRegistry) registry)

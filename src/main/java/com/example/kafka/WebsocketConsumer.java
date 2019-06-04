@@ -43,7 +43,7 @@ public class WebsocketConsumer {
         }
         broadcastMessages.forEach(broadcastMessage -> {
             BroadcastMessageVO broadcastMessageVO = (BroadcastMessageVO) ModelUtil.copy(broadcastMessage,
-                    new ModelUtil.Mapping(BroadcastMessage.class, BroadcastMessageVO.class),
+                    new ModelUtil.Mapping(BroadcastMessage.class, BroadcastMessageVO.class, "toUsers"),
                     new ModelUtil.Mapping(User.class, UserVO.class, "password", "roles"));
             Set<String> sessionIds = new HashSet<>();
             broadcastMessage.getToUsers().forEach(user -> sessionIds.addAll(sessionIdRegistry.getSessionIds(user.getId())));

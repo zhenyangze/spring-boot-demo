@@ -40,6 +40,10 @@ public interface IBaseService<T extends BaseModel> extends IService<T> {
         throw new ProjectException("方法未实现！");
     }
 
+    default void customUpdateBatchById(List<T> models) {
+        throw new ProjectException("方法未实现！");
+    }
+
     default void customRemoveById(Integer id) {
         throw new ProjectException("方法未实现！");
     }

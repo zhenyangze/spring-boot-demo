@@ -39,5 +39,10 @@ public class BroadcastMessage extends BaseModel {
     @NotEmpty(groups = {BroadcastInsert.class}, message = "接收用户不能为空")
     @IgnoreSwaggerParameter
     private List<User> toUsers;
+    @TableField(exist = false)
+    @ApiModelProperty(value = "接收用户关联")
+    @Null(groups = {BroadcastInsert.class}, message = "接收用户关联必须为空")
+    @IgnoreSwaggerParameter
+    private List<BroadcastToUserLink> links;
 
 }

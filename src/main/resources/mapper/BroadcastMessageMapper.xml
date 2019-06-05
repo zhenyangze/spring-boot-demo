@@ -60,7 +60,8 @@
 
     <resultMap id="resultMap" type="com.example.model.po.BroadcastMessage" extends="baseResultMap">
         <association column="t_broadcast_message_send_user_id" property="sendUser" resultMap="sendUserResultMap" />
-        <collection column="t_broadcast_message" property="toUsers" resultMap="toUserResultMap" />
+        <collection column="t_broadcast_message_id" property="toUsers" resultMap="toUserResultMap" />
+        <collection column="t_broadcast_message_id" property="links" resultMap="com.example.mapper.BroadcastToUserLinkMapper.baseResultMap" />
     </resultMap>
 
     <select id="customSelectPage" resultMap="resultMap">
@@ -84,7 +85,8 @@
     <select id="selectSelfPage" resultMap="resultMap">
         select <include refid="baseCol" />,
                <include refid="sendUserCol" />,
-               <include refid="sendUserHeadCol" />
+               <include refid="sendUserHeadCol" />,
+               <include refid="com.example.mapper.BroadcastToUserLinkMapper.baseCol" />
         from t_broadcast_message t_broadcast_message
         left join t_user send_user on send_user.id = t_broadcast_message.send_user_id
         left join t_attachment send_user_head on send_user_head.id = send_user.head_img_id
@@ -109,7 +111,8 @@
     <select id="selectSelfList" parameterType="com.example.params.Params" resultMap="resultMap">
         select <include refid="baseCol" />,
                <include refid="sendUserCol" />,
-               <include refid="sendUserHeadCol" />
+               <include refid="sendUserHeadCol" />,
+               <include refid="com.example.mapper.BroadcastToUserLinkMapper.baseCol" />
         from t_broadcast_message t_broadcast_message
         left join t_user send_user on send_user.id = t_broadcast_message.send_user_id
         left join t_attachment send_user_head on send_user_head.id = send_user.head_img_id
@@ -147,7 +150,8 @@
     <select id="selectSelfById" parameterType="int" resultMap="resultMap">
         select <include refid="baseCol" />,
                <include refid="sendUserCol" />,
-               <include refid="sendUserHeadCol" />
+               <include refid="sendUserHeadCol" />,
+               <include refid="com.example.mapper.BroadcastToUserLinkMapper.baseCol" />
         from t_broadcast_message t_broadcast_message
         left join t_user send_user on send_user.id = t_broadcast_message.send_user_id
         left join t_attachment send_user_head on send_user_head.id = send_user.head_img_id

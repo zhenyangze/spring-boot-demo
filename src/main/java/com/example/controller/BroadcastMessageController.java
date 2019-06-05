@@ -15,6 +15,7 @@ import com.example.params.Params;
 import com.example.service.IBroadcastMessageService;
 import com.example.service.IBroadcastToUserLinkService;
 import com.example.util.ModelUtil;
+import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -59,6 +60,7 @@ public class BroadcastMessageController {
 
     @GetMapping("/self/{current}/{size}")
     @ApiOperation(value = "查询当前用户收到的广播列表")
+    @SuppressWarnings("unchecked")
     public ResultVO findSelfPage(@PathVariable @NotNull(message = "当前页不能为空") @ApiParam(value = "当前页", defaultValue = "1", required = true) long current,
                              @PathVariable @NotNull(message = "每页显示条数不能为空") @ApiParam(value = "每页显示条数", defaultValue = "10", required = true) long size,
                              BroadcastMessageVO broadcastMessageVO) {
@@ -73,6 +75,13 @@ public class BroadcastMessageController {
         IPage messages = (IPage) ModelUtil.copy(iPage,
                 new ModelUtil.Mapping(BroadcastMessage.class, BroadcastMessageVO.class),
                 new ModelUtil.Mapping(User.class, UserVO.class, "password"));
+        if (messages!=null) {
+            messages.getRecords().forEach(o -> {
+                BroadcastMessageVO message = (BroadcastMessageVO) o;
+                BroadcastToUserLink link = message.getLinks().get(0);
+                message.setReadStatus(link.getReadStatus());
+            });
+        }
         return new ResultVO<>(SUCCESS, "", messages);
     }
 
@@ -139,15 +148,23 @@ public class BroadcastMessageController {
         return new ResultVO<>(SUCCESS, "广播成功！", null);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{ids}")
     @ApiOperation(value = "更新消息状态为已读")
-    public ResultVO read(@PathVariable @NotNull(message = "广播id不能为空") Integer id) {
+    public ResultVO read(
+            @PathVariable
+            @NotNull(message = "广播id不能为空")
+            @NotEmpty(message = "广播id不能为空")
+            @ApiParam(value = "广播id，多个用逗号分隔", required = true) List<Integer> ids) {
         User currentUser = broadcastMessageService.currentUser();
         if (currentUser==null) {
             throw new LogicException("获取当前用户失败");
         }
-        BroadcastToUserLink link = new BroadcastToUserLink(id, currentUser.getId(), IBroadcastMessageService.READ);
-        broadcastToUserLinkService.customUpdateById(link);
+        List<BroadcastToUserLink> links = Lists.newArrayList();
+        ids.forEach(id -> {
+            BroadcastToUserLink link = new BroadcastToUserLink(id, currentUser.getId(), IBroadcastMessageService.READ);
+            links.add(link);
+        });
+        broadcastToUserLinkService.customUpdateBatchById(links);
         return new ResultVO<>(SUCCESS, "更新消息状态成功！", null);
     }
 

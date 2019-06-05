@@ -18,4 +18,6 @@ public interface IBaseMapper<T extends BaseModel> extends BaseMapper<T> {
 
     T customSelectOne(@Param("params") Params<T> params);
 
+    void customUpdateBatchById(List<T> models);
+
 }

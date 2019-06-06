@@ -101,6 +101,9 @@
                     t_chat_message.to_user_id = #{params.map.userId}
                 )
             </if>
+            <if test=" params.map.startId != null ">
+                and t_chat_message.id &lt; #{params.map.startId}
+            </if>
             <if test=" params.entity.sendUserId != null">
                 and t_chat_message.send_user_id = #{params.entity.sendUserId}
             </if>
@@ -140,7 +143,7 @@
                 t_chat_message.to_user_id = #{params.map.userId}
                 )
             </if>
-            <if test=" params.entity.sendUserId != null">
+            <if test=" params.entity.sendUserId != null ">
                 and t_chat_message.send_user_id = #{params.entity.sendUserId}
             </if>
             <if test=" params.entity.toUserId != null ">
@@ -148,6 +151,11 @@
             </if>
             <if test=" params.entity.readStatus != null ">
                 and t_chat_message.read_status = #{params.entity.readStatus}
+            </if>
+            <if test=" params.map.ids != null ">
+                <foreach collection="params.map.ids" separator=")or(" index="index" item="item" open="and(" close=")">
+                    t_chat_message.id = #{item}
+                </foreach>
             </if>
         </where>
         order by t_chat_message.send_time desc

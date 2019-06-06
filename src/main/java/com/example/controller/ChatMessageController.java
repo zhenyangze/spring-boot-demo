@@ -20,11 +20,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 import static com.example.config.KafkaConfig.CHAT_TOPIC;
 import static com.example.model.vo.ResultVO.SUCCESS;
+import static com.example.service.IChatMessageService.READ;
 import static com.example.service.IChatMessageService.UNREAD;
 
 @RestController
@@ -85,6 +87,32 @@ public class ChatMessageController {
                 new ModelUtil.Mapping(User.class, UserVO.class, "password"));
         return new ResultVO<>(SUCCESS, "", messages);
     }
+
+    @GetMapping("/{userId}/{startId}/{current}/{size}")
+    @ApiOperation(value = "查询指定消息id之前的往来消息")
+    public ResultVO contacts(@PathVariable @NotNull(message = "用户id不能为空") @ApiParam(value = "用户id", required = true) Integer userId,
+                             @PathVariable @NotNull(message = "起始消息id不能为空") @ApiParam(value = "起始消息id", required = true) Integer startId,
+                             @PathVariable @NotNull(message = "当前页不能为空") @ApiParam(value = "当前页", defaultValue = "1", required = true) long current,
+                             @PathVariable @NotNull(message = "每页显示条数不能为空") @ApiParam(value = "每页显示条数", defaultValue = "10", required = true) long size,
+                             ChatMessageVO chatMessageVO) {
+        User currentUser = chatMessageService.currentUser();
+        if (currentUser==null) {
+            throw new LogicException("获取当前用户失败");
+        }
+        Page<ChatMessage> page = new Page<>(current, size);
+        Params<ChatMessage> params = new Params<>(chatMessageVO);
+        if (startId!=null) {
+            params.put("startId", startId);
+        }
+        params.put("currentUserId", currentUser.getId());
+        params.put("userId", userId);
+        IPage<ChatMessage> iPage = chatMessageService.customPage(page, params);
+        IPage messages = (IPage) ModelUtil.copy(iPage,
+                new ModelUtil.Mapping(ChatMessage.class, ChatMessageVO.class),
+                new ModelUtil.Mapping(User.class, UserVO.class, "password"));
+        return new ResultVO<>(SUCCESS, "", messages);
+    }
+
 
     @GetMapping("/{userId}/{current}/{size}")
     @ApiOperation(value = "查询往来消息")
@@ -150,19 +178,22 @@ public class ChatMessageController {
         return new ResultVO<>(SUCCESS, "发送消息成功！", null);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{ids}")
     @ApiOperation(value = "更新消息状态为已读")
-    public ResultVO update(@PathVariable @NotNull(message = "消息id不能为空") Integer id) {
+    public ResultVO update(
+            @PathVariable
+            @NotNull(message = "消息id不能为空")
+            @NotEmpty(message = "消息id不能为空")
+            @ApiParam(value = "消息id，多个用逗号分隔", required = true) List<Integer> ids) {
         User currentUser = chatMessageService.currentUser();
         if (currentUser==null) {
             throw new LogicException("获取当前用户失败");
         }
-        ChatMessage chatMessage = chatMessageService.getById(id);
-        if (!chatMessage.getToUserId().equals(currentUser.getId())) {
-            throw new LogicException("无法更新！");
-        }
-        chatMessage.setReadStatus(IChatMessageService.READ);
-        chatMessageService.updateById(chatMessage);
+        Params<ChatMessage> params = new Params<>(new ChatMessage().setToUserId(currentUser.getId()))
+                .put("ids", ids);
+        List<ChatMessage> chatMessages = chatMessageService.customList(params);
+        chatMessages.forEach(chatMessage -> chatMessage.setReadStatus(READ));
+        chatMessageService.updateBatchById(chatMessages);
         return new ResultVO<>(SUCCESS, "更新消息状态成功！", null);
     }
 

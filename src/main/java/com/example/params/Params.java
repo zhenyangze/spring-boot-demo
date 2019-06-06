@@ -19,8 +19,9 @@ public class Params<T extends BaseModel> implements Serializable {
     public Params(T entity) {
         this.entity = entity;
     }
-    public void put(String key, Object value) {
+    public Params<T> put(String key, Object value) {
         map.put(key, value);
+        return this;
     }
 
 }

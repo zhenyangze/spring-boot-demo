@@ -64,7 +64,8 @@ public class WebsocketConsumer {
             return;
         }
         chatMessages.forEach(chatMessage -> {
-            Set<String> sessionIds = sessionIdRegistry.getSessionIds(chatMessage.getToUserId());
+            Set<String> sessionIds = new HashSet<>();
+            sessionIds.addAll(sessionIdRegistry.getSessionIds(chatMessage.getToUserId()));
             sessionIds.addAll(sessionIdRegistry.getSessionIds(chatMessage.getSendUserId()));
             ChatMessageVO chatMessageVO = (ChatMessageVO) ModelUtil.copy(chatMessage,
                     new ModelUtil.Mapping(ChatMessage.class, ChatMessageVO.class),

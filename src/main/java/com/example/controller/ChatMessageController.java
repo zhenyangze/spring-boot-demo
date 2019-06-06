@@ -13,6 +13,7 @@ import com.example.model.vo.UserVO;
 import com.example.params.Params;
 import com.example.service.IChatMessageService;
 import com.example.util.ModelUtil;
+import io.jsonwebtoken.lang.Collections;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -192,8 +193,10 @@ public class ChatMessageController {
         Params<ChatMessage> params = new Params<>(new ChatMessage().setToUserId(currentUser.getId()))
                 .put("ids", ids);
         List<ChatMessage> chatMessages = chatMessageService.customList(params);
-        chatMessages.forEach(chatMessage -> chatMessage.setReadStatus(READ));
-        chatMessageService.updateBatchById(chatMessages);
+        if (!Collections.isEmpty(chatMessages)) {
+            chatMessages.forEach(chatMessage -> chatMessage.setReadStatus(READ));
+            chatMessageService.updateBatchById(chatMessages);
+        }
         return new ResultVO<>(SUCCESS, "更新消息状态成功！", null);
     }
 

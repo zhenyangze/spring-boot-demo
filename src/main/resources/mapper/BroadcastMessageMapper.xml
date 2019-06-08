@@ -78,6 +78,40 @@
             <if test=" params.entity.sendUserId != null ">
                 and t_broadcast_message.send_user_id = #{params.entity.sendUserId}
             </if>
+            <if test=" params.map.timeCol != null and params.map.timeCol != ''.toString() ">
+                <if test=" params.map.startTime != null ">
+                    and ${params.map.timeCol} >= #{params.map.startTime}
+                </if>
+                <if test=" params.map.endTime != null ">
+                    and ${params.map.timeCol} &lt; #{params.map.endTime}
+                </if>
+            </if>
+        </where>
+        order by t_broadcast_message.send_time desc
+    </select>
+
+    <select id="customSelectList" parameterType="com.example.params.Params" resultMap="resultMap">
+        select <include refid="baseCol" />,
+               <include refid="sendUserCol" />,
+               <include refid="sendUserHeadCol" />
+        from t_broadcast_message t_broadcast_message
+        left join t_user send_user on send_user.id = t_broadcast_message.send_user_id
+        left join t_attachment send_user_head on send_user_head.id = send_user.head_img_id
+        <where>
+            <if test=" params.entity.content != null and params.entity.content != ''.toString() ">
+                and instr(t_broadcast_message.content, #{params.entity.content}) > 0
+            </if>
+            <if test=" params.entity.sendUserId != null ">
+                and t_broadcast_message.send_user_id = #{params.entity.sendUserId}
+            </if>
+            <if test=" params.map.timeCol != null and params.map.timeCol != ''.toString() ">
+                <if test=" params.map.startTime != null ">
+                    and ${params.map.timeCol} >= #{params.map.startTime}
+                </if>
+                <if test=" params.map.endTime != null ">
+                    and ${params.map.timeCol} &lt; #{params.map.endTime}
+                </if>
+            </if>
         </where>
         order by t_broadcast_message.send_time desc
     </select>

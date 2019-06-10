@@ -16,6 +16,7 @@ import io.jsonwebtoken.lang.Collections;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -147,6 +148,7 @@ public class MailService extends BaseService<MailMapper, Mail> implements IMailS
     @Override
     @Transactional
     @Async
+    @CacheEvict(cacheNames = {"summary:mail:month", "summary:mail:user"}, allEntries = true)
     public void send(Mail mail, Integer maxRetry) {
         for (int i=0; i<maxRetry; i++) {
             try {

@@ -17,6 +17,7 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,6 +65,7 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
 
     @Override
     @Transactional
+    @CacheEvict(cacheNames = {"summary:user:sex"}, allEntries = true)
     public void customSave(User user) {
         checkUsernameAndEmail(user);
         baseMapper.insert(user);
@@ -80,6 +82,7 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
 
     @Override
     @Transactional
+    @CacheEvict(cacheNames = {"summary:user:sex"}, allEntries = true)
     public void customUpdateById(User user) {
         checkUsernameAndEmail(user);
         baseMapper.updateById(user);
@@ -96,6 +99,7 @@ public class UserService extends BaseService<UserMapper, User> implements IUserS
 
     @Override
     @Transactional
+    @CacheEvict(cacheNames = {"summary:user:sex"}, allEntries = true)
     public boolean updateById(User user) {
         checkUsernameAndEmail(user);
         return super.updateById(user);

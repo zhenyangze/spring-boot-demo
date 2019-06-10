@@ -11,6 +11,7 @@ import com.example.service.IBroadcastMessageService;
 import com.example.service.IBroadcastToUserLinkService;
 import io.jsonwebtoken.lang.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,6 +51,7 @@ public class BroadcastMessageService extends BaseService<BroadcastMessageMapper,
 
     @Override
     @Transactional
+    @CacheEvict(cacheNames = {"summary:broadcast:month", "summary:broadcast:user"}, allEntries = true)
     public void customSave(BroadcastMessage broadcastMessage) {
         long now = System.currentTimeMillis();
         broadcastMessage.setSendTime(now);

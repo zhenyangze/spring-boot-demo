@@ -46,8 +46,6 @@ Swagger2Controller不是spring容器中的bean，无法使用aop和拦截器，�
 #### 其他配置
 * 线程池和异步任务支持
 >支持使用@Async定义异步任务
-* 自定义java.sql.Date和java.sql.Timestamp的Converter
->spring自动接收java.sql.Date和java.sql.Timestamp类型的参数
 * fastjson
 >比jackson速度快，统一配置了返回值格式，可以在字段上使用@JsonField进行个性化配置
 * 全局跨域支持

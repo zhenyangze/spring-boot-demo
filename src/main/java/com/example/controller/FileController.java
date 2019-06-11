@@ -46,9 +46,13 @@ public class FileController {
                                          @PathVariable("rename") @NotNull(message = "是否重命名不能为空") @ApiParam(value = "是否重命名", allowableValues = "1,0", defaultValue = "1", required = true) String rename) {
         String name = file.getOriginalFilename();
         if (rename.equals("1")) { // 重命名
-            String[] arr = name.split("\\.");
-            String exp = arr[arr.length-1];
-            name = System.currentTimeMillis()+"."+exp;
+            if (name!=null && name.contains(".")) {
+                String[] arr = name.split("\\.");
+                String exp = arr[arr.length-1];
+                name = System.currentTimeMillis()+"."+exp;
+            } else {
+                name = String.valueOf(System.currentTimeMillis());
+            }
         }
         Calendar calendar = Calendar.getInstance();
         // 年

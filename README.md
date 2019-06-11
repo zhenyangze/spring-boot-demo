@@ -2,8 +2,20 @@
 
 #### 介绍
 spring boot项目模板<br>
-环境：jdk-8u162 mysql-5.7.25 redis-5.0.4 zookeeper-3.4.13 kafka_2.11:2.0.1<br>
+环境：jdk-8u162 mysql-5.7.25 redis-5.0.4 zookeeper-3.4.13 kafka_2.11-2.0.1<br>
 前端react项目地址：https://gitee.com/xuelingkang/react-demo
+
+#### 安装说明
+1. 在本地用VMware创建两台1核1G的centos7虚拟机，用户名和密码都是root，网络用NAT或桥接模式都可以
+2. 在本地和虚拟机上的hosts文件中添加server01和server02，分别对应两台虚拟机的ip
+3. 关闭防火墙
+4. 安装zip unzip vim wget等
+5. 在server02上创建demofile用户，密码为demo，用来保存附件
+6. 在server01上安装jdk、nginx、redis(3个)，server02上安装jdk、nginx、mysql、zookeeper、zookeeper，版本号见介绍
+7. mysql账号密码都是root，开启远程访问，创建demo数据库，导入resources/schema/demo.sql文件
+8. redis密码设置为demo，配置sentinel
+9. 服务器具体配置文件在centos7目录，文件位置根据安装位置确定
+10. 开启邮箱授权，将邮箱账号和授权码分别填写在spring.mail.username和spring.mail.password
 
 #### 基本功能
 * 基础框架：spring-boot-2.1.3.RELEASE

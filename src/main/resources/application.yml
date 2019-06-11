@@ -34,7 +34,7 @@ spring:
         reset-enable: true
         login-username: admin
         login-password: 123
-        allow: 192.168.52.0/24,192.168.124.0/24
+        allow:
 
   # spring cache
   cache:

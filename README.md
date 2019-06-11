@@ -56,6 +56,8 @@ spring boot项目模板<br>
 Swagger2Controller不是spring容器中的bean，无法使用aop和拦截器，所以在过滤器中拦截了/v2/api-docs请求，将登录和登出动态添加到返回值中
 
 #### 其他配置
+* 使用kafka消息队列发送websocket消息
+>支持服务集群部署
 * 线程池和异步任务支持
 >支持使用@Async定义异步任务
 * fastjson

@@ -48,8 +48,14 @@ public class DeptService extends BaseService<DeptMapper, Dept> implements IDeptS
 
     @Override
     @Transactional
-    @CacheEvict(cacheNames = {"dept:multiple"}, allEntries = true)
+    @Caching(evict = {
+            @CacheEvict(cacheNames = {"dept:multiple"}, allEntries = true),
+            @CacheEvict(cacheNames = {"dept:single"}, allEntries = true, condition="#dept.isDefault==1")
+    })
     public void customSave(Dept dept) {
+        if (Integer.valueOf(DEFAULT).equals(dept.getIsDefault())) {
+            resetDefault();
+        }
         Integer pid = dept.getPid();
         if (pid==null) {
             dept.setLevel(1);
@@ -71,6 +77,9 @@ public class DeptService extends BaseService<DeptMapper, Dept> implements IDeptS
             }
     )
     public void customUpdateById(Dept dept) {
+        if (Integer.valueOf(DEFAULT).equals(dept.getIsDefault())) {
+            resetDefault();
+        }
         Integer pid = dept.getPid();
         if (pid==null) {
             dept.setLevel(1);
@@ -92,6 +101,16 @@ public class DeptService extends BaseService<DeptMapper, Dept> implements IDeptS
                 List<Dept> allsubs = allsubs(subs, dept.getFullName());
                 super.updateBatchById(allsubs);
             }
+        }
+    }
+
+    @Override
+    @Transactional
+    public void resetDefault() {
+        List<Dept> defaults = baseMapper.customSelectList(new Params<>(new Dept().setIsDefault(DEFAULT)));
+        if (!Collections.isEmpty(defaults)) {
+            defaults.forEach(d -> d.setIsDefault(NOT_DEFAULT));
+            super.updateBatchById(defaults);
         }
     }
 

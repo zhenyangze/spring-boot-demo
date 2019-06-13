@@ -5,11 +5,9 @@ import com.example.group.*;
 import com.example.model.po.*;
 import com.example.model.vo.*;
 import com.example.params.Params;
-import com.example.service.IMailService;
-import com.example.service.IRoleService;
-import com.example.service.ITokenService;
-import com.example.service.IUserService;
+import com.example.service.*;
 import com.example.util.ModelUtil;
+import io.jsonwebtoken.lang.Collections;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -39,6 +37,8 @@ public class UserInfoController {
     @Autowired
     private IRoleService roleService;
     @Autowired
+    private IDeptService deptService;
+    @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
     private IMailService mailService;
@@ -63,8 +63,13 @@ public class UserInfoController {
         if (!StringUtils.isEmpty(password)) {
             user.setPassword(passwordEncoder.encode(password));
         }
-        List<Role> defaultRoles = roleService.customList(new Params<>(new Role().setIsDefault(1)));
+        List<Dept> defaultDepts = deptService.customList(new Params<>(new Dept().setIsDefault(IDeptService.DEFAULT)));
+        if (!Collections.isEmpty(defaultDepts)) {
+            user.setDeptId(defaultDepts.get(0).getId());
+        }
+        List<Role> defaultRoles = roleService.customList(new Params<>(new Role().setIsDefault(IRoleService.DEFAULT)));
         userService.customSave(user.setRoles(defaultRoles));
+        user = userService.customGetOne(new Params<>(new User().setUsername(user.getUsername())));
         // 自动登录
         TokenVO tokenVO = tokenService.saveToken(new UserDetailsImpl(user));
         return new ResultVO<>(SUCCESS, "注册个人信息成功！", tokenVO);

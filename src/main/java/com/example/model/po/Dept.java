@@ -37,6 +37,9 @@ public class Dept extends BaseModel implements Tree<Dept> {
     @ApiModelProperty(value = "部门全名")
     @Null(groups = {Insert.class, Update.class}, message = "部门全名必须为空")
     private String  fullName;
+    @ApiModelProperty(value = "是否新用户默认部门", allowableValues = "1,0")
+    @NotNull(groups = {Insert.class, Update.class}, message = "是否新用户默认部门不能为空")
+    private Integer isDefault;
 
     @TableField(exist = false)
     @ApiModelProperty(value = "子部门")

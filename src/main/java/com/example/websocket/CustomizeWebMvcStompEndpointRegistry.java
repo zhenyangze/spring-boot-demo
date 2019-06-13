@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 代替{@link org.springframework.web.socket.config.annotation.WebMvcStompEndpointRegistry}
+ * 代替{@link WebMvcStompEndpointRegistry}
  */
 @Slf4j
 public class CustomizeWebMvcStompEndpointRegistry extends WebMvcStompEndpointRegistry {

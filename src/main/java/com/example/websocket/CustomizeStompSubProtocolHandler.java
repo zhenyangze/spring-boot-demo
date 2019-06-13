@@ -17,7 +17,7 @@ import java.util.Queue;
 import java.util.concurrent.LinkedTransferQueue;
 
 /**
- * 代替{@link org.springframework.web.socket.messaging.StompSubProtocolHandler}
+ * 代替{@link StompSubProtocolHandler}
  * 增加了对拦截器的支持
  */
 public class CustomizeStompSubProtocolHandler extends StompSubProtocolHandler {

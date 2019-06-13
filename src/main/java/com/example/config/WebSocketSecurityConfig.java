@@ -5,31 +5,30 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.security.config.annotation.web.messaging.MessageSecurityMetadataSourceRegistry;
 import org.springframework.security.config.annotation.web.socket.AbstractSecurityWebSocketMessageBrokerConfigurer;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.config.annotation.DelegatingWebSocketMessageBrokerConfiguration;
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.config.annotation.WebMvcStompEndpointRegistry;
 import org.springframework.web.socket.messaging.StompSubProtocolErrorHandler;
+import org.springframework.web.socket.messaging.StompSubProtocolHandler;
 
 /**
- * 默认通过注解{@link org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker}
- * 开启使用STOMP协议来传输基于代理(message broker)的消息，
- * 支持使用{@link org.springframework.messaging.handler.annotation.MessageMapping}
- * 就像支持{@link org.springframework.web.bind.annotation.RequestMapping}一样。
- * 但是注解{@link org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker}
- * 会引入{@link org.springframework.web.socket.config.annotation.DelegatingWebSocketMessageBrokerConfiguration}配置类，
- * 该配置类默认使用{@link org.springframework.web.socket.config.annotation.WebMvcStompEndpointRegistry}，
- * {@link org.springframework.web.socket.config.annotation.WebMvcStompEndpointRegistry}的stomp协议处理器为
- * {@link org.springframework.web.socket.messaging.StompSubProtocolHandler}，
- * 处理消息的方法：
- * @see org.springframework.web.socket.messaging.StompSubProtocolHandler#handleMessageFromClient(WebSocketSession, WebSocketMessage, MessageChannel)
- * @see org.springframework.web.socket.messaging.StompSubProtocolHandler#handleMessageToClient(WebSocketSession, Message)
+ * 默认通过注解{@link EnableWebSocketMessageBroker}
+ * 开启使用STOMP协议来传输基于代理(message broker)的消息，支持使用{@link MessageMapping}就像支持{@link RequestMapping}一样。
+ * 但是注解{@link EnableWebSocketMessageBroker}会引入{@link DelegatingWebSocketMessageBrokerConfiguration}配置类，
+ * 该配置类默认使用{@link WebMvcStompEndpointRegistry}，{@link WebMvcStompEndpointRegistry}的stomp协议处理器为
+ * {@link StompSubProtocolHandler}，处理消息的方法：
+ * @see StompSubProtocolHandler#handleMessageFromClient(WebSocketSession, WebSocketMessage, MessageChannel)
+ * @see StompSubProtocolHandler#handleMessageToClient(WebSocketSession, Message)
  * 未对自定义拦截做支持，
- * 所以取消{@link org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker}，
- * 使用自定义配置{@link com.example.websocket.CustomizeWebSocketMessageBrokerConfiguration}
- * 后续将这部分配置单独做一个项目
+ * 所以取消{@link EnableWebSocketMessageBroker}，使用自定义配置{@link CustomizeWebSocketMessageBrokerConfiguration}
  */
 @Configuration
 //@EnableWebSocketMessageBroker

@@ -3,7 +3,9 @@
 #### 介绍
 spring boot项目模板<br>
 环境：jdk-8u162 mysql-5.7.25 redis-5.0.4 zookeeper-3.4.13 kafka_2.11-2.0.1<br>
-前端react项目地址：<a href="https://gitee.com/xuelingkang/react-demo" target="_blank">react-demo</a>
+前端react项目地址：<a href="https://gitee.com/xuelingkang/react-demo" target="_blank">react-demo</a><br>
+<a href="https://blog.csdn.net/qq_35433926" target="_blank">博客主页</a>
+
 #### 安装说明
 1. 在本地用VMware创建两台1核1G的centos7虚拟机，用户名和密码都是root，网络用NAT或桥接模式都可以
 2. 在本地和虚拟机上的hosts文件中添加server01和server02，分别对应两台虚拟机的ip
@@ -66,5 +68,4 @@ Swagger2Controller不是spring容器中的bean，无法使用aop和拦截器，�
 * sftp
 >实现了sftp连接池，sftp上传下载等功能
 
-#### <a href="https://blog.csdn.net/qq_35433926" target="_blank">博客主页</a>
 #### 如果我的代码对你有帮助，希望给我点个star，谢谢！

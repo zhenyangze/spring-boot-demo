@@ -72,7 +72,7 @@ spring:
       # latest（默认值）在偏移量无效的情况下，消费者将从最新的记录开始读取数据（在消费者启动之后生成的记录）
       # earliest ：在偏移量无效的情况下，消费者将从起始位置读取分区的记录
       auto-offset-reset: latest
-      # 是否自动提交偏移量，默认值是true，为了避免出现重复数据和数据丢失，可以把它设置为false，然后手动提交偏移量
+      # 设置为true表示使用kafka默认的提交模式，false表示使用spring提供的人工提交模式
       enable-auto-commit: false
       # 键的反序列化方式
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -81,6 +81,15 @@ spring:
     listener:
       # 在侦听器容器中运行的线程数。
       concurrency: 5
+      # 当自动提交设置为false时，设置spring人工提交模式
+      # record 每处理一条记录提交
+      # batch 每次poll的时候批量提交，默认
+      # time 每间隔ack-time提交，需要设置ack-time属性
+      # count 累积达到ack-count提交
+      # count_time ack-time和ack-count中满足任何一个就提交
+      # munual listener中接收AcknowledgingMessageListener类型的参数，调用acknowledge()方法提交，批量提交
+      # manual_immediate 和munul一样，但是调用方法后会立刻提交
+      ack-mode: batch
 
   # 定时任务
   quartz:

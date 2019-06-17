@@ -58,7 +58,7 @@ log:
   home: E:/IdeaProjects/logs/dev # 日志目录
 
 attachment:
-  save-dir: /home/demofile # 文件保存路径
+  save-dir: E:/IdeaProjects/demofile # 文件保存路径
 
 swagger2:
   enable: true # 启用swagger2

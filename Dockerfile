@@ -2,10 +2,12 @@ FROM anapsix/alpine-java:8_server-jre_unlimited
 
 MAINTAINER xuelingkang@163.com
 
-WORKDIR /spring-boot-demo
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
-EXPOSE 8080
+RUN mkdir -p /spring-boot-demo
 
 ADD spring-boot-demo.jar app.jar
 
-CMD java -Djava.security.egd=file:/dev/./urandom -jar app.jar
+EXPOSE 8080
+
+CMD nohup java -Dfile.encoding=utf-8 -Djava.security.egd=file:/dev/./urandom -jar app.jar --spring.mail.username=$mailusername --spring.mail.password=$mailpassword > /var/log/spring-boot-demo.log

@@ -28,7 +28,7 @@
         <json-lib.version>2.4</json-lib.version>
         <sftp.version>0.1.55</sftp.version>
         <docker.image.prefix>springboot</docker.image.prefix>
-        <docker.host>http://docker01:2375</docker.host>
+        <docker.host>http://docker:2375</docker.host>
     </properties>
 
     <dependencies>

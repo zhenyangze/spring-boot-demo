@@ -10,4 +10,4 @@ ADD spring-boot-demo.jar app.jar
 
 EXPOSE 8080
 
-CMD nohup java -Dfile.encoding=utf-8 -Djava.security.egd=file:/dev/./urandom -jar app.jar --spring.mail.username=$mailusername --spring.mail.password=$mailpassword > /var/log/spring-boot-demo.log
+CMD nohup java -Dfile.encoding=utf-8 -Djava.security.egd=file:/dev/./urandom $JAVA_OPTS -jar app.jar > /var/log/spring-boot-demo.log

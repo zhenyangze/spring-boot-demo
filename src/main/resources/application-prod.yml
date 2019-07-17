@@ -2,7 +2,7 @@
 spring:
   # 数据源
   datasource:
-    url: jdbc:mysql://server02:3306/demo?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://ali-server02:3306/demo?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
     password: root
     druid:
@@ -24,7 +24,7 @@ spring:
     # 使用sentinel集群时将以下三行注释打开
     sentinel:
       master: demomaster # master名称
-      nodes: server01:26379,server01:26380,server01:26381 # sentinel地址
+      nodes: ali-server01:26379,ali-server01:26380,ali-server01:26381 # sentinel地址
     lettuce:
       shutdown-timeout: 100ms
       pool:
@@ -36,7 +36,7 @@ spring:
   # kafka
   kafka:
     # 以逗号分隔的地址列表，用于建立与Kafka集群的初始连接(kafka 默认的端口号为9092)
-    bootstrap-servers: server02:9092
+    bootstrap-servers: ali-server03:9092
 
   # 邮件
   mail:
@@ -60,7 +60,7 @@ swagger2:
 
 # sftp
 sftp:
-  host: server02
+  host: ali-server02
   port: 22
   username: demofile
   password: demo

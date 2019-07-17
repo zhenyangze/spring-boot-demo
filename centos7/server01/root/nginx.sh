@@ -5,6 +5,7 @@ docker run -d --name nginx \
 -v /var/log/nginx:/var/log/nginx \
 -v /root/react-demo:/root/react-demo \
 -v /etc/localtime:/etc/localtime \
+-v /etc/timezone:/etc/timezone \
 -p 80:80 \
 -p 443:443 \
 --add-host server01:172.26.245.47 \

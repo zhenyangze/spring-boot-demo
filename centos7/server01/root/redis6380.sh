@@ -2,6 +2,7 @@
 docker run -d --name redis6380 \
 -v /mnt/redis/6380:/data \
 -v /etc/localtime:/etc/localtime \
+-v /etc/timezone:/etc/timezone \
 --network host \
 redis:alpine \
 redis-server --appendonly yes \

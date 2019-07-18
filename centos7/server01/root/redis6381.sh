@@ -1,5 +1,6 @@
 #/bin/bash
 docker run -d --name redis6381 \
+--restart=always \
 -v /mnt/redis/6381:/data \
 -v /etc/localtime:/etc/localtime \
 -v /etc/timezone:/etc/timezone \

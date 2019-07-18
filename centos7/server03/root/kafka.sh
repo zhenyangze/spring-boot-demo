@@ -1,5 +1,6 @@
 #/bin/bash
 docker run -d --name kafka \
+--restart=always \
 --publish 9092:9092 \
 --link zookeeper \
 --env KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 \

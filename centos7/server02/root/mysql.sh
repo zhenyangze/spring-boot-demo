@@ -1,5 +1,6 @@
 #/bin/bash
 docker run -d --name mysql \
+--restart=always \
 -e MYSQL_ROOT_PASSWORD=root \
 -v /etc/localtime:/etc/localtime \
 -v /etc/timezone:/etc/timezone \

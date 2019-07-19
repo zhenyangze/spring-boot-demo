@@ -31,6 +31,7 @@ public class BroadcastJob extends QuartzJobBean {
 
     @Override
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+        log.info("----------broadcastJob开始了----------");
         BroadcastMessage message = new BroadcastMessage();
         JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
         String content = jobDataMap.getString("content");
@@ -42,7 +43,7 @@ public class BroadcastJob extends QuartzJobBean {
         message.setToUsers(list);
         broadcastMessageService.customSave(message);
         defaultProducer.send(BROADCAST_TOPIC, message);
-        log.info("定时广播成功！");
+        log.info("----------broadcastJob开始了----------");
     }
 
 }

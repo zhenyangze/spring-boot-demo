@@ -43,7 +43,7 @@ public class BroadcastJob extends QuartzJobBean {
         message.setToUsers(list);
         broadcastMessageService.customSave(message);
         defaultProducer.send(BROADCAST_TOPIC, message);
-        log.info("----------broadcastJob开始了----------");
+        log.info("----------broadcastJob结束了----------");
     }
 
 }

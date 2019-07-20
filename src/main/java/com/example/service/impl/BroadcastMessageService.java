@@ -56,8 +56,10 @@ public class BroadcastMessageService extends BaseService<BroadcastMessageMapper,
         long now = System.currentTimeMillis();
         broadcastMessage.setSendTime(now);
         User currentUser = currentUser();
-        broadcastMessage.setSendUser(currentUser);
-        broadcastMessage.setSendUserId(currentUser.getId());
+        if (currentUser!=null) {
+            broadcastMessage.setSendUser(currentUser);
+            broadcastMessage.setSendUserId(currentUser.getId());
+        }
         baseMapper.insert(broadcastMessage);
         Integer broadcastId = broadcastMessage.getId();
         List<User> toUsers = broadcastMessage.getToUsers();

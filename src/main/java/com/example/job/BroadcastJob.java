@@ -32,8 +32,16 @@ public class BroadcastJob extends QuartzJobBean {
     @Override
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
         log.info("----------broadcastJob开始了----------");
-        BroadcastMessage message = new BroadcastMessage();
         JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
+        String username = jobDataMap.getString("senduser");
+        User sendUser = userService.customGetOne(new Params<>(new User().setUsername(username)));
+        if (sendUser==null) {
+            log.info("----------broadcastJob出错了，找不到用户："+username+"----------");
+            return;
+        }
+        BroadcastMessage message = new BroadcastMessage();
+        message.setSendUser(sendUser);
+        message.setSendUserId(sendUser.getId());
         String content = jobDataMap.getString("content");
         content += "---------现在时间是：";
         content += new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());

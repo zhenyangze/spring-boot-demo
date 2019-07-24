@@ -53,7 +53,7 @@ spring boot项目模板<br>
 * swagger过滤器
 >将spring-security的登录和登出url添加到文档中，
 由于swagger通过springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration的swagger2ControllerMapping方法将/v2/api-docs请求映射到Swagger2Controller<br>
-![Image text](images/Swagger2DocumetationConfiguration.png)<br>
+![Swagger2DocumetationConfiguration源码片段](https://images.gitee.com/uploads/images/2019/0724/154915_eb28248c_1672679.png "Swagger2DocumetationConfiguration.png")<br>
 Swagger2Controller不是spring容器中的bean，无法使用aop和拦截器，所以在过滤器中拦截了/v2/api-docs请求，将登录和登出动态添加到返回值中
 
 #### 其他配置

@@ -35,7 +35,7 @@ bootdemo:1.0.1
 <table>
     <tr>
         <th>服务器</th>
-        <th>启动脚本脚本</th>
+        <th>启动脚本</th>
     </tr>
     <tr>
         <td align="center">server03</td>

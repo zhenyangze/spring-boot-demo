@@ -1,22 +1,91 @@
 # spring-boot-demo
-
 #### 介绍
 spring boot项目模板<br>
 环境：jdk-8u162 mysql-5.7.25 redis-5.0.4 zookeeper-3.4.13 kafka_2.11-2.0.1<br>
 前端react项目地址：<a href="https://gitee.com/xuelingkang/react-demo" target="_blank">react-demo</a><br>
 <a href="https://blog.csdn.net/qq_35433926" target="_blank">博客主页</a>
-
 #### 安装说明
-1. 在本地用VMware创建两台1核1G的centos7虚拟机，用户名和密码都是root，网络用NAT或桥接模式都可以
-2. 在本地和虚拟机上的hosts文件中添加server01和server02，分别对应两台虚拟机的ip
-3. 关闭防火墙
-4. 安装zip unzip vim wget等
-5. 在server02上创建demofile用户，密码为demo，用来保存附件
-6. 在server01上安装jdk、nginx、redis(3个)，server02上安装jdk、nginx、mysql、zookeeper、zookeeper，版本号见介绍
-7. mysql账号密码都是root，开启远程访问，创建demo数据库，导入resources/schema/demo.sql文件
-8. redis密码设置为demo，配置sentinel
-9. 服务器具体配置文件在centos7目录，文件位置根据安装位置确定
-10. 开启邮箱授权，将邮箱账号和授权码分别填写在spring.mail.username和spring.mail.password
+1. 本地新建三个1核1G的centos7虚拟机，或者直接在阿里云创建
+2. 安装docker-ce，配置镜像加速，参考阿里云容器镜像服务
+3. 修改/etc/hosts，增加如下映射，***ip改成自己的局域网ip，三个虚拟机都需要增加这三行***
+```bash
+172.26.245.47   ali-server01    server01
+172.26.245.48   ali-server02    server02
+172.26.245.49   ali-server03    server03
+```
+4. 将工程中centos7目录下的文件修改为***UNIX格式***，按照目录结构分别拷贝到三个虚拟机的对应目录下，***注意提前修改文件格式为UNIX，否则无法运行***
+5. 修改/root目录下的shell脚本，将`--add-host`参数对应的真实ip修改为自己虚拟机的ip
+6. 构建应用镜像，<a href="https://blog.csdn.net/qq_35433926/article/details/95969980" target="_blank">参考博客</a>
+7. 在server01的/root下新建bootdemo.sh脚本，内容如下，***注意修改ip和邮箱账号授权码变量***
+```bash
+#/bin/bash
+docker run -d --name bootdemo \
+--restart=always \
+-e JAVA_OPTS='-Dspring.mail.username=xxxxxx@163.com -Dspring.mail.password=xxxxxx' \
+-v /var/log/spring-boot-demo:/root/spring-boot-demo \
+-v /etc/localtime:/etc/localtime \
+-v /etc/timezone:/etc/timezone \
+-p 8080:8080 \
+--add-host ali-server01:172.26.245.47 \
+--add-host ali-server02:172.26.245.48 \
+--add-host ali-server03:172.26.245.49 \
+bootdemo:1.0.1
+```
+8. 按照下表顺序启动容器
+<table>
+    <tr>
+        <th>服务器</th>
+        <th>启动脚本脚本</th>
+    </tr>
+    <tr>
+        <td align="center">server03</td>
+        <td align="center">zookeeper.sh</td>
+    </tr>
+    <tr>
+        <td align="center">server03</td>
+        <td align="center">kafka.sh</td>
+    </tr>
+    <tr>
+        <td align="center">server02</td>
+        <td align="center">mysql.sh</td>
+    </tr>
+    <tr>
+        <td align="center">server02</td>
+        <td align="center">nginx.sh</td>
+    </tr>
+    <tr>
+        <td align="center">server01</td>
+        <td align="center">redis6379.sh</td>
+    </tr>
+    <tr>
+        <td align="center">server01</td>
+        <td align="center">redis6380.sh</td>
+    </tr>
+    <tr>
+        <td align="center">server01</td>
+        <td align="center">redis6381.sh</td>
+    </tr>
+    <tr>
+        <td align="center">server01</td>
+        <td align="center">sentinel26379.sh</td>
+    </tr>
+    <tr>
+        <td align="center">server01</td>
+        <td align="center">sentinel26380.sh</td>
+    </tr>
+    <tr>
+        <td align="center">server01</td>
+        <td align="center">sentinel26381.sh</td>
+    </tr>
+    <tr>
+        <td align="center">server01</td>
+        <td align="center">bootdemo.sh</td>
+    </tr>
+    <tr>
+        <td align="center">server01</td>
+        <td align="center">nginx.sh</td>
+    </tr>
+</table>
 
 #### 基本功能
 * 基础框架：spring-boot-2.1.3.RELEASE
@@ -55,7 +124,6 @@ spring boot项目模板<br>
 由于swagger通过springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration的swagger2ControllerMapping方法将/v2/api-docs请求映射到Swagger2Controller<br>
 ![Swagger2DocumetationConfiguration源码片段](https://images.gitee.com/uploads/images/2019/0724/154915_eb28248c_1672679.png "Swagger2DocumetationConfiguration.png")<br>
 Swagger2Controller不是spring容器中的bean，无法使用aop和拦截器，所以在过滤器中拦截了/v2/api-docs请求，将登录和登出动态添加到返回值中
-
 #### 其他配置
 * 使用kafka消息队列发送websocket消息
 >支持服务集群部署
@@ -67,5 +135,4 @@ Swagger2Controller不是spring容器中的bean，无法使用aop和拦截器，�
 >com.example.config.GlobalCorsConfig
 * sftp
 >实现了sftp连接池，sftp上传下载等功能
-
 #### 如果我的代码对你有帮助，希望给我点个star，谢谢！

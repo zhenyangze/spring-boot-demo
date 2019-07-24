@@ -4,7 +4,7 @@ spring boot项目模板<br>
 环境：jdk-8u162 mysql-5.7.25 redis-5.0.4 zookeeper-3.4.13 kafka_2.11-2.0.1<br>
 前端react项目地址：<a href="https://gitee.com/xuelingkang/react-demo" target="_blank">react-demo</a><br>
 <a href="https://blog.csdn.net/qq_35433926" target="_blank">博客主页</a>
-#### 安装说明
+#### 部署步骤
 1. 本地新建三个1核1G的centos7虚拟机，或者直接在阿里云创建
 2. 安装docker-ce，配置镜像加速，参考阿里云容器镜像服务
 3. 修改/etc/hosts，增加如下映射，***ip改成自己的局域网ip，三个虚拟机都需要增加这三行***
@@ -87,6 +87,7 @@ bootdemo:1.0.1
     </tr>
 </table>
 
+9. <a href="https://gitee.com/xuelingkang/react-demo" target="_blank">前端项目部署</a>
 #### 基本功能
 * 基础框架：spring-boot-2.1.3.RELEASE
 >优点：敏捷开发，扩展方便

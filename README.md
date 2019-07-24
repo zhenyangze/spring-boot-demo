@@ -1,7 +1,7 @@
 # spring-boot-demo
 #### 介绍
 spring boot项目模板<br>
-环境：jdk-8u162 mysql-5.7.25 redis-5.0.4 zookeeper-3.4.13 kafka_2.11-2.0.1<br>
+运行环境：centos7 docker<br>
 前端react项目地址：<a href="https://gitee.com/xuelingkang/react-demo" target="_blank">react-demo</a><br>
 <a href="https://blog.csdn.net/qq_35433926" target="_blank">博客主页</a>
 #### 部署步骤
@@ -47,7 +47,7 @@ bootdemo:1.0.1
     </tr>
     <tr>
         <td align="center">server02</td>
-        <td align="center">mysql.sh</td>
+        <td align="center">mysql.sh，<strong>mysql启动完成后将工程目录下/src/main/resources/schema/demo.sql导入数据库</strong></td>
     </tr>
     <tr>
         <td align="center">server02</td>

@@ -47,7 +47,11 @@ bootdemo:1.0.1
     </tr>
     <tr>
         <td align="center">server02</td>
-        <td align="center">mysql.sh<br><b><i>mysql启动完成后将工程目录下</i></b><br><b><i>/src/main/resources/schema/demo.sql导入数据库</i></b></td>
+        <td align="center">
+            mysql.sh<br>
+            <b><i>mysql启动完成后将工程目录下</i></b><br>
+            <b><i>/src/main/resources/schema/demo.sql导入数据库</i></b>
+        </td>
     </tr>
     <tr>
         <td align="center">server02</td>

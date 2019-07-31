@@ -15,6 +15,37 @@ import java.util.concurrent.LinkedTransferQueue;
 
 public class SpringBootDemoTests {
 
+    public static <T extends Comparable> void bubble(T[] array) {
+        for (int i=0; i<array.length-1; i++) {
+            for (int j=0; j<array.length-i-1; j++) {
+                if (array[j].compareTo(array[j+1])>0) {
+                    T temp = array[j];
+                    array[j] = array[j+1];
+                    array[j+1] = temp;
+                }
+            }
+        }
+    }
+
+    public void bubble(int[] arr) {
+        for (int i=0; i<arr.length-1; i++) {
+            for (int j=0; j<arr.length-i-1; j++) {
+                if (arr[j]>arr[j+1]) {
+                    int temp = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = temp;
+                }
+            }
+        }
+    }
+
+    @Test
+    public void testBubble() {
+        int[] arr = {5, 6, 7, 3, 2, 1};
+        bubble(arr);
+        System.out.println(Arrays.toString(arr));
+    }
+
     @Test
     public void testQueue() {
         Queue<String> queue = new LinkedTransferQueue<>();

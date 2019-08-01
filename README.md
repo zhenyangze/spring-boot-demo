@@ -116,7 +116,8 @@ bootdemo:1.0.1
 * 认证授权框架：spring-security jwt websocket-security
 >应用：实现前后分离请求认证，资源模块将http请求和websocket请求按照method和url保存起来，当用户发起请求时，通过授权决策器实现动态授权
 * websocket
->应用：使用stomp子协议，继承并扩展了StompSubProtocolHandler，增加了对拦截器的支持，实现对SUBSCRIBE请求的动态授权，实现了群发消息和点对点消息
+>应用：使用stomp子协议，继承并扩展了StompSubProtocolHandler，增加了对拦截器的支持，实现对SUBSCRIBE请求的动态授权，实现了群发消息和点对点消息<br>
+这部分单独抽出了个模块<a href="https://gitee.com/xuelingkang/websocket" target="_blank">websocket</a>
 * 邮件：javax.mail
 >应用：实现了群发和附件
 * 参数校验：hibernate validation

@@ -30,7 +30,7 @@ public class OpenSource extends BaseModel {
     @NotBlank(groups = {OpenSourceInsert.class, OpenSourceUpdate.class}, message = "开源组件描述不能为空")
     private String sourceDesc;
     @ApiModelProperty(value = "开源组件顺序")
-    @NotBlank(groups = {OpenSourceInsert.class, OpenSourceUpdate.class}, message = "开源组件顺序不能为空")
+    @NotNull(groups = {OpenSourceInsert.class, OpenSourceUpdate.class}, message = "开源组件顺序不能为空")
     private Integer sourceSeq;
     @ApiModelProperty(value = "gitee地址")
     @NotBlank(groups = {OpenSourceInsert.class, OpenSourceUpdate.class}, message = "gitee地址不能为空")

@@ -72,7 +72,7 @@ public class OpenSourceController {
         return new ResultVO<>(SUCCESS, "更新开源组件成功！", null);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{ids}")
     @ApiOperation(value = "删除开源组件")
     public ResultVO delete(
             @PathVariable

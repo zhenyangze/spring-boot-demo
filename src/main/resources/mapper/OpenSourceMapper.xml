@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.mapper.OpenSourceMapper">
+
+    <sql id="baseCol">
+        t_open_source.id t_open_source_id, t_open_source.source_name t_open_source_source_name,
+        t_open_source.source_desc t_open_source_source_desc, t_open_source.source_seq t_open_source_source_seq,
+        t_open_source.gitee_url t_open_source_gitee_url, t_open_source.github_url t_open_source_github_url,
+        t_open_source.maven_group_id t_open_source_maven_group_id, t_open_source.maven_artifact_id t_open_source_maven_artifact_id,
+        t_open_source.maven_version t_open_source_maven_version, t_open_source.save_user_id t_open_source_save_user_id,
+        t_open_source.save_time t_open_source_save_time, t_open_source.update_user_id t_open_source_update_user_id,
+        t_open_source.update_time t_open_source_update_time
+    </sql>
+
+    <resultMap id="baseResultMap" type="com.example.model.po.OpenSource">
+        <id column="t_open_source_id" property="id" />
+        <result column="t_open_source_source_name" property="sourceName" />
+        <result column="t_open_source_source_desc" property="sourceDesc" />
+        <result column="t_open_source_source_seq" property="sourceSeq" />
+        <result column="t_open_source_gitee_url" property="giteeUrl" />
+        <result column="t_open_source_github_url" property="githubUrl" />
+        <result column="t_open_source_maven_group_id" property="mavenGroupId" />
+        <result column="t_open_source_maven_artifact_id" property="mavenArtifactId" />
+        <result column="t_open_source_maven_version" property="mavenVersion" />
+        <result column="t_open_source_save_user_id" property="saveUserId" />
+        <result column="t_open_source_save_time" property="saveTime" />
+        <result column="t_open_source_update_user_id" property="updateUserId" />
+        <result column="t_open_source_update_time" property="updateTime" />
+    </resultMap>
+
+    <sql id="saveUserCol">
+        save_user.id save_user_id, save_user.username save_user_username, save_user.nickname save_user_nickname,
+        save_user.sex save_user_sex, save_user.dept_id save_user_dept_id, save_user.head_img_id save_user_head_img_id
+    </sql>
+
+    <resultMap id="saveUserResultMap" type="com.example.model.po.User">
+        <id column="save_user_id" property="id" />
+        <result column="save_user_username" property="username" />
+        <result column="save_user_nickname" property="nickname" />
+        <result column="save_user_sex" property="sex" />
+        <result column="save_user_dept_id" property="deptId" />
+        <result column="save_user_head_img_id" property="headImgId" />
+    </resultMap>
+
+    <sql id="updateUserCol">
+        update_user.id update_user_id, update_user.username update_user_username, update_user.nickname update_user_nickname,
+        update_user.sex update_user_sex, update_user.dept_id update_user_dept_id, update_user.head_img_id update_user_head_img_id
+    </sql>
+
+    <resultMap id="updateUserResultMap" type="com.example.model.po.User">
+        <id column="update_user_id" property="id" />
+        <result column="update_user_username" property="username" />
+        <result column="update_user_nickname" property="nickname" />
+        <result column="update_user_sex" property="sex" />
+        <result column="update_user_dept_id" property="deptId" />
+        <result column="update_user_head_img_id" property="headImgId" />
+    </resultMap>
+
+    <resultMap id="resultMap" type="com.example.model.po.OpenSource" extends="baseResultMap">
+        <association column="t_open_source_id" property="intro" resultMap="com.example.mapper.OpenSourceIntroMapper.baseResultMap" />
+        <association column="t_open_source_save_user_id" property="saveUser" resultMap="saveUserResultMap" />
+        <association column="t_open_source_update_user_id" property="updateUser" resultMap="updateUserResultMap" />
+    </resultMap>
+
+    <select id="customSelectPage" resultMap="resultMap">
+        select <include refid="baseCol" />,
+               <include refid="saveUserCol" />,
+               <include refid="updateUserCol" />
+        from t_open_source t_open_source
+        left join t_user save_user on save_user.id = t_open_source.save_user_id
+        left join t_user update_user on update_user.id = t_open_source.update_user_id
+        <where>
+            <if test=" params.entity.sourceName != null and params.entity.sourceName != ''.toString() ">
+                and instr(t_open_source.source_name, #{params.entity.sourceName}) > 0
+            </if>
+            <if test=" params.entity.sourceDesc != null and params.entity.sourceDesc != ''.toString() ">
+                and instr(t_open_source.source_desc, #{params.entity.sourceDesc}) > 0
+            </if>
+            <if test=" params.entity.giteeUrl != null and params.entity.giteeUrl != ''.toString() ">
+                and instr(t_open_source.gitee_url, #{params.entity.giteeUrl}) > 0
+            </if>
+            <if test=" params.entity.githubUrl != null and params.entity.githubUrl != ''.toString() ">
+                and instr(t_open_source.github_url, #{params.entity.githubUrl}) > 0
+            </if>
+            <if test=" params.entity.mavenGroupId != null and params.entity.mavenGroupId != ''.toString() ">
+                and instr(t_open_source.maven_group_id, #{params.entity.mavenGroupId}) > 0
+            </if>
+            <if test=" params.entity.mavenArtifactId != null and params.entity.mavenArtifactId != ''.toString() ">
+                and instr(t_open_source.maven_artifact_id, #{params.entity.mavenArtifactId}) > 0
+            </if>
+            <if test=" params.entity.mavenVersion != null and params.entity.mavenVersion != ''.toString() ">
+                and instr(t_open_source.maven_version, #{params.entity.mavenVersion}) > 0
+            </if>
+            <if test=" params.entity.saveUserId != null ">
+                and t_open_source.save_user_id = #{params.entity.saveUserId}
+            </if>
+            <if test=" params.entity.updateUserId != null ">
+                and t_open_source.update_user_id = #{params.entity.updateUserId}
+            </if>
+        </where>
+        order by t_open_source.source_seq asc, t_open_source.save_time desc, t_open_source.update_time desc
+    </select>
+
+    <select id="customSelectById" parameterType="int" resultMap="resultMap">
+        select <include refid="baseCol" />,
+               <include refid="saveUserCol" />,
+               <include refid="updateUserCol" />,
+               <include refid="com.example.mapper.OpenSourceIntroMapper.baseCol" />
+        from t_open_source t_open_source
+        left join t_user save_user on save_user.id = t_open_source.save_user_id
+        left join t_user update_user on update_user.id = t_open_source.update_user_id
+        join t_open_source_intro t_open_source_intro on t_open_source_intro.open_source_id = t_open_source.id
+        where t_open_source.id = #{id}
+    </select>
+
+</mapper>

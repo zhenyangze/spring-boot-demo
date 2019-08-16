@@ -32,64 +32,21 @@ docker run -d --name bootdemo \
 bootdemo:1.0.1
 ```
 8. 按照下表顺序启动容器
-<table>
-    <tr>
-        <th>服务器</th>
-        <th>启动脚本</th>
-    </tr>
-    <tr>
-        <td align="center">server03</td>
-        <td align="center">zookeeper.sh</td>
-    </tr>
-    <tr>
-        <td align="center">server03</td>
-        <td align="center">kafka.sh</td>
-    </tr>
-    <tr>
-        <td align="center">server02</td>
-        <td align="center">
-            mysql.sh<br>
-            <b><i>mysql启动完成后将工程目录下</i></b><br>
-            <b><i>/src/main/resources/schema/demo.sql导入数据库</i></b>
-        </td>
-    </tr>
-    <tr>
-        <td align="center">server02</td>
-        <td align="center">nginx.sh</td>
-    </tr>
-    <tr>
-        <td align="center">server01</td>
-        <td align="center">redis6379.sh</td>
-    </tr>
-    <tr>
-        <td align="center">server01</td>
-        <td align="center">redis6380.sh</td>
-    </tr>
-    <tr>
-        <td align="center">server01</td>
-        <td align="center">redis6381.sh</td>
-    </tr>
-    <tr>
-        <td align="center">server01</td>
-        <td align="center">sentinel26379.sh</td>
-    </tr>
-    <tr>
-        <td align="center">server01</td>
-        <td align="center">sentinel26380.sh</td>
-    </tr>
-    <tr>
-        <td align="center">server01</td>
-        <td align="center">sentinel26381.sh</td>
-    </tr>
-    <tr>
-        <td align="center">server01</td>
-        <td align="center">bootdemo.sh</td>
-    </tr>
-    <tr>
-        <td align="center">server01</td>
-        <td align="center">nginx.sh</td>
-    </tr>
-</table>
+
+|服务器|启动脚本|
+|:-----:|:-------:|
+|server03|zookeeper.sh|
+|server03|kafka.sh|
+|server02|mysql.sh<br>mysql启动完成后将工程目录下<br>/src/main/resources/schema/demo.sql导入数据库|
+|server02|nginx.sh|
+|server01|redis6379.sh|
+|server01|redis6380.sh|
+|server01|redis6381.sh|
+|server01|sentinel26379.sh|
+|server01|sentinel26380.sh|
+|server01|sentinel26381.sh|
+|server01|bootdemo.sh|
+|server01|nginx.sh|
 
 9. <a href="https://gitee.com/xuelingkang/react-demo" target="_blank">前端项目部署</a>
 #### 基本功能

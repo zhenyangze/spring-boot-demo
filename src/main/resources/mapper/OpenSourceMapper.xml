@@ -6,10 +6,8 @@
         t_open_source.id t_open_source_id, t_open_source.source_name t_open_source_source_name,
         t_open_source.source_desc t_open_source_source_desc, t_open_source.source_seq t_open_source_source_seq,
         t_open_source.gitee_url t_open_source_gitee_url, t_open_source.github_url t_open_source_github_url,
-        t_open_source.maven_group_id t_open_source_maven_group_id, t_open_source.maven_artifact_id t_open_source_maven_artifact_id,
-        t_open_source.maven_version t_open_source_maven_version, t_open_source.save_user_id t_open_source_save_user_id,
-        t_open_source.save_time t_open_source_save_time, t_open_source.update_user_id t_open_source_update_user_id,
-        t_open_source.update_time t_open_source_update_time
+        t_open_source.save_user_id t_open_source_save_user_id, t_open_source.save_time t_open_source_save_time,
+        t_open_source.update_user_id t_open_source_update_user_id, t_open_source.update_time t_open_source_update_time
     </sql>
 
     <resultMap id="baseResultMap" type="com.example.model.po.OpenSource">
@@ -19,9 +17,6 @@
         <result column="t_open_source_source_seq" property="sourceSeq" />
         <result column="t_open_source_gitee_url" property="giteeUrl" />
         <result column="t_open_source_github_url" property="githubUrl" />
-        <result column="t_open_source_maven_group_id" property="mavenGroupId" />
-        <result column="t_open_source_maven_artifact_id" property="mavenArtifactId" />
-        <result column="t_open_source_maven_version" property="mavenVersion" />
         <result column="t_open_source_save_user_id" property="saveUserId" />
         <result column="t_open_source_save_time" property="saveTime" />
         <result column="t_open_source_update_user_id" property="updateUserId" />
@@ -81,15 +76,6 @@
             </if>
             <if test=" params.entity.githubUrl != null and params.entity.githubUrl != ''.toString() ">
                 and instr(t_open_source.github_url, #{params.entity.githubUrl}) > 0
-            </if>
-            <if test=" params.entity.mavenGroupId != null and params.entity.mavenGroupId != ''.toString() ">
-                and instr(t_open_source.maven_group_id, #{params.entity.mavenGroupId}) > 0
-            </if>
-            <if test=" params.entity.mavenArtifactId != null and params.entity.mavenArtifactId != ''.toString() ">
-                and instr(t_open_source.maven_artifact_id, #{params.entity.mavenArtifactId}) > 0
-            </if>
-            <if test=" params.entity.mavenVersion != null and params.entity.mavenVersion != ''.toString() ">
-                and instr(t_open_source.maven_version, #{params.entity.mavenVersion}) > 0
             </if>
             <if test=" params.entity.saveUserId != null ">
                 and t_open_source.save_user_id = #{params.entity.saveUserId}

@@ -38,12 +38,6 @@ public class OpenSource extends BaseModel {
     @ApiModelProperty(value = "github地址")
     @NotBlank(groups = {OpenSourceInsert.class, OpenSourceUpdate.class}, message = "github地址不能为空")
     private String githubUrl;
-    @ApiModelProperty(value = "maven坐标groupId")
-    private String mavenGroupId;
-    @ApiModelProperty(value = "maven坐标artifactId")
-    private String mavenArtifactId;
-    @ApiModelProperty(value = "maven坐标version")
-    private String mavenVersion;
     @ApiModelProperty(value = "录入人id")
     @Null(groups = {OpenSourceInsert.class, OpenSourceUpdate.class}, message = "录入人id必须为空")
     private Integer saveUserId;

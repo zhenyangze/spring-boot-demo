@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.mapper.LetterMapper">
+
+    <sql id="baseCol">
+        t_letter.id t_letter_id, t_letter.description t_letter_description, t_letter.contact t_letter_contact,
+        t_letter.contact_type t_letter_contact_type, t_letter.letter_user_id t_letter_letter_user_id,
+        t_letter.letter_time t_letter_letter_time
+    </sql>
+
+    <sql id="otherCol">
+        t_letter.letter_content t_letter_letter_content
+    </sql>
+
+    <resultMap id="baseResultMap" type="com.example.model.po.Letter">
+        <id column="t_letter_id" property="id" />
+        <result column="t_letter_description" property="description" />
+        <result column="t_letter_contact" property="contact" />
+        <result column="t_letter_contact_type" property="contactType" />
+        <result column="t_letter_letter_content" property="letterContent" />
+        <result column="t_letter_letter_user_id" property="letterUserId" />
+        <result column="t_letter_letter_time" property="letterTime" />
+    </resultMap>
+
+    <sql id="letterUserCol">
+        letter_user.id letter_user_id, letter_user.username letter_user_username, letter_user.nickname letter_user_nickname,
+        letter_user.sex letter_user_sex, letter_user.dept_id letter_user_dept_id, letter_user.head_img_id letter_user_head_img_id
+    </sql>
+
+    <resultMap id="letterUserResultMap" type="com.example.model.po.User">
+        <id column="letter_user_id" property="id" />
+        <result column="letter_user_username" property="username" />
+        <result column="letter_user_nickname" property="nickname" />
+        <result column="letter_user_sex" property="sex" />
+        <result column="letter_user_dept_id" property="deptId" />
+        <result column="letter_user_head_img_id" property="headImgId" />
+    </resultMap>
+
+    <resultMap id="resultMap" type="com.example.model.po.Letter" extends="baseResultMap">
+        <association column="t_letter_letter_user_id" property="letterUser" resultMap="letterUserResultMap" />
+    </resultMap>
+
+    <select id="customSelectPage" resultMap="resultMap">
+        select <include refid="baseCol" />,
+               <include refid="letterUserCol" />
+        from t_letter t_letter
+        left join t_user letter_user on letter_user.id = t_letter.letter_user_id
+        <where>
+            <if test=" params.entity.description != null and params.entity.description != ''.toString() ">
+                and instr(t_letter.description, #{params.entity.description}) > 0
+            </if>
+            <if test=" params.entity.contact != null and params.entity.contact != ''.toString() ">
+                and instr(t_letter.contact, #{params.entity.contact}) > 0
+            </if>
+            <if test=" params.entity.contactType != null and params.entity.contactType != ''.toString() ">
+                and t_letter.contact_type = #{params.entity.contactType}
+            </if>
+            <if test=" params.entity.letterUserId != null ">
+                and t_letter.letter_user_id = #{params.entity.letterUserId}
+            </if>
+        </where>
+        order by t_letter.letter_time desc
+    </select>
+
+    <select id="customSelectById" parameterType="int" resultMap="resultMap">
+        select <include refid="baseCol" />,
+               <include refid="otherCol" />,
+               <include refid="letterUserCol" />
+        from t_letter t_letter
+        left join t_user letter_user on letter_user.id = t_letter.letter_user_id
+        where t_letter.id = #{id}
+    </select>
+
+</mapper>

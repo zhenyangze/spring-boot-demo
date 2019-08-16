@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.mapper.LetterReplyMapper">
+
+    <sql id="baseCol">
+        t_letter_reply.id t_letter_reply_id, t_letter_reply.reply_content t_letter_reply_reply_content,
+        t_letter_reply.reply_user_id t_letter_reply_reply_user_id, t_letter_reply.reply_time t_letter_reply_reply_time,
+        t_letter_reply.letter_id t_letter_reply_letter_id
+    </sql>
+
+    <resultMap id="baseResultMap" type="com.example.model.po.LetterReply">
+        <id column="t_letter_reply_id" property="id" />
+        <result column="t_letter_reply_reply_content" property="replyContent" />
+        <result column="t_letter_reply_reply_user_id" property="replyUserId" />
+        <result column="t_letter_reply_reply_time" property="replyTime" />
+        <result column="t_letter_reply_letter_id" property="letterId" />
+    </resultMap>
+
+    <sql id="replyUserCol">
+        reply_user.id reply_user_id, reply_user.username reply_user_username, reply_user.nickname reply_user_nickname,
+        reply_user.sex reply_user_sex, reply_user.dept_id reply_user_dept_id, reply_user.head_img_id reply_user_head_img_id
+    </sql>
+
+    <resultMap id="replyUserResultMap" type="com.example.model.po.User">
+        <id column="reply_user_id" property="id" />
+        <result column="reply_user_username" property="username" />
+        <result column="reply_user_nickname" property="nickname" />
+        <result column="reply_user_sex" property="sex" />
+        <result column="reply_user_dept_id" property="deptId" />
+        <result column="reply_user_head_img_id" property="headImgId" />
+    </resultMap>
+
+    <resultMap id="resultMap" type="com.example.model.po.LetterReply" extends="baseResultMap">
+        <association column="t_letter_reply_reply_user_id" property="replyUser" resultMap="replyUserResultMap" />
+    </resultMap>
+
+    <select id="customSelectPage" resultMap="resultMap">
+        select <include refid="baseCol" />,
+               <include refid="replyUserCol" />
+        from t_letter_reply t_letter_reply
+        left join t_user reply_user on reply_user.id = t_letter_reply.reply_user_id
+        <where>
+            <if test=" params.entity.replyContent != null and params.entity.replyContent != ''.toString() ">
+                and instr(t_letter_reply.reply_content, #{params.entity.replyContent}) > 0
+            </if>
+            <if test=" params.entity.replyUserId != null ">
+                and t_letter_reply.reply_user_id = #{params.entity.replyUserId}
+            </if>
+            <if test=" params.entity.letterId != null ">
+                and t_letter_reply.letter_id = #{params.entity.letterId}
+            </if>
+        </where>
+        order by t_letter_reply.reply_time asc
+    </select>
+
+    <select id="customSelectById" parameterType="int" resultMap="resultMap">
+        select <include refid="baseCol" />,
+               <include refid="replyUserCol" />
+        from t_letter_reply t_letter_reply
+        left join t_user reply_user on reply_user.id = t_letter_reply.reply_user_id
+        where t_letter_reply.id = #{id}
+    </select>
+
+</mapper>

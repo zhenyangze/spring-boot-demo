@@ -221,3 +221,7 @@ kafka:
     websocket:
       properties:
         group.id: spring-boot-demo-websocket-consumer-1
+
+letter-notify:
+  to-username: admin # 留言提醒用户
+  max-retry: 3 # 提醒重试次数

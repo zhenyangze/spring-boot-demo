@@ -4,17 +4,20 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.group.LetterReplyInsert;
 import com.example.model.po.LetterReply;
+import com.example.model.po.Mail;
 import com.example.model.po.User;
 import com.example.model.vo.LetterReplyVO;
 import com.example.model.vo.ResultVO;
 import com.example.model.vo.UserVO;
 import com.example.params.Params;
 import com.example.service.ILetterReplyService;
+import com.example.service.IMailService;
 import com.example.util.ModelUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,8 +33,12 @@ import static com.example.model.vo.ResultVO.SUCCESS;
 @Validated
 public class LetterReplyController {
 
+    @Value("${letter-notify.max-retry}")
+    private Integer maxRetry;
     @Autowired
     private ILetterReplyService letterReplyService;
+    @Autowired
+    private IMailService mailService;
 
     @GetMapping("/{current}/{size}")
     @ApiOperation(value = "查询回复列表")
@@ -56,6 +63,9 @@ public class LetterReplyController {
         letterReply.setReplyUserId(currentUser.getId());
         letterReply.setReplyTime(now);
         letterReplyService.save(letterReply);
+        Mail mail = letterReplyService.notifyMail(letterReply);
+        mail = mailService.send(mail.getId());
+        mailService.send(mail, maxRetry);
         return new ResultVO<>(SUCCESS, "保存回复成功！", null);
     }
 

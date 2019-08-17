@@ -6,9 +6,11 @@ import com.example.group.OpenSourceInsert;
 import com.example.group.OpenSourceUpdate;
 import com.example.model.po.OpenSource;
 import com.example.model.po.OpenSourceIntro;
+import com.example.model.po.User;
 import com.example.model.vo.OpenSourceIntroVO;
 import com.example.model.vo.OpenSourceVO;
 import com.example.model.vo.ResultVO;
+import com.example.model.vo.UserVO;
 import com.example.params.Params;
 import com.example.service.IOpenSourceService;
 import com.example.util.ModelUtil;
@@ -42,7 +44,9 @@ public class OpenSourceController {
         Page<OpenSource> page = new Page<>(current, size);
         Params<OpenSource> params = new Params<>(openSourceVO);
         IPage<OpenSource> iPage = openSourceService.customPage(page, params);
-        IPage openSources = (IPage) ModelUtil.copy(iPage, new ModelUtil.Mapping(OpenSource.class, OpenSourceVO.class));
+        IPage openSources = (IPage) ModelUtil.copy(iPage,
+                new ModelUtil.Mapping(OpenSource.class, OpenSourceVO.class),
+                new ModelUtil.Mapping(User.class, UserVO.class, "password"));
         return new ResultVO<>(SUCCESS, "", openSources);
     }
 
@@ -52,7 +56,8 @@ public class OpenSourceController {
         OpenSource openSource = openSourceService.customGetById(id);
         OpenSourceVO openSourceVO = (OpenSourceVO) ModelUtil.copy(openSource,
                 new ModelUtil.Mapping(OpenSource.class, OpenSourceVO.class),
-                new ModelUtil.Mapping(OpenSourceIntro.class, OpenSourceIntroVO.class));
+                new ModelUtil.Mapping(OpenSourceIntro.class, OpenSourceIntroVO.class),
+                new ModelUtil.Mapping(User.class, UserVO.class, "password"));
         return new ResultVO<>(SUCCESS, "", openSourceVO);
     }
 

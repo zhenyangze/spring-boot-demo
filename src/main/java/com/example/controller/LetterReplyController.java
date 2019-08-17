@@ -55,6 +55,7 @@ public class LetterReplyController {
         long now = System.currentTimeMillis();
         letterReply.setReplyUserId(currentUser.getId());
         letterReply.setReplyTime(now);
+        letterReplyService.save(letterReply);
         return new ResultVO<>(SUCCESS, "保存回复成功！", null);
     }
 
@@ -65,7 +66,7 @@ public class LetterReplyController {
             @NotNull(message = "回复id不能为空")
             @NotEmpty(message = "回复id不能为空")
             @ApiParam(value = "回复id，多个用逗号分隔", required = true) List<Integer> ids) {
-        letterReplyService.removeByIds(ids);
+        letterReplyService.customRemoveByIds(ids);
         return new ResultVO<>(SUCCESS, "删除回复成功！", null);
     }
 

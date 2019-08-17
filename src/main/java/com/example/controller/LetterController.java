@@ -74,7 +74,7 @@ public class LetterController {
             @NotNull(message = "留言id不能为空")
             @NotEmpty(message = "留言id不能为空")
             @ApiParam(value = "留言id，多个用逗号分隔", required = true) List<Integer> ids) {
-        letterService.removeByIds(ids);
+        letterService.customRemoveByIds(ids);
         return new ResultVO<>(SUCCESS, "删除留言成功！", null);
     }
 

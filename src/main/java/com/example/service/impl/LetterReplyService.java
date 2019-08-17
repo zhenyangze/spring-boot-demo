@@ -35,6 +35,11 @@ public class LetterReplyService extends BaseService<LetterReplyMapper, LetterRep
     }
 
     @Override
+    public LetterReply customGetById(Integer id) {
+        return baseMapper.customSelectById(id);
+    }
+
+    @Override
     @Transactional
     public Mail notifyMail(LetterReply letterReply) {
         Letter letter = letterService.customGetById(letterReply.getLetterId());

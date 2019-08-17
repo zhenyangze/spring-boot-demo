@@ -54,6 +54,14 @@ public class LetterReplyController {
         return new ResultVO<>(SUCCESS, "", replys);
     }
 
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id查询留言回复")
+    public ResultVO<LetterReplyVO> findById(@PathVariable @NotNull(message = "留言回复id不能为空") @ApiParam(value = "留言回复id", required = true) Integer id) {
+        LetterReply letterReply = letterReplyService.customGetById(id);
+        LetterReplyVO letterReplyVO = (LetterReplyVO) ModelUtil.copy(letterReply, new ModelUtil.Mapping(LetterReply.class, LetterReplyVO.class));
+        return new ResultVO<>(SUCCESS, "", letterReplyVO);
+    }
+
     @PostMapping
     @ApiOperation(value = "保存回复")
     public ResultVO save(@Validated(LetterReplyInsert.class) LetterReplyVO letterReplyVO) {

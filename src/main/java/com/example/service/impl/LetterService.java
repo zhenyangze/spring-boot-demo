@@ -3,7 +3,6 @@ package com.example.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.exception.LogicException;
 import com.example.mapper.LetterMapper;
 import com.example.model.po.Letter;
 import com.example.model.po.Mail;
@@ -21,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class LetterService extends BaseService<LetterMapper, Letter> implements ILetterService {
@@ -63,19 +61,6 @@ public class LetterService extends BaseService<LetterMapper, Letter> implements 
         mail.setToUsers(Lists.newArrayList(toUser));
         mailService.customSave(mail);
         return mail;
-    }
-
-    @Override
-    public void customRemoveByIds(List<Integer> ids) {
-        User currentUser = currentUser();
-        Integer currentUserId = currentUser.getId();
-        List<Letter> list = baseMapper.selectBatchIds(ids);
-        for (Letter letter: list) {
-            if (!currentUserId.equals(letter.getLetterUserId())) {
-                throw new LogicException("无法删除其他用户的留言！");
-            }
-        }
-        super.removeByIds(ids);
     }
 
 }

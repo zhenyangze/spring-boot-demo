@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.exception.LogicException;
 import com.example.group.LetterInsert;
 import com.example.model.po.Letter;
 import com.example.model.po.Mail;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
 import java.util.List;
 
 import static com.example.model.vo.ResultVO.SUCCESS;
@@ -78,13 +80,32 @@ public class LetterController {
     }
 
     @DeleteMapping("/{ids}")
-    @ApiOperation(value = "删除留言")
+    @ApiOperation(value = "删除自己的留言")
     public ResultVO delete(
             @PathVariable
             @NotNull(message = "留言id不能为空")
             @NotEmpty(message = "留言id不能为空")
             @ApiParam(value = "留言id，多个用逗号分隔", required = true) List<Integer> ids) {
-        letterService.customRemoveByIds(ids);
+        User currentUser = letterService.currentUser();
+        Integer currentUserId = currentUser.getId();
+        Collection<Letter> collection = letterService.listByIds(ids);
+        for (Letter letter: collection) {
+            if (!currentUserId.equals(letter.getLetterUserId())) {
+                throw new LogicException("无法删除其他用户的留言！");
+            }
+        }
+        letterService.removeByIds(ids);
+        return new ResultVO<>(SUCCESS, "删除留言成功！", null);
+    }
+
+    @DeleteMapping("/admin/{ids}")
+    @ApiOperation(value = "删除留言")
+    public ResultVO adminDelete(
+            @PathVariable
+            @NotNull(message = "留言id不能为空")
+            @NotEmpty(message = "留言id不能为空")
+            @ApiParam(value = "留言id，多个用逗号分隔", required = true) List<Integer> ids) {
+        letterService.removeByIds(ids);
         return new ResultVO<>(SUCCESS, "删除留言成功！", null);
     }
 

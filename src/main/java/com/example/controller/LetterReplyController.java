@@ -80,7 +80,7 @@ public class LetterReplyController {
     }
 
     @DeleteMapping("/{ids}")
-    @ApiOperation(value = "删除自己的回复")
+    @ApiOperation(value = "删除回复")
     public ResultVO delete(
             @PathVariable
             @NotNull(message = "回复id不能为空")
@@ -94,17 +94,6 @@ public class LetterReplyController {
                 throw new LogicException("无法删除其他用户的回复！");
             }
         }
-        letterReplyService.removeByIds(ids);
-        return new ResultVO<>(SUCCESS, "删除回复成功！", null);
-    }
-
-    @DeleteMapping("/admin/{ids}")
-    @ApiOperation(value = "删除回复")
-    public ResultVO adminDelete(
-            @PathVariable
-            @NotNull(message = "回复id不能为空")
-            @NotEmpty(message = "回复id不能为空")
-            @ApiParam(value = "回复id，多个用逗号分隔", required = true) List<Integer> ids) {
         letterReplyService.removeByIds(ids);
         return new ResultVO<>(SUCCESS, "删除回复成功！", null);
     }

@@ -80,7 +80,7 @@ public class LetterController {
     }
 
     @DeleteMapping("/{ids}")
-    @ApiOperation(value = "删除自己的留言")
+    @ApiOperation(value = "删除留言")
     public ResultVO delete(
             @PathVariable
             @NotNull(message = "留言id不能为空")
@@ -94,17 +94,6 @@ public class LetterController {
                 throw new LogicException("无法删除其他用户的留言！");
             }
         }
-        letterService.removeByIds(ids);
-        return new ResultVO<>(SUCCESS, "删除留言成功！", null);
-    }
-
-    @DeleteMapping("/admin/{ids}")
-    @ApiOperation(value = "删除留言")
-    public ResultVO adminDelete(
-            @PathVariable
-            @NotNull(message = "留言id不能为空")
-            @NotEmpty(message = "留言id不能为空")
-            @ApiParam(value = "留言id，多个用逗号分隔", required = true) List<Integer> ids) {
         letterService.removeByIds(ids);
         return new ResultVO<>(SUCCESS, "删除留言成功！", null);
     }

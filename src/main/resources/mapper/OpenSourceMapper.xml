@@ -99,7 +99,7 @@
         left join t_user update_user on update_user.id = t_open_source.update_user_id
         join t_open_source_intro t_open_source_intro on t_open_source_intro.open_source_id = t_open_source.id
         left join t_open_source_attachment_link tosal on tosal.open_source_id = t_open_source.id
-        left join t_attachment t_attachment on t_attachment.id = tosal.attahcment_id
+        left join t_attachment t_attachment on t_attachment.id = tosal.attachment_id
         where t_open_source.id = #{id}
     </select>
 

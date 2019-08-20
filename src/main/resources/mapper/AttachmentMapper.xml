@@ -31,7 +31,7 @@
                 and instr(t_attachment.attachment_path, #{params.entity.attachmentPath}) > 0
             </if>
             <if test=" params.entity.linkInfo != null and params.entity.linkInfo != ''.toString() ">
-                and instr(t_attachment.link_info, #{params.entity.linkInfo}) > 0
+                and t_attachment.link_info = #{params.entity.linkInfo}
             </if>
         </where>
         order by t_attachment.create_time desc

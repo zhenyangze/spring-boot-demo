@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import java.util.List;
 
 @Data
 @ApiModel(value = "开源组件")
@@ -67,5 +68,10 @@ public class OpenSource extends BaseModel {
     @IgnoreSwaggerParameter
     @Null(groups = {OpenSourceInsert.class, OpenSourceUpdate.class}, message = "最后修改人必须为空")
     private User updateUser;
+    @TableField(exist = false)
+    @ApiModelProperty(value = "开源组件图片")
+    @IgnoreSwaggerParameter
+    @Valid
+    private List<Attachment> attachments;
 
 }

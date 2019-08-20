@@ -55,6 +55,7 @@
         <association column="t_open_source_id" property="intro" resultMap="com.example.mapper.OpenSourceIntroMapper.baseResultMap" />
         <association column="t_open_source_save_user_id" property="saveUser" resultMap="saveUserResultMap" />
         <association column="t_open_source_update_user_id" property="updateUser" resultMap="updateUserResultMap" />
+        <collection column="t_open_source_id" property="attachments" resultMap="com.example.mapper.AttachmentMapper.baseResultMap" />
     </resultMap>
 
     <select id="customSelectPage" resultMap="resultMap">
@@ -91,11 +92,14 @@
         select <include refid="baseCol" />,
                <include refid="saveUserCol" />,
                <include refid="updateUserCol" />,
-               <include refid="com.example.mapper.OpenSourceIntroMapper.baseCol" />
+               <include refid="com.example.mapper.OpenSourceIntroMapper.baseCol" />,
+               <include refid="com.example.mapper.AttachmentMapper.baseCol" />
         from t_open_source t_open_source
         left join t_user save_user on save_user.id = t_open_source.save_user_id
         left join t_user update_user on update_user.id = t_open_source.update_user_id
         join t_open_source_intro t_open_source_intro on t_open_source_intro.open_source_id = t_open_source.id
+        left join t_open_source_attachment_link tosal on tosal.open_source_id = t_open_source.id
+        left join t_attachment t_attachment on t_attachment.id = tosal.attahcment_id
         where t_open_source.id = #{id}
     </select>
 

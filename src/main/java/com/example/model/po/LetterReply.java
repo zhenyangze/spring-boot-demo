@@ -8,9 +8,11 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import java.util.List;
 
 @Data
 @ApiModel(value = "留言回复")
@@ -38,5 +40,10 @@ public class LetterReply extends BaseModel {
     @IgnoreSwaggerParameter
     @Null(groups = {LetterReplyInsert.class}, message = "回复人必须为空")
     private User replyUser;
+    @TableField(exist = false)
+    @ApiModelProperty(value = "留言回复图片")
+    @IgnoreSwaggerParameter
+    @Valid
+    private List<Attachment> attachments;
 
 }

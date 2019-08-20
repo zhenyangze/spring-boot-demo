@@ -66,13 +66,9 @@ public class LetterController {
 
     @PostMapping
     @ApiOperation(value = "保存留言")
-    public ResultVO save(@Validated(LetterInsert.class) LetterVO letterVO) {
+    public ResultVO save(@Validated(LetterInsert.class) @RequestBody LetterVO letterVO) {
         Letter letter = (Letter) ModelUtil.copy(letterVO, new ModelUtil.Mapping(LetterVO.class, Letter.class));
-        User currentUser = letterService.currentUser();
-        long now = System.currentTimeMillis();
-        letter.setLetterUserId(currentUser.getId());
-        letter.setLetterTime(now);
-        letterService.save(letter);
+        letterService.customSave(letter);
         Mail mail = letterService.notifyMail(letter);
         mail = mailService.send(mail.getId());
         mailService.send(mail, maxRetry);

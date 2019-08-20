@@ -38,6 +38,7 @@
 
     <resultMap id="resultMap" type="com.example.model.po.Letter" extends="baseResultMap">
         <association column="t_letter_letter_user_id" property="letterUser" resultMap="letterUserResultMap" />
+        <collection column="t_letter_id" property="attachments" resultMap="com.example.mapper.AttachmentMapper.baseResultMap" />
     </resultMap>
 
     <select id="customSelectPage" resultMap="resultMap">
@@ -65,9 +66,12 @@
     <select id="customSelectById" parameterType="int" resultMap="resultMap">
         select <include refid="baseCol" />,
                <include refid="otherCol" />,
-               <include refid="letterUserCol" />
+               <include refid="letterUserCol" />,
+               <include refid="com.example.mapper.AttachmentMapper.baseCol" />
         from t_letter t_letter
         left join t_user letter_user on letter_user.id = t_letter.letter_user_id
+        left join t_letter_attachment_link tlal on tlal.letter_id = t_letter.id
+        left join t_attachment t_attachment on t_attachment.id = tlal.attachment_id
         where t_letter.id = #{id}
     </select>
 

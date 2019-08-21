@@ -84,7 +84,7 @@ public class OpenSourceController {
             @NotNull(message = "开源组件id不能为空")
             @NotEmpty(message = "开源组件id不能为空")
             @ApiParam(value = "开源组件id，多个用逗号分隔", required = true) List<Integer> ids) {
-        openSourceService.removeByIds(ids);
+        openSourceService.customRemoveByIds(ids);
         return new ResultVO<>(SUCCESS, "删除开源组件成功！", null);
     }
 

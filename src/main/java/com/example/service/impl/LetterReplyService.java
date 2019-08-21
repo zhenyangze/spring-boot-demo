@@ -2,6 +2,7 @@ package com.example.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.exception.LogicException;
 import com.example.mapper.LetterReplyMapper;
 import com.example.model.po.*;
 import com.example.params.Params;
@@ -9,11 +10,14 @@ import com.example.service.*;
 import com.google.common.collect.Lists;
 import io.jsonwebtoken.lang.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -62,6 +66,26 @@ public class LetterReplyService extends BaseService<LetterReplyMapper, LetterRep
             }
             letterReplyAttachmentLinkService.saveBatch(links);
         }
+    }
+
+    @Override
+    @Transactional
+    @Caching(
+            evict = {
+                    @CacheEvict(cacheNames = {"attachment:multiple"}, allEntries = true),
+                    @CacheEvict(cacheNames = {"attachment:single"}, allEntries = true)
+            }
+    )
+    public void customRemoveByIds(List<Integer> ids) {
+        User currentUser = currentUser();
+        Integer currentUserId = currentUser.getId();
+        Collection<LetterReply> collection = baseMapper.selectBatchIds(ids);
+        for (LetterReply reply: collection) {
+            if (!currentUserId.equals(reply.getReplyUserId())) {
+                throw new LogicException("无法删除其他用户的回复！");
+            }
+        }
+        baseMapper.deleteBatchIds(ids);
     }
 
     @Override

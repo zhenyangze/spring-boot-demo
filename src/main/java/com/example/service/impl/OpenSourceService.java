@@ -12,6 +12,8 @@ import com.example.service.IOpenSourceIntroService;
 import com.example.service.IOpenSourceService;
 import io.jsonwebtoken.lang.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -90,6 +92,18 @@ public class OpenSourceService extends BaseService<OpenSourceMapper, OpenSource>
             }
             openSourceAttachmentLinkService.merge(links, new QueryWrapper<OpenSourceAttachmentLink>().eq("open_source_id", openSourceId));
         }
+    }
+
+    @Override
+    @Transactional
+    @Caching(
+            evict = {
+                    @CacheEvict(cacheNames = {"attachment:multiple"}, allEntries = true),
+                    @CacheEvict(cacheNames = {"attachment:single"}, allEntries = true)
+            }
+    )
+    public void customRemoveByIds(List<Integer> ids) {
+        baseMapper.deleteBatchIds(ids);
     }
 
 }

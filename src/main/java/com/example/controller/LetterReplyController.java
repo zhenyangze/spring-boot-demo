@@ -2,7 +2,6 @@ package com.example.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.exception.LogicException;
 import com.example.group.LetterReplyInsert;
 import com.example.model.po.LetterReply;
 import com.example.model.po.Mail;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.Collection;
 import java.util.List;
 
 import static com.example.model.vo.ResultVO.SUCCESS;
@@ -82,15 +80,7 @@ public class LetterReplyController {
             @NotNull(message = "回复id不能为空")
             @NotEmpty(message = "回复id不能为空")
             @ApiParam(value = "回复id，多个用逗号分隔", required = true) List<Integer> ids) {
-        User currentUser = letterReplyService.currentUser();
-        Integer currentUserId = currentUser.getId();
-        Collection<LetterReply> collection = letterReplyService.listByIds(ids);
-        for (LetterReply reply: collection) {
-            if (!currentUserId.equals(reply.getReplyUserId())) {
-                throw new LogicException("无法删除其他用户的回复！");
-            }
-        }
-        letterReplyService.removeByIds(ids);
+        letterReplyService.customRemoveByIds(ids);
         return new ResultVO<>(SUCCESS, "删除回复成功！", null);
     }
 

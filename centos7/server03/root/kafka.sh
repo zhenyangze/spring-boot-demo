@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 docker run  -d --name kafka \
 --restart=always \
 --add-host ali-server03:172.26.245.49 \

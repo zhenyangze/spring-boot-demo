@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 docker run -d --name redis6381 \
 --restart=always \
 -v /mnt/redis/6381:/data \

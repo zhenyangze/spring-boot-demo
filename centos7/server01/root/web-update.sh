@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 if [ -f $1 ]; then
     rm -rf /root/react-demo/*
     unzip -o -d /root/react-demo $1

@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 docker run -d --name zookeeper \
 --restart=always \
 -v /etc/localtime:/etc/localtime \

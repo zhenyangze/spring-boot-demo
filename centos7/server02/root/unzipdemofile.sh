@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 su demofile << EOF
 cd /home/demofile

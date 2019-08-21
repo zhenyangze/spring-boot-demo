@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 docker run -d --name nginx \
 --restart=always \
 -v /etc/nginx/nginx.conf:/etc/nginx/nginx.conf \

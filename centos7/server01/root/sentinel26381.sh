@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 docker run -d --name sentinel26381 \
 --restart=always \
 -v /etc/sentinel/26381/sentinel.conf:/conf/sentinel.conf \

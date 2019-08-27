@@ -52,7 +52,7 @@ bootdemo:1.0.1
 |:-----:|:-------:|
 |server03|zookeeper.sh|
 |server03|kafka.sh|
-|server02|mysql.sh<br>mysql启动完成后将工程目录下<br>/src/main/resources/schema/demo.sql导入数据库|
+|server02|mysql.sh<br>**mysql启动完成后将工程目录下<br>/src/main/resources/schema/demo.sql导入数据库**|
 |server02|nginx.sh|
 |server01|redis6379.sh|
 |server01|redis6380.sh|

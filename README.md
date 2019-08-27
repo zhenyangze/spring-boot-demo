@@ -29,13 +29,13 @@ spring boot项目模板
 
 6. 构建应用镜像，<a href="https://blog.csdn.net/qq_35433926/article/details/95969980" target="_blank">参考博客</a>
 
-7. 在server01的/root下新建bootdemo.sh脚本，内容如下，***注意修改ip和邮箱账号授权码变量***
+7. 在server01的/root下新建bootdemo.sh脚本，内容如下，***注意修改ip和邮箱账号授权码及镜像版本号等变量***
 
 ```bash
 #/bin/bash
 docker run -d --name bootdemo \
 --restart=always \
--e JAVA_OPTS='-Dspring.mail.username=xxxxxx@163.com -Dspring.mail.password=xxxxxx' \
+-e JAVA_OPTS='-Dspring.profiles.active=prod -Dspring.mail.username=xxxxxx@163.com -Dspring.mail.password=xxxxxx' \
 -v /var/log/spring-boot-demo:/root/spring-boot-demo \
 -v /etc/localtime:/etc/localtime \
 -v /etc/timezone:/etc/timezone \

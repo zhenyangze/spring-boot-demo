@@ -1,5 +1,6 @@
 # spring-boot-demo
-#### 介绍
+
+## 介绍
 
 spring boot项目模板
 
@@ -9,7 +10,7 @@ spring boot项目模板
 
 <a href="https://blog.csdn.net/qq_35433926" target="_blank">博客主页</a>
 
-#### 部署步骤
+## 部署步骤
 1. 本地新建三个1核1G的centos7虚拟机，或者直接在阿里云创建
 
 2. 安装docker-ce，配置镜像加速，参考阿里云容器镜像服务
@@ -64,7 +65,7 @@ bootdemo:1.0.1
 
 9. <a href="https://gitee.com/xuelingkang/react-demo" target="_blank">前端项目部署</a>
 
-#### 基本功能
+## 基本功能
 
 * 基础框架：spring-boot-2.1.3.RELEASE
 >优点：敏捷开发，扩展方便
@@ -116,7 +117,7 @@ bootdemo:1.0.1
 ![Swagger2DocumetationConfiguration源码片段](https://images.gitee.com/uploads/images/2019/0724/154915_eb28248c_1672679.png "Swagger2DocumetationConfiguration.png")<br>
 Swagger2Controller不是spring容器中的bean，无法使用aop和拦截器，所以在过滤器中拦截了/v2/api-docs请求，将登录和登出动态添加到返回值中
 
-#### 其他配置
+## 其他配置
 * 使用kafka消息队列发送websocket消息
 >支持服务集群部署
 
@@ -132,4 +133,4 @@ Swagger2Controller不是spring容器中的bean，无法使用aop和拦截器，�
 * sftp
 >实现了sftp连接池，sftp上传下载等功能
 
-#### 如果我的代码对您有帮助，希望给我个star，谢谢！
+## 欢迎issue和star！

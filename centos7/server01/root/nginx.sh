@@ -1,5 +1,6 @@
 #!/bin/bash
 docker run -d --name nginx \
+--link bootdemo \
 --restart=always \
 -v /etc/nginx/nginx.conf:/etc/nginx/nginx.conf \
 -v /etc/nginx/cert:/etc/nginx/cert \

@@ -12,12 +12,12 @@ spring boot项目模板
 
 ### 持续提取模块中
 
-| 模块名称 | gitee | github | maven坐标 | 描述 |
-|:-------:|:-----:|:------:|:-----:|:---:|
-| websocket | https://gitee.com/xuelingkang/websocket | https://github.com/xuelingkang/websocket | `<groupId>com.xzixi</groupId>`<br>`<artifactId>interceptable-websocket</artifactId>`<br>`<version>1.0</version>` | 基于spring-boot 2.x扩展WebSocket，支持细粒度控制 |
-| zookeeper | https://gitee.com/xuelingkang/zookeeper | https://github.com/xuelingkang/zookeeper | `<groupId>com.xzixi</groupId>`<br>`<artifactId>curator-client-spring-boot-starter</artifactId>`<br>`<version>1.0</version>` | 基于curator封装zookeeper常用api和springboot启动器 |
-| sftp | https://gitee.com/xuelingkang/sftp | https://github.com/xuelingkang/sftp | `<groupId>com.xzixi</groupId>`<br>`<artifactId>sftp-pool-spring-boot-starter</artifactId>`<br>`<version>1.0</version>` | sftp连接池和springboot启动器 |
-| swagger2 | https://gitee.com/xuelingkang/swagger2 | https://github.com/xuelingkang/swagger2 | `<groupId>com.xzixi</groupId>`<br>`<artifactId>swagger2-plus</artifactId>`<br>`<version>1.0</version>` | swagger2的扩展版本，基于2.8.0版，支持使用注解过滤字段 |
+| 模块名称 | scm | maven坐标 |
+|:-------:|:-----:|:-----:|
+| websocket | https://gitee.com/xuelingkang/websocket | `<groupId>com.xzixi</groupId>`<br>`<artifactId>interceptable-websocket</artifactId>`<br>`<version>1.0</version>` |
+| zookeeper | https://gitee.com/xuelingkang/zookeeper | `<groupId>com.xzixi</groupId>`<br>`<artifactId>curator-client-spring-boot-starter</artifactId>`<br>`<version>1.0</version>` |
+| sftp | https://gitee.com/xuelingkang/sftp | `<groupId>com.xzixi</groupId>`<br>`<artifactId>sftp-pool-spring-boot-starter</artifactId>`<br>`<version>1.0</version>` |
+| swagger2 | https://gitee.com/xuelingkang/swagger2 | `<groupId>com.xzixi</groupId>`<br>`<artifactId>swagger2-plus</artifactId>`<br>`<version>1.0</version>` |
 
 ## 部署步骤
 1. 本地新建三个1核1G的centos7虚拟机，或者直接在阿里云创建

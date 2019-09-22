@@ -48,11 +48,10 @@ docker run -d --name bootdemo \
 -v /var/log/spring-boot-demo:/root/spring-boot-demo \
 -v /etc/localtime:/etc/localtime \
 -v /etc/timezone:/etc/timezone \
--p 8080:8080 \
 --add-host ali-server01:172.26.245.47 \
 --add-host ali-server02:172.26.245.48 \
 --add-host ali-server03:172.26.245.49 \
-bootdemo:1.0.1
+bootdemo:1.0.7
 ```
 
 8. 按照下表顺序启动容器

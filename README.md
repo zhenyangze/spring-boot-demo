@@ -12,12 +12,12 @@ spring boot项目模板
 
 ### 持续提取模块中
 
-| 模块名称 | scm | maven坐标 |
-|:-------:|:-----:|:-----:|
-| websocket | https://gitee.com/xuelingkang/websocket | `<groupId>com.xzixi</groupId>`<br>`<artifactId>interceptable-websocket</artifactId>`<br>`<version>1.0</version>` |
-| zookeeper | https://gitee.com/xuelingkang/zookeeper | `<groupId>com.xzixi</groupId>`<br>`<artifactId>curator-client-spring-boot-starter</artifactId>`<br>`<version>1.0</version>` |
-| sftp | https://gitee.com/xuelingkang/sftp | `<groupId>com.xzixi</groupId>`<br>`<artifactId>sftp-pool-spring-boot-starter</artifactId>`<br>`<version>1.0</version>` |
-| swagger2 | https://gitee.com/xuelingkang/swagger2 | `<groupId>com.xzixi</groupId>`<br>`<artifactId>swagger2-plus</artifactId>`<br>`<version>1.0</version>` |
+| 模块名称 | 码云 | github | maven坐标 |
+|:---:|:---:|:---:|:---:|
+| websocket | <a href="https://gitee.com/xuelingkang/websocket" target="_blank">码云</a> | <a href="https://github.com/xuelingkang/websocket" target="_blank">github</a> | `<groupId>com.xzixi</groupId>`<br>`<artifactId>interceptable-websocket</artifactId>`<br>`<version>1.0</version>` |
+| zookeeper | <a href="https://gitee.com/xuelingkang/zookeeper" target="_blank">码云</a> | <a href="https://github.com/xuelingkang/zookeeper" target="_blank">github</a> | `<groupId>com.xzixi</groupId>`<br>`<artifactId>curator-client-spring-boot-starter</artifactId>`<br>`<version>1.0</version>` |
+| sftp | <a href="https://gitee.com/xuelingkang/sftp" target="_blank">码云</a> | <a href="https://github.com/xuelingkang/sftp" target="_blank">github</a> | `<groupId>com.xzixi</groupId>`<br>`<artifactId>sftp-pool-spring-boot-starter</artifactId>`<br>`<version>1.0</version>` |
+| swagger2 | <a href="https://gitee.com/xuelingkang/swagger2" target="_blank">码云</a> | <a href="https://github.com/xuelingkang/swagger2" target="_blank">github</a> | `<groupId>com.xzixi</groupId>`<br>`<artifactId>swagger2-plus</artifactId>`<br>`<version>1.0</version>` |
 
 ## 部署步骤
 1. 本地新建三个1核1G的centos7虚拟机，或者直接在阿里云创建

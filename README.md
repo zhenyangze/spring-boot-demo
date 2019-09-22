@@ -13,7 +13,7 @@ spring boot项目模板
 ### 持续提取模块中
 
 | 模块名称 | 码云 | github | maven坐标 |
-|:---:|:---:|:---:|:---:|
+| :---: | :---: | :---: | :---: |
 | websocket | <a href="https://gitee.com/xuelingkang/websocket" target="_blank">码云</a> | <a href="https://github.com/xuelingkang/websocket" target="_blank">github</a> | `<groupId>com.xzixi</groupId>`<br>`<artifactId>interceptable-websocket</artifactId>`<br>`<version>1.0</version>` |
 | zookeeper | <a href="https://gitee.com/xuelingkang/zookeeper" target="_blank">码云</a> | <a href="https://github.com/xuelingkang/zookeeper" target="_blank">github</a> | `<groupId>com.xzixi</groupId>`<br>`<artifactId>curator-client-spring-boot-starter</artifactId>`<br>`<version>1.0</version>` |
 | sftp | <a href="https://gitee.com/xuelingkang/sftp" target="_blank">码云</a> | <a href="https://github.com/xuelingkang/sftp" target="_blank">github</a> | `<groupId>com.xzixi</groupId>`<br>`<artifactId>sftp-pool-spring-boot-starter</artifactId>`<br>`<version>1.0</version>` |

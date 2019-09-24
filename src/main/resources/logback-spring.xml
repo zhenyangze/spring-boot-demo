@@ -173,7 +173,7 @@
     </appender>
 
     <!-- mybatis日志 -->
-    <logger name="com.example.mapper" level="TRACE" additivity="true">
+    <logger name="com.xzixi.demo.mapper" level="TRACE" additivity="true">
         <appender-ref ref="MYBATIS" />
     </logger>
 </configuration>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.mapper.BroadcastMessageMapper">
+<mapper namespace="com.xzixi.demo.mapper.BroadcastMessageMapper">
 
     <sql id="baseCol">
         t_broadcast_message.id t_broadcast_message_id, t_broadcast_message.send_time t_broadcast_message_send_time,
         t_broadcast_message.content t_broadcast_message_content, t_broadcast_message.send_user_id t_broadcast_message_send_user_id
     </sql>
 
-    <resultMap id="baseResultMap" type="com.example.model.po.BroadcastMessage">
+    <resultMap id="baseResultMap" type="com.xzixi.demo.model.po.BroadcastMessage">
         <id column="t_broadcast_message_id" property="id" />
         <result column="t_broadcast_message_send_time" property="sendTime" />
         <result column="t_broadcast_message_content" property="content" />
@@ -25,7 +25,7 @@
         send_user_head.id send_user_head_id, send_user_head.attachment_address send_user_head_attachment_address
     </sql>
 
-    <resultMap id="sendUserResultMap" type="com.example.model.po.User">
+    <resultMap id="sendUserResultMap" type="com.xzixi.demo.model.po.User">
         <id column="send_user_id" property="id" />
         <result column="send_user_username" property="username" />
         <result column="send_user_password" property="password" />
@@ -35,7 +35,7 @@
         <result column="send_user_logintime" property="logintime" />
         <result column="send_user_dept_id" property="deptId" />
         <result column="send_user_head_img_id" property="headImgId" />
-        <association column="send_user_head_img_id" property="headImg" javaType="com.example.model.po.Attachment">
+        <association column="send_user_head_img_id" property="headImg" javaType="com.xzixi.demo.model.po.Attachment">
             <id column="send_user_head_id" property="id" />
             <result column="send_user_head_attachment_address" property="attachmentAddress" />
         </association>
@@ -47,7 +47,7 @@
         to_user.logintime to_user_logintime, to_user.dept_id to_user_dept_id
     </sql>
 
-    <resultMap id="toUserResultMap" type="com.example.model.po.User">
+    <resultMap id="toUserResultMap" type="com.xzixi.demo.model.po.User">
         <id column="to_user_id" property="id" />
         <result column="to_user_username" property="username" />
         <result column="to_user_password" property="password" />
@@ -58,10 +58,10 @@
         <result column="to_user_dept_id" property="deptId" />
     </resultMap>
 
-    <resultMap id="resultMap" type="com.example.model.po.BroadcastMessage" extends="baseResultMap">
+    <resultMap id="resultMap" type="com.xzixi.demo.model.po.BroadcastMessage" extends="baseResultMap">
         <association column="t_broadcast_message_send_user_id" property="sendUser" resultMap="sendUserResultMap" />
         <collection column="t_broadcast_message_id" property="toUsers" resultMap="toUserResultMap" />
-        <collection column="t_broadcast_message_id" property="links" resultMap="com.example.mapper.BroadcastToUserLinkMapper.baseResultMap" />
+        <collection column="t_broadcast_message_id" property="links" resultMap="com.xzixi.demo.mapper.BroadcastToUserLinkMapper.baseResultMap" />
     </resultMap>
 
     <select id="customSelectPage" resultMap="resultMap">
@@ -90,7 +90,7 @@
         order by t_broadcast_message.send_time desc
     </select>
 
-    <select id="customSelectList" parameterType="com.example.params.Params" resultMap="resultMap">
+    <select id="customSelectList" parameterType="com.xzixi.demo.params.Params" resultMap="resultMap">
         select <include refid="baseCol" />,
                <include refid="sendUserCol" />,
                <include refid="sendUserHeadCol" />
@@ -120,7 +120,7 @@
         select <include refid="baseCol" />,
                <include refid="sendUserCol" />,
                <include refid="sendUserHeadCol" />,
-               <include refid="com.example.mapper.BroadcastToUserLinkMapper.baseCol" />
+               <include refid="com.xzixi.demo.mapper.BroadcastToUserLinkMapper.baseCol" />
         from t_broadcast_message t_broadcast_message
         left join t_user send_user on send_user.id = t_broadcast_message.send_user_id
         left join t_attachment send_user_head on send_user_head.id = send_user.head_img_id
@@ -142,11 +142,11 @@
         order by t_broadcast_message.send_time desc
     </select>
 
-    <select id="selectSelfList" parameterType="com.example.params.Params" resultMap="resultMap">
+    <select id="selectSelfList" parameterType="com.xzixi.demo.params.Params" resultMap="resultMap">
         select <include refid="baseCol" />,
                <include refid="sendUserCol" />,
                <include refid="sendUserHeadCol" />,
-               <include refid="com.example.mapper.BroadcastToUserLinkMapper.baseCol" />
+               <include refid="com.xzixi.demo.mapper.BroadcastToUserLinkMapper.baseCol" />
         from t_broadcast_message t_broadcast_message
         left join t_user send_user on send_user.id = t_broadcast_message.send_user_id
         left join t_attachment send_user_head on send_user_head.id = send_user.head_img_id
@@ -185,7 +185,7 @@
         select <include refid="baseCol" />,
                <include refid="sendUserCol" />,
                <include refid="sendUserHeadCol" />,
-               <include refid="com.example.mapper.BroadcastToUserLinkMapper.baseCol" />
+               <include refid="com.xzixi.demo.mapper.BroadcastToUserLinkMapper.baseCol" />
         from t_broadcast_message t_broadcast_message
         left join t_user send_user on send_user.id = t_broadcast_message.send_user_id
         left join t_attachment send_user_head on send_user_head.id = send_user.head_img_id

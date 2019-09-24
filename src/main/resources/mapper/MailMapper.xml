@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.mapper.MailMapper">
+<mapper namespace="com.xzixi.demo.mapper.MailMapper">
 
     <sql id="baseCol">
         t_mail.id t_mail_id, t_mail.mail_subject t_mail_mail_subject,
@@ -9,7 +9,7 @@
         t_mail.send_user_id t_mail_send_user_id
     </sql>
 
-    <resultMap id="baseResultMap" type="com.example.model.po.Mail">
+    <resultMap id="baseResultMap" type="com.xzixi.demo.model.po.Mail">
         <id column="t_mail_id" property="id" />
         <result column="t_mail_mail_subject" property="mailSubject" />
         <result column="t_mail_mail_type" property="mailType" />
@@ -26,7 +26,7 @@
         send_user.logintime send_user_logintime, send_user.dept_id send_user_dept_id
     </sql>
 
-    <resultMap id="sendUserResultMap" type="com.example.model.po.User">
+    <resultMap id="sendUserResultMap" type="com.xzixi.demo.model.po.User">
         <id column="send_user_id" property="id" />
         <result column="send_user_username" property="username" />
         <result column="send_user_password" property="password" />
@@ -43,7 +43,7 @@
         to_user.logintime to_user_logintime, to_user.dept_id to_user_dept_id
     </sql>
 
-    <resultMap id="toUserResultMap" type="com.example.model.po.User">
+    <resultMap id="toUserResultMap" type="com.xzixi.demo.model.po.User">
         <id column="to_user_id" property="id" />
         <result column="to_user_username" property="username" />
         <result column="to_user_password" property="password" />
@@ -54,16 +54,16 @@
         <result column="to_user_dept_id" property="deptId" />
     </resultMap>
 
-    <resultMap id="resultMap" type="com.example.model.po.Mail" extends="baseResultMap">
-        <association column="t_mail_id" property="mailContent" resultMap="com.example.mapper.MailContentMapper.baseResultMap" />
+    <resultMap id="resultMap" type="com.xzixi.demo.model.po.Mail" extends="baseResultMap">
+        <association column="t_mail_id" property="mailContent" resultMap="com.xzixi.demo.mapper.MailContentMapper.baseResultMap" />
         <association column="t_mail_send_user_id" property="sendUser" resultMap="sendUserResultMap" />
         <collection column="t_mail_to_user_id" property="toUsers" resultMap="toUserResultMap" />
-        <collection column="t_mail_id" property="attachments" resultMap="com.example.mapper.AttachmentMapper.baseResultMap" />
+        <collection column="t_mail_id" property="attachments" resultMap="com.xzixi.demo.mapper.AttachmentMapper.baseResultMap" />
     </resultMap>
 
     <select id="customSelectPage" resultMap="resultMap">
         select <include refid="baseCol" />,
-               <include refid="com.example.mapper.MailContentMapper.baseCol" />,
+               <include refid="com.xzixi.demo.mapper.MailContentMapper.baseCol" />,
                <include refid="sendUserCol" />,
                t_mail_to_users.info t_mail_to_users_info
         from t_mail t_mail
@@ -98,9 +98,9 @@
         order by t_mail.create_time desc
     </select>
 
-    <select id="customSelectList" parameterType="com.example.params.Params" resultMap="resultMap">
+    <select id="customSelectList" parameterType="com.xzixi.demo.params.Params" resultMap="resultMap">
         select <include refid="baseCol" />,
-               <include refid="com.example.mapper.MailContentMapper.baseCol" />,
+               <include refid="com.xzixi.demo.mapper.MailContentMapper.baseCol" />,
                <include refid="sendUserCol" />,
                t_mail_to_users.info t_mail_to_users_info
         from t_mail t_mail
@@ -137,10 +137,10 @@
 
     <select id="customSelectById" parameterType="int" resultMap="resultMap">
         select <include refid="baseCol" />,
-               <include refid="com.example.mapper.MailContentMapper.baseCol" />,
+               <include refid="com.xzixi.demo.mapper.MailContentMapper.baseCol" />,
                <include refid="sendUserCol" />,
                <include refid="toUserCol" />,
-               <include refid="com.example.mapper.AttachmentMapper.baseCol" />
+               <include refid="com.xzixi.demo.mapper.AttachmentMapper.baseCol" />
         from t_mail t_mail
         left join t_mail_content t_mail_content on t_mail_content.mail_id = t_mail.id
         left join t_user send_user on send_user.id = t_mail.send_user_id

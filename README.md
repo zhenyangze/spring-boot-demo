@@ -136,7 +136,7 @@ Swagger2Controller不是spring容器中的bean，无法使用aop和拦截器，�
 >比jackson速度快，统一配置了返回值格式，可以在字段上使用@JsonField进行个性化配置
 
 * 全局跨域支持
->com.example.config.GlobalCorsConfig
+>com.xzixi.demo.config.GlobalCorsConfig
 
 * sftp
 >实现了sftp连接池，sftp上传下载等功能

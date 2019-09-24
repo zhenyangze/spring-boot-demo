@@ -57,7 +57,7 @@ spring:
       # 键的序列化方式
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       # 值的序列化方式
-      value-serializer: com.example.kafka.CustomJsonSerializer
+      value-serializer: com.xzixi.demo.kafka.CustomJsonSerializer
       # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
       # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
       # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
@@ -77,7 +77,7 @@ spring:
       # 键的反序列化方式
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       # 值的反序列化方式
-      value-deserializer: com.example.kafka.CustomJsonDeserializer
+      value-deserializer: com.xzixi.demo.kafka.CustomJsonDeserializer
     listener:
       # 在侦听器容器中运行的线程数。
       concurrency: 5
@@ -164,7 +164,7 @@ server:
 # mybatis plus
 mybatis-plus:
   mapper-locations: classpath:/mapper/*Mapper.xml # mapper文件路径
-  type-aliases-package: com.example.model # 实体扫描，多个package用逗号或者分号分隔
+  type-aliases-package: com.xzixi.demo.model # 实体扫描，多个package用逗号或者分号分隔
   configuration:
     map-underscore-to-camel-case: true # 驼峰命名
     cache-enabled: false # 是否开启缓存

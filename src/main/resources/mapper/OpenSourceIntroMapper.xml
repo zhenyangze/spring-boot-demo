@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.mapper.OpenSourceIntroMapper">
+<mapper namespace="com.xzixi.demo.mapper.OpenSourceIntroMapper">
 
     <sql id="baseCol">
         t_open_source_intro.id t_open_source_intro_id, t_open_source_intro.readme t_open_source_intro_readme,
         t_open_source_intro.open_source_id t_open_source_intro_open_source_id
     </sql>
 
-    <resultMap id="baseResultMap" type="com.example.model.po.OpenSourceIntro">
+    <resultMap id="baseResultMap" type="com.xzixi.demo.model.po.OpenSourceIntro">
         <id column="t_open_source_intro_id" property="id" />
         <result column="t_open_source_intro_readme" property="readme" />
         <result column="t_open_source_intro_open_source_id" property="openSourceId" />

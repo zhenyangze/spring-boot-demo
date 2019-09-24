@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.mapper.LetterReplyMapper">
+<mapper namespace="com.xzixi.demo.mapper.LetterReplyMapper">
 
     <sql id="baseCol">
         t_letter_reply.id t_letter_reply_id, t_letter_reply.reply_content t_letter_reply_reply_content,
@@ -8,7 +8,7 @@
         t_letter_reply.letter_id t_letter_reply_letter_id
     </sql>
 
-    <resultMap id="baseResultMap" type="com.example.model.po.LetterReply">
+    <resultMap id="baseResultMap" type="com.xzixi.demo.model.po.LetterReply">
         <id column="t_letter_reply_id" property="id" />
         <result column="t_letter_reply_reply_content" property="replyContent" />
         <result column="t_letter_reply_reply_user_id" property="replyUserId" />
@@ -21,7 +21,7 @@
         reply_user.sex reply_user_sex, reply_user.dept_id reply_user_dept_id, reply_user.head_img_id reply_user_head_img_id
     </sql>
 
-    <resultMap id="replyUserResultMap" type="com.example.model.po.User">
+    <resultMap id="replyUserResultMap" type="com.xzixi.demo.model.po.User">
         <id column="reply_user_id" property="id" />
         <result column="reply_user_username" property="username" />
         <result column="reply_user_nickname" property="nickname" />
@@ -30,9 +30,9 @@
         <result column="reply_user_head_img_id" property="headImgId" />
     </resultMap>
 
-    <resultMap id="resultMap" type="com.example.model.po.LetterReply" extends="baseResultMap">
+    <resultMap id="resultMap" type="com.xzixi.demo.model.po.LetterReply" extends="baseResultMap">
         <association column="t_letter_reply_reply_user_id" property="replyUser" resultMap="replyUserResultMap" />
-        <collection column="t_letter_reply_id" property="attachments" resultMap="com.example.mapper.AttachmentMapper.baseResultMap" />
+        <collection column="t_letter_reply_id" property="attachments" resultMap="com.xzixi.demo.mapper.AttachmentMapper.baseResultMap" />
     </resultMap>
 
     <select id="customSelectPage" resultMap="resultMap">
@@ -57,7 +57,7 @@
     <select id="customSelectById" parameterType="int" resultMap="resultMap">
         select <include refid="baseCol" />,
                <include refid="replyUserCol" />,
-               <include refid="com.example.mapper.AttachmentMapper.baseCol" />
+               <include refid="com.xzixi.demo.mapper.AttachmentMapper.baseCol" />
         from t_letter_reply t_letter_reply
         left join t_user reply_user on reply_user.id = t_letter_reply.reply_user_id
         left join t_letter_reply_attachment_link tlral on tlral.letter_reply_id = t_letter_reply.id

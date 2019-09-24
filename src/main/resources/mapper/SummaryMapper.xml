@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.mapper.SummaryMapper">
+<mapper namespace="com.xzixi.demo.mapper.SummaryMapper">
 
-    <resultMap id="baseResultMap" type="com.example.model.vo.SummaryVO">
+    <resultMap id="baseResultMap" type="com.xzixi.demo.model.vo.SummaryVO">
         <result column="summary_name" property="name" />
         <result column="summary_value" property="value" />
     </resultMap>
 
-    <select id="selectBroadcastByTime" parameterType="com.example.params.Params"
-            resultMap="com.example.mapper.BroadcastMessageMapper.baseResultMap">
-        select <include refid="com.example.mapper.BroadcastMessageMapper.baseCol" />
+    <select id="selectBroadcastByTime" parameterType="com.xzixi.demo.params.Params"
+            resultMap="com.xzixi.demo.mapper.BroadcastMessageMapper.baseResultMap">
+        select <include refid="com.xzixi.demo.mapper.BroadcastMessageMapper.baseCol" />
         from t_broadcast_message t_broadcast_message
         <where>
             <if test=" params.map.timeCol != null and params.map.timeCol != ''.toString() ">
@@ -23,9 +23,9 @@
         </where>
     </select>
 
-    <select id="selectMailByTime" parameterType="com.example.params.Params"
-            resultMap="com.example.mapper.MailMapper.baseResultMap">
-        select <include refid="com.example.mapper.MailMapper.baseCol" />
+    <select id="selectMailByTime" parameterType="com.xzixi.demo.params.Params"
+            resultMap="com.xzixi.demo.mapper.MailMapper.baseResultMap">
+        select <include refid="com.xzixi.demo.mapper.MailMapper.baseCol" />
         from t_mail t_mail
         <where>
             <if test=" params.map.timeCol != null and params.map.timeCol != ''.toString() ">

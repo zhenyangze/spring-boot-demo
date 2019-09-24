@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.mapper.JobMapper">
+<mapper namespace="com.xzixi.demo.mapper.JobMapper">
 
     <sql id="baseCol">
         t_job.id t_job_id, t_job.job_desc t_job_job_desc, t_job.start_time t_job_start_time,
@@ -16,7 +16,7 @@
         qrtz_triggers.prev_fire_time qrtz_triggers_prev_fire_time
     </sql>
 
-    <resultMap id="baseResultMap" type="com.example.model.po.Job">
+    <resultMap id="baseResultMap" type="com.xzixi.demo.model.po.Job">
         <id column="t_job_id" property="id" />
         <result column="t_job_job_desc" property="jobDesc" />
         <result column="t_job_start_time" property="startTime" />
@@ -33,15 +33,15 @@
         <result column="qrtz_triggers_prev_fire_time" property="prevTime" />
     </resultMap>
 
-    <resultMap id="resultMap" type="com.example.model.po.Job" extends="baseResultMap">
-        <association column="t_job_job_template_id" property="jobTemplate" resultMap="com.example.mapper.JobTemplateMapper.baseResultMap" />
-        <collection column="t_job_id" property="parameters" resultMap="com.example.mapper.JobParameterMapper.baseResultMap" />
+    <resultMap id="resultMap" type="com.xzixi.demo.model.po.Job" extends="baseResultMap">
+        <association column="t_job_job_template_id" property="jobTemplate" resultMap="com.xzixi.demo.mapper.JobTemplateMapper.baseResultMap" />
+        <collection column="t_job_id" property="parameters" resultMap="com.xzixi.demo.mapper.JobParameterMapper.baseResultMap" />
     </resultMap>
 
     <select id="customSelectPage" resultMap="resultMap">
         select <include refid="baseCol" />,
                <include refid="triggerCol" />,
-               <include refid="com.example.mapper.JobTemplateMapper.baseCol" />
+               <include refid="com.xzixi.demo.mapper.JobTemplateMapper.baseCol" />
         from t_job t_job
         left join qrtz_triggers qrtz_triggers on qrtz_triggers.sched_name = t_job.sched_name and qrtz_triggers.trigger_name = t_job.trigger_name and qrtz_triggers.trigger_group = t_job.trigger_group
         left join t_job_template t_job_template on t_job_template.id = t_job.job_template_id
@@ -62,8 +62,8 @@
     <select id="customSelectById" parameterType="int" resultMap="resultMap">
         select <include refid="baseCol" />,
                <include refid="triggerCol" />,
-               <include refid="com.example.mapper.JobTemplateMapper.baseCol" />,
-               <include refid="com.example.mapper.JobParameterMapper.baseCol" />
+               <include refid="com.xzixi.demo.mapper.JobTemplateMapper.baseCol" />,
+               <include refid="com.xzixi.demo.mapper.JobParameterMapper.baseCol" />
         from t_job t_job
         left join qrtz_triggers qrtz_triggers on qrtz_triggers.sched_name = t_job.sched_name and qrtz_triggers.trigger_name = t_job.trigger_name and qrtz_triggers.trigger_group = t_job.trigger_group
         left join t_job_template t_job_template on t_job_template.id = t_job.job_template_id

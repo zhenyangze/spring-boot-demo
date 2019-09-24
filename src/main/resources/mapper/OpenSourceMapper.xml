@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.mapper.OpenSourceMapper">
+<mapper namespace="com.xzixi.demo.mapper.OpenSourceMapper">
 
     <sql id="baseCol">
         t_open_source.id t_open_source_id, t_open_source.source_name t_open_source_source_name,
@@ -10,7 +10,7 @@
         t_open_source.update_user_id t_open_source_update_user_id, t_open_source.update_time t_open_source_update_time
     </sql>
 
-    <resultMap id="baseResultMap" type="com.example.model.po.OpenSource">
+    <resultMap id="baseResultMap" type="com.xzixi.demo.model.po.OpenSource">
         <id column="t_open_source_id" property="id" />
         <result column="t_open_source_source_name" property="sourceName" />
         <result column="t_open_source_source_desc" property="sourceDesc" />
@@ -28,7 +28,7 @@
         save_user.sex save_user_sex, save_user.dept_id save_user_dept_id, save_user.head_img_id save_user_head_img_id
     </sql>
 
-    <resultMap id="saveUserResultMap" type="com.example.model.po.User">
+    <resultMap id="saveUserResultMap" type="com.xzixi.demo.model.po.User">
         <id column="save_user_id" property="id" />
         <result column="save_user_username" property="username" />
         <result column="save_user_nickname" property="nickname" />
@@ -42,7 +42,7 @@
         update_user.sex update_user_sex, update_user.dept_id update_user_dept_id, update_user.head_img_id update_user_head_img_id
     </sql>
 
-    <resultMap id="updateUserResultMap" type="com.example.model.po.User">
+    <resultMap id="updateUserResultMap" type="com.xzixi.demo.model.po.User">
         <id column="update_user_id" property="id" />
         <result column="update_user_username" property="username" />
         <result column="update_user_nickname" property="nickname" />
@@ -51,11 +51,11 @@
         <result column="update_user_head_img_id" property="headImgId" />
     </resultMap>
 
-    <resultMap id="resultMap" type="com.example.model.po.OpenSource" extends="baseResultMap">
-        <association column="t_open_source_id" property="intro" resultMap="com.example.mapper.OpenSourceIntroMapper.baseResultMap" />
+    <resultMap id="resultMap" type="com.xzixi.demo.model.po.OpenSource" extends="baseResultMap">
+        <association column="t_open_source_id" property="intro" resultMap="com.xzixi.demo.mapper.OpenSourceIntroMapper.baseResultMap" />
         <association column="t_open_source_save_user_id" property="saveUser" resultMap="saveUserResultMap" />
         <association column="t_open_source_update_user_id" property="updateUser" resultMap="updateUserResultMap" />
-        <collection column="t_open_source_id" property="attachments" resultMap="com.example.mapper.AttachmentMapper.baseResultMap" />
+        <collection column="t_open_source_id" property="attachments" resultMap="com.xzixi.demo.mapper.AttachmentMapper.baseResultMap" />
     </resultMap>
 
     <select id="customSelectPage" resultMap="resultMap">
@@ -92,8 +92,8 @@
         select <include refid="baseCol" />,
                <include refid="saveUserCol" />,
                <include refid="updateUserCol" />,
-               <include refid="com.example.mapper.OpenSourceIntroMapper.baseCol" />,
-               <include refid="com.example.mapper.AttachmentMapper.baseCol" />
+               <include refid="com.xzixi.demo.mapper.OpenSourceIntroMapper.baseCol" />,
+               <include refid="com.xzixi.demo.mapper.AttachmentMapper.baseCol" />
         from t_open_source t_open_source
         left join t_user save_user on save_user.id = t_open_source.save_user_id
         left join t_user update_user on update_user.id = t_open_source.update_user_id

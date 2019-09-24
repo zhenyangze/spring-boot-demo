@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.mapper.DeptMapper">
+<mapper namespace="com.xzixi.demo.mapper.DeptMapper">
 
     <sql id="baseCol">
         t_dept.id t_dept_id, t_dept.dept_name t_dept_dept_name, t_dept.level t_dept_level,
@@ -8,7 +8,7 @@
         t_dept.is_default t_dept_is_default
     </sql>
 
-    <resultMap id="baseResultMap" type="com.example.model.po.Dept">
+    <resultMap id="baseResultMap" type="com.xzixi.demo.model.po.Dept">
         <id column="t_dept_id" property="id" />
         <result column="t_dept_dept_name" property="deptName" />
         <result column="t_dept_level" property="level" />
@@ -18,7 +18,7 @@
         <result column="t_dept_is_default" property="isDefault" />
     </resultMap>
 
-    <select id="customSelectList" parameterType="com.example.params.Params" resultMap="baseResultMap">
+    <select id="customSelectList" parameterType="com.xzixi.demo.params.Params" resultMap="baseResultMap">
         select <include refid="baseCol" />
         from t_dept t_dept
         <where>

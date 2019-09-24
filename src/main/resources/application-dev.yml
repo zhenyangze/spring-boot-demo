@@ -7,7 +7,7 @@ spring:
 
   # 数据源
   datasource:
-    url: jdbc:mysql://server02:3306/demo?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://docker:3306/demo?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
     password: root
     druid:
@@ -21,15 +21,15 @@ spring:
   # redis
   redis:
     # 使用单机redis时将一下两行注释打开
-#    host: localhost # 默认localhost
-#    port: 6379 # 默认6379
+    host: docker # 默认localhost
+    port: 6379 # 默认6379
     password: demo # 密码
     database: 5 # 采用哪个数据库，默认0
     timeout: 500 # 连接超时时间（毫秒）
     # 使用sentinel集群时将以下三行注释打开
-    sentinel:
-      master: demomaster # master名称
-      nodes: server01:26379,server01:26380,server01:26381 # sentinel地址
+#    sentinel:
+#      master: demomaster # master名称
+#      nodes: server01:26379,server01:26380,server01:26381 # sentinel地址
     lettuce:
       shutdown-timeout: 100ms
       pool:
@@ -41,7 +41,7 @@ spring:
   # kafka
   kafka:
     # 以逗号分隔的地址列表，用于建立与Kafka集群的初始连接(kafka 默认的端口号为9092)
-    bootstrap-servers: server02:9092
+    bootstrap-servers: docker:9092
 
   # 邮件
   mail:
@@ -58,14 +58,14 @@ log:
   home: E:/IdeaProjects/logs/dev # 日志目录
 
 attachment:
-  save-dir: E:/IdeaProjects/demofile # 文件保存路径
+  save-dir: /home/demofile # 文件保存路径
 
 swagger2:
   enable: true # 启用swagger2
 
 # sftp
 sftp:
-  host: server02
+  host: docker
   port: 22
   username: demofile
   password: demo

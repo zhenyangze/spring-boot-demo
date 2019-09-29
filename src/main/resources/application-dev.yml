@@ -55,7 +55,7 @@ server:
       enabled: true # 开启访问日志，默认false
 
 log:
-  home: E:/IdeaProjects/logs/dev # 日志目录
+  home: E:/project/java/logs/spring-boot-demo # 日志目录
 
 attachment:
   save-dir: /home/demofile # 文件保存路径

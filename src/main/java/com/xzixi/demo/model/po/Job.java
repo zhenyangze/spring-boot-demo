@@ -2,10 +2,10 @@ package com.xzixi.demo.model.po;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.xzixi.demo.annotation.IgnoreSwaggerParameter;
 import com.xzixi.demo.group.JobInsert;
 import com.xzixi.demo.group.JobUpdate;
 import com.xzixi.demo.model.BaseModel;
+import com.xzixi.swagger2.plus.annotation.IgnoreSwagger2Parameter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -40,45 +40,45 @@ public class Job extends BaseModel {
     @NotNull(groups = {JobInsert.class, JobUpdate.class}, message = "任务模板id不能为空")
     private Integer jobTemplateId;
     @ApiModelProperty(value = "调度器名称", hidden = true)
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     @JSONField(serialize = false)
     private String schedName;
     @ApiModelProperty(value = "任务名称", hidden = true)
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     @JSONField(serialize = false)
     private String jobName;
     @ApiModelProperty(value = "任务组", hidden = true)
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     @JSONField(serialize = false)
     private String jobGroup;
     @ApiModelProperty(value = "触发器名称", hidden = true)
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     @JSONField(serialize = false)
     private String triggerName;
     @ApiModelProperty(value = "触发器组", hidden = true)
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     @JSONField(serialize = false)
     private String triggerGroup;
 
     @TableField(exist = false)
     @ApiModelProperty(value = "触发器状态")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     private String triggerState;
     @TableField(exist = false)
     @ApiModelProperty(value = "下次触发时间")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     private Long nextTime;
     @TableField(exist = false)
     @ApiModelProperty(value = "上次触发时间")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     private Long prevTime;
     @TableField(exist = false)
     @ApiModelProperty(value = "任务模板")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     private JobTemplate jobTemplate;
     @TableField(exist = false)
     @ApiModelProperty(value = "任务参数")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     @Valid
     private List<JobParameter> parameters;
 

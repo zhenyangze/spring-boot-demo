@@ -1,10 +1,10 @@
 package com.xzixi.demo.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.xzixi.demo.annotation.IgnoreSwaggerParameter;
 import com.xzixi.demo.group.Insert;
 import com.xzixi.demo.group.Update;
 import com.xzixi.demo.model.BaseModel;
+import com.xzixi.swagger2.plus.annotation.IgnoreSwagger2Parameter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -41,11 +41,11 @@ public class ChatMessage extends BaseModel {
 
     @TableField(exist = false)
     @ApiModelProperty(value = "发送用户")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     private User sendUser;
     @TableField(exist = false)
     @ApiModelProperty(value = "接收用户")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     private User toUser;
 
 }

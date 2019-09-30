@@ -1,9 +1,9 @@
 package com.xzixi.demo.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.xzixi.demo.annotation.IgnoreSwaggerParameter;
 import com.xzixi.demo.group.*;
 import com.xzixi.demo.model.BaseModel;
+import com.xzixi.swagger2.plus.annotation.IgnoreSwagger2Parameter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -61,15 +61,15 @@ public class User extends BaseModel {
 
     @TableField(exist = false)
     @ApiModelProperty(value = "部门信息")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     private Dept dept;
     @TableField(exist = false)
     @ApiModelProperty(value = "头像")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     private Attachment headImg;
     @TableField(exist = false)
     @ApiModelProperty(value = "角色信息")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     @NotEmpty(groups = {UserInsert.class, UserUpdate.class}, message = "角色信息不能为空")
     @Valid
     private List<Role> roles;

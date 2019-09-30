@@ -1,12 +1,12 @@
 package com.xzixi.demo.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.xzixi.demo.annotation.IgnoreSwaggerParameter;
 import com.xzixi.demo.group.RoleInsert;
 import com.xzixi.demo.group.RoleUpdate;
 import com.xzixi.demo.group.UserInsert;
 import com.xzixi.demo.group.UserUpdate;
 import com.xzixi.demo.model.BaseModel;
+import com.xzixi.swagger2.plus.annotation.IgnoreSwagger2Parameter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -41,7 +41,7 @@ public class Role extends BaseModel {
 
     @TableField(exist = false)
     @ApiModelProperty(value = "资源信息")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     @NotEmpty(groups = {RoleInsert.class, RoleUpdate.class}, message = "资源信息不能为空")
     @Valid
     private List<Resource> resources;

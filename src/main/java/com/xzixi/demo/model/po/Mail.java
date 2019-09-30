@@ -1,10 +1,10 @@
 package com.xzixi.demo.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.xzixi.demo.annotation.IgnoreSwaggerParameter;
 import com.xzixi.demo.group.MailInsert;
 import com.xzixi.demo.group.MailUpdate;
 import com.xzixi.demo.model.BaseModel;
+import com.xzixi.swagger2.plus.annotation.IgnoreSwagger2Parameter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -45,27 +45,27 @@ public class Mail extends BaseModel {
 
     @TableField(exist = false)
     @ApiModelProperty(value = "接收用户聚合信息")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     private String toUsersInfo;
     @TableField(exist = false)
     @ApiModelProperty("邮件内容")
     @NotNull(groups = {MailInsert.class, MailUpdate.class}, message = "邮件内容不能为空")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     @Valid
     private MailContent mailContent;
     @TableField(exist = false)
     @ApiModelProperty(value = "发送用户")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     private User sendUser;
     @TableField(exist = false)
     @ApiModelProperty(value = "接收用户")
     @NotNull(groups = {MailInsert.class, MailUpdate.class}, message = "接收用户不能为空")
     @NotEmpty(groups = {MailInsert.class, MailUpdate.class}, message = "接收用户不能为空")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     private List<User> toUsers;
     @TableField(exist = false)
     @ApiModelProperty(value = "邮件附件")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     @Valid
     private List<Attachment> attachments;
 

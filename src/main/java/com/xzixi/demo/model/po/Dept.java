@@ -1,11 +1,11 @@
 package com.xzixi.demo.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.xzixi.demo.annotation.IgnoreSwaggerParameter;
 import com.xzixi.demo.group.Insert;
 import com.xzixi.demo.group.Update;
 import com.xzixi.demo.model.BaseModel;
 import com.xzixi.demo.model.Tree;
+import com.xzixi.swagger2.plus.annotation.IgnoreSwagger2Parameter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -43,11 +43,11 @@ public class Dept extends BaseModel implements Tree<Dept> {
 
     @TableField(exist = false)
     @ApiModelProperty(value = "子部门")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     private List<Dept> subs;
     @TableField(exist = false)
     @ApiModelProperty(value = "部门下用户")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     private List<User> users;
 
 }

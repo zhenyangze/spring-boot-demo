@@ -1,10 +1,10 @@
 package com.xzixi.demo.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.xzixi.demo.annotation.IgnoreSwaggerParameter;
 import com.xzixi.demo.group.OpenSourceInsert;
 import com.xzixi.demo.group.OpenSourceUpdate;
 import com.xzixi.demo.model.BaseModel;
+import com.xzixi.swagger2.plus.annotation.IgnoreSwagger2Parameter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -54,23 +54,23 @@ public class OpenSource extends BaseModel {
 
     @TableField(exist = false)
     @ApiModelProperty(value = "开源组件详细说明")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     @Valid
     @NotNull(groups = {OpenSourceInsert.class, OpenSourceUpdate.class}, message = "开源组件详细说明不能为空")
     private OpenSourceIntro intro;
     @TableField(exist = false)
     @ApiModelProperty(value = "录入人")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     @Null(groups = {OpenSourceInsert.class, OpenSourceUpdate.class}, message = "录入人必须为空")
     private User saveUser;
     @TableField(exist = false)
     @ApiModelProperty(value = "最后修改人")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     @Null(groups = {OpenSourceInsert.class, OpenSourceUpdate.class}, message = "最后修改人必须为空")
     private User updateUser;
     @TableField(exist = false)
     @ApiModelProperty(value = "开源组件图片")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     @Valid
     private List<Attachment> attachments;
 

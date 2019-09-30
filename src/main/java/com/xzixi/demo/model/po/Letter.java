@@ -1,9 +1,9 @@
 package com.xzixi.demo.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.xzixi.demo.annotation.IgnoreSwaggerParameter;
 import com.xzixi.demo.group.LetterInsert;
 import com.xzixi.demo.model.BaseModel;
+import com.xzixi.swagger2.plus.annotation.IgnoreSwagger2Parameter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -39,12 +39,12 @@ public class Letter extends BaseModel {
 
     @TableField(exist = false)
     @ApiModelProperty(value = "留言人")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     @Null(groups = {LetterInsert.class}, message = "留言人必须为空")
     private User letterUser;
     @TableField(exist = false)
     @ApiModelProperty(value = "留言图片")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     @Valid
     private List<Attachment> attachments;
 

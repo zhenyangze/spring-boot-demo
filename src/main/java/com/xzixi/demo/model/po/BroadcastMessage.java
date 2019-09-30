@@ -1,9 +1,9 @@
 package com.xzixi.demo.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.xzixi.demo.annotation.IgnoreSwaggerParameter;
 import com.xzixi.demo.group.BroadcastInsert;
 import com.xzixi.demo.model.BaseModel;
+import com.xzixi.swagger2.plus.annotation.IgnoreSwagger2Parameter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -31,18 +31,18 @@ public class BroadcastMessage extends BaseModel {
 
     @TableField(exist = false)
     @ApiModelProperty(value = "发送用户")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     private User sendUser;
     @TableField(exist = false)
     @ApiModelProperty(value = "接收用户")
     @NotNull(groups = {BroadcastInsert.class}, message = "接收用户不能为空")
     @NotEmpty(groups = {BroadcastInsert.class}, message = "接收用户不能为空")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     private List<User> toUsers;
     @TableField(exist = false)
     @ApiModelProperty(value = "接收用户关联")
     @Null(groups = {BroadcastInsert.class}, message = "接收用户关联必须为空")
-    @IgnoreSwaggerParameter
+    @IgnoreSwagger2Parameter
     private List<BroadcastToUserLink> links;
 
 }

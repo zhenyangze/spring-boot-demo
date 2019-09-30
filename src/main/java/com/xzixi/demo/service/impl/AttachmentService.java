@@ -3,11 +3,12 @@ package com.xzixi.demo.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzixi.demo.exception.ProjectException;
-import com.xzixi.demo.ftp.SftpHelper;
 import com.xzixi.demo.mapper.AttachmentMapper;
 import com.xzixi.demo.model.po.Attachment;
 import com.xzixi.demo.params.Params;
 import com.xzixi.demo.service.IAttachmentService;
+import com.xzixi.sftp.pool.Sftp;
+import com.xzixi.sftp.pool.SftpPool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +28,7 @@ public class AttachmentService extends BaseService<AttachmentMapper, Attachment>
     @Value("${attachment.file-separator}")
     private String fileSeparator;
     @Autowired
-    private SftpHelper sftpHelper;
+    private SftpPool sftpPool;
 
     @Override
     @Cacheable(cacheNames = "attachment:multiple", keyGenerator = "defaultPageKeyGenerator")
@@ -65,11 +66,23 @@ public class AttachmentService extends BaseService<AttachmentMapper, Attachment>
             String name = path.substring(path.lastIndexOf(fileSeparator)+1);
             toDelete.add(new String[]{dir, name});
         }
-        for (String[] arr: toDelete) {
-            try {
-                sftpHelper.delete(arr[0], arr[1]);
-            } catch (ProjectException e) {
-                log.error(e.getMessage(), e);
+        Sftp sftp;
+        try {
+            sftp = sftpPool.borrowObject();
+        } catch (Exception e) {
+            throw new ProjectException("获取sftp连接出错！", e);
+        }
+        try {
+            for (String[] arr: toDelete) {
+                try {
+                    sftp.delete(arr[0], arr[1]);
+                } catch (ProjectException e) {
+                    log.error(e.getMessage(), e);
+                }
+            }
+        } finally {
+            if (sftp!=null) {
+                sftpPool.returnObject(sftp);
             }
         }
     }

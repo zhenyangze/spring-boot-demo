@@ -1,12 +1,13 @@
 package com.xzixi.demo.controller;
 
 import com.xzixi.demo.exception.ProjectException;
-import com.xzixi.demo.ftp.SftpHelper;
 import com.xzixi.demo.model.po.Attachment;
 import com.xzixi.demo.model.vo.AttachmentVO;
 import com.xzixi.demo.model.vo.ResultVO;
 import com.xzixi.demo.service.IAttachmentService;
 import com.xzixi.demo.util.ModelUtil;
+import com.xzixi.sftp.pool.Sftp;
+import com.xzixi.sftp.pool.SftpPool;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -31,7 +32,7 @@ public class FileController {
     @Autowired
     private IAttachmentService attachmentService;
     @Autowired
-    private SftpHelper sftpHelper;
+    private SftpPool sftpPool;
     @Value("${attachment.save-dir}")
     private String saveDir;
     @Value("${attachment.address-prefix}")
@@ -63,11 +64,19 @@ public class FileController {
         String relativeDir = type+fileSeparator+year+fileSeparator+month;
         // 目录绝对路径
         String absoluteDir = saveDir+(saveDir.endsWith(fileSeparator)? "": fileSeparator)+relativeDir;
+        Sftp sftp = null;
         try {
+            sftp = sftpPool.borrowObject();
             // 上传到ftp
-            sftpHelper.upload(absoluteDir, name, file.getInputStream());
+            sftp.upload(absoluteDir, name, file.getInputStream());
         } catch (IOException e) {
             throw new ProjectException("保存文件时出错", e);
+        } catch (Exception e) {
+            throw new ProjectException("获取sftp连接出错！", e);
+        } finally {
+            if (sftp!=null) {
+                sftpPool.returnObject(sftp);
+            }
         }
         // 访问路径
         String address = addressPrefix+(addressPrefix.endsWith(fileSeparator)? "": fileSeparator)+relativeDir+fileSeparator+name;

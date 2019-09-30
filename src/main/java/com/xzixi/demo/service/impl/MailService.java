@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzixi.demo.exception.LogicException;
-import com.xzixi.demo.ftp.SftpHelper;
+import com.xzixi.demo.exception.ProjectException;
 import com.xzixi.demo.mapper.MailMapper;
 import com.xzixi.demo.model.po.*;
 import com.xzixi.demo.params.Params;
@@ -12,6 +12,8 @@ import com.xzixi.demo.service.IMailAttachmentLinkService;
 import com.xzixi.demo.service.IMailContentService;
 import com.xzixi.demo.service.IMailService;
 import com.xzixi.demo.service.IMailToUserLinkService;
+import com.xzixi.sftp.pool.Sftp;
+import com.xzixi.sftp.pool.SftpPool;
 import io.jsonwebtoken.lang.Collections;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +50,7 @@ public class MailService extends BaseService<MailMapper, Mail> implements IMailS
     @Autowired
     private JavaMailSender javaMailSender;
     @Autowired
-    private SftpHelper sftpHelper;
+    private SftpPool sftpPool;
 
     @Override
     public IPage<Mail> customPage(Page<Mail> page, Params<Mail> params) {
@@ -150,6 +152,7 @@ public class MailService extends BaseService<MailMapper, Mail> implements IMailS
     @Async
     @CacheEvict(cacheNames = {"summary:mail:month", "summary:mail:user"}, allEntries = true)
     public void send(Mail mail, Integer maxRetry) {
+        Sftp sftp = null;
         for (int i=0; i<maxRetry; i++) {
             try {
                 MimeMessage message = javaMailSender.createMimeMessage();
@@ -172,11 +175,16 @@ public class MailService extends BaseService<MailMapper, Mail> implements IMailS
                 // 附件
                 List<Attachment> attachments = mail.getAttachments();
                 if (!Collections.isEmpty(attachments)) {
+                    try {
+                        sftp = sftpPool.borrowObject();
+                    } catch (Exception e) {
+                        throw new ProjectException("获取sftp连接出错！", e);
+                    }
                     for (Attachment attachment : attachments) {
                         String path = attachment.getAttachmentPath();
                         String dir = path.substring(0, path.lastIndexOf(fileSeparator));
                         String name = path.substring(path.lastIndexOf(fileSeparator)+1);
-                        ByteArrayResource byteArrayResource = new ByteArrayResource(sftpHelper.download(dir, name));
+                        ByteArrayResource byteArrayResource = new ByteArrayResource(sftp.download(dir, name));
                         messageHelper.addAttachment(attachment.getAttachmentName(), byteArrayResource);
                     }
                 }
@@ -191,6 +199,10 @@ public class MailService extends BaseService<MailMapper, Mail> implements IMailS
                     log.error("发送邮件["+mail.getId()+"]失败");
                 } else {
                     log.error("发送邮件["+mail.getId()+"]失败，准备重试");
+                }
+            } finally {
+                if (sftp!=null) {
+                    sftpPool.returnObject(sftp);
                 }
             }
         }

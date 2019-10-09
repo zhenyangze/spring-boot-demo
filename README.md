@@ -20,10 +20,28 @@ spring boot项目模板
 | swagger2 | <a href="https://gitee.com/xuelingkang/swagger2" target="_blank">码云</a> | <a href="https://github.com/xuelingkang/swagger2" target="_blank">github</a> | `<groupId>com.xzixi</groupId>`<br>`<artifactId>swagger2-plus</artifactId>`<br>`<version>1.0</version>` |
 
 ## 部署步骤
+
+### 开发环境
+
+1. 准备一个linux服务器（用VMware安装虚拟机或本地其他机器）用来安装其他服务
+2. 修改`C:\Windows\System32\drivers\etc\hosts`文件，将linux的ip映射到docker
+3. 安装docker-ce，并配置镜像加速，参考阿里云容器镜像服务
+4. 将工程目录下的`centos7/docker`目录中的文件修改为***UNIX格式***，按照目录结构拷贝到linux虚拟机对应目录下，***注意提前修改文件格式为UNIX，否则无法运行***
+5. 修改`kafka.sh`的第四行，将ip替换为linux的ip
+6. 按顺序启动以下容器
+  - `nginx.sh`
+  - `redis.sh`
+  - `zookeeper.sh`
+  - `kafka.sh`
+  - `mysql.sh`
+7. 创建`demo`数据库，将工程目录下`/src/main/resources/schema/demo.sql`导入`demo`数据库
+8. 修改`application-dev.yml`，将`spring.mail.username`和`spring.mail.password`修改为自己的邮箱账号和授权码
+9. 启动工程
+
+### 生产环境
+
 1. 本地新建三个1核1G的centos7虚拟机，或者直接在阿里云创建
-
 2. 安装docker-ce，配置镜像加速，参考阿里云容器镜像服务
-
 3. 修改/etc/hosts，增加如下映射，***ip改成自己的局域网ip，三个虚拟机都需要增加这三行***
 
 ```bash
@@ -33,11 +51,8 @@ spring boot项目模板
 ```
 
 4. 将工程中centos7目录下的文件修改为***UNIX格式***，按照目录结构分别拷贝到三个虚拟机的对应目录下，***注意提前修改文件格式为UNIX，否则无法运行***
-
 5. 修改/root目录下的shell脚本，将`--add-host`参数对应的真实ip修改为自己虚拟机的ip
-
 6. 构建应用镜像，<a href="https://blog.csdn.net/qq_35433926/article/details/95969980" target="_blank">参考博客</a>
-
 7. 在server01的/root下新建bootdemo.sh脚本，内容如下，***注意修改ip和邮箱账号授权码及镜像版本号等变量***
 
 ```bash
@@ -56,20 +71,20 @@ bootdemo:1.0.7
 
 8. 按照下表顺序启动容器
 
-|服务器|启动脚本|
-|:-----:|:-------:|
-|server03|zookeeper.sh|
-|server03|kafka.sh|
-|server02|mysql.sh<br>**mysql启动完成后将工程目录下<br>/src/main/resources/schema/demo.sql导入数据库**|
-|server02|nginx.sh|
-|server01|redis6379.sh|
-|server01|redis6380.sh|
-|server01|redis6381.sh|
-|server01|sentinel26379.sh|
-|server01|sentinel26380.sh|
-|server01|sentinel26381.sh|
-|server01|bootdemo.sh|
-|server01|nginx.sh|
+| 服务器 | 启动脚本 |
+| :---: | :---: |
+| server03 | `zookeeper.sh` |
+| server03 | `kafka.sh` |
+| server02 | `mysql.sh`<br>**mysql启动完成后，创建`demo`数据库，将工程目录下<br>`/src/main/resources/schema/demo.sql`导入`demo`数据库** |
+| server02 | `nginx.sh` |
+| server01 | `redis6379.sh` |
+| server01 | `redis6380.sh` |
+| server01 | `redis6381.sh` |
+| server01 | `sentinel26379.sh` |
+| server01 | `sentinel26380.sh` |
+| server01 | `sentinel26381.sh` |
+| server01 | `bootdemo.sh` |
+| server01 | `nginx.sh` |
 
 9. <a href="https://gitee.com/xuelingkang/react-demo" target="_blank">前端项目部署</a>
 
@@ -126,6 +141,7 @@ bootdemo:1.0.7
 Swagger2Controller不是spring容器中的bean，无法使用aop和拦截器，所以在过滤器中拦截了/v2/api-docs请求，将登录和登出动态添加到返回值中
 
 ## 其他配置
+
 * 使用kafka消息队列发送websocket消息
 >支持服务集群部署
 

@@ -12,4 +12,4 @@ docker run -d --name nginx \
 -p 443:443 \
 --add-host server01:172.26.245.47 \
 --add-host server02:172.26.245.48 \
-nginx:alpine
+nginx:1.17-alpine

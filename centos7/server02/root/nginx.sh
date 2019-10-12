@@ -7,4 +7,4 @@ docker run -d --name nginx \
 -v /etc/localtime:/etc/localtime \
 -v /etc/timezone:/etc/timezone \
 -p 80:80 \
-nginx:alpine
+nginx:1.17-alpine

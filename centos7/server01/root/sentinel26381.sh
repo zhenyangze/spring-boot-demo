@@ -6,6 +6,6 @@ docker run -d --name sentinel26381 \
 -v /etc/localtime:/etc/localtime \
 -v /etc/timezone:/etc/timezone \
 --network host \
-redis:alpine \
+redis:5-alpine \
 redis-sentinel \
 /conf/sentinel.conf --sentinel

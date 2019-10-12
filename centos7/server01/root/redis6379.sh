@@ -5,7 +5,7 @@ docker run -d --name redis6379 \
 -v /etc/localtime:/etc/localtime \
 -v /etc/timezone:/etc/timezone \
 --network host \
-redis:alpine \
+redis:5-alpine \
 redis-server --appendonly yes \
 --port 6379 \
 --requirepass demo \

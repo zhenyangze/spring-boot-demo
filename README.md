@@ -23,20 +23,12 @@ spring boot项目模板
 
 ### 开发环境
 
-1. 准备一个linux服务器（用VMware安装虚拟机或本地其他机器）用来安装其他服务
-2. 修改`C:\Windows\System32\drivers\etc\hosts`文件，将linux的ip映射到docker
-3. 安装docker-ce，并配置镜像加速，参考阿里云容器镜像服务
-4. 将工程目录下的`centos7/docker`目录中的文件修改为***UNIX格式***，按照目录结构拷贝到linux虚拟机对应目录下，***注意提前修改文件格式为UNIX，否则无法运行***
-5. 修改`kafka.sh`的第四行，将ip替换为linux的ip
-6. 按顺序启动以下容器
-  - `nginx.sh`
-  - `redis.sh`
-  - `zookeeper.sh`
-  - `kafka.sh`
-  - `mysql.sh`
-7. 创建`demo`数据库，将工程目录下`/src/main/resources/schema/demo.sql`导入`demo`数据库
-8. 修改`application-dev.yml`，将`spring.mail.username`和`spring.mail.password`修改为自己的邮箱账号和授权码
-9. 启动工程
+1. 准备一个centos7服务器（用VMware安装虚拟机或本地其他机器）用来安装其他服务，以下称**开发服务器**
+2. 修改`C:\Windows\System32\drivers\etc\hosts`文件，将开发服务器的ip映射到docker
+3. 将工程目录下的`centos/docker/init.sh`转为**unix**格式，上传到开发服务器的`/root`目录下，执行`sh init.sh`
+4. 连接开发服务器的mysql，创建`demo`数据库，将工程目录下`/src/main/resources/schema/demo.sql`导入`demo`数据库
+5. 修改`application-dev.yml`，将`spring.mail.username`和`spring.mail.password`修改为自己的邮箱账号和授权码
+6. 启动工程
 
 ### 生产环境
 

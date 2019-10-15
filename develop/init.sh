@@ -1,5 +1,16 @@
 #!/bin/bash
-# 初始化开发环境服务器
+#############################
+# 请仔细阅读以下说明和注意事项 #
+#############################
+
+# 说明：
+# 由于项目依赖的外部服务越来越多，导致搭建开发环境复杂度越来越高
+# 编写此自动化脚本主要是为了方便开发环境的移植，也方便其他开发者运行这个项目
+# 注意事项：
+# 请在CentOS7服务器上登录root用户运行此脚本
+# 执行过程中需要获取网络资源，请提前配置网络及固定ipv4地址
+# 为避免执行过程中由于网络不通等其他原因导致执行失败，请在执行此脚本前创建虚拟机快照
+# 此脚本只需要成功执行一次，虚拟机重启之后只需重新启动docker和容器（默认自启动）
 
 # 检查当前是否root用户
 if [[ `whoami` != "root" ]];then
@@ -32,6 +43,7 @@ do
 done
 
 # 读取docker镜像加速地址
+# https://ey9rkwik.mirror.aliyuncs.com
 regex_url="^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$"
 while [[ `echo $docker_mirror | grep -E $regex_url` == "" ]]
 do
@@ -236,6 +248,8 @@ rm -rf /etc/timezone
 echo "Asia/Shanghai" > /etc/timezone
 
 # 下载镜像，创建并启动容器
+docker pull mysql:5.7.26
+sh mysql.sh
 docker pull nginx:1.17-alpine
 sh nginx.sh
 docker pull redis:5-alpine
@@ -244,6 +258,10 @@ docker pull wurstmeister/zookeeper
 sh zookeeper.sh
 docker pull wurstmeister/kafka:2.11-2.0.1
 sh kafka.sh
-docker pull mysql:5.7.26
-sh mysql.sh
 docker pull anapsix/alpine-java:8_server-jre_unlimited
+
+# 创建并初始化数据库
+docker cp init.sql mysql:/root/
+docker exec -i mysql mysql -uroot -proot -e "create database demo character set utf8mb4;"
+docker exec -i mysql mysql -uroot -proot -e "alter database demo default character set utf8mb4 collate utf8mb4_bin;"
+docker exec -i mysql mysql -uroot -proot demo -e "source /root/init.sql;"

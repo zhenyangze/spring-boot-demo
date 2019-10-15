@@ -1,23 +1,11 @@
-/*
-Navicat MySQL Data Transfer
+SET CHARACTER SET utf8mb4;
+DROP DATABASE IF EXISTS `demo`;
+CREATE DATABASE `demo` DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
-Source Server         : docker
-Source Server Version : 50726
-Source Host           : docker:3306
-Source Database       : demo
-
-Target Server Type    : MYSQL
-Target Server Version : 50726
-File Encoding         : 65001
-
-Date: 2019-10-15 13:40:39
-*/
+USE `demo`;
 
 SET FOREIGN_KEY_CHECKS=0;
 
--- ----------------------------
--- Table structure for qrtz_blob_triggers
--- ----------------------------
 DROP TABLE IF EXISTS `qrtz_blob_triggers`;
 CREATE TABLE `qrtz_blob_triggers` (
   `SCHED_NAME` varchar(120) COLLATE utf8mb4_bin NOT NULL,
@@ -29,13 +17,6 @@ CREATE TABLE `qrtz_blob_triggers` (
   CONSTRAINT `qrtz_blob_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of qrtz_blob_triggers
--- ----------------------------
-
--- ----------------------------
--- Table structure for qrtz_calendars
--- ----------------------------
 DROP TABLE IF EXISTS `qrtz_calendars`;
 CREATE TABLE `qrtz_calendars` (
   `SCHED_NAME` varchar(120) COLLATE utf8mb4_bin NOT NULL,
@@ -44,13 +25,6 @@ CREATE TABLE `qrtz_calendars` (
   PRIMARY KEY (`SCHED_NAME`,`CALENDAR_NAME`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of qrtz_calendars
--- ----------------------------
-
--- ----------------------------
--- Table structure for qrtz_cron_triggers
--- ----------------------------
 DROP TABLE IF EXISTS `qrtz_cron_triggers`;
 CREATE TABLE `qrtz_cron_triggers` (
   `SCHED_NAME` varchar(120) COLLATE utf8mb4_bin NOT NULL,
@@ -62,13 +36,6 @@ CREATE TABLE `qrtz_cron_triggers` (
   CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of qrtz_cron_triggers
--- ----------------------------
-
--- ----------------------------
--- Table structure for qrtz_fired_triggers
--- ----------------------------
 DROP TABLE IF EXISTS `qrtz_fired_triggers`;
 CREATE TABLE `qrtz_fired_triggers` (
   `SCHED_NAME` varchar(120) COLLATE utf8mb4_bin NOT NULL,
@@ -93,13 +60,6 @@ CREATE TABLE `qrtz_fired_triggers` (
   KEY `IDX_QRTZ_FT_TG` (`SCHED_NAME`,`TRIGGER_GROUP`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of qrtz_fired_triggers
--- ----------------------------
-
--- ----------------------------
--- Table structure for qrtz_job_details
--- ----------------------------
 DROP TABLE IF EXISTS `qrtz_job_details`;
 CREATE TABLE `qrtz_job_details` (
   `SCHED_NAME` varchar(120) COLLATE utf8mb4_bin NOT NULL,
@@ -117,13 +77,6 @@ CREATE TABLE `qrtz_job_details` (
   KEY `IDX_QRTZ_J_GRP` (`SCHED_NAME`,`JOB_GROUP`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of qrtz_job_details
--- ----------------------------
-
--- ----------------------------
--- Table structure for qrtz_locks
--- ----------------------------
 DROP TABLE IF EXISTS `qrtz_locks`;
 CREATE TABLE `qrtz_locks` (
   `SCHED_NAME` varchar(120) COLLATE utf8mb4_bin NOT NULL,
@@ -131,13 +84,6 @@ CREATE TABLE `qrtz_locks` (
   PRIMARY KEY (`SCHED_NAME`,`LOCK_NAME`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of qrtz_locks
--- ----------------------------
-
--- ----------------------------
--- Table structure for qrtz_paused_trigger_grps
--- ----------------------------
 DROP TABLE IF EXISTS `qrtz_paused_trigger_grps`;
 CREATE TABLE `qrtz_paused_trigger_grps` (
   `SCHED_NAME` varchar(120) COLLATE utf8mb4_bin NOT NULL,
@@ -145,13 +91,6 @@ CREATE TABLE `qrtz_paused_trigger_grps` (
   PRIMARY KEY (`SCHED_NAME`,`TRIGGER_GROUP`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of qrtz_paused_trigger_grps
--- ----------------------------
-
--- ----------------------------
--- Table structure for qrtz_scheduler_state
--- ----------------------------
 DROP TABLE IF EXISTS `qrtz_scheduler_state`;
 CREATE TABLE `qrtz_scheduler_state` (
   `SCHED_NAME` varchar(120) COLLATE utf8mb4_bin NOT NULL,
@@ -161,13 +100,6 @@ CREATE TABLE `qrtz_scheduler_state` (
   PRIMARY KEY (`SCHED_NAME`,`INSTANCE_NAME`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of qrtz_scheduler_state
--- ----------------------------
-
--- ----------------------------
--- Table structure for qrtz_simple_triggers
--- ----------------------------
 DROP TABLE IF EXISTS `qrtz_simple_triggers`;
 CREATE TABLE `qrtz_simple_triggers` (
   `SCHED_NAME` varchar(120) COLLATE utf8mb4_bin NOT NULL,
@@ -180,13 +112,6 @@ CREATE TABLE `qrtz_simple_triggers` (
   CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of qrtz_simple_triggers
--- ----------------------------
-
--- ----------------------------
--- Table structure for qrtz_simprop_triggers
--- ----------------------------
 DROP TABLE IF EXISTS `qrtz_simprop_triggers`;
 CREATE TABLE `qrtz_simprop_triggers` (
   `SCHED_NAME` varchar(120) COLLATE utf8mb4_bin NOT NULL,
@@ -207,13 +132,6 @@ CREATE TABLE `qrtz_simprop_triggers` (
   CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of qrtz_simprop_triggers
--- ----------------------------
-
--- ----------------------------
--- Table structure for qrtz_triggers
--- ----------------------------
 DROP TABLE IF EXISTS `qrtz_triggers`;
 CREATE TABLE `qrtz_triggers` (
   `SCHED_NAME` varchar(120) COLLATE utf8mb4_bin NOT NULL,
@@ -248,13 +166,6 @@ CREATE TABLE `qrtz_triggers` (
   CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) REFERENCES `qrtz_job_details` (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of qrtz_triggers
--- ----------------------------
-
--- ----------------------------
--- Table structure for t_attachment
--- ----------------------------
 DROP TABLE IF EXISTS `t_attachment`;
 CREATE TABLE `t_attachment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -265,13 +176,6 @@ CREATE TABLE `t_attachment` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of t_attachment
--- ----------------------------
-
--- ----------------------------
--- Table structure for t_broadcast_message
--- ----------------------------
 DROP TABLE IF EXISTS `t_broadcast_message`;
 CREATE TABLE `t_broadcast_message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -283,13 +187,6 @@ CREATE TABLE `t_broadcast_message` (
   CONSTRAINT `t_broadcast_message_fk_send_user_id` FOREIGN KEY (`send_user_id`) REFERENCES `t_user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of t_broadcast_message
--- ----------------------------
-
--- ----------------------------
--- Table structure for t_broadcast_to_user_link
--- ----------------------------
 DROP TABLE IF EXISTS `t_broadcast_to_user_link`;
 CREATE TABLE `t_broadcast_to_user_link` (
   `broadcast_id` int(11) NOT NULL COMMENT '广播消息id',
@@ -301,13 +198,6 @@ CREATE TABLE `t_broadcast_to_user_link` (
   CONSTRAINT `t_broadcast_to_user_link_fk_to_user_id` FOREIGN KEY (`to_user_id`) REFERENCES `t_user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of t_broadcast_to_user_link
--- ----------------------------
-
--- ----------------------------
--- Table structure for t_chat_message
--- ----------------------------
 DROP TABLE IF EXISTS `t_chat_message`;
 CREATE TABLE `t_chat_message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -323,13 +213,6 @@ CREATE TABLE `t_chat_message` (
   CONSTRAINT `t_chat_message_fk_to_user_id` FOREIGN KEY (`to_user_id`) REFERENCES `t_user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of t_chat_message
--- ----------------------------
-
--- ----------------------------
--- Table structure for t_dept
--- ----------------------------
 DROP TABLE IF EXISTS `t_dept`;
 CREATE TABLE `t_dept` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -345,9 +228,6 @@ CREATE TABLE `t_dept` (
   CONSTRAINT `t_dept_fk_pid` FOREIGN KEY (`pid`) REFERENCES `t_dept` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of t_dept
--- ----------------------------
 INSERT INTO `t_dept` VALUES ('1', '公司', '1', null, '100', '公司', '0');
 INSERT INTO `t_dept` VALUES ('2', '人资行政部', '2', '1', '100', '公司-人资行政部', '0');
 INSERT INTO `t_dept` VALUES ('3', '财务部', '2', '1', '200', '公司-财务部', '0');
@@ -364,9 +244,6 @@ INSERT INTO `t_dept` VALUES ('13', '售后部', '3', '4', '200', '公司-市场�
 INSERT INTO `t_dept` VALUES ('14', '客服部', '2', '1', '400', '公司-客服部', '0');
 INSERT INTO `t_dept` VALUES ('15', '缺省部门', '2', '1', '99999', '公司-缺省部门', '0');
 
--- ----------------------------
--- Table structure for t_job
--- ----------------------------
 DROP TABLE IF EXISTS `t_job`;
 CREATE TABLE `t_job` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -385,13 +262,6 @@ CREATE TABLE `t_job` (
   CONSTRAINT `t_job_fk_job_template_id` FOREIGN KEY (`job_template_id`) REFERENCES `t_job_template` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of t_job
--- ----------------------------
-
--- ----------------------------
--- Table structure for t_job_parameter
--- ----------------------------
 DROP TABLE IF EXISTS `t_job_parameter`;
 CREATE TABLE `t_job_parameter` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -403,13 +273,6 @@ CREATE TABLE `t_job_parameter` (
   CONSTRAINT `t_job_parameter_fk_job_id` FOREIGN KEY (`job_id`) REFERENCES `t_job` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of t_job_parameter
--- ----------------------------
-
--- ----------------------------
--- Table structure for t_job_template
--- ----------------------------
 DROP TABLE IF EXISTS `t_job_template`;
 CREATE TABLE `t_job_template` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -420,16 +283,10 @@ CREATE TABLE `t_job_template` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of t_job_template
--- ----------------------------
 INSERT INTO `t_job_template` VALUES ('8', '打印指定用户信息', 'com.xzixi.demo.job.LogUserJob', '定时在后台info日志中输出指定用户的信息', '1559138174987');
 INSERT INTO `t_job_template` VALUES ('9', '向指定用户发送邮件', 'com.xzixi.demo.job.SendMailJob', '向指定用户发送邮件', '1559138280258');
 INSERT INTO `t_job_template` VALUES ('11', '定时广播', 'com.xzixi.demo.job.BroadcastJob', '定时向所有用户广播指定内容消息', '1564104073319');
 
--- ----------------------------
--- Table structure for t_job_template_parameter
--- ----------------------------
 DROP TABLE IF EXISTS `t_job_template_parameter`;
 CREATE TABLE `t_job_template_parameter` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -442,9 +299,6 @@ CREATE TABLE `t_job_template_parameter` (
   CONSTRAINT `t_job_template_parameter_fk_job_template_id` FOREIGN KEY (`job_template_id`) REFERENCES `t_job_template` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of t_job_template_parameter
--- ----------------------------
 INSERT INTO `t_job_template_parameter` VALUES ('1', 'username', 'string', '用户名', '8');
 INSERT INTO `t_job_template_parameter` VALUES ('2', 'username', 'string', '用户名', '9');
 INSERT INTO `t_job_template_parameter` VALUES ('3', 'subject', 'string', '邮件标题', '9');
@@ -452,9 +306,6 @@ INSERT INTO `t_job_template_parameter` VALUES ('4', 'content', 'string', '邮件
 INSERT INTO `t_job_template_parameter` VALUES ('7', 'senduser', 'string', '发送广播用户名', '11');
 INSERT INTO `t_job_template_parameter` VALUES ('8', 'content', 'string', '广播内容', '11');
 
--- ----------------------------
--- Table structure for t_letter
--- ----------------------------
 DROP TABLE IF EXISTS `t_letter`;
 CREATE TABLE `t_letter` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -469,13 +320,6 @@ CREATE TABLE `t_letter` (
   CONSTRAINT `t_letter_fk_letter_user_id` FOREIGN KEY (`letter_user_id`) REFERENCES `t_user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of t_letter
--- ----------------------------
-
--- ----------------------------
--- Table structure for t_letter_attachment_link
--- ----------------------------
 DROP TABLE IF EXISTS `t_letter_attachment_link`;
 CREATE TABLE `t_letter_attachment_link` (
   `letter_id` int(11) NOT NULL COMMENT '留言id',
@@ -486,13 +330,6 @@ CREATE TABLE `t_letter_attachment_link` (
   CONSTRAINT `t_letter_attachment_link_fk_letter_id` FOREIGN KEY (`letter_id`) REFERENCES `t_letter` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of t_letter_attachment_link
--- ----------------------------
-
--- ----------------------------
--- Table structure for t_letter_reply
--- ----------------------------
 DROP TABLE IF EXISTS `t_letter_reply`;
 CREATE TABLE `t_letter_reply` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -507,13 +344,6 @@ CREATE TABLE `t_letter_reply` (
   CONSTRAINT `t_letter_reply_fk_reply_user_id` FOREIGN KEY (`reply_user_id`) REFERENCES `t_user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of t_letter_reply
--- ----------------------------
-
--- ----------------------------
--- Table structure for t_letter_reply_attachment_link
--- ----------------------------
 DROP TABLE IF EXISTS `t_letter_reply_attachment_link`;
 CREATE TABLE `t_letter_reply_attachment_link` (
   `letter_reply_id` int(11) NOT NULL COMMENT '留言回复id',
@@ -524,13 +354,6 @@ CREATE TABLE `t_letter_reply_attachment_link` (
   CONSTRAINT `t_letter_reply_attachment_link_fk_letter_reply_id` FOREIGN KEY (`letter_reply_id`) REFERENCES `t_letter_reply` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of t_letter_reply_attachment_link
--- ----------------------------
-
--- ----------------------------
--- Table structure for t_mail
--- ----------------------------
 DROP TABLE IF EXISTS `t_mail`;
 CREATE TABLE `t_mail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -545,13 +368,6 @@ CREATE TABLE `t_mail` (
   CONSTRAINT `t_mail_fk_send_user_id` FOREIGN KEY (`send_user_id`) REFERENCES `t_user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of t_mail
--- ----------------------------
-
--- ----------------------------
--- Table structure for t_mail_attachment_link
--- ----------------------------
 DROP TABLE IF EXISTS `t_mail_attachment_link`;
 CREATE TABLE `t_mail_attachment_link` (
   `mail_id` int(11) NOT NULL,
@@ -562,13 +378,6 @@ CREATE TABLE `t_mail_attachment_link` (
   CONSTRAINT `t_mail_attachment_link_fk_mail_id` FOREIGN KEY (`mail_id`) REFERENCES `t_mail` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of t_mail_attachment_link
--- ----------------------------
-
--- ----------------------------
--- Table structure for t_mail_content
--- ----------------------------
 DROP TABLE IF EXISTS `t_mail_content`;
 CREATE TABLE `t_mail_content` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -579,13 +388,6 @@ CREATE TABLE `t_mail_content` (
   CONSTRAINT `t_mail_content_fk_mail_id` FOREIGN KEY (`mail_id`) REFERENCES `t_mail` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of t_mail_content
--- ----------------------------
-
--- ----------------------------
--- Table structure for t_mail_to_user_link
--- ----------------------------
 DROP TABLE IF EXISTS `t_mail_to_user_link`;
 CREATE TABLE `t_mail_to_user_link` (
   `mail_id` int(11) NOT NULL COMMENT '邮件id',
@@ -596,13 +398,6 @@ CREATE TABLE `t_mail_to_user_link` (
   CONSTRAINT `t_mail_to_user_link_fk_to_user_id` FOREIGN KEY (`to_user_id`) REFERENCES `t_user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of t_mail_to_user_link
--- ----------------------------
-
--- ----------------------------
--- Table structure for t_open_source
--- ----------------------------
 DROP TABLE IF EXISTS `t_open_source`;
 CREATE TABLE `t_open_source` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -622,13 +417,6 @@ CREATE TABLE `t_open_source` (
   CONSTRAINT `t_open_source_fk_update_user_id` FOREIGN KEY (`update_user_id`) REFERENCES `t_user` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='开源组件';
 
--- ----------------------------
--- Records of t_open_source
--- ----------------------------
-
--- ----------------------------
--- Table structure for t_open_source_attachment_link
--- ----------------------------
 DROP TABLE IF EXISTS `t_open_source_attachment_link`;
 CREATE TABLE `t_open_source_attachment_link` (
   `open_source_id` int(11) NOT NULL COMMENT '开源组件id',
@@ -639,13 +427,6 @@ CREATE TABLE `t_open_source_attachment_link` (
   CONSTRAINT `t_open_source_attachment_link_fk_open_source_id` FOREIGN KEY (`open_source_id`) REFERENCES `t_open_source` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of t_open_source_attachment_link
--- ----------------------------
-
--- ----------------------------
--- Table structure for t_open_source_intro
--- ----------------------------
 DROP TABLE IF EXISTS `t_open_source_intro`;
 CREATE TABLE `t_open_source_intro` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -656,13 +437,6 @@ CREATE TABLE `t_open_source_intro` (
   CONSTRAINT `t_open_source_intro_fk_open_source_id` FOREIGN KEY (`open_source_id`) REFERENCES `t_open_source` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='开源组件详细介绍';
 
--- ----------------------------
--- Records of t_open_source_intro
--- ----------------------------
-
--- ----------------------------
--- Table structure for t_resource
--- ----------------------------
 DROP TABLE IF EXISTS `t_resource`;
 CREATE TABLE `t_resource` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -675,9 +449,6 @@ CREATE TABLE `t_resource` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of t_resource
--- ----------------------------
 INSERT INTO `t_resource` VALUES ('1', 'http', '附件', '1300', '/attachment/*/*', 'GET', '附件列表');
 INSERT INTO `t_resource` VALUES ('2', 'http', '附件', '1400', '/attachment/*', 'GET', '附件详情');
 INSERT INTO `t_resource` VALUES ('3', 'http', '附件', '1500', '/attachment/*', 'DELETE', '删除附件');
@@ -773,9 +544,6 @@ INSERT INTO `t_resource` VALUES ('97', 'http', '留言', '7600', '/letterReply/*
 INSERT INTO `t_resource` VALUES ('98', 'http', '留言', '7800', '/letterReply/*', 'DELETE', '删除留言回复');
 INSERT INTO `t_resource` VALUES ('99', 'http', '留言', '7700', '/letterReply/*', 'GET', '查询留言回复详情');
 
--- ----------------------------
--- Table structure for t_role
--- ----------------------------
 DROP TABLE IF EXISTS `t_role`;
 CREATE TABLE `t_role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -787,9 +555,6 @@ CREATE TABLE `t_role` (
   UNIQUE KEY `t_role_idx_role_name` (`role_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of t_role
--- ----------------------------
 INSERT INTO `t_role` VALUES ('7', 'ROLE_GUEST', '游客', '100', '0');
 INSERT INTO `t_role` VALUES ('8', 'ROLE_PERSONAL', '个人信息管理', '200', '1');
 INSERT INTO `t_role` VALUES ('9', 'ROLE_BASE', '基础数据查询', '300', '1');
@@ -804,9 +569,6 @@ INSERT INTO `t_role` VALUES ('22', 'ROLE_SUMMARY', '统计查询', '600', '1');
 INSERT INTO `t_role` VALUES ('23', 'ROLE_OPEN', '开源组件管理', '1200', '0');
 INSERT INTO `t_role` VALUES ('24', 'ROLE_LETTER', '留言管理', '1300', '1');
 
--- ----------------------------
--- Table structure for t_role_resource_link
--- ----------------------------
 DROP TABLE IF EXISTS `t_role_resource_link`;
 CREATE TABLE `t_role_resource_link` (
   `role_id` int(11) NOT NULL,
@@ -817,9 +579,6 @@ CREATE TABLE `t_role_resource_link` (
   CONSTRAINT `t_role_resource_link_fk_role_id` FOREIGN KEY (`role_id`) REFERENCES `t_role` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of t_role_resource_link
--- ----------------------------
 INSERT INTO `t_role_resource_link` VALUES ('10', '1');
 INSERT INTO `t_role_resource_link` VALUES ('7', '2');
 INSERT INTO `t_role_resource_link` VALUES ('10', '2');
@@ -935,9 +694,6 @@ INSERT INTO `t_role_resource_link` VALUES ('24', '97');
 INSERT INTO `t_role_resource_link` VALUES ('24', '98');
 INSERT INTO `t_role_resource_link` VALUES ('24', '99');
 
--- ----------------------------
--- Table structure for t_user
--- ----------------------------
 DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -959,9 +715,6 @@ CREATE TABLE `t_user` (
   CONSTRAINT `t_user_fk_head_img_id` FOREIGN KEY (`head_img_id`) REFERENCES `t_attachment` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of t_user
--- ----------------------------
 INSERT INTO `t_user` VALUES ('9', 'admin', '$2a$10$JACRXGN3LbM/5yayqf85VuyUvIH/cGKm/MrZPXTs4.MgkRzthhwbK', 'xuelingkang@163.com', '薛凌康', null, '1', '650736000736', '1570810620317', '1');
 INSERT INTO `t_user` VALUES ('10', 'chongqingkai', '$2a$10$g40KOaQkwA/bY1ar.eNWk.ArK4Q0ZEi32R0Gi3xOFwyXSo0eq1QhK', '574290057@qq.com', '种庆凯', null, '1', '755625600710', '1563532210010', '5');
 INSERT INTO `t_user` VALUES ('11', 'guoxiaogang', '$2a$10$AXiiXAG7zEAfzaXT2h8CDeBKCKuSMbM2uHo6EH8VQhxjRWz2V5Pea', 'guoxiaogang@163.com', '郭小纲', null, '1', '96134400243', '1560490569442', '2');
@@ -980,9 +733,6 @@ INSERT INTO `t_user` VALUES ('23', 'yangxiaoguo', '$2a$10$vXSKsoAI3ocq66L7F75wUO
 INSERT INTO `t_user` VALUES ('24', 'baozupo', '$2a$10$TeH8lU5d/wrXf.LMv2MNUukIHZrOpPLCSh.J4rYzZT5YIGT03Lyni', 'baozupo@163.com', '包租婆', null, '0', '90086400957', '1560492167186', '11');
 INSERT INTO `t_user` VALUES ('25', 'liushihong', '$2a$10$b7t95iUmZP4CVu1b6j9bQePNX2W8roqLcgtEbeopmQhz6FhZTFeW6', '952649292@qq.com', '刘世红', null, '0', '689529600315', '1566484128341', '1');
 
--- ----------------------------
--- Table structure for t_user_role_link
--- ----------------------------
 DROP TABLE IF EXISTS `t_user_role_link`;
 CREATE TABLE `t_user_role_link` (
   `user_id` int(11) NOT NULL COMMENT '用户id',
@@ -993,9 +743,6 @@ CREATE TABLE `t_user_role_link` (
   CONSTRAINT `t_user_role_link_fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `t_user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
--- ----------------------------
--- Records of t_user_role_link
--- ----------------------------
 INSERT INTO `t_user_role_link` VALUES ('9', '8');
 INSERT INTO `t_user_role_link` VALUES ('10', '8');
 INSERT INTO `t_user_role_link` VALUES ('11', '8');
@@ -1201,20 +948,11 @@ INSERT INTO `t_user_role_link` VALUES ('23', '24');
 INSERT INTO `t_user_role_link` VALUES ('24', '24');
 INSERT INTO `t_user_role_link` VALUES ('25', '24');
 
--- ----------------------------
--- View structure for t_attachment_view
--- ----------------------------
 DROP VIEW IF EXISTS `t_attachment_view`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `t_attachment_view` AS select `t_attachment`.`id` AS `id`,`t_attachment`.`attachment_name` AS `attachment_name`,`t_attachment`.`attachment_address` AS `attachment_address`,`t_attachment`.`attachment_path` AS `attachment_path`,`t_attachment`.`create_time` AS `create_time`,(case when (`t_user`.`head_img_id` is not null) then 't_user.head_img_id' when (`tmal`.`attachment_id` is not null) then 't_mail_attachment_link.attachment_id' when (`tosal`.`attachment_id` is not null) then 't_open_source_attachment_link.attachment_id' when (`tlal`.`attachment_id` is not null) then 't_letter_attachment_link.attachment_id' when (`tlral`.`attachment_id` is not null) then 't_letter_reply_attachment_link.attachment_id' else NULL end) AS `link_info` from (((((`t_attachment` left join `t_user` on((`t_attachment`.`id` = `t_user`.`head_img_id`))) left join `t_mail_attachment_link` `tmal` on((`t_attachment`.`id` = `tmal`.`attachment_id`))) left join `t_open_source_attachment_link` `tosal` on((`t_attachment`.`id` = `tosal`.`attachment_id`))) left join `t_letter_attachment_link` `tlal` on((`t_attachment`.`id` = `tlal`.`attachment_id`))) left join `t_letter_reply_attachment_link` `tlral` on((`t_attachment`.`id` = `tlral`.`attachment_id`))) ;
 
--- ----------------------------
--- View structure for t_mail_to_users
--- ----------------------------
 DROP VIEW IF EXISTS `t_mail_to_users`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `t_mail_to_users` AS select `t_mail_to_user_link`.`mail_id` AS `mail_id`,group_concat(`t_user`.`nickname` separator ',') AS `info` from (`t_mail_to_user_link` left join `t_user` on((`t_user`.`id` = `t_mail_to_user_link`.`to_user_id`))) group by `t_mail_to_user_link`.`mail_id` ;
 
--- ----------------------------
--- View structure for t_role_resources_info
--- ----------------------------
 DROP VIEW IF EXISTS `t_role_resources_info`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `t_role_resources_info` AS select `demo`.`t_role`.`id` AS `id`,group_concat(`t_resource`.`resources_info` order by `t_resource`.`resource_seq` ASC separator ',') AS `resources_info` from ((`demo`.`t_role` left join `demo`.`t_role_resource_link` on((`demo`.`t_role`.`id` = `demo`.`t_role_resource_link`.`role_id`))) left join (select `res`.`id` AS `id`,`res`.`resource_seq` AS `resource_seq`,(case when isnull(`res`.`resource_method`) then concat(`res`.`resource_desc`,':',`res`.`resource_type`,'.',`res`.`resource_pattern`,'.',`res`.`resource_method`) else concat(`res`.`resource_desc`,': ',`res`.`resource_type`,'.',`res`.`resource_pattern`) end) AS `resources_info` from `demo`.`t_resource` `res`) `t_resource` on((`demo`.`t_role_resource_link`.`resource_id` = `t_resource`.`id`))) group by `demo`.`t_role`.`id` ;

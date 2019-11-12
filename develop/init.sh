@@ -148,8 +148,9 @@ http {
 
     keepalive_timeout  65;
 
-    gzip on;
     sendfile on;
+
+    gzip on;
     gzip_buffers 16 8k;
     gzip_comp_level 2;
     gzip_http_version 1.1;
@@ -183,7 +184,8 @@ EOF
 tee mysql.sh <<-'EOF'
 #!/bin/bash
 docker pull mysql:5.7.26
-docker stop mysql && docker rm mysql
+docker stop mysql
+docker rm mysql
 docker run -d --name mysql \
 --restart=always \
 -e MYSQL_ROOT_PASSWORD=root \
@@ -198,7 +200,8 @@ EOF
 tee nginx.sh <<-'EOF'
 #!/bin/bash
 docker pull nginx:1.17-alpine
-docker stop nginx && docker rm nginx
+docker stop nginx
+docker rm nginx
 docker run -d --name nginx \
 --restart=always \
 -v /etc/nginx/nginx.conf:/etc/nginx/nginx.conf \
@@ -214,7 +217,8 @@ EOF
 tee redis.sh <<-'EOF'
 #!/bin/bash
 docker pull redis:5-alpine
-docker stop redis && docker rm redis
+docker stop redis
+docker rm redis
 docker run -d --name redis \
 --restart=always \
 -v /opt/redis:/data \
@@ -230,7 +234,8 @@ EOF
 tee zookeeper.sh <<-'EOF'
 #!/bin/bash
 docker pull wurstmeister/zookeeper
-docker stop zookeeper && docker rm zookeeper
+docker stop zookeeper
+docker rm zookeeper
 docker run -d --name zookeeper \
 --restart=always \
 -v /etc/localtime:/etc/localtime \
@@ -244,8 +249,9 @@ EOF
 tee kafka.sh <<-'EOF'
 #!/bin/bash
 docker pull wurstmeister/kafka:2.11-2.0.1
-docker stop kafka && docker rm kafka
-docker run  -d --name kafka \
+docker stop kafka
+docker rm kafka
+docker run -d --name kafka \
 --restart=always \
 --add-host docker:local_ip \
 -v /etc/localtime:/etc/localtime \
@@ -261,6 +267,24 @@ wurstmeister/kafka:2.11-2.0.1
 EOF
 # 替换为真实ip
 sed -i "s#--add-host docker:local_ip#--add-host docker:$local_ip#g" kafka.sh
+
+# rabbitmq
+tee rabbitmq.sh <<-'EOF'
+#!/bin/bash
+docker pull rabbitmq:3.7-management-alpine
+docker stop rabbitmq
+docker rm rabbitmq
+docker run -d --name rabbitmq \
+--restart=always \
+--hostname rabbitmq \
+-v /etc/localtime:/etc/localtime \
+-v /etc/timezone:/etc/timezone \
+-p 5672:5672 \
+-p 15672:15672 \
+-e RABBITMQ_DEFAULT_USER=demo \
+-e RABBITMQ_DEFAULT_PASS=demo \
+rabbitmq:3.7-management-alpine
+EOF
 
 # 设置时区
 rm -rf /etc/timezone
@@ -278,6 +302,7 @@ sh nginx.sh
 sh redis.sh
 sh zookeeper.sh
 sh kafka.sh
+sh rabbitmq.sh
 
 # 关闭防火墙
 systemctl stop firewalld

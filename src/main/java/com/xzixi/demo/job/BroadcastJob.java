@@ -1,9 +1,9 @@
 package com.xzixi.demo.job;
 
-import com.xzixi.demo.kafka.DefaultProducer;
 import com.xzixi.demo.model.po.BroadcastMessage;
 import com.xzixi.demo.model.po.User;
 import com.xzixi.demo.params.Params;
+import com.xzixi.demo.rabbitmq.WebsocketMessageSender;
 import com.xzixi.demo.service.IBroadcastMessageService;
 import com.xzixi.demo.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -17,15 +17,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import static com.xzixi.demo.config.KafkaConfig.BROADCAST_TOPIC;
-
 @Slf4j
 public class BroadcastJob extends QuartzJobBean {
 
     @Autowired
     private IBroadcastMessageService broadcastMessageService;
     @Autowired
-    private DefaultProducer defaultProducer;
+    private WebsocketMessageSender websocketMessageSender;
     @Autowired
     private IUserService userService;
 
@@ -50,7 +48,7 @@ public class BroadcastJob extends QuartzJobBean {
         List<User> list = userService.customList(new Params<>(new User()));
         message.setToUsers(list);
         broadcastMessageService.customSave(message);
-        defaultProducer.send(BROADCAST_TOPIC, message);
+        websocketMessageSender.sendBroadcast( message);
         log.info("----------broadcastJob结束了----------");
     }
 

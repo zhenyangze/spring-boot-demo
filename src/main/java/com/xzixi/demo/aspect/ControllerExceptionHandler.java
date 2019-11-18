@@ -28,7 +28,7 @@ public class ControllerExceptionHandler {
     // controller形参校验异常
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResultVO HandleConstraintViolationException(ConstraintViolationException e) {
+    public ResultVO handleConstraintViolationException(ConstraintViolationException e) {
         Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
         StringBuilder errorMsg = new StringBuilder();
         Iterator<ConstraintViolation<?>> iterator = constraintViolations.iterator();

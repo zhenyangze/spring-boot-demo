@@ -9,7 +9,7 @@ public class SerializeUtil {
 
     private static final byte[] EMPTY_ARRAY = new byte[0];
 
-    private static ObjectMapper objectMapper;
+    public static ObjectMapper objectMapper;
 
     static {
         objectMapper = new ObjectMapper();

@@ -4,13 +4,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xzixi.demo.exception.LogicException;
 import com.xzixi.demo.group.Insert;
-import com.xzixi.demo.kafka.DefaultProducer;
 import com.xzixi.demo.model.po.ChatMessage;
 import com.xzixi.demo.model.po.User;
 import com.xzixi.demo.model.vo.ChatMessageVO;
 import com.xzixi.demo.model.vo.ResultVO;
 import com.xzixi.demo.model.vo.UserVO;
 import com.xzixi.demo.params.Params;
+import com.xzixi.demo.rabbitmq.WebsocketMessageSender;
 import com.xzixi.demo.service.IChatMessageService;
 import com.xzixi.demo.util.ModelUtil;
 import io.jsonwebtoken.lang.Collections;
@@ -25,7 +25,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-import static com.xzixi.demo.config.KafkaConfig.CHAT_TOPIC;
 import static com.xzixi.demo.model.vo.ResultVO.SUCCESS;
 import static com.xzixi.demo.service.IChatMessageService.READ;
 import static com.xzixi.demo.service.IChatMessageService.UNREAD;
@@ -39,7 +38,7 @@ public class ChatMessageController {
     @Autowired
     private IChatMessageService chatMessageService;
     @Autowired
-    private DefaultProducer defaultProducer;
+    private WebsocketMessageSender websocketMessageSender;
 
     @GetMapping("/{current}/{size}")
     @ApiOperation(value = "查询消息列表")
@@ -175,7 +174,7 @@ public class ChatMessageController {
         chatMessage.setSendUserId(currentUser.getId());
         chatMessage.setReadStatus(UNREAD);
         chatMessageService.save(chatMessage);
-        defaultProducer.send(CHAT_TOPIC, chatMessage);
+        websocketMessageSender.sendChat(chatMessage);
         return new ResultVO<>(SUCCESS, "发送消息成功！", null);
     }
 

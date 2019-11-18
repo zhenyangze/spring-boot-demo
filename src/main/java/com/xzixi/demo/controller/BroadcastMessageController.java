@@ -2,9 +2,9 @@ package com.xzixi.demo.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.collect.Lists;
 import com.xzixi.demo.exception.LogicException;
 import com.xzixi.demo.group.BroadcastInsert;
-import com.xzixi.demo.kafka.DefaultProducer;
 import com.xzixi.demo.model.po.BroadcastMessage;
 import com.xzixi.demo.model.po.BroadcastToUserLink;
 import com.xzixi.demo.model.po.User;
@@ -12,10 +12,10 @@ import com.xzixi.demo.model.vo.BroadcastMessageVO;
 import com.xzixi.demo.model.vo.ResultVO;
 import com.xzixi.demo.model.vo.UserVO;
 import com.xzixi.demo.params.Params;
+import com.xzixi.demo.rabbitmq.WebsocketMessageSender;
 import com.xzixi.demo.service.IBroadcastMessageService;
 import com.xzixi.demo.service.IBroadcastToUserLinkService;
 import com.xzixi.demo.util.ModelUtil;
-import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -27,7 +27,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-import static com.xzixi.demo.config.KafkaConfig.BROADCAST_TOPIC;
 import static com.xzixi.demo.model.vo.ResultVO.SUCCESS;
 import static com.xzixi.demo.service.IBroadcastMessageService.UNREAD;
 
@@ -42,7 +41,7 @@ public class BroadcastMessageController {
     @Autowired
     private IBroadcastToUserLinkService broadcastToUserLinkService;
     @Autowired
-    private DefaultProducer defaultProducer;
+    private WebsocketMessageSender websocketMessageSender;
 
     @GetMapping("/{current}/{size}")
     @ApiOperation(value = "查询广播列表")
@@ -144,7 +143,7 @@ public class BroadcastMessageController {
         BroadcastMessage broadcastMessage = (BroadcastMessage) ModelUtil.copy(broadcastMessageVO,
                 new ModelUtil.Mapping(BroadcastMessageVO.class, BroadcastMessage.class));
         broadcastMessageService.customSave(broadcastMessage);
-        defaultProducer.send(BROADCAST_TOPIC, broadcastMessage);
+        websocketMessageSender.sendBroadcast(broadcastMessage);
         return new ResultVO<>(SUCCESS, "广播成功！", null);
     }
 

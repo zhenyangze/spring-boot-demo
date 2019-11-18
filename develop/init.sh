@@ -230,44 +230,6 @@ redis-server --appendonly yes \
 --requirepass demo
 EOF
 
-# zookeeper
-tee zookeeper.sh <<-'EOF'
-#!/bin/bash
-docker pull wurstmeister/zookeeper
-docker stop zookeeper
-docker rm zookeeper
-docker run -d --name zookeeper \
---restart=always \
--v /etc/localtime:/etc/localtime \
--v /etc/timezone:/etc/timezone \
--p 2181:2181 \
--t \
-wurstmeister/zookeeper
-EOF
-
-# kafka
-tee kafka.sh <<-'EOF'
-#!/bin/bash
-docker pull wurstmeister/kafka:2.11-2.0.1
-docker stop kafka
-docker rm kafka
-docker run -d --name kafka \
---restart=always \
---add-host docker:local_ip \
--v /etc/localtime:/etc/localtime \
--v /etc/timezone:/etc/timezone \
--p 9092:9092 \
--e KAFKA_BROKER_ID=0 \
--e KAFKA_ZOOKEEPER_CONNECT=docker:2181 \
--e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://docker:9092 \
--e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 \
--e KAFKA_JVM_PERFORMANCE_OPTS=' -Xmx512m -Xms512m' \
--t \
-wurstmeister/kafka:2.11-2.0.1
-EOF
-# 替换为真实ip
-sed -i "s#--add-host docker:local_ip#--add-host docker:$local_ip#g" kafka.sh
-
 # rabbitmq
 tee rabbitmq.sh <<-'EOF'
 #!/bin/bash
@@ -300,8 +262,6 @@ fi
 sh mysql.sh
 sh nginx.sh
 sh redis.sh
-sh zookeeper.sh
-sh kafka.sh
 sh rabbitmq.sh
 
 # 关闭防火墙

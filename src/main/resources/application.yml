@@ -45,51 +45,12 @@ spring:
       cache-null-values: false # 缓存为null的value，默认true
       time-to-live: 30m # 缓存有效时间
 
-  # kafka
-  kafka:
-    producer:
-      # 发生错误后，消息重发的次数。
-      retries: 3
-      # 当有多个消息需要被发送到同一个分区时，生产者会把它们放在同一个批次里。该参数指定了一个批次可以使用的内存大小，按照字节数计算。
-      batch-size: 16384
-      # 设置生产者内存缓冲区的大小。
-      buffer-memory: 33554432
-      # 键的序列化方式
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      # 值的序列化方式
-      value-serializer: com.xzixi.demo.kafka.CustomJsonSerializer
-      # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
-      # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
-      # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
-      acks: all
-    consumer:
-      # 消费者组
-      group-id: spring-boot-demo-default-consumer
-      # 自动提交的时间间隔 在spring boot 2.X 版本中这里采用的是值的类型为Duration 需要符合特定的格式，如1S,1M,2H,5D
-      # 当enable-auto-commit为true时有效
-      #auto-commit-interval: 1S
-      # 该属性指定了消费者在读取一个没有偏移量的分区或者偏移量无效的情况下该作何处理：
-      # latest（默认值）在偏移量无效的情况下，消费者将从最新的记录开始读取数据（在消费者启动之后生成的记录）
-      # earliest ：在偏移量无效的情况下，消费者将从起始位置读取分区的记录
-      auto-offset-reset: latest
-      # 设置为true表示使用kafka默认的提交模式，false表示使用spring提供的人工提交模式
-      enable-auto-commit: false
-      # 键的反序列化方式
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      # 值的反序列化方式
-      value-deserializer: com.xzixi.demo.kafka.CustomJsonDeserializer
-    listener:
-      # 在侦听器容器中运行的线程数。
-      concurrency: 5
-      # 当自动提交设置为false时，设置spring人工提交模式
-      # record 每处理一条记录提交
-      # batch 每次poll的时候批量提交，默认
-      # time 每间隔ack-time提交，需要设置ack-time属性
-      # count 累积达到ack-count提交
-      # count_time ack-time和ack-count中满足任何一个就提交
-      # munual listener中接收AcknowledgingMessageListener类型的参数，调用acknowledge()方法提交，批量提交
-      # manual_immediate 和munul一样，但是调用方法后会立刻提交
-      ack-mode: batch
+  # rabbitmq
+  rabbitmq:
+    # 发送确认
+    publisher-confirms: true
+    # 发送失败退回
+    publisher-returns: true
 
   # 定时任务
   quartz:
@@ -274,11 +235,11 @@ retrieve-password:
   min-wait: 60 # 发送找回密码验证码最小等待时间，秒
   expire: 30 # 验证码有效期，分钟
 
-kafka:
-  consumer:
+rabbitmq:
+  queue:
     websocket:
-      properties:
-        group.id: spring-boot-demo-websocket-consumer-1
+      broadcast: broadcast-queue-1
+      chat: chat-queue-1
 
 letter-notify:
   to-username: admin # 留言提醒用户

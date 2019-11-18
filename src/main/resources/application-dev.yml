@@ -38,10 +38,12 @@ spring:
         max-idle: 8 # 连接池中的最大空闲连接
         min-idle: 1 # 连接池中的最小空闲连接
 
-  # kafka
-  kafka:
-    # 以逗号分隔的地址列表，用于建立与Kafka集群的初始连接(kafka 默认的端口号为9092)
-    bootstrap-servers: docker:9092
+  # rabbitmq
+  rabbitmq:
+    host: docker
+    port: 5672
+    username: demo
+    password: demo
 
   # 邮件
   mail:

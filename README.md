@@ -64,8 +64,7 @@ bootdemo:1.0.7
 
 | 服务器 | 启动脚本 |
 | :---: | :---: |
-| server03 | `zookeeper.sh` |
-| server03 | `kafka.sh` |
+| server03 | `rabbitmq.sh` |
 | server02 | `mysql.sh`<br>**mysql启动完成后，创建`demo`数据库，将工程目录下<br>`/src/main/resources/schema/demo.sql`导入`demo`数据库** |
 | server02 | `nginx.sh` |
 | server01 | `redis6379.sh` |

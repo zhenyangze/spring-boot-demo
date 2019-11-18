@@ -36,20 +36,6 @@ wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-
 yum clean all
 yum makecache fast
 
-# 安装net-tools
-yum -y install net-tools
-
-# 获取本地ip
-regex_ip="^(2[0-4][0-9]|25[0-5]|1[0-9][0-9]|[1-9]?[0-9])(\.(2[0-4][0-9]|25[0-5]|1[0-9][0-9]|[1-9]?[0-9])){3}$"
-# 尝试获取本地ip
-local_ip=`/sbin/ifconfig -a|grep inet|grep -v 127.0.0.1|grep -v inet6|awk '{print $2}'|tr -d "addr:"`
-# 如果获取ip失败，读取用户输入ip
-while [[ `echo $local_ip | grep -E $regex_ip` == "" ]]
-do
-  echo "请输入本地ip:"
-  read -p "本地ip:" -r local_ip
-done
-
 # 读取docker镜像加速地址
 # https://ey9rkwik.mirror.aliyuncs.com
 regex_url="^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$"

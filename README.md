@@ -43,15 +43,15 @@ spring boot项目模板
 3. 修改/etc/hosts，增加如下映射，***ip改成自己的局域网ip，三个虚拟机都需要增加这三行***
 
 ```bash
-172.26.245.47   ali-server01    server01
-172.26.245.48   ali-server02    server02
-172.26.245.49   ali-server03    server03
+172.26.245.47   ali-server01
+172.26.245.48   ali-server02
+172.26.245.49   ali-server03
 ```
 
 4. 将工程中centos7目录下的文件修改为***UNIX格式***，按照目录结构分别拷贝到三个虚拟机的对应目录下，***注意提前修改文件格式为UNIX，否则无法运行***
 5. 修改/root目录下的shell脚本，将`--add-host`参数对应的真实ip修改为自己虚拟机的ip
 6. 构建应用镜像，<a href="https://blog.csdn.net/qq_35433926/article/details/95969980" target="_blank">参考博客</a>
-7. 在server01的/root下新建bootdemo.sh脚本，内容如下，***注意修改ip和邮箱账号授权码及镜像版本号等变量***
+7. 在ali-server01的/root下新建bootdemo.sh脚本，内容如下，***注意修改ip和邮箱账号授权码及镜像版本号等变量***
 
 ```bash
 #/bin/bash
@@ -71,13 +71,13 @@ bootdemo:1.0.7
 
 | 服务器 | 启动脚本 |
 | :---: | :---: |
-| server03 | `elasticsearch.sh` |
-| server02 | `rabbitmq.sh` |
-| server02 | `mysql.sh`<br>**mysql启动完成后，创建`demo`数据库，将工程目录下<br>`devlop/init.sql`导入`demo`数据库** |
-| server02 | `nginx.sh` |
-| server01 | `redis.sh` |
-| server01 | `bootdemo.sh` |
-| server01 | `nginx.sh` |
+| ali-server03 | `elasticsearch.sh` |
+| ali-server02 | `rabbitmq.sh` |
+| ali-server02 | `mysql.sh`<br>**mysql启动完成后，创建`demo`数据库，将工程目录下<br>`devlop/init.sql`导入`demo`数据库** |
+| ali-server02 | `nginx.sh` |
+| ali-server01 | `redis.sh` |
+| ali-server01 | `bootdemo.sh` |
+| ali-server01 | `nginx.sh` |
 
 9. <a href="https://gitee.com/xuelingkang/react-demo" target="_blank">前端项目部署</a>
 

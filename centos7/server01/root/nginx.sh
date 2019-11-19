@@ -10,6 +10,5 @@ docker run -d --name nginx \
 -v /etc/timezone:/etc/timezone \
 -p 80:80 \
 -p 443:443 \
---add-host server01:172.26.245.47 \
---add-host server02:172.26.245.48 \
+--add-host ali-server02:172.26.245.48 \
 nginx:1.17-alpine

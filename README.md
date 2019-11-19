@@ -12,10 +12,9 @@ spring boot项目模板
 
 ### 重构计划
 
-1. 引入elasticsearch
-2. 查询列表使用elasticsearch
-3. 查询单个记录使用数据库，写缓存
-4. 重构BaseService
+1. 查询列表使用elasticsearch
+2. 查询单个记录使用数据库，写缓存
+3. 重构BaseService
 
 ### 持续提取模块中
 

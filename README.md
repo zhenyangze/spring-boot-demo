@@ -32,7 +32,7 @@ spring boot项目模板
 
 1. 准备一个centos7服务器（用VMware安装虚拟机或本地其他机器）用来安装其他服务，以下称**开发服务器**
 2. 修改`C:\Windows\System32\drivers\etc\hosts`文件，将开发服务器的ip映射到docker
-3. 将工程目录下的`develop/init.sh`和`develop/init.sql`另存为**unix**格式，上传到开发服务器的`/root`目录下，执行`sh init.sh`
+3. 将工程目录下的`develop/init.sh`和`develop/init.sql`另存为**unix**格式，和`develop/elasticsearch-analysis-ik-6.4.3.zip`，上传到开发服务器的`/root`目录下，执行`sh init.sh`
 4. 修改`application-dev.yml`，将`spring.mail.username`和`spring.mail.password`修改为自己的邮箱账号和授权码
 5. 启动工程
 

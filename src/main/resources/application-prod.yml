@@ -45,6 +45,13 @@ spring:
     username: xxxxxx@163.com
     password: xxxxxx
 
+  data:
+    elasticsearch:
+      cluster-name: elasticsearch
+      cluster-nodes: ali-server03:9300
+      repositories:
+        enabled: true
+
 # sftp
 sftp-pool:
   # 主机ip

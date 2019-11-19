@@ -30,7 +30,7 @@ spring:
 
   # rabbitmq
   rabbitmq:
-    host: ali-server03
+    host: ali-server02
     port: 5672
     username: demo
     password: demo

@@ -71,15 +71,11 @@ bootdemo:1.0.7
 
 | 服务器 | 启动脚本 |
 | :---: | :---: |
-| server03 | `rabbitmq.sh` |
-| server02 | `mysql.sh`<br>**mysql启动完成后，创建`demo`数据库，将工程目录下<br>`/src/main/resources/schema/demo.sql`导入`demo`数据库** |
+| server03 | `elasticsearch.sh` |
+| server02 | `rabbitmq.sh` |
+| server02 | `mysql.sh`<br>**mysql启动完成后，创建`demo`数据库，将工程目录下<br>`devlop/init.sql`导入`demo`数据库** |
 | server02 | `nginx.sh` |
-| server01 | `redis6379.sh` |
-| server01 | `redis6380.sh` |
-| server01 | `redis6381.sh` |
-| server01 | `sentinel26379.sh` |
-| server01 | `sentinel26380.sh` |
-| server01 | `sentinel26381.sh` |
+| server01 | `redis.sh` |
 | server01 | `bootdemo.sh` |
 | server01 | `nginx.sh` |
 

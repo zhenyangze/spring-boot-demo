@@ -15,16 +15,11 @@ spring:
 
   # redis
   redis:
-    # 使用单机redis时将一下两行注释打开
-#    host: localhost # 默认localhost
-#    port: 6379 # 默认6379
+    host: ali-server01 # 默认localhost
+    port: 6379 # 默认6379
     password: demo # 密码
     database: 5 # 采用哪个数据库，默认0
     timeout: 500 # 连接超时时间（毫秒）
-    # 使用sentinel集群时将以下三行注释打开
-    sentinel:
-      master: demomaster # master名称
-      nodes: ali-server01:26379,ali-server01:26380,ali-server01:26381 # sentinel地址
     lettuce:
       shutdown-timeout: 100ms
       pool:

@@ -36,6 +36,13 @@ wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-
 yum clean all
 yum makecache fast
 
+# 安装zip和unzip
+yum -y install zip unzip
+
+# 将ik分词器解压到/etc/elasticsearch/plugins/ik
+mkdir -p /etc/elasticsearch/plugins/ik
+unzip -o -d /etc/elasticsearch/plugins/ik /root/elasticsearch-analysis-ik-6.4.3.zip
+
 # 读取docker镜像加速地址
 # https://ey9rkwik.mirror.aliyuncs.com
 regex_url="^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$"
@@ -232,6 +239,24 @@ docker run -d --name rabbitmq \
 -e RABBITMQ_DEFAULT_USER=demo \
 -e RABBITMQ_DEFAULT_PASS=demo \
 rabbitmq:3.7-management-alpine
+EOF
+
+# elasticsearch
+tee elasticsearch.sh <<-'EOF'
+#!/bin/bash
+docker pull elasticsearch:6.4.3
+docker stop elasticsearch
+docker rm elasticsearch
+docker run -d --name elasticsearch \
+--restart=always \
+-e ES_JAVA_OPTS="-Xms512m -Xmx512m" \
+-e "discovery.type=single-node" \
+-v /etc/localtime:/etc/localtime \
+-v /etc/timezone:/etc/timezone \
+-v /etc/elasticsearch/plugins/ik:/usr/share/elasticsearch/plugins/ik \
+-p 9200:9200 \
+-p 9300:9300 \
+elasticsearch:6.4.3
 EOF
 
 # 设置时区

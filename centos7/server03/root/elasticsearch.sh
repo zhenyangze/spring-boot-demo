@@ -1,4 +1,10 @@
 #!/bin/bash
+ik=/root/elasticsearch-analysis-ik-6.4.3.zip
+if [ -f "$ik" ]; then
+  mkdir -p /etc/elasticsearch/plugins/ik
+  unzip -o -d /etc/elasticsearch/plugins/ik /root/elasticsearch-analysis-ik-6.4.3.zip
+  rm -rf $ik
+fi
 docker run -d --name elasticsearch \
 --restart=always \
 -e ES_JAVA_OPTS="-Xms256m -Xmx256m" \

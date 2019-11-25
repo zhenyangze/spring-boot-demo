@@ -10,12 +10,6 @@ spring boot项目模板
 
 <a href="https://blog.csdn.net/qq_35433926" target="_blank">博客主页</a>
 
-### 重构计划
-
-1. 查询列表使用elasticsearch
-2. 查询单个记录使用数据库，写缓存
-3. 重构BaseService
-
 ### 持续提取模块中
 
 | 模块名称 | 码云 | github | maven坐标 |

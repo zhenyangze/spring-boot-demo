@@ -274,6 +274,7 @@ sh mysql.sh
 sh nginx.sh
 sh redis.sh
 sh rabbitmq.sh
+sh elasticsearch.sh
 
 # 关闭防火墙
 systemctl stop firewalld
